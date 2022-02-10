@@ -17,8 +17,10 @@ companyCreation = (function () {
                                 title: res.text,
                                 text: "Click OK to exit",
                                 type: "success"
+                            },function (){
+                                window.location.reload()
                             });
-                            window.location.reload();
+
                         } else {
                             swal({
                                 title: res.text,

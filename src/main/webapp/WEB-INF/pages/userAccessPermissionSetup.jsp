@@ -71,7 +71,7 @@
                                 </tbody>
                             </table>
                             <sec:authorize access="hasAuthority('2-ADD')">
-                                <div class="col-sm-offset-4 col-md-2">
+                                <div class="col-sm-offset-4 col-md-2 pt-3">
                                     <input type="submit" tabindex="5" class="btn btn-primary btn-block" value="Save" id="btnSave">
                                 </div>
                             </sec:authorize>

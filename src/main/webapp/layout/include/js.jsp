@@ -26,6 +26,8 @@
 <script defer type="text/javascript" src="<c:url value='/resources/limitless/global_assets/js/plugins/notifications/sweet_alert.min.js' />"></script>
 <script type="text/javascript" src="<c:url value='/resources/bcs_lib/jquery-ui.min.js'/>"></script>
 <script defer type="text/javascript" src="<c:url value='/resources/bcs_lib/jquery.autocomplete.js' />"></script>
+<script defer type="text/javascript" src="<c:url value='/resources/bcs_lib/sweetalert.min.js' />"></script>
+
 
 
 
