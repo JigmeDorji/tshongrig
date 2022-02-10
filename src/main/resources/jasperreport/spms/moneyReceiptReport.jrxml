@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2020-11-04T20:16:20 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ServiceingEstimation" pageWidth="595" pageHeight="321" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="31d6567c-10c1-4afa-8c69-39ea40196c82">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NEW_DATAADAPTER.xml"/>
+	<parameter name="userName" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="moneyReceiptNo" class="java.lang.String"/>
+	<parameter name="partyName" class="java.lang.String"/>
+	<parameter name="amount" class="java.lang.Double"/>
+	<parameter name="tDSAmount" class="java.lang.Double"/>
+	<parameter name="receiptDate" class="java.util.Date"/>
+	<parameter name="companyName" class="java.lang.String"/>
+	<parameter name="companyContact" class="java.lang.Integer"/>
+	<parameter name="companyEmailID" class="java.lang.String"/>
+	<parameter name="amountInWords" class="java.lang.String"/>
+	<parameter name="paymentMode" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select 0]]>
+	</queryString>
+	<field name="ledgerName" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="84" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="5" width="545" height="23" uuid="3a331ea9-d1e4-4994-9aeb-94b9a91a0c20"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{companyName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="28" width="545" height="14" uuid="27413ff9-633e-46de-8a06-29cf2d7a5c5f"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Contact: "+$P{companyContact}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="43" width="545" height="14" uuid="aeb865fe-2a74-4ebb-96b0-c289234316cc"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Email: "+$P{companyEmailID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="68" width="544" height="16" uuid="c2592eee-288d-4f40-a7b8-2a2ea3457919"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["MONEY RECEIPT"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageFooter>
+		<band height="27">
+			<textField>
+				<reportElement x="370" y="11" width="130" height="16" uuid="88483051-f3db-4144-afd3-b488510e7e26"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["Received by"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="109" splitType="Stretch">
+			<textField>
+				<reportElement x="396" y="14" width="50" height="16" uuid="735ca625-c9ea-4275-ae9e-9b3818b86b94"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Date :"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="446" y="14" width="104" height="16" uuid="5e5b0070-dbe1-4d89-9486-1a3a9dac831e"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy:hh:mm a").format($P{receiptDate})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="16" width="54" height="16" uuid="12f5ca87-ea51-408a-ab07-1c4640916729"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["MR.No :"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="54" y="16" width="116" height="16" uuid="3a8ba285-49dc-429c-bf58-a2a398f3d485"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{moneyReceiptNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="40" width="140" height="16" uuid="e82d1a14-e0f8-4f82-b305-b7510860c633"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Received with thanks from "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="36" width="404" height="16" uuid="e247e72e-74ca-47cc-b1fd-30514046e20f"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{partyName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="56" width="120" height="16" uuid="10d2ffd5-a0fb-43b6-b1c3-049eae1e1bea"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Amount of Ngultrum "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="121" y="52" width="404" height="16" uuid="31359733-d29b-4224-b9d2-390f60fdff21"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{amountInWords}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="73" width="30" height="16" uuid="e2c8b1a5-e96c-4742-822d-89f3a5dbad21"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["By"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="30" y="69" width="505" height="16" uuid="82b8955b-850e-4a2f-8c0e-44943ae95957"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{paymentMode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="93" width="32" height="16" uuid="47d38971-fac0-413a-bffd-88e1bf685d04"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nu."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="32" y="93" width="147" height="16" uuid="7265f288-b2a4-46d1-a0d7-a4abd87275ec"/>
+				<box leftPadding="5" rightPadding="5">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{amount}+"/-"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="140" y="52" width="410" height="1" uuid="87649a91-12e6-4b0b-ba41-513f9a3dec09"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="120" y="68" width="430" height="1" uuid="8127ad6d-1b0b-4b16-95ce-2669128cfa73"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="32" y="84" width="520" height="1" uuid="fc9f6d3d-078e-433b-8e72-bae0c70102ac"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <security:http auto-config="true" use-expressions="true" entry-point-ref="authenticationEntryPoint"
+                   authentication-manager-ref="authenticationManager">
+
+
+        <security:custom-filter position="CONCURRENT_SESSION_FILTER" ref="concurrentFilter"/>
+        <security:custom-filter before="FORM_LOGIN_FILTER" ref="authFilter"/>
+
+        <!--Set the access right for different users operations-->
+        <security:intercept-url access="permitAll" pattern="/user/resetPassword"/>
+        <security:intercept-url access="hasAuthority('1-VIEW')" pattern="/createUser"/>
+        <security:intercept-url access="hasAuthority('2-VIEW')" pattern="/userAccessPermission"/>
+
+        <security:form-login always-use-default-target="false" authentication-failure-url="/login?error"
+                             default-target-url="/home" login-page="/login" login-processing-url="/auth"
+                             username-parameter="username" password-parameter="password"
+                             authentication-details-source-ref="bcsWebAuthenticationDetailsSource"
+                             authentication-success-handler-ref="loginSuccessHandler"
+                             authentication-failure-handler-ref="loginFailureHandler"/>
+
+        <security:logout logout-url="/logout" success-handler-ref="logoutSuccessHandler"
+                         invalidate-session="true" delete-cookies="JSESSIONID"/>
+
+        <security:session-management session-authentication-strategy-ref="sas" invalid-session-url="/login"/>
+        <security:access-denied-handler ref="accessDeniedHandler"/>
+        <security:http-basic/>
+        <security:csrf/>
+    </security:http>
+
+
+    <bean id="expiredSessionFilter" class="com.spms.mvc.security.ExpiredSessionFilter"/>
+    <bean id="bcsWebAuthenticationDetailsSource" class="com.spms.mvc.security.BcsWebAuthenticationDetailsSource"/>
+
+    <security:authentication-manager alias="authenticationManager" erase-credentials="true">
+        <security:authentication-provider ref="authenticationProvider"/>
+    </security:authentication-manager>
+
+    <bean class="org.springframework.security.core.session.SessionRegistryImpl" id="sessionRegistry"/>
+
+    <bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" id="passwordEncoder"/>
+    <bean class="com.spms.mvc.security.WebAuthenticationProvider" id="authenticationProvider">
+        <property name="passwordEncoder" ref="passwordEncoder"/>
+    </bean>
+
+    <bean class="com.spms.mvc.security.AuthenticationEntryPoint" id="authenticationEntryPoint">
+        <constructor-arg name="loginUrl" value="/login"/>
+    </bean>
+
+    <bean class="com.spms.mvc.security.WebAccessDeniedHandler" id="accessDeniedHandler">
+        <property name="accessDeniedUrl" value="403"/>
+    </bean>
+
+    <bean class="com.spms.mvc.security.LoginSuccessHandler" id="loginSuccessHandler">
+        <constructor-arg name="defaultTargetUrl" value="/home"/>
+    </bean>
+
+    <bean class="com.spms.mvc.security.LoginFailureHandler" id="loginFailureHandler">
+        <constructor-arg name="defaultFailureUrl" value="/login?error"/>
+    </bean>
+
+    <bean class="com.spms.mvc.security.LogoutSuccessHandler" id="logoutSuccessHandler">
+        <constructor-arg name="defaultTargetUrl" value="/login"/>
+    </bean>
+
+    <bean class="org.springframework.security.web.session.ConcurrentSessionFilter" id="concurrentFilter">
+        <constructor-arg name="sessionRegistry" ref="sessionRegistry"/>
+        <constructor-arg name="expiredUrl" value="/login"/>
+    </bean>
+
+    <bean class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter" id="authFilter">
+        <property name="sessionAuthenticationStrategy" ref="sas"/>
+        <property name="authenticationManager" ref="authenticationManager"/>
+    </bean>
+
+    <bean class="org.springframework.security.web.authentication.session.CompositeSessionAuthenticationStrategy"
+          id="sas">
+        <constructor-arg>
+            <list>
+                <bean class="org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy">
+                    <constructor-arg ref="sessionRegistry"/>
+                    <property name="maximumSessions" value="2"/>
+                    <property name="exceptionIfMaximumExceeded" value="true"/>
+                </bean>
+                <bean class="org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy"/>
+                <bean class="org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy">
+                    <constructor-arg ref="sessionRegistry"/>
+                </bean>
+            </list>
+        </constructor-arg>
+    </bean>
+</beans>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- For times when you need more complex processing, passing data to the scheduled job -->
+    <bean name="jobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.spms.mvc.ScheduledJob.ScheduledJob"/>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="kuenga_workshop_db_backup" value-ref="kuenga_workshop_db_backup"/>
+            </map>
+        </property>
+        <property name="durability" value="true"/>
+    </bean>
+
+
+    <!-- Run the job every 5 seconds only on Weekends -->
+    <!--
+      every 12 midnight->0 0 0 * * ?
+      ever 10:15 AM -> 0 15 10 ? * *
+      every second -> * * * ? * *
+      ever 30 second -> 0/30 0/1 * 1/1 * ? *
+      -->
+    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="jobDetail"/>
+        <property name="cronExpression" value="0 15 10 ? * *"/>
+    </bean>
+
+
+    <!-- Scheduler factory bean to glue together jobDetails and triggers to Configure Quartz Scheduler -->
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="cronTrigger"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean name="kuenga_workshop_db_backup" class="com.spms.mvc.library.helper.Kuenga_workshop_db_backup"/>
+</beans>

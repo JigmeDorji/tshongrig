@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="barcodeHtml"
+          class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
+          p:url="classpath:jasperreport/spms/BarcodeForItem.jrxml"
+          p:reportDataKey="datasource"/>
+
+    <bean id="saleInvoiceReport"
+          class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
+          p:url="classpath:jasperreport/spms/saleInvoice.jrxml"
+          p:reportDataKey="datasource"/>
+
+    <bean id="moneyReceiptReport"
+          class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
+          p:url="classpath:jasperreport/spms/moneyReceiptReport.jrxml"
+          p:reportDataKey="datasource"/>
+
+    <bean id="brandWiseItem"
+          class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
+          p:url="classpath:jasperreport/spms/brandWiseItem.jrxml"
+          p:reportDataKey="brandWiseItem_data_source"/>
+
+    <bean id="summarySaleReportHTML"
+          class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
+          p:url="classpath:jasperreport/spms/summarySaleReport.jrxml"
+          p:reportDataKey="datasource"/>
+
+</beans>
+
+
+
+
+

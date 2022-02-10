@@ -1,0 +1,44 @@
+truncate tbl_acc_bank;
+truncate tbl_acc_voucher_count;
+truncate tbl_acc_bank_reconciliation;
+truncate tbl_acc_depreciation;
+truncate tbl_acc_depreciation_item_details;
+truncate tbl_acc_depreciation_item_setup;
+truncate tbl_acc_inv_voucherdetail;
+truncate tbl_acc_ledger;
+truncate tbl_acc_ledger_a;
+truncate tbl_acc_loan;
+truncate tbl_acc_money_receipt;
+truncate tbl_acc_party_detail;
+truncate tbl_acc_sale_invoice;
+truncate tbl_acc_sale_invoice_counter;
+truncate tbl_acc_sale_invoice_detail;
+truncate tbl_acc_voucher_entries;
+truncate tbl_acc_voucher_entries_detail;
+truncate tbl_hr_employeesetup;
+truncate tbl_hr_employeeadvance;
+truncate tbl_hr_other_remittance;
+truncate tbl_hr_salary_remittance;
+truncate tbl_hr_salary_sheet;
+truncate tbl_hr_statutory_remittance;
+truncate tbl_inv_discount;
+truncate tbl_inv_item_code_counter;
+truncate tbl_inv_purchase;
+truncate tbl_inv_purchase_a;
+truncate tbl_inv_purchase_credit_supplier;
+truncate tbl_inv_purchase_ledger;
+truncate tbl_inv_purchase_ledger_a;
+truncate tbl_inv_receipt_counter;
+truncate tbl_inv_replace_item;
+truncate tbl_inv_return_item;
+truncate tbl_inv_sale_record;
+truncate tbl_inv_sale_record_detail;
+truncate tbl_inv_supplier;
+truncate tbl_item;
+truncate tbl_item_code;
+truncate tbl_locationsetup;
+truncate tbl_receiptcounter;
+
+
+
+
