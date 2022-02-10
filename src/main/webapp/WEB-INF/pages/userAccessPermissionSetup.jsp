@@ -41,9 +41,9 @@
                         </div>
                     </div>
                 </fieldset>
-                <fieldset class="v-no-padding">
+                <fieldset>
                     <legend class="text-uppercase font-size-sm font-weight-bold">Permission Details</legend>
-                    <div class="col-md-12 table-responsive">
+                    <div class="table-responsive">
                         <table class="table table-bordered table-striped editable-grid" Id="userAccessPermissionGrid">
                             <thead>
                             <tr class="bg-primary text-white">
@@ -78,6 +78,7 @@
 
                 </fieldset>
             </form>
+
         </div>
     </div>
 </div>

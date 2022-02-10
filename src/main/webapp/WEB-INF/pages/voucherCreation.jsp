@@ -71,7 +71,7 @@
                         <table class="table table-bordered editable-grid tableGrid"
                                id="voucherCreationGrid">
                             <thead>
-                            <tr>
+                            <tr class="bg-primary text-white">
                                 <th width="7%"></th>
                                 <th width="50%">Particulars</th>
                                 <th width="20%">Debit</th>

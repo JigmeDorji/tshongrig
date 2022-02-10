@@ -108,7 +108,6 @@
                     <ul class="nav nav-group-sub" data-submenu-title="Starter kit">
                         <li class="nav-item"><a href="<c:url value='/boqSetup' />" class="nav-link"> Upload BOQ</a></li>
                         <li class="nav-item"><a href="<c:url value='/boqDetail' />" class="nav-link"> BOQ Details</a></li>
-                        <li class="nav-item-divider"></li>
                         <li class="nav-item"><a href="<c:url value='/raBillGeneration' />" class="nav-link"> Generate RA Bills</a></li>
                         <li class="nav-item"><a href="<c:url value='/raBillDetail' />" class="nav-link"> View RA Bills</a></li>
                     </ul>
