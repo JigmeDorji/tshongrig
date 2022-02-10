@@ -23,7 +23,7 @@
     <!-- Form inputs -->
     <div class="card">
         <div class="card-body">
-            <form id="folktaleCreationFrom" action="<c:url value='/userAccessPermission'/> " class="form-horizontal globalForm">
+            <form id="folktaleCreationFrom" action="<c:url value='/userAccessPermission'/> " class="globalForm">
                 <input type="hidden" id="locationSetUpId" name="locationSetUpId">
                 <fieldset>
                     <legend class="text-uppercase font-size-sm font-weight-bold">Set user permission based on user role type</legend>
@@ -43,39 +43,37 @@
                 </fieldset>
                 <fieldset class="v-no-padding">
                     <legend class="text-uppercase font-size-sm font-weight-bold">Permission Details</legend>
-                    <div class="form-group">
-                        <div class="col-md-11">
-                            <table class="table table-bordered table-striped editable-grid" Id="userAccessPermissionGrid">
-                                <thead>
-                                <tr class="bg-primary text-white">
-                                    <th class="">Screen Id</th>
-                                    <th class="">Screen Name</th>
-                                    <th class="">View Access
-                                        <input type="checkbox"
-                                               id="checkAllScreenAccessAllow"></th>
-                                    </th>
-                                    <th class="">Edit Access
-                                        <input type="checkbox"
-                                               id="checkAllEditAccessAllow"></th>
-                                    <th class="">Delete Access
-                                        <input type="checkbox"
-                                               id="checkAllDeleteAccessAllow"></th>
-                                    </th>
-                                    <th class="">Save Access
-                                        <input type="checkbox"
-                                               id="checkAllSaveAccessAllow"></th>
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                            <sec:authorize access="hasAuthority('2-ADD')">
-                                <div class="col-sm-offset-4 col-md-2 pt-3">
-                                    <input type="submit" tabindex="5" class="btn btn-primary btn-block" value="Save" id="btnSave">
-                                </div>
-                            </sec:authorize>
-                        </div>
+                    <div class="col-md-12 table-responsive">
+                        <table class="table table-bordered table-striped editable-grid" Id="userAccessPermissionGrid">
+                            <thead>
+                            <tr class="bg-primary text-white">
+                                <th class="">Screen Id</th>
+                                <th class="">Screen Name</th>
+                                <th class="">View Access
+                                    <input type="checkbox"
+                                           id="checkAllScreenAccessAllow"></th>
+                                </th>
+                                <th class="">Edit Access
+                                    <input type="checkbox"
+                                           id="checkAllEditAccessAllow"></th>
+                                <th class="">Delete Access
+                                    <input type="checkbox"
+                                           id="checkAllDeleteAccessAllow"></th>
+                                </th>
+                                <th class="">Save Access
+                                    <input type="checkbox"
+                                           id="checkAllSaveAccessAllow"></th>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                        <sec:authorize access="hasAuthority('2-ADD')">
+                            <div class="col-sm-offset-4 col-md-2 pt-3">
+                                <input type="submit" tabindex="5" class="btn btn-primary btn-block" value="Save" id="btnSave">
+                            </div>
+                        </sec:authorize>
                     </div>
 
                 </fieldset>

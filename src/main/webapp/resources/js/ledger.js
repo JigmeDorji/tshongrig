@@ -81,13 +81,13 @@ ledger = (function () {
                             let hasDeleteRole = $('#hasDeleteRole').val();
                             let hasEditRole = $('#hasEditRole').val();
                             if (hasDeleteRole.toString() === 'true') {
-                                deleteBtn = '<a href="#" id="deleteBtn" class="btn btn-danger btn-xs ml-3 d-none d-sm-inline-block deleteBtn" data-toggle="modal" data-target="#userDetailModal"><i class="fa fa-trash"></i> Delete</a>';
+                                deleteBtn = '<a href="#" id="deleteBtn" class="btn btn-sm btn-danger btn-xs ml-3 d-none d-sm-inline-block deleteBtn" data-toggle="modal" data-target="#userDetailModal"><i class="fa fa-trash"></i> Delete</a>';
                             }
                             if (hasEditRole.toString() === 'true') {
-                                editBtn = '<a href="#" id="editId" class="btn btn-primary btn-xs ml-3 d-none d-sm-inline-block" data-toggle="modal" data-target="#userDetailModal"><i class="fa fa-edit"></i> Edit</a>';
+                                editBtn = '<a href="#" id="editId" class="btn btn-sm btn-primary btn-xs ml-3 d-none d-sm-inline-block" data-toggle="modal" data-target="#userDetailModal"><i class="fa fa-edit"></i> Edit</a>';
                             }
                             return editBtn +
-                                '&nbsp;&nbsp;<a href="#" id="viewBtn" class="btn btn-primary viewBtn btn-xs ml-3 d-none d-sm-inline-block" data-toggle="modal" data-target="#userDetailModal"><i class="fa fa-eye"></i> View</a>' +
+                                '&nbsp;&nbsp;<a href="#" id="viewBtn" class="btn btn-sm btn-primary viewBtn btn-xs ml-3 d-none d-sm-inline-block" data-toggle="modal" data-target="#userDetailModal"><i class="fa fa-eye"></i> View</a>' +
                                 '&nbsp;&nbsp;' + deleteBtn;
 
                         }
@@ -98,7 +98,8 @@ ledger = (function () {
                     data: res,
                     "aLengthMenu": [[10, 50, 75, -1], [25, 50, 75, "All"]],
                     pageLength: 50,
-                    columns: columnDef
+                    columns: columnDef,
+                    bSort:false
                 });
 
                 t.on('order.dt search.dt', function () {

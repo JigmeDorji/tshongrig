@@ -130,7 +130,7 @@
                         <div class="form-group row">
                             <div class="col-md-12">
                                 <table
-                                        class="table table-bordered table-striped editable-grid"
+                                        class="table"
                                         id="companyCreationGrid">
                                     <thead>
                                     <tr class="bg-primary text-white">

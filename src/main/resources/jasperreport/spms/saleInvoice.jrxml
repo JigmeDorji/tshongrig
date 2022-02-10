@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2019-10-24T23:10:21 -->
+<!-- 2022-01-19T13:35:57 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="received" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="20" bottomMargin="20" uuid="31eca624-a6be-45fc-9e5f-2bc1424f048e">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -16,7 +16,7 @@
 	<parameter name="printedDate" class="java.util.Date"/>
 	<parameter name="companyName" class="java.lang.String"/>
 	<parameter name="companyEmailID" class="java.lang.String"/>
-	<parameter name="companyContact" class="java.lang.Integer">
+	<parameter name="companyContact" class="java.lang.String">
 		<parameterDescription><![CDATA[]]></parameterDescription>
 	</parameter>
 	<parameter name="receiptName" class="java.lang.String"/>
@@ -28,6 +28,7 @@
 	</parameter>
 	<parameter name="partyAddress" class="java.lang.String"/>
 	<parameter name="totalBillAmtInWords" class="java.lang.String"/>
+	<parameter name="companyMailingAddress" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -42,13 +43,13 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="59" splitType="Stretch">
+		<band height="82" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="0" width="509" height="16" uuid="7ffc945a-3fdd-42f6-80d2-e69cff8c59f9"/>
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true" isUnderline="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["BILL"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["INVOICE"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="0" y="16" width="509" height="14" uuid="4a3c73a3-7ef7-4217-8339-730839322b94"/>
@@ -58,69 +59,76 @@
 				<textFieldExpression><![CDATA[$P{companyName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="30" width="509" height="14" uuid="19162031-08e6-48db-ba47-f3699a5ab614"/>
+				<reportElement x="0" y="44" width="509" height="14" uuid="19162031-08e6-48db-ba47-f3699a5ab614"/>
 				<textElement textAlignment="Center">
 					<font size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Contact: "+$P{companyContact}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="45" width="509" height="14" uuid="b4fadbe8-1a82-4722-b896-a58282ef21ea"/>
+				<reportElement x="0" y="58" width="509" height="14" uuid="b4fadbe8-1a82-4722-b896-a58282ef21ea"/>
 				<textElement textAlignment="Center">
 					<font size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Email: "+$P{companyEmailID}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="0" y="30" width="509" height="14" uuid="fbd1c353-8ab3-4eef-b6f5-74c528fd5bb8"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{companyMailingAddress}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="57" splitType="Stretch">
+		<band height="67" splitType="Stretch">
 			<textField>
-				<reportElement x="426" y="0" width="83" height="20" uuid="9145086f-009d-42a4-bd91-db63b439aaa2"/>
+				<reportElement x="426" y="10" width="83" height="20" uuid="9145086f-009d-42a4-bd91-db63b439aaa2"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="8" isItalic="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("dd-MMM-YYYY").format($P{invoiceDate})]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="399" y="0" width="27" height="20" uuid="d2bbab09-d85a-403e-aae8-f4636653bf20"/>
+				<reportElement x="399" y="10" width="27" height="20" uuid="d2bbab09-d85a-403e-aae8-f4636653bf20"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Date:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="10" y="28" width="25" height="16" uuid="3e49eaa7-e9c1-4a22-bb28-4218648e6030"/>
+				<reportElement x="10" y="38" width="25" height="16" uuid="3e49eaa7-e9c1-4a22-bb28-4218648e6030"/>
 				<textElement verticalAlignment="Bottom"/>
 				<text><![CDATA[To]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="43" y="28" width="441" height="16" uuid="5393c470-fef8-4490-b30b-5a4bd0ac5acf"/>
+				<reportElement x="43" y="38" width="441" height="16" uuid="5393c470-fef8-4490-b30b-5a4bd0ac5acf"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{partyName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="43" y="44" width="441" height="13" uuid="46fcb742-a2bc-44a4-9cd2-9bc6f0d34509"/>
+				<reportElement x="43" y="54" width="441" height="13" uuid="46fcb742-a2bc-44a4-9cd2-9bc6f0d34509"/>
 				<textElement verticalAlignment="Top">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{partyAddress}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="53" y="0" width="99" height="20" uuid="a40bc039-48e3-445a-99eb-da17ee03491e"/>
+				<reportElement x="62" y="10" width="99" height="20" uuid="a40bc039-48e3-445a-99eb-da17ee03491e"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="8" isBold="true" isItalic="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{invoiceNo}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="35" y="0" width="15" height="20" uuid="84b6c086-be6a-476a-bdc4-aa5a60313f93"/>
+				<reportElement x="10" y="10" width="50" height="20" uuid="84b6c086-be6a-476a-bdc4-aa5a60313f93"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[No.]]></text>
+				<text><![CDATA[Invoice No.]]></text>
 			</staticText>
 		</band>
 	</pageHeader>

@@ -35,12 +35,11 @@
     <div class="card">
         <div class="card-body">
             <form id="financialYearForm" action="<c:url value='/financialYearSetup'/> "
-                  class="form-horizontal globalForm">
+                  class="globalForm">
                 <div class="card-body">
-                    <fieldset>
                         <legend class="text-uppercase font-size-sm font-weight-bold">Financial Year</legend>
                         <div class="table-responsive">
-                            <table id="financialYearGrid" class="table table-bordered table-striped">
+                            <table id="financialYearGrid" class="table">
                                 <thead>
                                 <tr class="bg-primary text-white">
                                     <th>SL</th>
@@ -55,7 +54,6 @@
                                 </tbody>
                             </table>
                         </div>
-                    </fieldset>
                 </div>
             </form>
         </div>

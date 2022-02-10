@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2020-11-04T20:16:20 -->
+<!-- 2022-01-19T13:54:43 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ServiceingEstimation" pageWidth="595" pageHeight="321" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="31d6567c-10c1-4afa-8c69-39ea40196c82">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -14,10 +14,11 @@
 	<parameter name="tDSAmount" class="java.lang.Double"/>
 	<parameter name="receiptDate" class="java.util.Date"/>
 	<parameter name="companyName" class="java.lang.String"/>
-	<parameter name="companyContact" class="java.lang.Integer"/>
+	<parameter name="companyContact" class="java.lang.String"/>
 	<parameter name="companyEmailID" class="java.lang.String"/>
 	<parameter name="amountInWords" class="java.lang.String"/>
 	<parameter name="paymentMode" class="java.lang.String"/>
+	<parameter name="companyMailingAddress" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select 0]]>
 	</queryString>
@@ -26,34 +27,41 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="84" splitType="Stretch">
+		<band height="87" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="5" width="545" height="23" uuid="3a331ea9-d1e4-4994-9aeb-94b9a91a0c20"/>
+				<reportElement x="0" y="0" width="545" height="21" uuid="3a331ea9-d1e4-4994-9aeb-94b9a91a0c20"/>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{companyName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="28" width="545" height="14" uuid="27413ff9-633e-46de-8a06-29cf2d7a5c5f"/>
+				<reportElement x="0" y="36" width="545" height="14" uuid="27413ff9-633e-46de-8a06-29cf2d7a5c5f"/>
 				<textElement textAlignment="Center">
 					<font size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Contact: "+$P{companyContact}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="43" width="545" height="14" uuid="aeb865fe-2a74-4ebb-96b0-c289234316cc"/>
+				<reportElement x="0" y="51" width="545" height="14" uuid="aeb865fe-2a74-4ebb-96b0-c289234316cc"/>
 				<textElement textAlignment="Center">
 					<font size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Email: "+$P{companyEmailID}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="68" width="544" height="16" uuid="c2592eee-288d-4f40-a7b8-2a2ea3457919"/>
-				<textElement textAlignment="Center">
+				<reportElement x="0" y="71" width="544" height="16" uuid="c2592eee-288d-4f40-a7b8-2a2ea3457919"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font size="8" isBold="true" isUnderline="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["MONEY RECEIPT"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="22" width="545" height="14" uuid="c37b7707-ad1b-4e65-9739-ad2dffeff441"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{companyMailingAddress}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -97,8 +105,8 @@
 				<textFieldExpression><![CDATA[$P{moneyReceiptNo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="40" width="140" height="16" uuid="e82d1a14-e0f8-4f82-b305-b7510860c633"/>
-				<textElement>
+				<reportElement x="0" y="36" width="140" height="16" uuid="e82d1a14-e0f8-4f82-b305-b7510860c633"/>
+				<textElement verticalAlignment="Bottom">
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Received with thanks from "]]></textFieldExpression>
@@ -111,18 +119,18 @@
 				<textFieldExpression><![CDATA[$P{partyName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="56" width="120" height="16" uuid="10d2ffd5-a0fb-43b6-b1c3-049eae1e1bea"/>
-				<textElement>
+				<reportElement x="2" y="53" width="78" height="16" uuid="10d2ffd5-a0fb-43b6-b1c3-049eae1e1bea"/>
+				<textElement verticalAlignment="Bottom">
 					<font isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Amount of Ngultrum "]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Ngultrum "]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="121" y="52" width="404" height="16" uuid="31359733-d29b-4224-b9d2-390f60fdff21"/>
+				<reportElement x="82" y="52" width="404" height="16" uuid="31359733-d29b-4224-b9d2-390f60fdff21"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom">
 					<font isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{amountInWords}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{amountInWords}+" Only"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="0" y="73" width="30" height="16" uuid="e2c8b1a5-e96c-4742-822d-89f3a5dbad21"/>
@@ -165,7 +173,7 @@
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="120" y="68" width="430" height="1" uuid="8127ad6d-1b0b-4b16-95ce-2669128cfa73"/>
+				<reportElement x="82" y="69" width="468" height="1" uuid="8127ad6d-1b0b-4b16-95ce-2669128cfa73"/>
 				<graphicElement>
 					<pen lineStyle="Dashed"/>
 				</graphicElement>

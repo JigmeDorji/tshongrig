@@ -80,7 +80,9 @@ statutoryRemittance = (function () {
 
                         let table = statutoryRemittanceGrid.DataTable({
                             data: res.dto,
-                            columns: columnDef
+                            columns: columnDef,
+                            bSort:false,
+                            'autoWidth':false
                         });
 
                         /*let totalTDS = table.column(9);

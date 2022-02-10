@@ -57,9 +57,8 @@ salaryRemittance = (function () {
 
                         let columnDef = [
                             {
-                                data: 'index',
-                                render: function (index) {
-                                    return index + 1;
+                                "mRender": function (data, type, row, meta) {
+                                    return meta.row + 1;
                                 }
                             },
                             {
@@ -80,7 +79,11 @@ salaryRemittance = (function () {
 
                         let table = employeeSalarySheetList.DataTable({
                             data: res.dto,
-                            columns: columnDef
+                            columns: columnDef,
+                            bSort:false,
+                            bInfo:false,
+                            'paging':false,
+                            'searching':false
                         });
 
                         table.on('order.dt search.dt', function () {
@@ -171,7 +174,7 @@ salaryRemittance = (function () {
                 data: {
                     reportFormat: $("#xls").prop("checked") ? $("#xls").val() : ($("#pdf").prop("checked") ? $("#pdf").val() : $("#docx").val()),
                     month: $('#monthId').val(),
-                    cost:$('#cost').val()
+                    cost: $('#cost').val()
                 },
                 async: false,
                 success: function (res) {

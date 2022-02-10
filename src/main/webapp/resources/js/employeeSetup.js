@@ -59,7 +59,8 @@ employeeSetup = (function () {
                 var order = [[1, 'asc']];
                 var t = $('#employeeSetUpList').DataTable({
                     data: res,
-                    columns: columnDef
+                    columns: columnDef,
+                    bSort:false
                 });
                 t.on('order.dt search.dt', function () {
                     t.column(0, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {

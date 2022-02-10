@@ -70,8 +70,8 @@ voucherGroupList = (function () {
                                let typeName=row.voucherTypeName;
                                 let btn = row.voucherTypeName === 'Purchase' || ledgerName === 'Purchase' ? '<a  href=' + "voucherGroupList" + '/navigateToPurchasePage?voucherNo=' +
                                     encodeURIComponent(row.voucherNo) + "&voucherNo=" + row.voucherNo + '>' +
-                                    '<input type=button" class="btn btn-primary btn-xs" style="width: 70px" value="View"></a>' :
-                                    typeName!=="Salary Admin" && typeName!=="Salary Production"&& typeName!== "GIS" && typeName!== "PF(Employee)" && typeName!== "PF(Employer)"&& typeName!== "Salary Payable"&& typeName!== "HC" && typeName!== "Salary TDS"&& typeName!== "Material" ? '<input type="button" class="btn btn-danger btn-xs deleteBtn" style="width: 70px" value="Delete">' : ''
+                                    '<input type=button" class="btn btn-sm btn-primary btn-xs" style="width: 70px" value="View"></a>' :
+                                    typeName!=="Salary Admin" && typeName!=="Salary Production"&& typeName!== "GIS" && typeName!== "PF(Employee)" && typeName!== "PF(Employer)"&& typeName!== "Salary Payable"&& typeName!== "HC" && typeName!== "Salary TDS"&& typeName!== "Material" ? '<input type="button" class="btn btn-sm btn-danger btn-xs deleteBtn" style="width: 70px" value="Delete">' : ''
                                 //return '<a href=' + "voucherGroupList" + '/deleteLedgerVoucherDetails?voucherNo=' + encodeURIComponent(row.voucherNo) + "&voucherTypeId=" + row.voucherTypeId + '>' + '<input type="button" class="btn btn-danger btn-xs deleteBtn" style="width: 70px" value="Delete"></a>'
                                 return btn
                             }
@@ -82,6 +82,8 @@ voucherGroupList = (function () {
                         info: false,
                         paging: false,
                         searching: true,
+                        bSort: false,
+                        'autoWidth': false,
                         columns: columnDef
                     });
                 } else {
