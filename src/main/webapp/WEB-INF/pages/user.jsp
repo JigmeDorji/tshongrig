@@ -23,7 +23,7 @@
     <div class="breadcrumb-line breadcrumb-line-light header-elements-lg-inline">
         <div class="d-flex">
             <div class="breadcrumb">
-                <a href="index.html" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Setting</a>
+                <a href="." class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Setting</a>
                 <span class="breadcrumb-item active">User Creation</span>
             </div>
             <a href="#" class="header-elements-toggle text-body d-lg-none"><i class="icon-more"></i></a>
@@ -48,11 +48,11 @@
                 <input type="hidden" id="loginCompanyId" value="${currentUser.companyId}">
 
                 <div class="form-group row">
-                    <label class="col-form-label col-lg-2 required text-right">Username</label>
+                    <label class="col-form-label col-lg-2 required ">Username</label>
                     <div class="col-lg-4">
                         <input type="text" class="form-control form-control-sm" required name="username" id="username">
                     </div>
-                    <label class="col-form-label col-lg-2 required text-right">Full Name</label>
+                    <label class="col-form-label col-lg-2 required ">Full Name</label>
                     <div class="col-lg-4">
                         <input type="text" class="form-control form-control-sm" required name="userFullName"
                                id="userFullName">
@@ -61,13 +61,13 @@
 
 
                 <div class="form-group row">
-                    <label class="col-form-label col-lg-2 required text-right">Password</label>
+                    <label class="col-form-label col-lg-2 required ">Password</label>
 
                     <div class="col-md-4">
                         <input type="password" name="userPassword" required
                                id="userPassword" class="form-control form-control-sm field">
                     </div>
-                    <label class="col-form-label col-lg-2 required text-right">Confirm
+                    <label class="col-form-label col-lg-2 required ">Confirm
                         Password</label>
 
                     <div class="col-md-4">
@@ -78,7 +78,7 @@
                 </div>
                 <div class="form-group mb-1 row">
 
-                    <label class="col-form-label col-lg-2 required text-right">Status</label>
+                    <label class="col-form-label col-lg-2 required ">Status</label>
 
                     <div class="col-md-4">
                         <form:select required="true" path="statusList"
@@ -93,7 +93,7 @@
                     </div>
 
 
-                    <label class="col-form-label col-lg-2 required text-right">Creation Date</label>
+                    <label class="col-form-label col-lg-2 required ">Creation Date</label>
 
                     <div class="col-md-4">
                         <input type="text" value="${currentDate}"
@@ -103,7 +103,7 @@
                 </div>
                 <div class="form-group  row">
 
-                    <label class="col-form-label col-lg-2 required text-right">User
+                    <label class="col-form-label col-lg-2 required ">User
                         Role</label>
 
                     <div class="col-md-4">
@@ -120,7 +120,7 @@
                     </div>
 
                     <%--                    <div class="companyHiddenId">--%>
-                    <label class="col-form-label col-lg-2 required companyHiddenId text-right">Company</label>
+                    <label class="col-form-label col-lg-2 required companyHiddenId ">Company</label>
 
                     <div class="col-md-4 companyHiddenId">
                         <form:select class="form-control form-control-sm select2"

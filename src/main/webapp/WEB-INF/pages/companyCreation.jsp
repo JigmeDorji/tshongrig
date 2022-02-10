@@ -38,16 +38,13 @@
                     <input type="hidden" name="companyId" id="companyId"/>
 
                     <div class="form-group row">
-                        <label class="col-md-2 text-right required">Company Name</label>
+                        <label class="col-md-2  required">Company Name</label>
 
                         <div class="col-md-3">
                             <input type="text" tabindex="1" class="form-control form-control-sm resetfield" autofocus
                                    name="companyName" id="companyName" required="true"/>
                         </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-md-2 text-right required">Mailing Address </label>
+                        <label class="col-md-2  required">Mailing Address </label>
 
                         <div class="col-md-3">
                             <input type="text" tabindex="2" class="form-control form-control-sm resetfield"
@@ -56,17 +53,16 @@
                         </div>
                     </div>
 
+
+
                     <div class="form-group row">
-                        <label class="col-md-2 text-right required">Mobile No. </label>
+                        <label class="col-md-2  required">Mobile No. </label>
 
                         <div class="col-md-3">
                             <input type="text" tabindex="3" class="form-control form-control-sm resetfield numeric" name="mobileNo"
                                    id="mobileNo" required="true"/>
                         </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-md-2 text-right">Email </label>
+                        <label class="col-md-2 ">Email </label>
 
                         <div class="col-md-3">
                             <input type="text" tabindex="4" class="form-control form-control-sm resetfield" name="email"
@@ -74,17 +70,16 @@
                         </div>
                     </div>
 
+
+
                     <div class="form-group row">
-                        <label class="col-md-2 text-right">Website</label>
+                        <label class="col-md-2 ">Website</label>
 
                         <div class="col-md-3">
                             <input type="text" tabindex="5" class="form-control form-control-sm resetfield" name="website"
                                    id="website"/>
                         </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-md-2 text-right  required">Financial Year Start</label>
+                        <label class="col-md-2   required">Financial Year Start</label>
 
                         <div class="col-md-3">
                             <input type="text" tabindex="6" class="form-control form-control-sm formatDate resetfield"
@@ -95,7 +90,7 @@
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-md-2 text-right required">Business Type</label>
+                        <label class="col-md-2  required">Business Type</label>
 
                         <div class="col-md-3">
                             <form:select class="form-control form-control-sm select2 resetfield" name="businessType"
@@ -106,11 +101,7 @@
                                               itemLabel="text"/>
                             </form:select>
                         </div>
-
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-md-2 text-right required">PF Percentage(%)</label>
+                        <label class="col-md-2  required">PF Percentage(%)</label>
 
                         <div class="col-md-3">
                             <input type="text" tabindex="6" class="form-control form-control-sm  resetfield numeric"
@@ -120,6 +111,7 @@
                         </div>
 
                     </div>
+
 
                     <div class="form-group row">
                         <div class="col-md-2"></div>
