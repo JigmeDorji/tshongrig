@@ -87,9 +87,20 @@
                     <ul class="nav nav-group-sub" data-submenu-title="Starter kit">
                         <li class="nav-item"><a href="<c:url value='/ledger' />" class="nav-link"> Ledger</a></li>
                         <li class="nav-item"><a href="<c:url value='/voucherCreation' />" class="nav-link"> Voucher</a></li>
-                        <li class="nav-item-divider"></li>
                         <li class="nav-item"><a href="<c:url value='/saleInvoiceGeneration' />" class="nav-link"> Invoice</a></li>
                         <li class="nav-item"><a href="<c:url value='/moneyReceipt' />" class="nav-link"> Money Receipt</a></li>
+                        <li class="nav-item nav-item-submenu">
+                            <a href="#" class="nav-link">Voucher</a>
+                            <ul class="nav nav-group-sub">
+                                <li class="nav-item"><a href="<c:url value='/payment' />" class="nav-link">Payment</a></li>
+                                <li class="nav-item"><a href="<c:url value='/cashDepositWithdrawal' />" class="nav-link">Cash
+                                    Deposit / Withdrawal</a></li>
+                                <li class="nav-item"><a href="<c:url value='/receipt' />" class="nav-link">Receipt</a></li>
+                                <li class="nav-item"><a href="<c:url value='/bankTransfer' />" class="nav-link">Bank Transfer</a></li>
+                                <li class="nav-item"><a href="<c:url value='/adjustment' />" class="nav-link">Adjustment</a></li>
+                                <li class="nav-item"><a href="<c:url value='/payable' />" class="nav-link">Payable Booking</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item nav-item-submenu">
