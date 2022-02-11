@@ -196,7 +196,9 @@
 
                     </div>
                     <div class="form-group row">
-                        <div class="col-md-2 col-lg-offset-7">
+                        <div class="col-md-2">
+                        </div>
+                        <div class="col-md-2">
                             <input type="button" class="btn btn-primary btn-block" value="Add" id="btnAdd">
                         </div>
                     </div>

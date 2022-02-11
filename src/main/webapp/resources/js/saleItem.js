@@ -2,6 +2,8 @@ saleItem = (function () {
 
         let saleItemGrid = $('#saleItemGrid').dataTable({
             info: false,
+            bSort: false,
+            autoWidth: false,
             paging: false,
             sorting: false,
             searching: false
@@ -57,14 +59,14 @@ saleItem = (function () {
                 saleDate.removeClass('error');
 
                 var row = "<tr>" +
-                    "<td><input type='text' id='index' readonly class='form-control' value='" + i + "'></td>" +
-                    "<td><input type='text' id='itemCode' readonly name='saleItemListDTO[" + i + "].itemCode' class='form-control' value='" + itemCode.val().toUpperCase() + "'></td>" +
-                    "<td><input type='text' readonly name='saleItemListDTO[" + i + "].locationId' class='form-control' value='" + itemName.val() + "'></td>" +
-                    "<td><input type='text' id='unitName' readonly class='form-control right-align'  value=" + unitName.val() + " ></td>" +
-                    "<td><input type='text' readonly name='saleItemListDTO[" + i + "].sellingPrice' class='form-control sellingPrice right-align' value='" + sellingPrice.val() + "'></td>" +
-                    "<td><input type='hidden' id='initialQty' readonly class='form-control initialQty right-align'><input type='text' id='qty' readonly class='form-control qty right-align amount'   name='saleItemListDTO[" + i + "].qty' value=" + qty.val() + " ></td>" +
-                    "<td><input type='text' readonly class='form-control totalAmount right-align totalAmount' id='totalAmount'  name='saleItemListDTO[" + i + "].totalAmount' value=" + totalAmount + " ></td>" +
-                    "<td><input type='button'  id='itemEditBtn' class='btn btn-primary btn-xs fa fa-trash' value='Edit'><input type='button'  id='btnDeleteItem' class='btn btn-danger btn-xs fa fa-trash' value='Delete'></td>" +
+                    "<td><input type='text' id='index' readonly class='form-control form-control-sm' value='" + i + "'></td>" +
+                    "<td><input type='text' id='itemCode' readonly name='saleItemListDTO[" + i + "].itemCode' class='form-control form-control-sm' value='" + itemCode.val().toUpperCase() + "'></td>" +
+                    "<td><input type='text' readonly name='saleItemListDTO[" + i + "].locationId' class='form-control form-control-sm' value='" + itemName.val() + "'></td>" +
+                    "<td><input type='text' id='unitName' readonly class='form-control form-control-sm right-align'  value=" + unitName.val() + " ></td>" +
+                    "<td><input type='text' readonly name='saleItemListDTO[" + i + "].sellingPrice' class='form-control form-control-sm sellingPrice right-align' value='" + sellingPrice.val() + "'></td>" +
+                    "<td><input type='hidden' id='initialQty' readonly class='form-control form-control-sm initialQty right-align'><input type='text' id='qty' readonly class='form-control form-control-sm qty right-align amount'   name='saleItemListDTO[" + i + "].qty' value=" + qty.val() + " ></td>" +
+                    "<td><input type='text' readonly class='form-control form-control-sm totalAmount right-align totalAmount' id='totalAmount'  name='saleItemListDTO[" + i + "].totalAmount' value=" + totalAmount + " ></td>" +
+                    "<td><input type='button'  id='itemEditBtn' class='btn btn-sm btn-primary btn-xs fa fa-trash' value='Edit'><input type='button'  id='btnDeleteItem' class='btn btn-danger btn-sm fa fa-trash' value='Delete'></td>" +
                     "</tr>";
                 i++;
                 let tableGrid = $('#saleItemGrid');
@@ -441,15 +443,15 @@ saleItem = (function () {
 
                                 saleItemGrid.fnAddData(
                                     [
-                                        "<td><input type='text' id='index' readonly class='form-control' value='" + iterator + "'></td>",
-                                        "<td><input type='text' id='itemCode' readonly name='saleItemListDTO[" + i + "].itemCode' class='form-control' value='" + res.saleItemListDTO[i].itemCode + "'></td>",
-                                        "<td><input type='text' readonly name='saleItemListDTO[" + i + "].itemName' class='form-control' value='" + res.saleItemListDTO[i].itemName + "'></td>",
-                                        "<td><input type='text' readonly name='saleItemListDTO[" + i + "].unitName' class='form-control' value='" + res.saleItemListDTO[i].unitName + "'></td>",
-                                        "<td><input type='text' readonly name='saleItemListDTO[" + i + "].sellingPrice' class='form-control sellingPrice right-align' value='" + res.saleItemListDTO[i].sellingPrice + "'></td>",
-                                        "<td><input type='hidden' id='initialQty' readonly class='form-control initialQty right-align' value=" + res.saleItemListDTO[i].qty + " >" +
-                                        "<input type='text' id='qty' readonly class='form-control qty right-align amount'   name='saleItemListDTO[" + i + "].qty' value=" + res.saleItemListDTO[i].qty + " ></td>",
-                                        "<td><input type='text' readonly class='form-control totalAmount right-align totalAmount' id='totalAmount'  name='saleItemListDTO[" + i + "].totalAmount' value=" + res.saleItemListDTO[i].totalAmount + " ><input type='hidden' readonly class='form-control formatDate right-align' id='saleDate'  name='saleItemListDTO[" + i + "].saleDate' value=" + formatAsDate(res.saleItemListDTO[i].saleDate) + " ></td>",
-                                        "<td><input type='button'  id='itemEditBtn' class='btn btn-primary btn-xs fa fa-trash' value='Edit'></td>"
+                                        "<td><input type='text' id='index' readonly class='form-control form-control-sm' value='" + iterator + "'></td>",
+                                        "<td><input type='text' id='itemCode' readonly name='saleItemListDTO[" + i + "].itemCode' class='form-control form-control-sm' value='" + res.saleItemListDTO[i].itemCode + "'></td>",
+                                        "<td><input type='text' readonly name='saleItemListDTO[" + i + "].itemName' class='form-control form-control-sm' value='" + res.saleItemListDTO[i].itemName + "'></td>",
+                                        "<td><input type='text' readonly name='saleItemListDTO[" + i + "].unitName' class='form-control form-control-sm' value='" + res.saleItemListDTO[i].unitName + "'></td>",
+                                        "<td><input type='text' readonly name='saleItemListDTO[" + i + "].sellingPrice' class='form-control form-control-sm sellingPrice right-align' value='" + res.saleItemListDTO[i].sellingPrice + "'></td>",
+                                        "<td><input type='hidden' id='initialQty' readonly class='form-control form-control-sm initialQty right-align' value=" + res.saleItemListDTO[i].qty + " >" +
+                                        "<input type='text' id='qty' readonly class='form-control form-control-sm qty right-align amount'   name='saleItemListDTO[" + i + "].qty' value=" + res.saleItemListDTO[i].qty + " ></td>",
+                                        "<td><input type='text' readonly class='form-control form-control-sm totalAmount right-align totalAmount' id='totalAmount'  name='saleItemListDTO[" + i + "].totalAmount' value=" + res.saleItemListDTO[i].totalAmount + " ><input type='hidden' readonly class='form-control form-control-sm formatDate right-align' id='saleDate'  name='saleItemListDTO[" + i + "].saleDate' value=" + formatAsDate(res.saleItemListDTO[i].saleDate) + " ></td>",
+                                        "<td><input type='button'  id='itemEditBtn' class='btn btn-sm btn-primary btn-xs fa fa-trash' value='Edit'></td>"
                                     ]
                                 );
                                 iterator = iterator + 1;

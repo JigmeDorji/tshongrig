@@ -5,6 +5,7 @@ fixedAssetSale = (function () {
 
         let faSaleItemGrid = $('#faSaleItemGrid').dataTable({
             info: false,
+            bSort: false,
             paging: false,
             sorting: false,
             searching: false

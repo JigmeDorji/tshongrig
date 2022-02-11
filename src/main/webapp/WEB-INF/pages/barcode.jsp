@@ -10,42 +10,67 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <html>
-<title class="title">Barcode</title>
+<title class="title">Barcode Generation</title>
 
 <body>
-<div class="page_title">
-    <span class="title">Stock Management</span>
-    <span class="subtitle">Barcode Generation</span>
+<!-- Page header -->
+<div class="page-header page-header-light">
+    <div class="breadcrumb-line breadcrumb-line-light header-elements-lg-inline">
+        <div class="d-flex">
+            <div class="breadcrumb">
+                <a href="." class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Inventory</a>
+                <span class="breadcrumb-item active">Barcode Generation</span>
+            </div>
+            <a href="." class="header-elements-toggle text-body d-lg-none"><i class="icon-more"></i></a>
+        </div>
+    </div>
 </div>
-<form id="folktaleCreationFrom" action="<c:url value='/barcode/generateBarcode'/> " class="form-horizontal globalForm"
-      target="_blank">
-    <%--<input type="hidden" id="itemCategoryId" name="itemCategoryId">--%>
-    <fieldset>+
-        <legend>Barcode generation criteria</legend>
-        <div class=" form-group col-md-12">
-            <label class="col-md-2 right-align required">Item Code</label>
+<!-- /page header -->
+<!-- Content area -->
+<div class="content">
+    <!-- Form inputs -->
+    <div class="card">
+        <div class="card-body">
+            <form id="folktaleCreationFrom" action="<c:url value='/barcode/generateBarcode'/> "
+                  class="form-horizontal globalForm"
+                  target="_blank">
+                <%--<input type="hidden" id="itemCategoryId" name="itemCategoryId">--%>
+                <fieldset>
+                    <legend class="text-uppercase font-size-sm font-weight-bold">Barcode generation criteria</legend>
+                    <div class="form-group row col-md-12">
+                        <label class="col-md-2 right-align required">Item Code</label>
 
-            <div class="col-md-5">
-                <form:select class="form-control resetField" path="itemList" id="itemCode" required="required" tabindex="1"
-                             name="itemCode">
-                    <form:option value="">---Please Select---</form:option>
-                    <form:options items="${itemList}" itemValue="id" itemLabel="text"/>
-                </form:select>
-            </div>
-        </div>
-        <div class=" form-group col-md-12">
-            <label class="col-md-2 right-align required">Qty</label>
+                        <div class="col-md-5">
+                            <form:select class="form-control form-control-sm resetField" path="itemList" id="itemCode"
+                                         required="required"
+                                         tabindex="1"
+                                         name="itemCode">
+                                <form:option value="">---Please Select---</form:option>
+                                <form:options items="${itemList}" itemValue="id" itemLabel="text"/>
+                            </form:select>
+                        </div>
+                    </div>
+                    <div class="form-group row col-md-12">
+                        <label class="col-md-2 right-align required">Qty</label>
 
-            <div class="col-md-5">
-                <input type="text" tabindex="2" class="form-control" name="qty" id="qty" required="required"/>
-            </div>
+                        <div class="col-md-5">
+                            <input type="text" tabindex="2" class="form-control form-control-sm" name="qty" id="qty"
+                                   required="required"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-3">
+                            <input type="submit" class="btn btn-primary btn-block" value="Generate Barcode"
+                                   id="generateBarcodeBtn">
+                        </div>
+                    </div>
+
+                </fieldset>
+            </form>
         </div>
-        <div class="col-md-2 col-lg-offset-3">
-            <input type="submit" class="btn btn-primary btn-block" value="Generate Barcode" id="generateBarcodeBtn">
-        </div>
-        </div>
-    </fieldset>
-</form>
+    </div>
+</div>
 </body>
 </html>
 

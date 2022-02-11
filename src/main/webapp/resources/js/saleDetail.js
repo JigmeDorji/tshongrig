@@ -53,7 +53,7 @@ saleDetail = (function () {
                         },
                     ];
 
-                    spms.populateTableData($('#saleDetailGrid'), columnDef, res)
+                    spms.populateTableData($('#saleDetailGrid'), columnDef, res,)
                 }
             });
         }

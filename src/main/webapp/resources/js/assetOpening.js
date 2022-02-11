@@ -118,8 +118,8 @@ assetOpening = (function () {
             "<td><input type='text'  name='openingAndBuyingListDTO[0].rate' class='form-control rate right-align'></td>" +
             "<td><input type='text'  name='openingAndBuyingListDTO[0].qty' class='form-control qty  right-align'></td>" +
             "<td><input type='text'  name='openingAndBuyingListDTO[0].total' readonly class='form-control total right-align'></td>" +
-            "<td><button class='btn btn-danger btn-xs ml-3 d-none d-sm-inline-block removeBtn hidden' type='button' id='removeBtn'><i class='fa fa-trash'></i> Delete</button>" +
-            "<button class='btn  btn-xs btn-success d-sm-inline-block addBtn' type='button' id='addBtn'><i class='fa fa-plus'></i> Add More</button></td>" +
+            "<td><button class='btn btn-sm btn-danger btn-xs ml-3 d-none d-sm-inline-block removeBtn hidden' type='button' id='removeBtn'><i class='fa fa-trash'></i> Delete</button>" +
+            "<button class='btn  btn-sm btn-success d-sm-inline-block addBtn' type='button' id='addBtn'><i class='fa fa-plus'></i> Add More</button></td>" +
             "</tr>";
     }
 

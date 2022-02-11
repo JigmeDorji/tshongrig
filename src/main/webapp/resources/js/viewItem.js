@@ -71,7 +71,7 @@ viewItem = (function () {
                                 let asOnDate = $('#asOnDate').val();
                                 return '<a href=' + "viewItem" + '/navigateToDetail?itemCode=' +
                                     encodeURIComponent(itemCode) + "&asOnDate=" + asOnDate + '>' +
-                                    '<input type=button" class="btn btn-primary td-center" style="width: 70px" value="View"></a>'
+                                    '<input type=button" class="btn btn-sm btn-primary td-center" style="width: 70px" value="View"></a>'
                             }
                         },
                     ];
