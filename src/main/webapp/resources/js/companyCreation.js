@@ -53,7 +53,11 @@ companyCreation = (function () {
                     {data: 'mobileNo'},
                     {data: 'email'},
                     {data: 'website'},
-                    {data: 'fnYrStart'},
+                    {data: 'fnYrStart',
+                    render:function (data){
+                        return formatAsDate(data);
+                    }
+                    },
                     // {data: 'bookYrStart'},
                     {data: 'businessType', class: 'hidden'}
                 ];
