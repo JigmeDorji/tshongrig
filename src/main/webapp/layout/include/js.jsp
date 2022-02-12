@@ -38,7 +38,6 @@
 <script defer type="text/javascript"
         src="<c:url value='/resources/limitless/global_assets/js/plugins/tables/datatables/datatables.min.js'/>">
 </script>
-<%--<script defer type="text/javascript" src="<c:url value='/resources/bcs_lib/activeMenu.js'/>"></script>--%>
 <script defer type="text/javascript"
         src="<c:url value='/resources/limitless/global_assets/js/demo_pages/datatables_data_sources.js'/>"></script>
 
