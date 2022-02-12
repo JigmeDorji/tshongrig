@@ -63,18 +63,17 @@ ledger = (function () {
             url: 'ledger/getLedgerList',
             type: 'GET',
             success: function (res) {
-                var columnDef = [
+                let columnDef = [
                     {
-                        data: 'iterator',
-                        render: function () {
-                            return 1;
+                        "mRender": function (data, type, row, meta) {
+                            return meta.row + 1;
                         }
                     },
                     {data: 'ledgerId', class: 'ledgerId hidden'},
                     {data: 'ledgerName', class: 'ledgerName left-align'},
                     {data: 'accTypeId', class: 'accTypeId hidden'},
                     {
-                        data: 'iterator',
+                        data: 'action',
                         render: function () {
                             let deleteBtn = '';
                             let editBtn = '';
@@ -93,20 +92,23 @@ ledger = (function () {
                         }
                     },
                 ];
-                var order = [[1, 'asc']];
                 var t = $('#ledgerTable').DataTable({
                     data: res,
                     "aLengthMenu": [[10, 50, 75, -1], [25, 50, 75, "All"]],
                     pageLength: 50,
                     columns: columnDef,
-                    bSort:false
+                    bSort: false,
+                    columnDefs: [{
+                        "defaultContent": "-",
+                        "targets": "_all"
+                    }]
                 });
 
-                t.on('order.dt search.dt', function () {
+               /* t.on('order.dt search.dt', function () {
                     t.column(0, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
                         cell.innerHTML = i + 1;
                     });
-                }).draw()
+                }).draw()*/
             }
 
         });

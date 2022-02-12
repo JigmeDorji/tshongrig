@@ -38,13 +38,14 @@
         <div class="sidebar-section">
             <ul class="nav nav-sidebar nav-sidebar-bordered" data-nav-type="accordion">
                 <!-- Main -->
+                <%--Setting--%>
                 <li class="nav-item nav-item-submenu">
-                    <a href="#" class="nav-link"><i class="icon-toggle"></i> <span>Setting</span></a>
-
+                    <a href="#" class="nav-link"><i class=" icon-gear"></i> <span>Setting</span></a>
                     <ul class="nav nav-group-sub" data-submenu-title="Layouts">
                         <sec:authorize access="hasAuthority('1-VIEW')">
                             <li class="nav-item">
-                                <a href="<c:url value='/user'/>" class="nav-link"> User Creation</a></li>
+                                <a href="<c:url value='/user'/>" class="nav-link"> User Creation</a>
+                            </li>
                         </sec:authorize>
 
                         <sec:authorize access="hasAuthority('20-VIEW')">
@@ -65,8 +66,10 @@
                         </sec:authorize>
                     </ul>
                 </li>
+
+                <%--Human Resource--%>
                 <li class="nav-item nav-item-submenu">
-                    <a href="#" class="nav-link"><i class="icon-color-sampler"></i> <span>Human Resources</span></a>
+                    <a href="#" class="nav-link"><i class="icon-users4"></i> <span>Human Resources</span></a>
 
                     <ul class="nav nav-group-sub" data-submenu-title="Themes">
                         <li class="nav-item"><a href="<c:url value='/employeeSetup'/>" class="nav-link"> Employee
@@ -88,6 +91,8 @@
                         </li>
                     </ul>
                 </li>
+
+                <%--Accounting--%>
                 <li class="nav-item nav-item-submenu">
                     <a href="#" class="nav-link"><i class="icon-stack"></i> <span>Accounting</span></a>
 
@@ -119,18 +124,8 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item nav-item-submenu">
-                    <a href="#" class="nav-link"><i class="icon-bookmark4"></i> <span>BOQ</span></a>
-                    <ul class="nav nav-group-sub" data-submenu-title="Starter kit">
-                        <li class="nav-item"><a href="<c:url value='/boqSetup' />" class="nav-link"> Upload BOQ</a></li>
-                        <li class="nav-item"><a href="<c:url value='/boqDetail' />" class="nav-link"> BOQ Details</a>
-                        </li>
-                        <li class="nav-item"><a href="<c:url value='/raBillGeneration' />" class="nav-link"> Generate RA
-                            Bills</a></li>
-                        <li class="nav-item"><a href="<c:url value='/raBillDetail' />" class="nav-link"> View RA
-                            Bills</a></li>
-                    </ul>
-                </li>
+
+                <%--Fixed Asset--%>
                 <li class="nav-item nav-item-submenu">
                     <a href="#" class="nav-link"><i class="icon-package"></i> <span>Fixed Asset Management</span></a>
                     <ul class="nav nav-group-sub" data-submenu-title="Starter kit">
@@ -138,7 +133,10 @@
                         </li>
                         <li class="nav-item"><a href="<c:url value='/assetOpening' />" class="nav-link"> Opening</a>
                         </li>
+                        <<<<<<< HEAD
                         <li class="nav-item-divider"></li>
+                        =======
+                        >>>>>>> fdc63f7c89bd91dfd56d730170c4874458ff6455
                         <li class="nav-item"><a href="<c:url value='/assetBuying' />" class="nav-link"> Buy</a></li>
                         <li class="nav-item"><a href="<c:url value='/fixedAssetSale' />" class="nav-link"> Dispose</a>
                         </li>
@@ -147,56 +145,115 @@
                             Assets Schedule</a></li>
                     </ul>
                 </li>
+
+                <c:if test="${currentUser.businessType ==1}">
+                    <%--Inventory--%>
+                    <li class="nav-item nav-item-submenu">
+                        <a href="#" class="nav-link"><i class="icon-list3"></i> <span>Inventory</span></a>
+                        <ul class="nav nav-group-sub" data-submenu-title="Starter kit">
+                            <li class="nav-item"><a href="<c:url value='/locationSetUp' />" class="nav-link"> Location
+                                Setup</a></li>
+                            <li class="nav-item"><a href="<c:url value='/openingBalanceInventory' />" class="nav-link">
+                                Opening Balance</a></li>
+                            <li class="nav-item"><a href="<c:url value='/receivedItem' />" class="nav-link">
+                                Purchase</a>
+                            </li>
+                            <li class="nav-item"><a href="<c:url value='/viewItem' />" class="nav-link"> View Item</a>
+                            </li>
+                            <li class="nav-item"><a href="<c:url value='/saleItem' />" class="nav-link"> Sale</a></li>
+                            <li class="nav-item"><a href="<c:url value='/saleDetail' />" class="nav-link"> Sale
+                                Detail</a>
+                            </li>
+                            <li class="nav-item"><a href="<c:url value='/barcode' />" class="nav-link"> Barcode</a></li>
+                            <li class="nav-item"><a href="<c:url value='/saleRecord' />" class="nav-link"> Daily Sale
+                                Report</a></li>
+                        </ul>
+                    </li>
+                </c:if>
+
+                <c:if test="${currentUser.businessType ==4}">
+                    <%--Material--%>
+                    <li class="nav-item nav-item-submenu">
+                        <a href="#" class="nav-link"><i class="icon icon-hammer-wrench"></i> <span>Material</span></a>
+                        <ul class="nav nav-group-sub" data-submenu-title="Starter kit">
+                            <li class="nav-item">
+                                <sec:authorize access="hasAuthority('12-VIEW')">
+                                    <a href="<c:url value='/locationSetUp' />" class="nav-link"> Location Setup</a>
+                                </sec:authorize>
+                            </li>
+                            <li class="nav-item">
+
+                                <sec:authorize access="hasAuthority('14-VIEW')">
+                                    <a class="nav-link" href="<c:url value='/openingRawMaterialPurchase' />">
+                                        Opening</a>
+                                </sec:authorize>
+                            </li>
+                            <li class="nav-item">
+                                <sec:authorize access="hasAuthority('14-VIEW')">
+                                    <a class="nav-link" href="<c:url value='/rawMaterialPurchase' />"> Purchase</a>
+                                </sec:authorize>
+                            </li>
+                            <li class="nav-item">
+                                <sec:authorize access="hasAuthority('15-VIEW')">
+                                    <a class="nav-link" href="<c:url value='/viewItem' />"> View Item</a>
+                                </sec:authorize>
+                            </li>
+                            <li class="nav-item">
+                                <sec:authorize access="hasAuthority('17-VIEW')">
+                                    <a class="nav-link" href="<c:url value='/stockIssue' />"> Issue</a>
+                                </sec:authorize>
+                            </li>
+                            <li class="nav-item">
+                                <sec:authorize access="hasAuthority('16-VIEW')">
+                                    <a class="nav-link" href="<c:url value='/issueDetail' />"> Issue Detail</a>
+                                </sec:authorize>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <%--BOQ--%>
+                    <li class="nav-item nav-item-submenu">
+                        <a href="#" class="nav-link"><i class="icon-bookmark4"></i> <span>BOQ</span></a>
+                        <ul class="nav nav-group-sub" data-submenu-title="Starter kit">
+                            <li class="nav-item"><a href="<c:url value='/boqSetup' />" class="nav-link"> Upload BOQ</a>
+                            </li>
+                            <li class="nav-item"><a href="<c:url value='/boqDetail' />" class="nav-link"> BOQ
+                                Details</a>
+                            </li>
+                            <li class="nav-item"><a href="<c:url value='/raBillGeneration' />" class="nav-link">
+                                Generate RA
+                                Bills</a></li>
+                            <li class="nav-item"><a href="<c:url value='/raBillDetail' />" class="nav-link"> View RA
+                                Bills</a></li>
+                        </ul>
+                    </li>
+                </c:if>
+
+                <%--Financial Statement--%>
                 <li class="nav-item nav-item-submenu">
-                    <a href="#" class="nav-link"><i class="icon-list3"></i> <span>Inventory</span></a>
-                    <ul class="nav nav-group-sub" data-submenu-title="Starter kit">
-                        <li class="nav-item"><a href="<c:url value='/locationSetUp' />" class="nav-link"> Location
-                            Setup</a></li>
-                        <li class="nav-item"><a href="<c:url value='/openingBalanceInventory' />" class="nav-link">
-                            Opening Balance</a></li>
-                        <li class="nav-item"><a href="<c:url value='/receivedItem' />" class="nav-link"> Purchase</a>
-                        </li>
-                        <li class="nav-item"><a href="<c:url value='/viewItem' />" class="nav-link"> View Item</a></li>
-                        <li class="nav-item"><a href="<c:url value='/saleItem' />" class="nav-link"> Sale</a></li>
-                        <li class="nav-item"><a href="<c:url value='/saleDetail' />" class="nav-link"> Sale Detail</a>
-                        </li>
-                        <li class="nav-item"><a href="<c:url value='/barcode' />" class="nav-link"> Barcode</a></li>
-                        <li class="nav-item"><a href="<c:url value='/saleRecord' />" class="nav-link"> Daily Sale
-                            Report</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item nav-item-submenu">
-                    <a href="#" class="nav-link"><i class="icon-list3"></i> <span>Material</span></a>
+                    <a href="#" class="nav-link"><i class="icon icon-cash3"></i> <span>Financial Statement</span></a>
                     <ul class="nav nav-group-sub" data-submenu-title="Starter kit">
                         <li class="nav-item">
-                            <sec:authorize access="hasAuthority('12-VIEW')">
-                                <a href="<c:url value='/locationSetUp' />" class="nav-link"> Location Setup</a>
+                            <sec:authorize access="hasAuthority('7-VIEW')">
+                                <a class="nav-link" href="<c:url value='/accProfitAndLossReport' />"> Income &
+                                    Expenditure</a>
                             </sec:authorize>
                         </li>
                         <li class="nav-item">
 
-                            <sec:authorize access="hasAuthority('14-VIEW')">
-                                <a class="nav-link" href="<c:url value='/openingRawMaterialPurchase' />"> Opening</a>
+                            <sec:authorize access="hasAuthority('8-VIEW')">
+                                <a class="nav-link" href="<c:url value='/accBalanceSheetReport' />"> Financial
+                                    Position</a>
                             </sec:authorize>
                         </li>
                         <li class="nav-item">
-                            <sec:authorize access="hasAuthority('14-VIEW')">
-                                <a class="nav-link" href="<c:url value='/rawMaterialPurchase' />"> Purchase</a>
+                            <sec:authorize access="hasAuthority('9-VIEW')">
+                                <a class="nav-link" href="<c:url value='/accTrialBalance' />"> Trial Balance</a>
                             </sec:authorize>
                         </li>
                         <li class="nav-item">
-                            <sec:authorize access="hasAuthority('15-VIEW')">
-                                <a class="nav-link" href="<c:url value='/viewItem' />"> View Item</a>
-                            </sec:authorize>
-                        </li>
-                        <li class="nav-item">
-                            <sec:authorize access="hasAuthority('17-VIEW')">
-                                <a class="nav-link" href="<c:url value='/stockIssue' />"> Issue</a>
-                            </sec:authorize>
-                        </li>
-                        <li class="nav-item">
-                            <sec:authorize access="hasAuthority('16-VIEW')">
-                                <a class="nav-link" href="<c:url value='/issueDetail' />"> Issue Detail</a>
+                            <sec:authorize access="hasAuthority('10-VIEW')">
+                                <a class="nav-link" href="<c:url value='/accCashFlow' />"> Cash Flow</a>
                             </sec:authorize>
                         </li>
                     </ul>
@@ -212,263 +269,3 @@
 <!-- /main sidebar -->
 
 
-<%--<aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar>
-    <a href="#" class="btn collapseSidebar toggle-btn d-lg-none text-muted ml-2 mt-3" data-toggle="toggle">
-        <i class="fe fe-x"><span class="sr-only"></span></i>
-    </a>
-    <nav class="vertnav navbar navbar-light">
-        <!-- nav bar -->
-        <div class="w-100 mb-4 d-flex">
-            <img id="profile-img" width="45%"
-                 height="auto" src="<c:url value='/resources/images/logobcs.png'/>"/>
-        </div>
-        <ul class="navbar-nav flex-fill w-100 mb-2">
-            <li class="nav-item dropdown">
-                <a href="/" data-toggle="collapse" aria-expanded="false" class="nav-link">
-                    <i class="fe fe-home fe-16"></i>
-                    <span class="ml-3 item-text">HOME</span><span class="sr-only">(current)</span>
-                </a>
-            </li>
-        </ul>
-        <ul class="navbar-nav flex-fill w-100 mb-2">
-            <li class="nav-item dropdown">
-                <a href="#ui-elements" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                    <i class="fe fe-settings fe-16"></i>
-                    <span class="ml-3 item-text">Setting</span>
-                </a>
-                <ul class="collapse list-unstyled pl-4 w-100" id="ui-elements">
-                    <li class="nav-item">
-                        <sec:authorize access="hasAuthority('1-VIEW')">
-                            <a class="nav-link pl-3" href="<c:url value='/user'/>"><span class="ml-1 item-text">Financial Year Setup</span></a>
-                        </sec:authorize>
-                    </li>
-                    <li class="nav-item">
-                        <sec:authorize access="hasAuthority('20-VIEW')">
-                            <a class="nav-link pl-3" href="<c:url value='/financialYearSetup' />"><span
-                                    class="ml-1 item-text">Financial Year Setup</span></a>
-                        </sec:authorize>
-                    </li>
-                    <li class="nav-item">
-                        <sec:authorize access="hasAuthority('20-VIEW')">
-                            <a class="nav-link pl-3" href="<c:url value='/companyCreation' />"><span
-                                    class="ml-1 item-text">Company Setup</span></a>
-                        </sec:authorize>
-                    </li>
-                    <li class="nav-item">
-                        <sec:authorize access="hasAuthority('2-VIEW')">
-                            <a class="nav-link pl-3" href="<c:url value='/userAccessPermission' />"><span
-                                    class="ml-1 item-text">Access Permission Setup</span></a>
-                        </sec:authorize>
-                    </li>
-                </ul>
-            </li>
-
-            <li class="nav-item dropdown">
-                <a href="#forms" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                    <i class="fe fe-users fe-16"></i>
-                    <span class="ml-3 item-text">Human Resources</span>
-                </a>
-                <ul class="collapse list-unstyled pl-4 w-100" id="forms">
-                    <li class="nav-item">
-                        <a class="nav-link pl-3" href="<c:url value='/employeeSetup'/>"><span class="ml-1 item-text">Employee Details</span></a>
-                        <a href="./form_elements.html"></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link pl-3" href="<c:url value='/employeeAdvance' />"><span class="ml-1 item-text">Employee Advance</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link pl-3" href="<c:url value='/salarySheet' />"><span class="ml-1 item-text">Salary Sheet</span></a></h4>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link pl-3" href="<c:url value='/salaryRemittance' />"><span
-                                class="ml-1 item-text">Salary Remittance</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link pl-3" href="<c:url value='/statutoryRemittance' />"><span
-                                class="ml-1 item-text">Statutory Remittance</span></a></h4>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link pl-3" href="<c:url value='/otherRemittance' />"><span class="ml-1 item-text">Other Remittance</span></a>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item dropdown">
-                <a href="#tables" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                    <i class="fe fe-grid fe-16"></i>
-                    <span class="ml-3 item-text">Accounting</span>
-                </a>
-                <ul class="collapse list-unstyled pl-4 w-100" id="tables">
-                    <li class="nav-item">
-                        <sec:authorize access="hasAuthority('3-VIEW')">
-                            <a class="nav-link pl-3" href="<c:url value='/ledger' />"><span class="ml-1 item-text">Ledger</span></a>
-                        </sec:authorize>
-                    </li>
-                    <li class="nav-item">
-                        <sec:authorize access="hasAuthority('6-VIEW')">
-                            <a class="nav-link pl-3" href="<c:url value='/voucherCreation' />"><span
-                                    class="ml-1 item-text">Voucher</span></a>
-                        </sec:authorize>
-                    </li>
-                    <li class="nav-item">
-                        <sec:authorize access="hasAuthority('5-VIEW')">
-                            <a class="nav-link pl-3" href="<c:url value='/saleInvoiceGeneration' />"><span
-                                    class="ml-1 item-text">Invoice</span></a>
-                        </sec:authorize>
-                    </li>
-                    <li class="nav-item">
-                        <sec:authorize access="hasAuthority('4-VIEW')">
-                            <a class="nav-link pl-3" href="<c:url value='/moneyReceipt' />"><span
-                                    class="ml-1 item-text">Money Receipt</span></a>
-                        </sec:authorize>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item dropdown">
-                <a href="#charts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                    <i class="fe fe-pie-chart fe-16"></i>
-                    <span class="ml-3 item-text">Fixed Asset Management</span>
-                </a>
-                <ul class="collapse list-unstyled pl-4 w-100" id="charts">
-                    <li class="nav-item">
-                        <a class="nav-link pl-3" href="<c:url value='/assetSetup' />"><span class="ml-1 item-text">Asset setup</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link pl-3" href="<c:url value='/assetOpening' />"><span class="ml-1 item-text">Opening</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link pl-3" href="<c:url value='/assetBuying' />"><span
-                                class="ml-1 item-text">Buy</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link pl-3" href="<c:url value='/fixedAssetSale' />"><span class="ml-1 item-text">Dispose</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link pl-3" href="<c:url value='/fixedAssetSchedule' />"><span
-                                class="ml-1 item-text">Fixed Assets Schedule</span></a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-        <ul class="navbar-nav flex-fill w-100 mb-2">
-            <li class="nav-item dropdown">
-                <a href="#contact" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                    <i class="fe fe-book fe-16"></i>
-                    <span class="ml-3 item-text">Inventory</span>
-                </a>
-                <ul class="collapse list-unstyled pl-4 w-100" id="contact">
-                    <sec:authorize access="hasAuthority('12-VIEW')">
-                        <a class="nav-link pl-3" href="<c:url value='/locationSetUp' />"><span class="ml-1">Location Setup</span></a>
-                    </sec:authorize>
-                    <sec:authorize access="hasAuthority('12-VIEW')">
-                        <a class="nav-link pl-3" href="<c:url value='/openingBalanceInventory' />"><span class="ml-1">Opening Balance</span></a>
-                    </sec:authorize>
-                    <sec:authorize access="hasAuthority('14-VIEW')">
-                        <a class="nav-link pl-3" href="<c:url value='/receivedItem' />"><span
-                                class="ml-1">Purchase</span></a>
-                    </sec:authorize>
-
-                    <sec:authorize access="hasAuthority('15-VIEW')">
-                        <a class="nav-link pl-3" href="<c:url value='/viewItem' />"><span class="ml-1">View Item</span></a>
-                    </sec:authorize>
-                    <sec:authorize access="hasAuthority('12-VIEW')">
-                        <a class="nav-link pl-3" href="<c:url value='/saleItem' />"><span class="ml-1">Sale</span></a>
-                    </sec:authorize>
-                    <sec:authorize access="hasAuthority('16-VIEW')">
-                        <a class="nav-link pl-3" href="<c:url value='/saleDetail' />"><span
-                                class="ml-1">Sale Detail</span></a>
-                    </sec:authorize>
-                    <sec:authorize access="hasAuthority('19-VIEW')">
-                        <a class="nav-link pl-3" href="<c:url value='/barcode' />"><span class="ml-1">Barcode</span></a>
-                    </sec:authorize>
-                    <sec:authorize access="hasAuthority('17-VIEW')">
-                        <a class="nav-link pl-3" href="<c:url value='/saleRecord' />"><span class="ml-1">Daily Sale Report</span></a>
-                    </sec:authorize>
-                </ul>
-            </li>
-            <li class="nav-item dropdown">
-                <a href="#profile" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                    <i class="fe fe-user fe-16"></i>
-                    <span class="ml-3 item-text">Material</span>
-                </a>
-                <ul class="collapse list-unstyled pl-4 w-100" id="profile">
-                    <sec:authorize access="hasAuthority('12-VIEW')">
-                        <a class="nav-link pl-3" href="<c:url value='/locationSetUp' />"><span class="ml-1"> Location Setup</span></a>
-                    </sec:authorize>
-                    <sec:authorize access="hasAuthority('14-VIEW')">
-                        <a class="nav-link pl-3" href="<c:url value='/openingRawMaterialPurchase' />"><span
-                                class="ml-1">Opening</span></a>
-                    </sec:authorize>
-                    <sec:authorize access="hasAuthority('12-VIEW')">
-                        <a class="nav-link pl-3" href="<c:url value='/rawMaterialPurchase' />"><span class="ml-1">Purchase</span></a>
-                    </sec:authorize>
-                    <sec:authorize access="hasAuthority('15-VIEW')">
-                        <a class="nav-link pl-3" href="<c:url value='/viewItem' />"><span class="ml-1">View Item</span></a>
-                    </sec:authorize>
-                    <sec:authorize access="hasAuthority('17-VIEW')">
-                        <a class="nav-link pl-3" href="<c:url value='/stockIssue' />"><span
-                                class="ml-1">Issue</span></a>
-                    </sec:authorize>
-                    <sec:authorize access="hasAuthority('17-VIEW')">
-                        <a class="nav-link pl-3" href="<c:url value='/issueDetail' />"><span
-                                class="ml-1">Issue Detail</span></a>
-                    </sec:authorize>
-                </ul>
-            </li>
-            <li class="nav-item dropdown">
-                <a href="#fileman" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                    <i class="fe fe-folder fe-16"></i>
-                    <span class="ml-3 item-text">Financial Statement</span>
-                </a>
-                <ul class="collapse list-unstyled pl-4 w-100" id="fileman">
-                    <sec:authorize access="hasAuthority('7-VIEW')">
-                        <a class="nav-link pl-3" href="<c:url value='/accProfitAndLossReport' />"><span class="ml-1">Income &
-                            Expenditure</span></a>
-                    </sec:authorize>
-                    <sec:authorize access="hasAuthority('8-VIEW')">
-                        <a class="nav-link pl-3" href="<c:url value='/accBalanceSheetReport' />"><span class="ml-1">Financial Position</span></a>
-                    </sec:authorize>
-                    <sec:authorize access="hasAuthority('9-VIEW')">
-                        <a class="nav-link pl-3" href="<c:url value='/accTrialBalance' />"><span class="ml-1">Trial Balance</span></a>
-                    </sec:authorize>
-                    <sec:authorize access="hasAuthority('7-VIEW')">
-                        <a class="nav-link pl-3" href="<c:url value='/accCashFlow' />"><span
-                                class="ml-1">Cash Flow</span></a>
-                    </sec:authorize>
-                </ul>
-            </li>
-        </ul>
-    </nav>
-</aside>
-<main role="main" class="main-content">
-    <div class="modal fade modal-shortcut modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="defaultModalLabel">Shortcuts</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body px-5">
-                    <div class="row align-items-center">
-                        <div class="col-6 text-center">
-                            <div class="squircle bg-success justify-content-center">
-                                <i class="fe fe-cpu fe-32 align-self-center text-white"></i>
-
-                            </div>
-                            <p><a class="dropdown-item" href="<c:url value="/changePassword"/>">Change Password</a></p>
-                        </div>
-                        <div class="col-6 text-center">
-                            <div class="squircle bg-primary justify-content-center">
-                                <i class="fe fe-log-out fe-32 align-self-center text-white"></i>
-                            </div>
-                            <p><a class="dropdown-item" href="javascript:$('#logoutForm').submit();">Logout</a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>--%>
-<!-- main -->

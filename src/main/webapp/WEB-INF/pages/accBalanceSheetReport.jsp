@@ -13,6 +13,58 @@
 <title class="title">Financial Position</title>
 
 <body>
+<!-- Page header -->
+<div class="page-header page-header-light">
+    <div class="breadcrumb-line breadcrumb-line-light header-elements-lg-inline">
+        <div class="d-flex">
+            <div class="breadcrumb">
+                <a href="." class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Financial Statement</a>
+                <span class="breadcrumb-item active">Financial Position</span>
+            </div>
+            <a href="." class="header-elements-toggle text-body d-lg-none"><i class="icon-more"></i></a>
+        </div>
+    </div>
+</div>
+<!-- /page header -->
+<!-- Content area -->
+<div class="content">
+    <!-- Form inputs -->
+    <div class="card">
+        <div class="card-body">
+            <form id="ledgerForm" action="<c:url value='/accBalanceSheetReport'/> " class="form-horizontal globalForm">
+                <input type="hidden" id="ledgerId" name="ledgerId">
+                <fieldset>
+                    <div class="form-group row">
+                        <label class="col-md-2  required right-label">As On.</label>
+
+                        <div class="col-md-2">
+                            <input type="text" tabindex="1" class="form-control form-control-sm datepicker"
+                                   id="toDate" required="required" value="${toDate}"/>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="table-responsive">
+                        <table class="table navigatable_table" id="balanceSheetTable">
+                            <thead>
+                            <tr class="bg-primary text-white">
+                                <th width="70%" height="40px" class="left-align">Particular</th>
+                                <th width="30%">Amount</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
 <%--<style type="text/css">
     .table > tbody > tr > td {
         border-top: none;
@@ -37,42 +89,6 @@
         border-right: 1px solid #9d9d9d;
     }
 </style>--%>
-
-<div class="page_title">
-    <span class="title">Financial Statement</span>
-    <span class="subtitle">Financial Position</span>
-</div>
-<form id="ledgerForm" action="<c:url value='/accBalanceSheetReport'/> " class="form-horizontal globalForm">
-    <input type="hidden" id="ledgerId" name="ledgerId">
-    <fieldset>
-        <div class="form-group">
-            <label class="col-md-2 text-right required right-label">As On.</label>
-
-            <div class="col-md-2">
-                <input type="text" tabindex="1" class="form-control datepicker"
-                       id="toDate" required="required"  value="${toDate}"/>
-            </div>
-        </div>
-    </fieldset>
-    <fieldset>
-        <div class="col-md-12">
-            <table class="table navigatable_table" id="balanceSheetTable">
-                <thead>
-                <tr>
-                    <th width="70%" height="40px" class="left-align">Particular</th>
-                    <th width="30%">Amount</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                </tbody>
-
-            </table>
-        </div>
-
-    </fieldset>
-</form>
 </body>
 </html>
 

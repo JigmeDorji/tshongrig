@@ -105,10 +105,3 @@
         </li>
     </ul>
 </nav>--%>
-
-
-<script>
-    $('.currentPeriod').on('click', function () {
-        window.location.href = spms.getUrl() + 'financialYearSetup'
-    })
-</script>

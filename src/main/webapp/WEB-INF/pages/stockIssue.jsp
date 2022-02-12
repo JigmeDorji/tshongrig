@@ -127,7 +127,7 @@
                             <%--                    </div>--%>
                             <%--                </div>--%>
 
-                            <div class="form-group row">
+                            <div class="form-group row pt-2">
                                 <label class="col-md-2 right-label col-lg-offset-7">Issue Note</label>
 
                                 <div class="col-md-3">
@@ -137,14 +137,19 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <div class=" col-md-2"></div>
-                            <div class=" col-md-3">
-                                <input type="button" class="btn btn-primary btn-block" value="Save" id="btnSave"
-                                       disabled>
-                            </div>
+
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-2"></div>
+
+                        <div class="col-md-2">
+                            <div class="col-md-2"></div>
+                            <input type="button" class="btn btn-primary btn-block" value="Save"
+                                   id="btnSave"
+                                   disabled>
                         </div>
                     </div>
+
                 </fieldset>
 
             </form>

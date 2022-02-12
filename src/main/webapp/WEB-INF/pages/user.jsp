@@ -10,6 +10,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <sec:authorize access="hasAuthority('1-EDIT')" var="hasEditRole"/>
 <sec:authorize access="hasAuthority('1-DELETE')" var="hasDeleteRole"/>
 
@@ -141,7 +142,7 @@
                     <div class="col-md-4">
                         <form:select multiple="multiple"
                                      data-placeholder="---Please Select---"
-                                     class="form-control form-control-sm select2"
+                                     class="form-control form-control-sm select"
                                      style="width: 100%;" tabindex="7"
                                      path="companyList"
                                      id="companyMappingId"
@@ -174,25 +175,25 @@
             <div class="form-group">
                 <legend class="text-uppercase font-size-sm font-weight-bold">User List</legend>
 
-               <div class="table-responsive">
-                   <table class="table"
-                          id="userListTableId">
-                       <thead>
-                       <tr class="bg-primary text-white">
-                           <th class="">Sl.</th>
-                           <th class="">Status</th>
-                           <th class=" hidden">id</th>
-                           <th class="">Username</th>
-                           <th class="">Full Name</th>
-                           <th class="">No</th>
-                           <th class="">Date</th>
-                           <th class="">Role</th>
-                           <th class="">Action</th>
-                       </tr>
-                       <tbody>
-                       </tbody>
-                   </table>
-               </div>
+                <div class="table-responsive">
+                    <table class="table"
+                           id="userListTableId">
+                        <thead>
+                        <tr class="bg-primary text-white">
+                            <th class="">Sl.</th>
+                            <th class="">Status</th>
+                            <th class=" hidden">id</th>
+                            <th class="">Username</th>
+                            <th class="">Full Name</th>
+                            <th class="">No</th>
+                            <th class="">Date</th>
+                            <th class="">Role</th>
+                            <th class="">Action</th>
+                        </tr>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
 
             </div>
 
