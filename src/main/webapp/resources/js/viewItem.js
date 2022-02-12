@@ -79,6 +79,7 @@ viewItem = (function () {
                     $('#itemTable').DataTable({
                         'iDisplayLength': [100],
                         data: res,
+                        bSort:false,
                         columns: columnDef,
                         "footerCallback": function (row, data, start, end, display) {
                             var api = this.api(), data;

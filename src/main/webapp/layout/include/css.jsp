@@ -8,7 +8,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!-- Global stylesheets -->
-<%--<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">--%>
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="<c:url value='/resources/limitless/global_assets/css/icons/icomoon/styles.min.css' />">
 <link rel="stylesheet" href="<c:url value='/resources/limitless/assets/css/all.min.css' />">
 <link rel="stylesheet" href="<c:url value='/resources/bcs_lib/style.css' />">

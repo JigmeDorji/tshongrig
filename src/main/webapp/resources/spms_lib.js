@@ -752,7 +752,7 @@ function errorMsg(msg, callback) {
         has_icon: true,
         has_close_btn: true,
         stack: true,
-        fullscreen: false,
+        fullscreen: true,
         timeout: 5000,
         sticky: false,
         has_progress: true,
