@@ -2,7 +2,7 @@
  * Created by Bcass Sawa on 11/27/2018.
  */
 $(document).ajaxSend(function (e, xhr, options) {
-    var token = $('input[name="_csrf"]').val();
+    let token = $('input[name="_csrf"]').val();
     xhr.setRequestHeader("X-CSRF-TOKEN", token);
     NProgress.start();
 }).ajaxStart(function () {
@@ -16,7 +16,6 @@ $(document).ajaxSend(function (e, xhr, options) {
 }).ajaxSuccess(function () {
     NProgress.done();
 });
-
 $(document).ajaxError(function (event, jqxhr, settings, thrownError) {
     switch (jqxhr.status) {
         case 500:
@@ -31,7 +30,6 @@ $(document).ajaxError(function (event, jqxhr, settings, thrownError) {
     }
 });
 
-
 function indexRowNo(tableId) {
     let iterator = 0;
     tableId.find('tbody tr').each(function () {
@@ -43,56 +41,27 @@ function indexRowNo(tableId) {
 
 spms = (function () {
 
-    /**
-     * validate the date entered
-     * @param $this
-     * @returns {boolean}
-     */
-    function isEnteredDateValid($this) {
-        var date = $this.val();
-
-        if (date === '') {
-            return false;
-        }
-        var rxDatePattern = /^(\d{1,2})(\/|.)(\d{1,2})(\/|.)(\d{4})$/;
-        var dtArray = date.match(rxDatePattern);
-
-        if (dtArray == null) {
-            $this.val('');
-            $this.focus();
-            return false;
-        }
-
-        var dtDay = dtArray[1];
-        var dtMonth = dtArray[3];
-        var dtYear = dtArray[5];
-
-        if (dtMonth < 1 || dtMonth > 12) {
-            $this.val('');
-            $this.focus();
-            return false;
-        } else if (dtDay < 1 || dtDay > 31) {
-            $this.val('');
-            $this.focus();
-            return false;
-        } else if ((dtMonth === 4 || dtMonth === 6 || dtMonth === 9 || dtMonth === 11) && dtDay === 31) {
-            $this.val('');
-            $this.focus();
-            return false;
-            return false;
-        } else if (dtMonth === 2) {
-            var isleap = (dtYear % 4 === 0 && (dtYear % 100 !== 0 || dtYear % 400 === 0));
-            if (dtDay > 29 || (dtDay === 29 && !isleap)) {
-                $this.val('');
-                $this.focus();
-                return false;
-            }
-        }
-        return true;
-    }
-
     function isFormValid(form) {
+
+        $.validator.setDefaults({
+            /*highlight: function (element) {
+                $(element).closest('.form-group').addClass('has-error');
+            },
+            unhighlight: function (element) {
+                $(element).closest('.form-group').removeClass('has-error');
+            },*/
+            errorElement: 'span',
+            errorClass: 'help-block',
+            errorPlacement: function (error, element) {
+                if (element.parent('.input-group').length) {
+                    error.insertAfter(element.parent());
+                } else {
+                    error.insertAfter(element);
+                }
+            }
+        });
         form.validate({
+            // ignore: 'input[type=hidden]',
             errorElement: 'span',
             errorPlacement: function (error, element) {
                 error.addClass('error');
@@ -103,6 +72,7 @@ spms = (function () {
                 $(element).removeClass('error');
             }
         });
+
     }
 
     function getUrl() {
@@ -239,7 +209,7 @@ spms = (function () {
      */
     function formattedDate(day, month, year) {
 
-        var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        let monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
         if (parseInt(month) === 1) {
             month = monthNames[0];
@@ -409,7 +379,7 @@ spms = (function () {
 
 $(document).ready(function () {
 
-    $('.select2').select2();
+    // $('.select2').select2();
 
     let body = $('body');
     body.on('keypress', '.alphanumeric', function (e) {
@@ -546,10 +516,10 @@ $(document).ready(function () {
 
     // $(document).on('focus', '.select2', function (e) {
     //     //s2element.select2('open');
-    //     var self = $(this), form = self.parents('form:eq(0)'), focusable;
+    //     let self = $(this), form = self.parents('form:eq(0)'), focusable;
     //     // Set focus back to select2 element on closing.
     //     if (e.originalEvent) {
-    //         var s2element = $(this).siblings('select');
+    //         let s2element = $(this).siblings('select');
     //         s2element.on('select2:closing', function (e) {
     //             //s2element.select2('focus');
     //             $('select').select2().trigger("select2:close");
@@ -633,13 +603,13 @@ $(document).ready(function () {
      * @returns {boolean}
      */
     function isEnteredDateValid($this) {
-        var date = $this.val();
+        let date = $this.val();
 
         if (date == '') {
             return false;
         }
-        var rxDatePattern = /^(\d{1,2})(\/|.)(\d{1,2})(\/|.)(\d{4})$/;
-        var dtArray = date.match(rxDatePattern);
+        let rxDatePattern = /^(\d{1,2})(\/|.)(\d{1,2})(\/|.)(\d{4})$/;
+        let dtArray = date.match(rxDatePattern);
 
         if (dtArray == null) {
             $this.val('');
@@ -647,9 +617,9 @@ $(document).ready(function () {
             return false;
         }
 
-        var dtDay = dtArray[1];
-        var dtMonth = dtArray[3];
-        var dtYear = dtArray[5];
+        let dtDay = dtArray[1];
+        let dtMonth = dtArray[3];
+        let dtYear = dtArray[5];
 
         if (dtMonth < 1 || dtMonth > 12) {
             $this.val('');
@@ -664,7 +634,7 @@ $(document).ready(function () {
             $this.focus();
             return false;
         } else if (dtMonth == 2) {
-            var isleap = (dtYear % 4 == 0 && (dtYear % 100 != 0 || dtYear % 400 == 0));
+            let isleap = (dtYear % 4 == 0 && (dtYear % 100 != 0 || dtYear % 400 == 0));
             if (dtDay > 29 || (dtDay == 29 && !isleap)) {
                 $this.val('');
                 $this.focus();
@@ -674,7 +644,7 @@ $(document).ready(function () {
         return true;
     }
 
-    // var datePickerOptions = {
+    // let datePickerOptions = {
     //     dateFormat: "dd-M-yy",
     //     changeMonth: true,
     //     changeYear: true,
@@ -731,7 +701,6 @@ $(document).ready(function () {
     // });
 });
 
-
 /**
  * format date
  * @param date
@@ -761,15 +730,14 @@ function errorMsg(msg, callback) {
         if (callback !== undefined)
             callback(e);
     });
-
-    // swal({
-    //     title: msg,
-    //     text: "Click OK to exit",
-    //     type: "warning"
-    // }, function (e) {
-    //     if (callback !== undefined)
-    //         callback(e);
-    // });
+    /* swal({
+         title: msg,
+         text: "Click OK to exit",
+         type: "warning"
+     }, function (e) {
+         if (callback !== undefined)
+             callback(e);
+     });*/
 }
 
 function successMsg(msg, callback) {
@@ -786,14 +754,14 @@ function successMsg(msg, callback) {
         if (callback !== undefined)
             callback(e);
     });
-    /*swal({
-        title: msg,
-        text: "Click OK to exit",
-        type: "success"
-    }, function (e) {
-        if (callback !== undefined)
-            callback(e);
-    });*/
+    /* swal({
+         title: msg,
+         text: "Click OK to exit",
+         type: "success"
+     }, function (e) {
+         if (callback !== undefined)
+             callback(e);
+     });*/
 }
 
 function confirmMessage(msg, callback) {
@@ -856,20 +824,20 @@ function populate(data) {
     );
 }
 
-$.fn.disableElements = function (status) {
-    $(this).removeClass('error');
-    $(this).each(
-        function () {
-            $(this).attr('readonly', status);
-            $(this).find('option').prop('disabled', status);
-
-            if ($(this).is(':checkbox') || $(this).is(':radio')) {
-                $(this).attr('disabled', status);
-            }
-            $('input:checkbox[name=checkme]').attr('disabled', status);
-        }
-    );
-};
+// $.fn.disableElements = function (status) {
+//     $(this).removeClass('error');
+//     $(this).each(
+//         function () {
+//             $(this).attr('readonly', status);
+//             $(this).find('option').prop('disabled', status);
+//
+//             if ($(this).is(':checkbox') || $(this).is(':radio')) {
+//                 $(this).attr('disabled', status);
+//             }
+//             $('input:checkbox[name=checkme]').attr('disabled', status);
+//         }
+//     );
+// };
 
 
 

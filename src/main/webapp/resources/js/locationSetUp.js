@@ -68,7 +68,11 @@ locationSetUp = (function () {
                 $('#locationTable').DataTable({
                     data: res,
                     columns: col,
-                    bSort: false
+                    bSort: false,
+                    columnDefs: [{
+                        "defaultContent": "-",
+                        "targets": "_all"
+                    }]
                 });
 
                 /*for (var i in res) {

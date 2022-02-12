@@ -15,6 +15,7 @@
  * Search Tag:
  **/
 $(document).ready(function () {
+
     if (document.URL.search("user") > 1)
         scriptLoader("resources/js/user.js");
 
@@ -121,6 +122,33 @@ $(document).ready(function () {
 
     if (document.URL.search("receipt") > 1)
         scriptLoader("resources/js/receipt.js");
+
+    if (document.URL.search("bankTransfer") > 1)
+        scriptLoader("resources/js/bankTransfer.js");
+
+    if (document.URL.search("adjustment") > 1)
+        scriptLoader("resources/js/adjustment.js");
+
+    if (document.URL.search("payable") > 1)
+        scriptLoader("resources/js/payable.js");
+
+
+    /**
+     * BOQ Module
+     */
+
+
+    if (document.URL.search("boqSetup") > 1)
+        scriptLoader("resources/js/boqSetup.js");
+
+    if (document.URL.search("boqDetail") > 1)
+        scriptLoader("resources/js/boqDetail.js");
+
+    if (document.URL.search("raBillGeneration") > 1)
+        scriptLoader("resources/js/raBillGeneration.js");
+
+    if (document.URL.search("raBillDetail") > 1)
+        scriptLoader("resources/js/raBillDetail.js");
 
     /**
      * Hr Module

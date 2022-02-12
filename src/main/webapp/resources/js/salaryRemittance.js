@@ -80,10 +80,14 @@ salaryRemittance = (function () {
                         let table = employeeSalarySheetList.DataTable({
                             data: res.dto,
                             columns: columnDef,
-                            bSort:false,
-                            bInfo:false,
-                            'paging':false,
-                            'searching':false
+                            bSort: false,
+                            bInfo: false,
+                            'paging': false,
+                            'searching': false,
+                            columnDefs: [{
+                                "defaultContent": "-",
+                                "targets": "_all"
+                            }]
                         });
 
                         table.on('order.dt search.dt', function () {

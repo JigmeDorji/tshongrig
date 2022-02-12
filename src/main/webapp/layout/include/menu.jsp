@@ -49,7 +49,8 @@
 
                         <sec:authorize access="hasAuthority('20-VIEW')">
                             <li class="nav-item">
-                                <a href="<c:url value='/financialYearSetup'/>" class="nav-link"> Financial Year Setup</a></li>
+                                <a href="<c:url value='/financialYearSetup'/>" class="nav-link"> Financial Year
+                                    Setup</a></li>
                         </sec:authorize>
 
                         <sec:authorize access="hasAuthority('1-VIEW')">
@@ -59,7 +60,8 @@
 
                         <sec:authorize access="hasAuthority('2-VIEW')">
                             <li class="nav-item">
-                                <a href="<c:url value='/userAccessPermission'/>" class="nav-link"> Access Permission Setup</a></li>
+                                <a href="<c:url value='/userAccessPermission'/>" class="nav-link"> Access Permission
+                                    Setup</a></li>
                         </sec:authorize>
                     </ul>
                 </li>
@@ -67,17 +69,22 @@
                     <a href="#" class="nav-link"><i class="icon-color-sampler"></i> <span>Human Resources</span></a>
 
                     <ul class="nav nav-group-sub" data-submenu-title="Themes">
-                        <li class="nav-item"><a href="<c:url value='/employeeSetup'/>" class="nav-link"> Employee Details</a>
+                        <li class="nav-item"><a href="<c:url value='/employeeSetup'/>" class="nav-link"> Employee
+                            Details</a>
                         </li>
-                        <li class="nav-item"><a href="<c:url value='/employeeAdvance'/>" class="nav-link"> Employee Advance</a>
+                        <li class="nav-item"><a href="<c:url value='/employeeAdvance'/>" class="nav-link"> Employee
+                            Advance</a>
                         </li>
                         <li class="nav-item"><a href="<c:url value='/salarySheet'/>" class="nav-link"> Salary Sheet</a>
                         </li>
-                        <li class="nav-item"><a href="<c:url value='/salaryRemittance'/>" class="nav-link"> Salary Remittance</a>
+                        <li class="nav-item"><a href="<c:url value='/salaryRemittance'/>" class="nav-link"> Salary
+                            Remittance</a>
                         </li>
-                        <li class="nav-item"><a href="<c:url value='/statutoryRemittance'/>" class="nav-link"> Statutory Remittance</a>
+                        <li class="nav-item"><a href="<c:url value='/statutoryRemittance'/>" class="nav-link"> Statutory
+                            Remittance</a>
                         </li>
-                        <li class="nav-item"><a href="<c:url value='/otherRemittance'/>" class="nav-link"> Other Remittance</a>
+                        <li class="nav-item"><a href="<c:url value='/otherRemittance'/>" class="nav-link"> Other
+                            Remittance</a>
                         </li>
                     </ul>
                 </li>
@@ -86,19 +93,28 @@
 
                     <ul class="nav nav-group-sub" data-submenu-title="Starter kit">
                         <li class="nav-item"><a href="<c:url value='/ledger' />" class="nav-link"> Ledger</a></li>
-                        <li class="nav-item"><a href="<c:url value='/voucherCreation' />" class="nav-link"> Voucher</a></li>
-                        <li class="nav-item"><a href="<c:url value='/saleInvoiceGeneration' />" class="nav-link"> Invoice</a></li>
-                        <li class="nav-item"><a href="<c:url value='/moneyReceipt' />" class="nav-link"> Money Receipt</a></li>
+                        <li class="nav-item"><a href="<c:url value='/voucherCreation' />" class="nav-link"> Voucher</a>
+                        </li>
+                        <li class="nav-item"><a href="<c:url value='/saleInvoiceGeneration' />" class="nav-link">
+                            Invoice</a></li>
+                        <li class="nav-item"><a href="<c:url value='/moneyReceipt' />" class="nav-link"> Money
+                            Receipt</a></li>
                         <li class="nav-item nav-item-submenu">
                             <a href="#" class="nav-link">Voucher</a>
                             <ul class="nav nav-group-sub">
-                                <li class="nav-item"><a href="<c:url value='/payment' />" class="nav-link">Payment</a></li>
-                                <li class="nav-item"><a href="<c:url value='/cashDepositWithdrawal' />" class="nav-link">Cash
+                                <li class="nav-item"><a href="<c:url value='/payment' />" class="nav-link">Payment</a>
+                                </li>
+                                <li class="nav-item"><a href="<c:url value='/cashDepositWithdrawal' />"
+                                                        class="nav-link">Cash
                                     Deposit / Withdrawal</a></li>
-                                <li class="nav-item"><a href="<c:url value='/receipt' />" class="nav-link">Receipt</a></li>
-                                <li class="nav-item"><a href="<c:url value='/bankTransfer' />" class="nav-link">Bank Transfer</a></li>
-                                <li class="nav-item"><a href="<c:url value='/adjustment' />" class="nav-link">Adjustment</a></li>
-                                <li class="nav-item"><a href="<c:url value='/payable' />" class="nav-link">Payable Booking</a></li>
+                                <li class="nav-item"><a href="<c:url value='/receipt' />" class="nav-link">Receipt</a>
+                                </li>
+                                <li class="nav-item"><a href="<c:url value='/bankTransfer' />" class="nav-link">Bank
+                                    Transfer</a></li>
+                                <li class="nav-item"><a href="<c:url value='/adjustment' />"
+                                                        class="nav-link">Adjustment</a></li>
+                                <li class="nav-item"><a href="<c:url value='/payable' />" class="nav-link">Payable
+                                    Booking</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -107,34 +123,45 @@
                     <a href="#" class="nav-link"><i class="icon-bookmark4"></i> <span>BOQ</span></a>
                     <ul class="nav nav-group-sub" data-submenu-title="Starter kit">
                         <li class="nav-item"><a href="<c:url value='/boqSetup' />" class="nav-link"> Upload BOQ</a></li>
-                        <li class="nav-item"><a href="<c:url value='/boqDetail' />" class="nav-link"> BOQ Details</a></li>
-                        <li class="nav-item"><a href="<c:url value='/raBillGeneration' />" class="nav-link"> Generate RA Bills</a></li>
-                        <li class="nav-item"><a href="<c:url value='/raBillDetail' />" class="nav-link"> View RA Bills</a></li>
+                        <li class="nav-item"><a href="<c:url value='/boqDetail' />" class="nav-link"> BOQ Details</a>
+                        </li>
+                        <li class="nav-item"><a href="<c:url value='/raBillGeneration' />" class="nav-link"> Generate RA
+                            Bills</a></li>
+                        <li class="nav-item"><a href="<c:url value='/raBillDetail' />" class="nav-link"> View RA
+                            Bills</a></li>
                     </ul>
                 </li>
                 <li class="nav-item nav-item-submenu">
                     <a href="#" class="nav-link"><i class="icon-package"></i> <span>Fixed Asset Management</span></a>
                     <ul class="nav nav-group-sub" data-submenu-title="Starter kit">
-                        <li class="nav-item"><a href="<c:url value='/assetSetup' />" class="nav-link"> Asset setup</a></li>
-                        <li class="nav-item"><a href="<c:url value='/assetOpening' />" class="nav-link"> Opening</a></li>
-                        <li class="nav-item-divider"></li>
+                        <li class="nav-item"><a href="<c:url value='/assetSetup' />" class="nav-link"> Asset setup</a>
+                        </li>
+                        <li class="nav-item"><a href="<c:url value='/assetOpening' />" class="nav-link"> Opening</a>
+                        </li>
                         <li class="nav-item"><a href="<c:url value='/assetBuying' />" class="nav-link"> Buy</a></li>
-                        <li class="nav-item"><a href="<c:url value='/fixedAssetSale' />" class="nav-link"> Dispose</a></li>
+                        <li class="nav-item"><a href="<c:url value='/fixedAssetSale' />" class="nav-link"> Dispose</a>
+                        </li>
                         <li class="nav-item"><a href="<c:url value='/viewAsset' />" class="nav-link"> View</a></li>
-                        <li class="nav-item"><a href="<c:url value='/fixedAssetSchedule' />" class="nav-link"> Fixed Assets Schedule</a></li>
+                        <li class="nav-item"><a href="<c:url value='/fixedAssetSchedule' />" class="nav-link"> Fixed
+                            Assets Schedule</a></li>
                     </ul>
                 </li>
                 <li class="nav-item nav-item-submenu">
                     <a href="#" class="nav-link"><i class="icon-list3"></i> <span>Inventory</span></a>
                     <ul class="nav nav-group-sub" data-submenu-title="Starter kit">
-                        <li class="nav-item"><a href="<c:url value='/locationSetUp' />" class="nav-link"> Location Setup</a></li>
-                        <li class="nav-item"><a href="<c:url value='/openingBalanceInventory' />" class="nav-link"> Opening Balance</a></li>
-                        <li class="nav-item"><a href="<c:url value='/receivedItem' />" class="nav-link"> Purchase</a></li>
+                        <li class="nav-item"><a href="<c:url value='/locationSetUp' />" class="nav-link"> Location
+                            Setup</a></li>
+                        <li class="nav-item"><a href="<c:url value='/openingBalanceInventory' />" class="nav-link">
+                            Opening Balance</a></li>
+                        <li class="nav-item"><a href="<c:url value='/receivedItem' />" class="nav-link"> Purchase</a>
+                        </li>
                         <li class="nav-item"><a href="<c:url value='/viewItem' />" class="nav-link"> View Item</a></li>
                         <li class="nav-item"><a href="<c:url value='/saleItem' />" class="nav-link"> Sale</a></li>
-                        <li class="nav-item"><a href="<c:url value='/saleDetail' />" class="nav-link"> Sale Detail</a></li>
+                        <li class="nav-item"><a href="<c:url value='/saleDetail' />" class="nav-link"> Sale Detail</a>
+                        </li>
                         <li class="nav-item"><a href="<c:url value='/barcode' />" class="nav-link"> Barcode</a></li>
-                        <li class="nav-item"><a href="<c:url value='/saleRecord' />" class="nav-link"> Daily Sale Report</a></li>
+                        <li class="nav-item"><a href="<c:url value='/saleRecord' />" class="nav-link"> Daily Sale
+                            Report</a></li>
                     </ul>
                 </li>
             </ul>
@@ -146,8 +173,6 @@
 
 </div>
 <!-- /main sidebar -->
-
-
 
 
 <%--<aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar>
