@@ -107,7 +107,8 @@
                         <li class="nav-item nav-item-submenu">
                             <a href="#" class="nav-link">Voucher</a>
                             <ul class="nav nav-group-sub">
-                                <li class="nav-item"><a href="<c:url value='/payment' />" class="nav-link">Payment</a>
+                                <li class="nav-item">
+                                    <a href="<c:url value='/payment' />" class="nav-link">Payment</a>
                                 </li>
                                 <li class="nav-item"><a href="<c:url value='/cashDepositWithdrawal' />"
                                                         class="nav-link">Cash
