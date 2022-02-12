@@ -294,8 +294,11 @@ legend {
     font-size: 1.5rem;
     line-height: inherit;
     color: inherit;
-    white-space: normal
+    white-space: normal;
+    padding: 2px 0px;
+    border-bottom: 12 solid black;
 }
+
 
 progress {
     vertical-align: baseline
@@ -14055,13 +14058,6 @@ tbody .table-border-double td, tbody .table-border-double th, tfoot .table-borde
 
 .card-footer + .table, .card-footer + [class*=table-responsive] {
     border-top: 1px solid #ddd
-}
-
-legend {
-    /*padding-top: .625rem;*/
-    /*padding-bottom: .625rem;*/
-    margin-bottom: 0.25rem;
-    font-size: .875rem
 }
 
 fieldset:first-child legend:first-child {

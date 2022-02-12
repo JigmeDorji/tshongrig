@@ -167,114 +167,112 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-<%--                            <h4 class="modal-title">Edit Ledger Details</h4>--%>
+                            <%--                            <h4 class="modal-title">Edit Ledger Details</h4>--%>
                         </div>
                         <div class="modal-body">
                             <form id="ledgerEditForm" class="form-horizontal ledgerEditForm" method="POST">
                                 <input type="hidden" id="editLedgerId" name="ledgerId">
-                                <fieldset>
-                                    <legend class="text-uppercase font-size-sm font-weight-bold">Ledger Details</legend>
+                                <legend class="text-uppercase font-size-sm font-weight-bold">Ledger Details</legend>
+                                <div class="form-group row">
+                                    <label class="col-md-2  required">Ledger Name</label>
+
+                                    <div class="col-md-4">
+                                        <input type="text" tabindex="1" class="form-control form-control-sm"
+                                               id="editLedgerName"
+                                               name="ledgerName" required="required"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2  required">Under</label>
+
+                                    <div class="col-md-4">
+                                        <form:select class="resetField select2" name="accTypeId" path="accTypeList"
+                                                     style="width:285px"
+                                                     tabindex="2"
+                                                     id="editAccTypeId" required="required">
+                                            <form:option value="">---Please Select---</form:option>
+                                            <form:options items="${accTypeList}" itemValue="value"
+                                                          itemLabel="text"/>
+                                        </form:select>
+                                    </div>
+                                </div>
+                                <div class="editBankAccDetail">
                                     <div class="form-group row">
-                                        <label class="col-md-2  required">Ledger Name</label>
+                                        <label class="col-md-2  bankAccDetail">Reconciliation Date</label>
+                                        <input type="hidden" tabindex="2" class="form-control form-control-sm"
+                                               id="bankId" name="bankId"/>
+                                        <div class="col-md-4">
+
+                                            <input type="text" tabindex="2"
+                                                   class="form-control form-control-sm datepicker"
+                                                   id="editReconciliationDate"
+                                                   name="reconciliationDate"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-md-2 text-righ ">Bank account holder details</label>
 
                                         <div class="col-md-4">
-                                            <input type="text" tabindex="1" class="form-control form-control-sm"
-                                                   id="editLedgerName"
-                                                   name="ledgerName" required="required"/>
+                                            <input type="text" tabindex="3" class="form-control form-control-sm"
+                                                   id="editBankAccHolderDetail"
+                                                   name="bankAccHolderDetail"/>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-md-2  required">Under</label>
+                                        <label class="col-md-2  ">Account holder name</label>
 
                                         <div class="col-md-4">
-                                            <form:select class="resetField select2" name="accTypeId" path="accTypeList"
-                                                         style="width:285px"
-                                                         tabindex="2"
-                                                         id="editAccTypeId" required="required">
-                                                <form:option value="">---Please Select---</form:option>
-                                                <form:options items="${accTypeList}" itemValue="value"
-                                                              itemLabel="text"/>
-                                            </form:select>
-                                        </div>
-                                    </div>
-                                    <div class="editBankAccDetail">
-                                        <div class="form-group row">
-                                            <label class="col-md-2  bankAccDetail">Reconciliation Date</label>
-                                            <input type="hidden" tabindex="2" class="form-control form-control-sm"
-                                                   id="bankId" name="bankId"/>
-                                            <div class="col-md-4">
-
-                                                <input type="text" tabindex="2"
-                                                       class="form-control form-control-sm datepicker"
-                                                       id="editReconciliationDate"
-                                                       name="reconciliationDate"/>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <label class="col-md-2 text-righ ">Bank account holder details</label>
-
-                                            <div class="col-md-4">
-                                                <input type="text" tabindex="3" class="form-control form-control-sm"
-                                                       id="editBankAccHolderDetail"
-                                                       name="bankAccHolderDetail"/>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-md-2  ">Account holder name</label>
-
-                                            <div class="col-md-4">
-                                                <input type="text" tabindex="4" class="form-control form-control-sm "
-                                                       id="editAccHolderName"
-                                                       name="accHolderName"/>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-md-2  required">Account No.</label>
-
-                                            <div class="col-md-4">
-                                                <input type="text" required tabindex="5"
-                                                       class="form-control form-control-sm numeric" id="editAccNo"
-                                                       name="accNo"/>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-md-2  bankAccDetail">Bank Name</label>
-
-                                            <div class="col-md-4">
-                                                <input type="text" tabindex="6" class="form-control form-control-sm "
-                                                       id="editBankName"
-                                                       name="bankName"/>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-md-2 ">Branch</label>
-
-                                            <div class="col-md-4">
-                                                <input type="text" tabindex="7" class="form-control form-control-sm"
-                                                       id="editBranch" name="branch"/>
-                                            </div>
+                                            <input type="text" tabindex="4" class="form-control form-control-sm "
+                                                   id="editAccHolderName"
+                                                   name="accHolderName"/>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-md-2  required">Opening Balance</label>
+                                        <label class="col-md-2  required">Account No.</label>
 
                                         <div class="col-md-4">
-                                            <input type="text" tabindex="8" class="form-control form-control-sm amount"
-                                                   name="openingBal"
-                                                   id="editOpeningBal" required="required" value="0"/>
+                                            <input type="text" required tabindex="5"
+                                                   class="form-control form-control-sm numeric" id="editAccNo"
+                                                   name="accNo"/>
                                         </div>
                                     </div>
-
                                     <div class="form-group row">
-                                        <div class="col-md-2"></div>
-                                        <div class="col-md-2">
-                                            <input type="submit" tabindex="9" class="btn btn-sm btn-primary btn-block"
-                                                   value="Update"
-                                                   id="editBtnSave">
+                                        <label class="col-md-2  bankAccDetail">Bank Name</label>
+
+                                        <div class="col-md-4">
+                                            <input type="text" tabindex="6" class="form-control form-control-sm "
+                                                   id="editBankName"
+                                                   name="bankName"/>
                                         </div>
                                     </div>
-                                </fieldset>
+                                    <div class="form-group row">
+                                        <label class="col-md-2 ">Branch</label>
+
+                                        <div class="col-md-4">
+                                            <input type="text" tabindex="7" class="form-control form-control-sm"
+                                                   id="editBranch" name="branch"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2  required">Opening Balance</label>
+
+                                    <div class="col-md-4">
+                                        <input type="text" tabindex="8" class="form-control form-control-sm amount"
+                                               name="openingBal"
+                                               id="editOpeningBal" required="required" value="0"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-2">
+                                        <input type="submit" tabindex="9" class="btn btn-sm btn-primary btn-block"
+                                               value="Update"
+                                               id="editBtnSave">
+                                    </div>
+                                </div>
                             </form>
                         </div>
                     </div>

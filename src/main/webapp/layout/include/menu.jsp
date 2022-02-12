@@ -40,7 +40,10 @@
                 <!-- Main -->
                 <%--Setting--%>
                 <li class="nav-item nav-item-submenu">
-                    <a href="#" class="nav-link"><i class=" icon-gear"></i> <span>Setting</span></a>
+                    <a href="#" class="nav-link">
+                        <i class=" icon-gear"></i>
+                        <span>Setting</span>
+                    </a>
                     <ul class="nav nav-group-sub" data-submenu-title="Layouts">
                         <sec:authorize access="hasAuthority('1-VIEW')">
                             <li class="nav-item">
@@ -133,10 +136,6 @@
                         </li>
                         <li class="nav-item"><a href="<c:url value='/assetOpening' />" class="nav-link"> Opening</a>
                         </li>
-                        <<<<<<< HEAD
-                        <li class="nav-item-divider"></li>
-                        =======
-                        >>>>>>> fdc63f7c89bd91dfd56d730170c4874458ff6455
                         <li class="nav-item"><a href="<c:url value='/assetBuying' />" class="nav-link"> Buy</a></li>
                         <li class="nav-item"><a href="<c:url value='/fixedAssetSale' />" class="nav-link"> Dispose</a>
                         </li>
@@ -210,7 +209,6 @@
                             </li>
                         </ul>
                     </li>
-
                     <%--BOQ--%>
                     <li class="nav-item nav-item-submenu">
                         <a href="#" class="nav-link"><i class="icon-bookmark4"></i> <span>BOQ</span></a>
@@ -228,7 +226,6 @@
                         </ul>
                     </li>
                 </c:if>
-
                 <%--Financial Statement--%>
                 <li class="nav-item nav-item-submenu">
                     <a href="#" class="nav-link"><i class="icon icon-cash3"></i> <span>Financial Statement</span></a>

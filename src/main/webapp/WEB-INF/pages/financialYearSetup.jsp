@@ -37,51 +37,27 @@
             <form id="financialYearForm" action="<c:url value='/financialYearSetup'/> "
                   class="globalForm">
                 <div class="card-body">
-                        <legend class="text-uppercase font-size-sm font-weight-bold">Financial Year</legend>
-                        <div class="table-responsive">
-                            <table id="financialYearGrid" class="table">
-                                <thead>
-                                <tr class="bg-primary text-white">
-                                    <th>SL</th>
-                                    <th hidden></th>
-                                    <th>From</th>
-                                    <th>To</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
+                    <legend class="text-uppercase font-size-sm font-weight-bold">Financial Year</legend>
+                    <div class="table-responsive">
+                        <table id="financialYearGrid" class="table">
+                            <thead>
+                            <tr class="bg-primary text-white">
+                                <th>SL</th>
+                                <th hidden></th>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </form>
         </div>
     </div>
-</div>
-<%--<div class="wrapper">--%>
-<!-- Content Wrapper. Contains page content -->
-<div class="">
-    <!-- Content Header (Page header) -->
-    <div class="page_title">
-        <span class="title">Setting</span>
-        <span class="subtitle">Financial Year Setup</span>
-    </div>
-
-    <!-- Main content -->
-    <section class="content">
-        <div class="container-fluid">
-            <div class="card card-info">
-
-                <!-- /.card-header -->
-                <!-- form start -->
-
-            </div>
-        </div>
-        <!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
-    <%--</div>--%>
 </div>
 </body>
 </html>
