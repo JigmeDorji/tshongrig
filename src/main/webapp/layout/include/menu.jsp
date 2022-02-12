@@ -134,10 +134,7 @@
                         </li>
                         <li class="nav-item"><a href="<c:url value='/assetOpening' />" class="nav-link"> Opening</a>
                         </li>
-                        <<<<<<< HEAD
-                        <li class="nav-item-divider"></li>
-                        =======
-                        >>>>>>> fdc63f7c89bd91dfd56d730170c4874458ff6455
+
                         <li class="nav-item"><a href="<c:url value='/assetBuying' />" class="nav-link"> Buy</a></li>
                         <li class="nav-item"><a href="<c:url value='/fixedAssetSale' />" class="nav-link"> Dispose</a>
                         </li>
