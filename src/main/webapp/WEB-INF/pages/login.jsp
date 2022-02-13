@@ -172,7 +172,7 @@
                                 class="icon-file-text2 mr-2"></i> Docs</a></li>
                         <li class="nav-item"><a href="http://www.tshongrig.com/price-packages-2/"
                                                 class="navbar-nav-link font-weight-semibold" target="_blank"><span
-                                class="text-pink"><i class="icon-cart2 mr-2"></i> Purchase</span></a></li>
+                                class="text-pink"><i class="icon-cart2 mr-2"></i>  Purchase Tshong Rig Packages</span></a></li>
                     </ul>
                 </div>
             </div>
