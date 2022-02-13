@@ -53,6 +53,33 @@ label.required:after {
     display: block;
     border-bottom: 1px solid #000;
 }
+
 .hidden {
     display: none !important
+}
+
+.navigation_table td.myGlower {
+    position: relative;
+}
+
+.navigation_table td.myGlower:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /*border: 1px solid #467fff !important;*/
+}
+
+
+.parentText {
+    font-weight: bold;
+    /*font-style: oblique;*/
+    background-color: #FCFBFB;
+
+}
+
+.childText {
+    text-indent: 5%;
 }

@@ -38,13 +38,15 @@
                         <label class="col-md-2  required">From Date</label>
 
                         <div class="col-md-2">
-                            <input type="text" tabindex="1" class="form-control form-control-sm datepicker" name="fromDate"
+                            <input type="text" tabindex="1" class="form-control form-control-sm datepicker"
+                                   name="fromDate"
                                    id="fromDate" required="required" value="${fromDate}"/>
                         </div>
                         <label class="col-md-2  required">To Date</label>
 
                         <div class="col-md-2">
-                            <input type="text" tabindex="1" class="form-control form-control-sm datepicker" name="toDate"
+                            <input type="text" tabindex="1" class="form-control form-control-sm datepicker"
+                                   name="toDate"
                                    id="toDate" required="required" value="${toDate}"/>
                         </div>
                     </div>
@@ -52,7 +54,7 @@
 
                 <fieldset>
                     <div class="table-responsive">
-                        <table class="table navigatable_table" id="trialBalanceGrid">
+                        <table class="table navigation_table" id="trialBalanceGrid">
                             <thead>
                             <tr class="bg-primary text-white">
                                 <th rowspan="2"><p style="text-align:center">Particulars</p></th>
@@ -69,10 +71,13 @@
                             <tfoot>
                             <tr>
                                 <th>Grand Total</th>
-                                <th class="right-align"><input type="text" class="right-align" id="totalDrAmount"
-                                                               style="border: none;font-size:15px;"></th>
-                                <th class="right-align"><input type="text" class="right-align" id="totalCrAmount"
-                                                               style="border: none;font-size:15px;"></th>
+                                <th class="right-align">
+                                    <input type="text" class="right-align" id="totalDrAmount"
+                                           style="border: none;font-size:15px;">
+                                </th>
+                                <th class="right-align">
+                                    <input type="text" class="right-align" id="totalCrAmount"
+                                           style="border: none;font-size:15px;"></th>
                                 <th></th>
                             </tr>
                             </tfoot>
