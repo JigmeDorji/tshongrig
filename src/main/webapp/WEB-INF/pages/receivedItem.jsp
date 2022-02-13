@@ -106,7 +106,7 @@
                             <input type="button" data-toggle="modal" class="btn btn-sm btn-primary" value="New Brand"
                                    id="btnAddBrand">
                         </div>
-                        <label class="col-md-2 text-right">Serial:</label>
+                        <label class="col-md-2 ">Serial:</label>
                         <div class="col-md-2">
                             <input type="text" tabindex="2" class="form-control form-control-sm  right-align common"
                                    id="currentSerial" readonly/>
@@ -283,86 +283,82 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" id="closeBtn" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Enter Supplier Details</h4>
                         </div>
-                        <form id="supplierSetupForm" action="<c:url value='/supplierSetup'/> "
-                              class="form-horizontal supplierForm">
-                            <input type="hidden" tabindex="2" id="id" name="id"/>
-                            <fieldset>
-                                <legend>Credit Details</legend>
-                                <div class="form-group row">
-                                    <label class="col-md-3 text-right required">Supplier Name:</label>
+                        <div class="modal-body">
+                            <form id="supplierSetupForm" action="<c:url value='/supplierSetup'/> "
+                                  class="form-horizontal supplierForm">
+                                <input type="hidden" tabindex="2" id="id" name="id"/>
+                                <fieldset>
+                                    <legend class="text-uppercase font-size-sm font-weight-bold">Credit Details</legend>
+                                    <div class="form-group row">
+                                        <label class="col-md-3  required">Supplier Name:</label>
 
-                                    <div class="col-md-3">
-                                        <input type="text" tabindex="2" class="form-control form-control-sm" id="suppName"
-                                               name="supplierName" required="required"/>
+                                        <div class="col-md-3">
+                                            <input type="text" tabindex="2" class="form-control form-control-sm" id="suppName"
+                                                   name="supplierName" required="required"/>
+                                        </div>
+                                        <label class="col-md-2 text-righ required ">Address</label>
+
+                                        <div class="col-md-4">
+                                            <input type="text" tabindex="3" class="form-control form-control-sm" id="address"
+                                                   name="address" required="required"/>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="form-group row">
-                                    <label class="col-md-3 text-righ required ">Address</label>
+                                    <div class="form-group row">
+                                        <label class="col-md-3  required">Contact No</label>
 
-                                    <div class="col-md-3">
-                                        <input type="text" tabindex="3" class="form-control form-control-sm" id="address"
-                                               name="address" required="required"/>
+                                        <div class="col-md-3">
+                                            <input type="text" required="required" tabindex="5" class="form-control form-control-sm numeric"
+                                                   id="contactNo"
+                                                   name="contactNo"/>
+                                        </div>
+                                        <label class="col-md-2  ">Email</label>
+
+                                        <div class="col-md-4">
+                                            <input type="text" tabindex="4" class="form-control form-control-sm" id="email"
+                                                   name="email"/>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 text-right ">Email</label>
 
-                                    <div class="col-md-3">
-                                        <input type="text" tabindex="4" class="form-control form-control-sm" id="email"
-                                               name="email"/>
+                                    <div class="form-group row">
+                                        <div class="col-md-3"></div>
+
+                                        <div class="col-md-2">
+                                            <input type="submit" class="btn btn-sm btn-primary btn-block" value="Save"
+                                                   id="btnSupplierSave">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input type="reset" class="btn btn-sm btn-primary btn-block" value="Reset"
+                                                   id="btnReset">
+                                        </div>
                                     </div>
-                                </div>
+                                </fieldset>
+                                <fieldset>
+                                    <legend class="text-uppercase font-size-sm font-weight-bold">Agency Details</legend>
 
-                                <div class="form-group row">
-                                    <label class="col-md-3 text-right required">Contact No</label>
-
-                                    <div class="col-md-3">
-                                        <input type="text" required="required" tabindex="5" class="form-control form-control-sm numeric"
-                                               id="contactNo"
-                                               name="contactNo"/>
+                                    <div class="form-group row">
+                                        <div class="col-md-12">
+                                            <table class="table table-bordered table-striped editable-grid tableGrid"
+                                                   id="supplierListTable">
+                                                <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th width="30%">Supplier Name</th>
+                                                    <th width="35%">Address</th>
+                                                    <th width="20%">Email</th>
+                                                    <th width="20%">Contact No.</th>
+                                                    <th width="5%"></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="customerSearchBody">
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <div class="col-md-2 text-right"></div>
-
-                                    <div class="col-md-2">
-                                        <input type="submit" class="btn btn-primary btn-block" value="Save"
-                                               id="btnSupplierSave">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <input type="reset" class="btn btn-primary btn-block" value="Reset"
-                                               id="btnReset">
-                                    </div>
-                                </div>
-                            </fieldset>
-                            <fieldset>
-                                <legend>Agency Details</legend>
-
-                                <div class="form-group row">
-                                    <div class="col-md-12">
-                                        <table class="table table-bordered table-striped editable-grid tableGrid"
-                                               id="supplierListTable">
-                                            <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th width="30%">Supplier Name</th>
-                                                <th width="35%">Address</th>
-                                                <th width="20%">Email</th>
-                                                <th width="20%">Contact No.</th>
-                                                <th width="5%"></th>
-                                            </tr>
-                                            </thead>
-                                            <tbody id="customerSearchBody">
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </form>
+                                </fieldset>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

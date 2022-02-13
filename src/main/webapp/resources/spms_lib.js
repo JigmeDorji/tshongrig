@@ -726,6 +726,7 @@ function errorMsg(msg, callback) {
         sticky: false,
         has_progress: true,
         rtl: false,
+        position_class: "toast-top-right",
     }, function (e) {
         if (callback !== undefined)
             callback(e);
@@ -745,11 +746,12 @@ function successMsg(msg, callback) {
         has_icon: true,
         has_close_btn: true,
         stack: true,
-        fullscreen: false,
-        timeout: 5000,
+        fullscreen: true,
+        timeout: 2000,
         sticky: false,
         has_progress: true,
         rtl: false,
+        position_class: "toast-top-right",
     }, function (e) {
         if (callback !== undefined)
             callback(e);
