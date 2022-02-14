@@ -25,13 +25,25 @@ public class UserDao extends BaseDao {
 
     //region public methods
     @Transactional(readOnly = true)
-    public Boolean isLoginIdAlreadyExists(String username, Integer companyId) {
-        String sqlQuery = "SELECT COUNT(*) FROM tbl_user WHERE username =:username AND (:companyId is NUll OR companyId=:companyId)";
+    public Boolean isLoginIdAlreadyExists(String username) {
+        String sqlQuery = "SELECT COUNT(*) FROM tbl_user WHERE username =:username";
+        Session session = sessionFactory.getCurrentSession();
+        return session.createSQLQuery(sqlQuery)
+                .setParameter("username", username)
+                .uniqueResult().equals(BigInteger.ZERO);
+    }
+
+    //region public methods
+    @Transactional(readOnly = true)
+    public Boolean chekAdminUserExist(String username, Integer companyId) {
+        String sqlQuery = "select COUNT(*) FROM tbl_company_mapping a\n" +
+                "INNER JOIN tbl_user b ON a.userId=b.userId where\n" +
+                "a.companyId=:companyId and b.username=:username";
         Session session = sessionFactory.getCurrentSession();
         return session.createSQLQuery(sqlQuery)
                 .setParameter("username", username)
                 .setParameter("companyId", companyId)
-                .uniqueResult().equals(BigInteger.ONE);
+                .uniqueResult().equals(BigInteger.ZERO);
     }
 
     @Transactional(readOnly = true)
@@ -39,13 +51,13 @@ public class UserDao extends BaseDao {
         String sqlQuery = "SELECT A.userId,A.username, A.userFullName, A.createdDate, \n" +
                 "A.userStatus,A.userMobileNo, B.userRoleTypeName \n" +
                 "FROM tbl_user A INNER JOIN tbl_user_role_type B \n" +
-                "ON A.userRoleTypeId = B.userRoleTypeId WHERE A.companyId=:companyId\n" +
+                "ON A.userRoleTypeId = B.userRoleTypeId WHERE A.companyId=:companyId and A.userRoleTypeId !=4\n" +
                 "UNION \n" +
                 "SELECT A.userId,A.username, A.userFullName, A.createdDate, \n" +
                 "A.userStatus,A.userMobileNo, B.userRoleTypeName \n" +
                 "FROM tbl_user A INNER JOIN tbl_user_role_type B ON A.userRoleTypeId = B.userRoleTypeId \n" +
                 "INNER JOIN tbl_company_mapping C On A.userId=C.userId\n" +
-                "WHERE C.companyId=:companyId";
+                "WHERE C.companyId=:companyId and A.userRoleTypeId !=4";
         Session session = sessionFactory.getCurrentSession();
         return session.createSQLQuery(sqlQuery)
                 .setParameter("companyId", companyId)
@@ -76,19 +88,18 @@ public class UserDao extends BaseDao {
     }
 
     @Transactional(readOnly = true)
-    public String getOldPassword(String username, Integer companyId) {
+    public String getOldPassword(BigInteger userId) {
 
-        String sqlQuery = "SELECT UserPassword FROM tbl_user WHERE username =:username AND (:companyId IS NULL OR companyId=:companyId)";
+        String sqlQuery = "SELECT UserPassword FROM tbl_user WHERE userId =:userId";
         Session session = sessionFactory.getCurrentSession();
         return (String) session.createSQLQuery(sqlQuery)
-                .setParameter("username", username)
-                .setParameter("companyId", companyId)
+                .setParameter("userId", userId)
                 .uniqueResult();
     }
 
     @Transactional
     public void updateUserInfo(User user) {
-        sessionFactory.getCurrentSession().saveOrUpdate(user);
+        sessionFactory.getCurrentSession().update(user);
     }
 
     @Transactional(readOnly = true)
@@ -172,6 +183,7 @@ public class UserDao extends BaseDao {
                 .setParameter("companyId", companyId)
                 .executeUpdate();
     }
+
     @Transactional
     public void deleteMappedCompanyByUserId(BigInteger userId) {
         String sqlQuery = "DELETE FROM tbl_company_mapping WHERE userId=:userId";
@@ -182,11 +194,11 @@ public class UserDao extends BaseDao {
     }
 
     @Transactional(readOnly = true)
-    public Boolean checkIsAdministratorExists(Integer roleTypeId,Integer companyId) {
-            String sqlQuery = "SELECT COUNT(*) FROM tbl_user a\n" +
-                    "INNER JOIN tbl_company_mapping b On a.userId=b.userId \n" +
-                    "WHERE userRoleTypeId=:roleTypeId AND b.companyId=:companyId\n" +
-                    "AND a.companyId IS NULL";
+    public Boolean checkIsAdministratorExists(Integer roleTypeId, Integer companyId) {
+        String sqlQuery = "SELECT COUNT(*) FROM tbl_user a\n" +
+                "INNER JOIN tbl_company_mapping b On a.userId=b.userId \n" +
+                "WHERE userRoleTypeId=:roleTypeId AND b.companyId=:companyId\n" +
+                "AND a.companyId IS NULL";
         Session session = sessionFactory.getCurrentSession();
         return session.createSQLQuery(sqlQuery)
                 .setParameter("roleTypeId", roleTypeId)

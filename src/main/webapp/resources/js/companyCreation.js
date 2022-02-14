@@ -17,8 +17,8 @@ companyCreation = (function () {
                                 title: res.text,
                                 text: "Click OK to exit",
                                 type: "success"
-                            },function (){
-                                window.location.reload()
+                            }, function () {
+                                $("#companyCreationForm")[0].reset();
                             });
 
                         } else {
@@ -53,10 +53,11 @@ companyCreation = (function () {
                     {data: 'mobileNo'},
                     {data: 'email'},
                     {data: 'website'},
-                    {data: 'fnYrStart',
-                    render:function (data){
-                        return formatAsDate(data);
-                    }
+                    {
+                        data: 'fnYrStart',
+                        render: function (data) {
+                            return formatAsDate(data);
+                        }
                     },
                     // {data: 'bookYrStart'},
                     {data: 'businessType', class: 'hidden'}

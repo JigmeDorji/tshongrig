@@ -1,5 +1,4 @@
 package com.spms.mvc.service.auth; /**
- * Component Name: Spare part management
  * Name: UserService
  * Description: See the description at the top of class declaration
  * Project: Spare part management
@@ -74,7 +73,14 @@ public class UserService {
     public ResponseMessage isLoginIdAlreadyExists(String username, CurrentUser currentUser) {
         ResponseMessage responseMessage = new ResponseMessage();
 
-        if (userDao.isLoginIdAlreadyExists(username, currentUser.getCompanyId())) {
+        //check for other user
+        if (!userDao.isLoginIdAlreadyExists(username)) {
+            responseMessage.setStatus(SystemDataInt.MESSAGE_STATUS_UNSUCCESSFUL.value());
+            responseMessage.setText(username + " already exist in the system. Please choose different username.");
+        }
+
+        //check for other user
+        if (!userDao.chekAdminUserExist(username, currentUser.getCompanyId())) {
             responseMessage.setStatus(SystemDataInt.MESSAGE_STATUS_UNSUCCESSFUL.value());
             responseMessage.setText(username + " already exist in the system. Please choose different username.");
         }
@@ -117,11 +123,11 @@ public class UserService {
      * @param currentUser currentUser
      * @return ResponseMessage
      */
+//    @Transactional(rollbackFor = Exception.class)
     public ResponseMessage addUser(UserDTO userDTO, CurrentUser currentUser) {
         ResponseMessage responseMessage = new ResponseMessage();
         User user = new User();
-        BigInteger userId = null;
-        Boolean isLoginIdExists = null;
+        BigInteger userId;
 
         if (UserRoleType.Administrator.getValue().equals(userDTO.getUserRoleTypeId())) {
             if (userDTO.getUserId() == null) {
@@ -131,15 +137,11 @@ public class UserService {
                     return responseMessage;
                 }
             }
-            isLoginIdExists = userDao.isLoginIdAlreadyExists(userDTO.getUsername(), null);
-        } else {
-            if (!UserRoleType.Administrator.getValue().equals(userDTO.getUserRoleTypeId())) {
-                isLoginIdExists = userDao.isLoginIdAlreadyExists(userDTO.getUsername(), currentUser.getCompanyId());
-            }
         }
-        try {
 
-            if (!isLoginIdExists) {
+        try {
+            user.setUserFullName(userDTO.getUserFullName());
+            if (userDTO.getUserId() == null) {
                 String saltValue = generateSaltValue(6);
                 if (userDTO.getUserPassword().equals("")) {
                     userDTO.setUserPassword(generatePassword(6));//system generate 6 digits password
@@ -148,9 +150,8 @@ public class UserService {
                 lastUserId = lastUserId == null ? BigInteger.ONE : lastUserId.add(BigInteger.ONE);
                 user.setUserId(lastUserId);
                 user.setUsername(userDTO.getUsername());
-                user.setUserFullName(userDTO.getUserFullName());
                 user.setSaltValue(saltValue);
-                user.setUserPassword(passwordEncoder.encode(saltValue + userDTO.getUserPassword()));
+                user.setUserPassword(passwordEncoder.encode(saltValue + userDTO.getUserPassword().trim()));
                 user.setUserMobileNo(userDTO.getUserMobileNo());
                 user.setUserStatus(userDTO.getUserStatus());
                 user.setUserRoleTypeId(userDTO.getUserRoleTypeId());
@@ -167,13 +168,7 @@ public class UserService {
                 String userInfoPWD = userDTO.getUserPassword();
                 UserDTO userDTOdB = userDao.getUserDetail(userDTO.getUsername(), currentUser.getCompanyId());
                 if (userInfoPWD.equals("")) {
-                    String oldPassword;
-                    if (UserRoleType.Administrator.getValue().equals(userDTO.getUserRoleTypeId())) {
-                        oldPassword = userDao.getOldPassword(userDTO.getUsername(), null);
-                    } else {
-                        oldPassword = userDao.getOldPassword(userDTO.getUsername(), currentUser.getCompanyId());
-                    }
-                    user.setUserPassword(oldPassword);
+                    user.setUserPassword(userDao.getOldPassword(userDTO.getUserId()));
                     user.setSaltValue(userDTOdB.getSaltValue());
                 } else {
                     String saltValue = generateSaltValue(6);
@@ -181,9 +176,8 @@ public class UserService {
                     user.setUserPassword(passwordEncoder.encode(saltValue + newPassword));
                     user.setSaltValue(saltValue);
                 }
-                user.setUserId(userDTOdB.getUserId());
+                user.setUserId(userDTO.getUserId());
                 user.setUsername(userDTO.getUsername());
-                user.setUserFullName(userDTO.getUserFullName());
                 user.setUserMobileNo(userDTO.getUserMobileNo());
                 user.setUserStatus(userDTO.getUserStatus());
                 user.setEmailId(userDTO.getEmailId());
@@ -196,14 +190,11 @@ public class UserService {
                 userDao.updateUserInfo(user);
                 responseMessage.setText("User updated successfully.");
                 responseMessage.setStatus(SystemDataInt.MESSAGE_STATUS_SUCCESSFUL.value());
+                userId = userDTO.getUserId();
             }
 
             //Only applies to administrative role
             saveUserWiseCompanyMapping(userDTO, userId);
-//            if (userDTO.getUserRoleTypeId().equals(UserRoleType.Administrator.getValue())) {
-//                saveUserWiseCompanyMapping(userDTO, userId);
-//            }
-
         } catch (Exception ex) {
             responseMessage.setText("Application Error.");
             responseMessage.setStatus(SystemDataInt.MESSAGE_STATUS_UNSUCCESSFUL.value());
@@ -212,7 +203,7 @@ public class UserService {
         return responseMessage;
     }
 
-    private void saveUserWiseCompanyMapping(UserDTO userDTO, BigInteger userId) {
+    public void saveUserWiseCompanyMapping(UserDTO userDTO, BigInteger userId) {
         if (userDTO.getCompanyMappingId() != null) {
 
             if (userId == null) {

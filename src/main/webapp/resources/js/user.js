@@ -1,7 +1,6 @@
 /**
  * Created by jigme.dorji on 24-Apr-2020.
  */
-
 user = (function () {
     "use strict";
     let form = $('#userFormId');
@@ -25,6 +24,9 @@ user = (function () {
                 data: {username: username},
                 success: function (res) {
                     populate(res);
+                    $('#txtConfirmPassword').removeAttr('required');
+                    $('#userPassword').removeAttr('required');
+                    $('#username').attr('readonly', true);
                     $('.viewUser').removeClass('hidden');
                     $('.newUser').addClass('hidden');
                     $('#btnUpdate').removeClass('hidden');
@@ -48,7 +50,6 @@ user = (function () {
                     //     $('#mappingId').attr('hidden', true);
                     // }
                     $('#mappingId').attr('hidden', false);
-
                     $('.companyHiddenId').attr('hidden', true);
                     $('#companyId').val('');
                     loadMappingCompany(userId)
@@ -76,24 +77,20 @@ user = (function () {
                         contentType: false,
                         success: function (res) {
                             if (res.status === 1) {
-                                $.Toast("Success", res.text, "success", {
-                                    has_icon: true,
-                                    has_close_btn: true,
-                                    stack: true,
-                                    fullscreen: false,
-                                    timeout: 5000,
-                                    sticky: false,
-                                    has_progress: true,
-                                    rtl: false,
-                                });
-                                getUserList();
+                                swal({
+                                        title: res.text,
+                                        text: "Click OK to exit",
+                                        type: "success"
+                                    }, function () {
+                                        $('#userFormId')[0].reset();
+                                    }
+                                );
                             } else {
                                 $('#btnSave').attr("disabled", false);
                                 errorMsg(res.text);
                             }
                         }, complete: function (res) {
                             $('#btnSave').attr("disabled", false);
-                            errorMsg(res.text);
                         }
                     });
                 }
@@ -130,29 +127,20 @@ user = (function () {
                     contentType: false,
                     success: function (res) {
                         if (res.status === 1) {
-                            $.Toast("test", res.text, "success", {
-                                has_icon: true,
-                                has_close_btn: true,
-                                stack: true,
-                                fullscreen: false,
-                                timeout: 5000,
-                                sticky: false,
-                                has_progress: true,
-                                rtl: false,
-                            });
-                            /*swal({
+                            swal({
                                     title: res.text,
                                     text: "Click OK to exit",
                                     type: "success"
                                 }, function () {
                                     window.location.reload();
                                 }
-                            )*/
+                            )
                         } else {
                             $('#btnSave').attr("disabled", false);
                             errorMsg(res.text);
                             isSubmitted = false;
                         }
+                        $('#username').attr('readonly', false);
                     }, complete: function (res) {
                         isSubmitted = false;
                         $('#btnSave').attr("disabled", false);
@@ -165,7 +153,7 @@ user = (function () {
 
     //to validate that similar login id doesnt exists
     function checkIfExist() {
-        $('#username').on('blur', function () {
+        $('.username').on('blur', function () {
             let username = $('#username').val();
             if (username === "") {
             } else {
@@ -189,9 +177,9 @@ user = (function () {
     }
 
     function getUserList() {
+
         let statusActive = $('#statusActive').val();
         let statusInactive = $('#statusInactive').val();
-        $('#userListTableId').dataTable().fnDestroy();
         $.ajax({
             url: _baseURL() + 'getUserList',
             type: 'GET',
@@ -207,10 +195,10 @@ user = (function () {
                         render: function (data) {
                             let status = null;
                             if (data === statusActive) {
-                                status = "Active";
+                                status = "<i class='status-icon bg-success spinner-grow'></i>" + "Active";
                             }
                             if (data === statusInactive) {
-                                status = "Inactive";
+                                status = "<i class='status-icon bg-danger'></i>" + "Inactive";
                             }
                             return status;
                         }
@@ -233,12 +221,9 @@ user = (function () {
                         }
                     }
                 ];
-
                 $('#userListTableId').DataTable({
                     data: res,
-                    columns: columnDef,
-                    bSort: false,
-                    "bSearchable": false,
+                    columns: columnDef
                 });
             }
         });
@@ -250,15 +235,10 @@ user = (function () {
             let password = $('#userPassword').val();
             let confirmPassword = $('#txtConfirmPassword').val();
             if (password !== confirmPassword) {
-                $.Toast("Warning", "Your password doesn't match, Please type again", "warning", {
-                    has_icon: true,
-                    has_close_btn: true,
-                    stack: true,
-                    fullscreen: false,
-                    timeout: 5000,
-                    sticky: false,
-                    has_progress: true,
-                    rtl: false,
+                swal({
+                    title: "Your password doesn't match, Please type again",
+                    text: "Click OK to exit",
+                    type: "warning"
                 });
                 $('#txtConfirmPassword').val('');
             }
@@ -288,6 +268,7 @@ user = (function () {
                         } else {
                             errorMsg(res.text)
                         }
+                        $('#username').attr('readonly', false);
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         swal("Error deleting!", "Please try again", "error");

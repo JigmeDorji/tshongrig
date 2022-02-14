@@ -54,12 +54,12 @@
                     </div>
 
 
-
                     <div class="form-group row">
                         <label class="col-md-2  required">Mobile No. </label>
 
                         <div class="col-md-3">
-                            <input type="text" tabindex="3" class="form-control form-control-sm resetfield numeric" name="mobileNo"
+                            <input type="text" tabindex="3" class="form-control form-control-sm resetfield numeric"
+                                   name="mobileNo"
                                    id="mobileNo" required="true"/>
                         </div>
                         <label class="col-md-2 ">Email </label>
@@ -71,12 +71,12 @@
                     </div>
 
 
-
                     <div class="form-group row">
                         <label class="col-md-2 ">Website</label>
 
                         <div class="col-md-3">
-                            <input type="text" tabindex="5" class="form-control form-control-sm resetfield" name="website"
+                            <input type="text" tabindex="5" class="form-control form-control-sm resetfield"
+                                   name="website"
                                    id="website"/>
                         </div>
                         <label class="col-md-2   required">Financial Year Start</label>
@@ -93,7 +93,7 @@
                         <label class="col-md-2  required">Business Type</label>
 
                         <div class="col-md-3">
-                            <form:select class="form-control form-control-sm select2 resetfield" name="businessType"
+                            <form:select class="form-control form-control-sm resetfield" name="businessType"
                                          path="businessTypeList"
                                          id="businessType" tabindex="8">
                                 <form:option value="">---Please Select---</form:option>
@@ -115,16 +115,13 @@
 
                     <div class="form-group row">
                         <div class="col-md-2"></div>
-
                         <div class="col-md-2">
-                            <input type="submit" tabindex="9" class="btn btn-primary btn-block resetfield"
+                            <input type="submit" tabindex="9" class="btn btn-primary btn-sm resetfield"
                                    value="Save" id="saveBtn">
-                        </div>
-                        <div class="col-md-2">
-                            <input type="reset" tabindex="10" class="btn btn-primary btn-block"
+
+                            <input type="reset" tabindex="10" class="btn btn-primary btn-sm"
                                    value="Reset" id="reRestBtn">
                         </div>
-
                     </div>
                     <fieldset>
                         <div class="form-group row">
