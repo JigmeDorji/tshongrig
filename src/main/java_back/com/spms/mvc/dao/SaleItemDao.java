@@ -110,7 +110,7 @@ public class SaleItemDao {
                 "a.discount AS discountRate, \n" +
                 "a.invoiceNo AS invoiceNo \n" +
                 "FROM tbl_inv_sale_record a \n" +
-                "WHERE a.voucherNo=:voucherNo AND a.companyId=:companyId AND a.financialYearId=:financialYearId";
+                "WHERE a.voucherNo=:voucherNo AND a.companyId=:companyId AND a.financialYearId=:financialYearId group by receiptMemoNo";
         Session session = sessionFactory.getCurrentSession();
         return (SaleItemDTO) session.createSQLQuery(query)
                 .setParameter("voucherNo", voucherNo)
@@ -397,7 +397,7 @@ public class SaleItemDao {
 
     @Transactional(readOnly = true)
     public SaleItemDTO getSaleItemPaymentModeDetail(Integer voucherNo, Integer companyId, Integer financialYearId) {
-        String query = "SELECT partyId, saleInType FROM tbl_inv_sale_record WHERE voucherNo=:voucherNo AND companyId=:companyId AND financialYearId=:financialYearId";
+        String query = "SELECT partyId, saleInType FROM tbl_inv_sale_record WHERE voucherNo=:voucherNo AND companyId=:companyId AND financialYearId=:financialYearId group by receiptMemoNo";
 
         return (SaleItemDTO) sessionFactory.getCurrentSession().createSQLQuery(query)
                 .setParameter("voucherNo", voucherNo)

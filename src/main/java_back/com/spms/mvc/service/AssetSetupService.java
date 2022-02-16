@@ -128,4 +128,8 @@ public class AssetSetupService {
     public List<AssetSetupDTO> getAssetItemDetail(BigInteger faPurchaseId) {
         return assetSetupDao.getAssetItemDetail(faPurchaseId);
     }
+
+    public List<AssetSetupDTO> getAssetItemTxnDetail(BigInteger assetDetailId) {
+        return assetSetupDao.getAssetItemTxnDetail(assetDetailId);
+    }
 }

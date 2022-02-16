@@ -133,6 +133,7 @@ public class AssetSetupDao extends BaseDao {
         String query = "SELECT a.assetId,\n" +
                 " e.faPurchaseId, \n" +
                 " a.description,\n" +
+                " b.assetDetailId,\n" +
                 " b.particular,\n" +
                 " d.accTypeName AS groupName,\n" +
                 " count(e.faPurchaseId) as qty \n" +
@@ -143,7 +144,7 @@ public class AssetSetupDao extends BaseDao {
                 "LEFT JOIN tbl_fa_purchase e ON e.assetDetailId=b.assetDetailId\n" +
                 "LEFT JOIN tbl_fa_purchase_detail f ON f.faPurchaseId=e.faPurchaseId\n" +
                 " where a.companyId=:companyId\n" +
-                " group by e.faPurchaseId,a.assetId,b.particular";
+                " group by e.assetDetailId";
         Session session = sessionFactory.getCurrentSession();
         return session.createSQLQuery(query)
                 .setParameter("companyId", companyId)
@@ -166,6 +167,29 @@ public class AssetSetupDao extends BaseDao {
         Session session = sessionFactory.getCurrentSession();
         return session.createSQLQuery(query)
                 .setParameter("faPurchaseId", faPurchaseId)
+                .setResultTransformer(Transformers.aliasToBean(AssetSetupDTO.class)).list();
+    }
+
+    @Transactional(readOnly = true)
+    public List<AssetSetupDTO> getAssetItemTxnDetail(BigInteger assetDetailId) {
+        String query = "SELECT  e.faPurchaseId, \n" +
+                "CASE WHEN e.openingBalance IS NULL THEN \"Purchase\" \n" +
+                "ELSE \"Opening\" END AS description,\n" +
+                "e.purchaseDate,\n" +
+                "e.rate,\n" +
+                "count(e.faPurchaseId) as qty \n" +
+                "FROM tbl_fa_item_setup  a \n" +
+                "INNER JOIN tbl_fa_item_setup_detail b ON a.assetId=b.assetId\n" +
+                "INNER JOIN tbl_fa_group c ON c.assetClassId=a.assetClassId\n" +
+                "INNER JOIN tbl_acc_acctype d ON d.accTypeId=c.accTypeId\n" +
+                "LEFT JOIN tbl_fa_purchase e ON e.assetDetailId=b.assetDetailId\n" +
+                "LEFT JOIN tbl_fa_purchase_detail f ON f.faPurchaseId=e.faPurchaseId\n" +
+                "where e.assetDetailId=:assetDetailId\n" +
+                "group by e.faPurchaseId,a.assetId,b.particular\n" +
+                "ORDER BY purchaseDate ASC;";
+        Session session = sessionFactory.getCurrentSession();
+        return session.createSQLQuery(query)
+                .setParameter("assetDetailId", assetDetailId)
                 .setResultTransformer(Transformers.aliasToBean(AssetSetupDTO.class)).list();
     }
 }

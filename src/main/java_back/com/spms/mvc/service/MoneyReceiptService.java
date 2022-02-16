@@ -53,7 +53,7 @@ public class MoneyReceiptService {
         return stringReceiptNo;
     }
 
-    @Transactional(rollbackOn = Exception.class)
+   /* @Transactional(rollbackOn = Exception.class)*/
     public ResponseMessage save(MoneyReceiptDTO moneyReceiptDTO, CurrentUser currentUser) throws ParseException {
         //region accounting Region
         VoucherDTO voucherDTO = new VoucherDTO();
@@ -73,18 +73,60 @@ public class MoneyReceiptService {
         partyVoucher.setIsCash(moneyReceiptDTO.getIsCash());
         voucherDetailDTOs.add(partyVoucher);
 
+        String ledgerName = ledgerDao.getNameByLedgerId(moneyReceiptDTO.getPartyLedgerId(), currentUser.getCompanyId(), currentUser.getFinancialYearId());
+
         //CR TDS voucher
         VoucherDetailDTO tdsVoucher = new VoucherDetailDTO();
-        tdsVoucher.setLedgerId(ledgerService.getLedgerIdByLedgerName(LedgerType.TDS.getText(),
+        tdsVoucher.setLedgerId(ledgerService.getLedgerIdByLedgerName(LedgerType.TDS_RECEIVABLE.getText(),
                 currentUser, AccountTypeEnum.RECEIVABLE.getValue()));
         tdsVoucher.setDrcrAmount(AccountingUtil.drAmount(moneyReceiptDTO.gettDSAmount()));
         tdsVoucher.setIsCash(moneyReceiptDTO.getIsCash());
         voucherDetailDTOs.add(tdsVoucher);
 
+        //CR Retention
+        if (moneyReceiptDTO.getRetentionAmount() == null) {
+            moneyReceiptDTO.setRetentionAmount(0.0);
+        }
+        if (moneyReceiptDTO.getRetentionAmount() > 0) {
+            VoucherDetailDTO retentionVoucher = new VoucherDetailDTO();
+            retentionVoucher.setLedgerId(ledgerService.getLedgerIdByLedgerName(
+                    ledgerName + "(Retention)", currentUser, AccountTypeEnum.RETENTION.getValue()));
+            retentionVoucher.setDrcrAmount(AccountingUtil.drAmount(moneyReceiptDTO.getRetentionAmount()));
+            retentionVoucher.setIsCash(moneyReceiptDTO.getIsCash());
+            voucherDetailDTOs.add(retentionVoucher);
+        }
+
+
+        //CR Mobilization Advance
+        if (moneyReceiptDTO.getMobilizationAdvAmount() == null) {
+            moneyReceiptDTO.setMobilizationAdvAmount(0.0);
+        }
+        if (moneyReceiptDTO.getMobilizationAdvAmount() > 0) {
+            VoucherDetailDTO mobilizationAdvVoucher = new VoucherDetailDTO();
+            mobilizationAdvVoucher.setLedgerId(moneyReceiptDTO.getMobilizationAdvPartyLedgerId());
+            mobilizationAdvVoucher.setDrcrAmount(AccountingUtil.drAmount(moneyReceiptDTO.getMobilizationAdvAmount()));
+            mobilizationAdvVoucher.setIsCash(moneyReceiptDTO.getIsCash());
+            voucherDetailDTOs.add(mobilizationAdvVoucher);
+        }
+
+
+        //CR Material Advance
+        if (moneyReceiptDTO.getMaterialAdvAmount() == null) {
+            moneyReceiptDTO.setMaterialAdvAmount(0.0);
+        }
+        if (moneyReceiptDTO.getMaterialAdvAmount() > 0) {
+            VoucherDetailDTO materialAdvVoucher = new VoucherDetailDTO();
+            materialAdvVoucher.setLedgerId(moneyReceiptDTO.getMaterialAdvPartyLedgerId());
+            materialAdvVoucher.setDrcrAmount(AccountingUtil.drAmount(moneyReceiptDTO.getMaterialAdvAmount()));
+            materialAdvVoucher.setIsCash(moneyReceiptDTO.getIsCash());
+            voucherDetailDTOs.add(materialAdvVoucher);
+        }
+
+
         //DR cash/bank
         VoucherDetailDTO voucherDetailDTO = new VoucherDetailDTO();
         voucherDetailDTO.setIsCash(moneyReceiptDTO.getIsCash());
-        voucherDetailDTO.setDrcrAmount(AccountingUtil.drAmount(moneyReceiptDTO.getAmount() - moneyReceiptDTO.gettDSAmount()));
+        voucherDetailDTO.setDrcrAmount(AccountingUtil.drAmount(moneyReceiptDTO.getAmount() - (moneyReceiptDTO.gettDSAmount() + moneyReceiptDTO.getRetentionAmount() + moneyReceiptDTO.getMobilizationAdvAmount() + moneyReceiptDTO.getMaterialAdvAmount())));
         voucherDetailDTO.setBankLedgerId(moneyReceiptDTO.getBankLedgerId());
         voucherDetailDTOs.add(voucherDetailDTO);
 
@@ -98,7 +140,7 @@ public class MoneyReceiptService {
         MoneyReceipt moneyReceipt = new MoneyReceipt();
         moneyReceipt.setReceiptNo(moneyReceiptDTO.getReceiptNo());
         moneyReceipt.setPartyLedgerId(moneyReceiptDTO.getPartyLedgerId());
-        moneyReceipt.setAmount(moneyReceiptDTO.getAmount());
+        moneyReceipt.setAmount(moneyReceiptDTO.getAmount() - (moneyReceiptDTO.gettDSAmount() + moneyReceiptDTO.getRetentionAmount() + moneyReceiptDTO.getMobilizationAdvAmount() + moneyReceiptDTO.getMaterialAdvAmount()));
         moneyReceipt.setReceivedIn(moneyReceiptDTO.getIsCash());
         moneyReceipt.setReceiptDate(moneyReceiptDTO.getReceiptDate());
         moneyReceipt.setCompanyId(currentUser.getCompanyId());
@@ -123,5 +165,13 @@ public class MoneyReceiptService {
 
     public Double getReceivableAmt(Integer partyLedgerId, CurrentUser currentUser) {
         return moneyReceiptDao.getReceivableAmt(partyLedgerId, currentUser.getCompanyId());
+    }
+
+    public List<DropdownDTO> getMobilizationPartyLedgerList(Integer companyId) {
+        return moneyReceiptDao.getMobilizationPartyLedgerList(companyId);
+    }
+
+    public List<DropdownDTO> getMaterialAdvPartyLedgerList(Integer companyId) {
+        return moneyReceiptDao.getMaterialAdvPartyLedgerList(companyId);
     }
 }

@@ -65,13 +65,13 @@ public class VoucherCreationService {
 
         if (voucherCreationDao.isVoucherIdExists(voucherDTO.getVoucherNo(), currentUser.getCompanyId(), voucherDTO.getVoucherTypeId())) {
             //delete from voucher details
-            voucherCreationDao.getVoucherIdByVoucherNo(voucherDTO.getVoucherNo(), currentUser.getCompanyId(),
+            voucherCreationDao.getVoucherIdByVoucherNo(voucherDTO.getVoucherNo(), currentUser.getCompanyId(), currentUser.getFinancialYearId(),
                     voucherDTO.getVoucherTypeId()).forEach(voucherCreationDao::deleteVoucherDetailList);
             //delete from voucher
             voucherCreationDao.deleteVoucherItemsFromVoucherTable(
                     voucherCreationDao.getVoucherIdFromVoucherTable(
                             voucherDTO.getVoucherNo(),
-                            currentUser.getCompanyId(),
+                            currentUser.getCompanyId(), currentUser.getFinancialYearId(),
                             voucherDTO.getVoucherTypeId()));
         }
         voucherId = voucherCreationDao.getCurrentVoucherId() == null ? 1 : voucherCreationDao.getCurrentVoucherId() + 1;

@@ -24,7 +24,7 @@ public class UserAccessPermissionDao extends BaseDao {
 
     @Transactional(readOnly = true)
     public List<DropdownDTO> getUserRoleList() {
-        String sqlQuery = "SELECT userRoleTypeId AS valueInteger,userRoleTypeName AS text FROM tbl_user_role_type";
+        String sqlQuery = "SELECT userRoleTypeId AS valueInteger,userRoleTypeName AS text FROM tbl_user_role_type WHERE userRoleTypeId !=4";
         Session session = sessionFactory.getCurrentSession();
         return session.createSQLQuery(sqlQuery).setResultTransformer(Transformers.aliasToBean(DropdownDTO.class)).list();
     }

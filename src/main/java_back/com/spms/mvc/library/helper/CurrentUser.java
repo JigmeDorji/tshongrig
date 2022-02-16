@@ -1,3 +1,6 @@
+
+
+
 /**
  * Component Name: Spare part management
  * Name: CurrentUser
@@ -32,6 +35,7 @@ public class CurrentUser {
     private Character userStatus;
     private Character permissionType;
     private Integer businessType;
+    private String mailingAddress;
     //endregion
 
     //region public setter and getter
@@ -121,7 +125,7 @@ public class CurrentUser {
     }
 
     public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
+        this.createdDate = new Date();
     }
 
     public Character getUserStatus() {
@@ -148,5 +152,12 @@ public class CurrentUser {
         this.businessType = businessType;
     }
 
+    public String getMailingAddress() {
+        return mailingAddress;
+    }
+
+    public void setMailingAddress(String mailingAddress) {
+        this.mailingAddress = mailingAddress;
+    }
 //endregion
 }

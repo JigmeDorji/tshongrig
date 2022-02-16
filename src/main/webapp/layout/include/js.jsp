@@ -40,4 +40,6 @@
 </script>
 <script defer type="text/javascript"
         src="<c:url value='/resources/limitless/global_assets/js/demo_pages/datatables_data_sources.js'/>"></script>
+<script defer type="text/javascript"
+        src="<c:url value='/resources/limitless/global_assets/js/plugins/forms/inputs/typeahead/typeahead.bundle.min.js'/>"></script>
 

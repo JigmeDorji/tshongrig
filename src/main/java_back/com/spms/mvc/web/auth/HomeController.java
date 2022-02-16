@@ -101,6 +101,7 @@ public class HomeController {
         currentUser.setCompanyAdd(companyCreationDTO.getMailingAddress());
         currentUser.setEmail(companyCreationDTO.getEmail());
         currentUser.setContact(companyCreationDTO.getMobileNo());
+        currentUser.setMailingAddress(companyCreationDTO.getMailingAddress());
         currentUser.setBusinessType(companyCreationDTO.getBusinessType());
         request.getSession().setAttribute("currentUser", currentUser);
         modelAndView.setViewName("home");

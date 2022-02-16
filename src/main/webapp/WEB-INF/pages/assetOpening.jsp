@@ -42,7 +42,8 @@
                         <label class="  col-md-2 right-align required">As On:</label>
 
                         <div class="col-md-3">
-                            <input type="text" tabindex="2" class="form-control form-control-sm  formatDate right-align" readonly
+                            <input type="text" tabindex="2" class="form-control form-control-sm  formatDate right-align"
+                                   readonly
                                    value="${currentUser.financialYearFrom}" id="asOnDate" name="purchaseDate"
                                    required="required"/>
                         </div>
@@ -70,10 +71,11 @@
                             </tbody>
                         </table>
 
-                        <div class="form-group row row">
+                        <br>
+                        <div class="form-group row">
                             <sec:authorize access="hasAuthority('14-ADD')">
-                                <div class="col-md-2 col-lg-offset-7">
-                                    <input type="submit" class="btn btn-primary btn-block" value="Save" id="btnSave">
+                                <div class="col-md-2">
+                                    <input type="submit" class="btn btn-primary btn-group-sm" value="Save" id="btnSave">
                                 </div>
                             </sec:authorize>
                             <%--                <sec:authorize access="hasAuthority('14-DELETE')">--%>

@@ -1,6 +1,6 @@
 package com.spms.mvc.web;
 
-import com.spms.mvc.dto.AccSaleInvoiceGenerationDTO;
+import com.spms.mvc.Enumeration.AccountTypeEnum;
 import com.spms.mvc.dto.AutoVoucherDTO;
 import com.spms.mvc.library.helper.CurrentUser;
 import com.spms.mvc.library.helper.DateUtil;
@@ -39,7 +39,7 @@ import java.util.List;
 @Controller
 @PreAuthorize("isAuthenticated()")
 @RequestMapping(value = "/payment")
-public class PaymentController {
+public class PaymentController extends BaseController {
 
     @Autowired
     private MoneyReceiptService moneyReceiptService;
@@ -49,7 +49,7 @@ public class PaymentController {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String list(Model model, HttpServletRequest request) {
-        CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
+        CurrentUser currentUser = getCurrentUser(request);
         model.addAttribute("paymentDate", DateUtil.format(new Date(), DateUtil.DD_MMM_YYYY));
         model.addAttribute("bankList", moneyReceiptService.getBankList(currentUser.getCompanyId()));
         model.addAttribute("paidForTypeList", autoVoucherService.getPaidForTypeList());
@@ -61,36 +61,56 @@ public class PaymentController {
     public ResponseMessage save(HttpServletRequest request, AutoVoucherDTO autoVoucherDTO) throws
             IOException, ParseException {
         autoVoucherDTO.setTypeId(1);
-        CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
-        return autoVoucherService.save(autoVoucherDTO, currentUser);
+        return autoVoucherService.save(autoVoucherDTO, getCurrentUser(request));
     }
 
     @ResponseBody
     @RequestMapping(value = "/getLedgerUnderPayableForRepayment", method = RequestMethod.GET)
     public List<DropdownDTO> getLedgerUnderPayableForRepayment(HttpServletRequest request) {
-        return autoVoucherService.getLedgerUnderPayableForRepayment((CurrentUser) request.getSession()
-                .getAttribute("currentUser"));
+        return autoVoucherService.getLedgerUnderPayableForRepayment(getCurrentUser(request));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getAllLPayableLedgerExcludingTds", method = RequestMethod.GET)
+    public List<DropdownDTO> getAllLPayableLedgerExcludingTds(HttpServletRequest request) {
+        return autoVoucherService.getAllLPayableLedgerExcludingTds(getCurrentUser(request));
     }
 
     @ResponseBody
     @RequestMapping(value = "/getAllLedgerUnderExpenseForCost", method = RequestMethod.GET)
     public List<DropdownDTO> getAllLedgerUnderExpenseForCost(HttpServletRequest request) {
-        return autoVoucherService.getAllLedgerUnderExpenseForCost((CurrentUser) request.getSession()
-                .getAttribute("currentUser"));
+        return autoVoucherService.getAllLedgerUnderExpenseForCost(getCurrentUser(request));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/fetchTDSPayableList", method = RequestMethod.GET)
+    public ResponseMessage fetchTDSPayableList(HttpServletRequest request) {
+        return autoVoucherService.fetchTDSPayableList(getCurrentUser(request));
     }
 
     @ResponseBody
     @RequestMapping(value = "/getAllLedgerUnderAdvancePaid", method = RequestMethod.GET)
     public List<DropdownDTO> getAllLedgerUnderAdvancePaid(HttpServletRequest request) {
-        return autoVoucherService.getAllLedgerUnderAdvancePaid((CurrentUser) request.getSession()
-                .getAttribute("currentUser"));
+        return autoVoucherService.getAllLedgerUnderAccountType(getCurrentUser(request),
+                AccountTypeEnum.PARTY_ADVANCE_PAID.getValue());
     }
 
     @ResponseBody
     @RequestMapping(value = "/getAllLedgerUnderAdvanceReceived", method = RequestMethod.GET)
     public List<AutoVoucherDTO> getAllLedgerUnderAdvanceReceived(HttpServletRequest request) {
-        return autoVoucherService.getAllLedgerUnderAdvanceReceived((CurrentUser) request.getSession()
-                .getAttribute("currentUser"));
+        return autoVoucherService.getAllLedgerUnderAdvanceReceived(getCurrentUser(request));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getRepaymentAmount", method = RequestMethod.GET)
+    public Double getRepaymentAmount(HttpServletRequest request, String ledgerId) {
+        return autoVoucherService.getAmountByLedgerId(getCurrentUser(request), ledgerId);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getCostTypeByLedgerId", method = RequestMethod.GET)
+    public Integer getCostTypeByLedgerId(HttpServletRequest request, String ledgerId) {
+        return autoVoucherService.getCostTypeByLedgerId(getCurrentUser(request), ledgerId);
     }
 
 }

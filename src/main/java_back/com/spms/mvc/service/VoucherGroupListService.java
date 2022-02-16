@@ -157,10 +157,11 @@ public class VoucherGroupListService {
         ResponseMessage responseMessage = new ResponseMessage();
 
         //delete from voucher details
-        voucherCreationDao.getVoucherIdByVoucherNo(voucherNo, currentUser.getCompanyId(),
+        voucherCreationDao.getVoucherIdByVoucherNo(voucherNo, currentUser.getCompanyId(), currentUser.getFinancialYearId(),
                 voucherTypeId).forEach(voucherCreationDao::deleteVoucherDetailList);
         //delete from voucher
-        voucherCreationDao.deleteVoucherItemsFromVoucherTable(voucherCreationDao.getVoucherIdFromVoucherTable(voucherNo, currentUser.getCompanyId(), voucherTypeId));
+        voucherCreationDao.deleteVoucherItemsFromVoucherTable(voucherCreationDao.getVoucherIdFromVoucherTable(voucherNo, currentUser.getCompanyId(),
+                currentUser.getFinancialYearId(), voucherTypeId));
 
         //region delete sale related data
         Integer saleRecordId = voucherCreationDao.getSaleRecordIdByVoucherNo(voucherNo, currentUser.getCompanyId(),

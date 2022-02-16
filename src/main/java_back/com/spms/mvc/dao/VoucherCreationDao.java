@@ -114,12 +114,13 @@ public class VoucherCreationDao {
     }
 
     @Transactional(readOnly = true)
-    public List<Integer> getVoucherIdByVoucherNo(Integer voucherNo, Integer companyId, Integer voucherTypeId) {
-        String query = "SELECT voucherId AS voucherId FROM tbl_acc_voucher_entries where voucherNo=:voucherNo and companyId=:companyId and voucherTypeId=:voucherTypeId";
+    public List<Integer> getVoucherIdByVoucherNo(Integer voucherNo, Integer companyId, Integer financialYearId, Integer voucherTypeId) {
+        String query = "SELECT voucherId AS voucherId FROM tbl_acc_voucher_entries where voucherNo=:voucherNo and companyId=:companyId and financialYearId=:financialYearId and voucherTypeId=:voucherTypeId";
         Session session = sessionFactory.getCurrentSession();
         return session.createSQLQuery(query)
                 .setParameter("voucherNo", voucherNo)
                 .setParameter("companyId", companyId)
+                .setParameter("financialYearId", financialYearId)
                 .setParameter("voucherTypeId", voucherTypeId)
                 .list();
     }
@@ -144,12 +145,13 @@ public class VoucherCreationDao {
     }
 
     @Transactional(readOnly = true)
-    public Integer getVoucherIdFromVoucherTable(Integer voucherNo, Integer companyId, Integer voucherTypeId) {
-        String query = "SELECT voucherId FROM tbl_acc_voucher_entries where voucherNo=:voucherNo and companyId=:companyId AND voucherTypeId=:voucherTypeId";
+    public Integer getVoucherIdFromVoucherTable(Integer voucherNo, Integer companyId, Integer financialYearId, Integer voucherTypeId) {
+        String query = "SELECT voucherId FROM tbl_acc_voucher_entries where voucherNo=:voucherNo and companyId=:companyId AND voucherTypeId=:voucherTypeId and financialYearId=:financialYearId";
         Session session = sessionFactory.getCurrentSession();
         return (Integer) session.createSQLQuery(query)
                 .setParameter("voucherNo", voucherNo)
                 .setParameter("companyId", companyId)
+                .setParameter("financialYearId", financialYearId)
                 .setParameter("voucherTypeId", voucherTypeId)
                 .uniqueResult();
     }

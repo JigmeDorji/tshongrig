@@ -28,12 +28,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 
-import java.security.Security;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -75,13 +72,13 @@ public class WebAuthenticationProvider implements AuthenticationProvider {
         username = username.trim().toUpperCase();
         String password = String.valueOf(auth.getCredentials());
 
-        UserDTO userDTO = userLoginService.login(username,((BcsWebAuthenticationDetails) auth.getDetails()).getCompanyId());
+        UserDTO userDTO = userLoginService.login(username, ((BcsWebAuthenticationDetails) auth.getDetails()).getCompanyId());
 
         if (userDTO == null) {
             throw new UsernameNotFoundException(LoginErrorCode.FAILED.getCode());
         } else if (!userDTO.getUserStatus().equals('A')) {
             throw new LockedException(LoginErrorCode.LOCKED.getCode());
-        } else if (passwordEncoder.matches(userDTO.getSaltValue() + password, userDTO.getUserPassword())) {
+        } else if (passwordEncoder.matches(userDTO.getSaltValue() + password.trim(), userDTO.getUserPassword())) {
             Collection<GrantedAuthority> authorities = getAccessRight(userDTO);
             return new UsernamePasswordAuthenticationToken(userDTO, userDTO.getUserPassword(), authorities);
         } else {

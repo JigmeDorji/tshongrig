@@ -128,11 +128,11 @@ assetSetup = (function () {
                                 deleteBtn = '<button  type="button" class="btn btn-danger btn-xs" id="btnDelete"><i class="fa fa-trash"></i> Delete</button>';
                             }
                             if (hasEditRole.toString() === 'true') {
-                                editBtn = '<button type="button" class="btn btn-primary btn-xs" id="btnEdit"><i class="fa fa-edit"></i> Edit</button>';
+                                editBtn = '<button type="button" class="btn btn-primary btn-sm" id="btnEdit"><i class="fa fa-edit"></i> Edit</button>';
                             }
 
                             return editBtn +
-                                '<a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#itemSaleDetailModal"><button  type="button" class="btn btn-info btn-xs" id="btnView"><i class="fa fa-info-circle"></i> View</button></a>';
+                                '<a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#itemSaleDetailModal"><button  type="button" class="btn btn-info btn-sm" id="btnView"><i class="fa fa-info-circle"></i> View</button></a>';
                         }
                     },
                 ];

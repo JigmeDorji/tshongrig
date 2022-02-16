@@ -42,6 +42,8 @@ public class MoneyReceiptController {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
         model.addAttribute("moneyReceiptNo", moneyReceiptService.getMoneyReceiptNo(currentUser));
         model.addAttribute("partyList", moneyReceiptService.getPartyLedgerList(currentUser.getCompanyId()));
+        model.addAttribute("mobilizationAdvPartyList", moneyReceiptService.getMobilizationPartyLedgerList(currentUser.getCompanyId()));
+        model.addAttribute("materialAdvPartyList", moneyReceiptService.getMaterialAdvPartyLedgerList(currentUser.getCompanyId()));
         model.addAttribute("bankList", moneyReceiptService.getBankList(currentUser.getCompanyId()));
 
         Calendar cal = Calendar.getInstance();
@@ -66,13 +68,17 @@ public class MoneyReceiptController {
     }
 
     @RequestMapping(value = "/generateMoneyReceipt")
-    public ModelAndView generateSaleInvoice(HttpServletRequest request, ModelAndView modelAndView, String moneyReceiptNo, String partyName, Double amount, Double tDSAmount,String paymentMode) {
+    public ModelAndView generateSaleInvoice(HttpServletRequest request, ModelAndView modelAndView, String moneyReceiptNo, String partyName, Double amount, Double tDSAmount,Double retentionAmount,Double mobilizationAdvAmount,Double materialAdvAmount,String paymentMode) {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
         List<MoneyReceiptDTO> dtoList = moneyReceiptService.getMoneyReceiptDetails(moneyReceiptNo, currentUser.getCompanyId());
         JRDataSource jrDataSource = new JRBeanCollectionDataSource(dtoList, false);
         Map<String, Object> params = new HashMap<String, Object>();
-        amount=amount-tDSAmount;
-        params.put("datasource", jrDataSource);
+
+        retentionAmount=retentionAmount==null?0.0:retentionAmount;
+        mobilizationAdvAmount=mobilizationAdvAmount==null?0.0:mobilizationAdvAmount;
+        materialAdvAmount=materialAdvAmount==null?0.0:materialAdvAmount;
+
+        amount=amount-(tDSAmount+retentionAmount+mobilizationAdvAmount+materialAdvAmount);
         params.put("datasource", jrDataSource);
         params.put("moneyReceiptNo", moneyReceiptNo);
         params.put("partyName", partyName);
@@ -81,6 +87,7 @@ public class MoneyReceiptController {
         params.put("tDSAmount", tDSAmount);
         params.put("receiptDate", new Date());
         params.put("companyName", currentUser.getCompanyName());
+        params.put("companyMailingAddress", currentUser.getCompanyAdd());
         params.put("companyContact", currentUser.getContact());
         params.put("companyEmailID", currentUser.getEmail());
         params.put("printedDate", new Date());

@@ -20,10 +20,7 @@ import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Created by SonamPC on 13-Dec-16.
@@ -69,10 +66,10 @@ public class AddItemService {
         ResponseMessage responseMessage = new ResponseMessage();
 
         /*validate item name is exist or not*/
-        for(PurchaseDTO purchaseDTO:purchaseCallingDTO.getPurchaseDTOS()){
-            if(addItemDao.checkIsItemNameExist(purchaseDTO.getItemName(),currentUser,purchaseDTO.getItemCode())){
+        for (PurchaseDTO purchaseDTO : purchaseCallingDTO.getPurchaseDTOS()) {
+            if (addItemDao.checkIsItemNameExist(purchaseDTO.getItemName(), currentUser, purchaseDTO.getItemCode())) {
                 responseMessage.setStatus(SystemDataInt.MESSAGE_STATUS_UNSUCCESSFUL.value());
-                responseMessage.setText("Item already exist.");
+                responseMessage.setText("Item name '" + purchaseDTO.getItemName() + "' already exist. Please select existing item '" + purchaseDTO.getItemName() + "' and add again.");
                 return responseMessage;
             }
         }
@@ -297,11 +294,13 @@ public class AddItemService {
 
         if (cash.equals(PaymentModeTypeEnum.CASH.getValue())) {
 
-            openingBalance = voucherGroupListService.getOpeningBalance(
-                    ledgerService.getLedgerIdByAccountTypeId(AccountTypeEnum.CASH.getValue(),
-                            currentUser.getCompanyId()),
-                    currentPeriodFrom, currentPeriodTo, currentUser).getOpeningBal();
+            Optional<String> ledgerId = Optional.ofNullable(ledgerService.getLedgerIdByAccountTypeId(AccountTypeEnum.CASH.getValue(),
+                    currentUser.getCompanyId()));
 
+            if (ledgerId.isPresent()) {
+                openingBalance = voucherGroupListService.getOpeningBalance(ledgerId.get(),
+                        currentPeriodFrom, currentPeriodTo, currentUser).getOpeningBal();
+            }
             totalCashAmount = addItemDao.getTotalCash(AccountTypeEnum.CASH.getValue(),
                     currentUser.getCompanyId(),
                     currentUser.getFinancialYearId());

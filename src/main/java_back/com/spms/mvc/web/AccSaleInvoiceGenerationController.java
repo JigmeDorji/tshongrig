@@ -92,6 +92,7 @@ public class AccSaleInvoiceGenerationController {
         params.put("partyName", accSaleInvoiceGenerationDTO.getPartyName());
         params.put("partyAddress", accSaleInvoiceGenerationDTO.getPartyAddress());
         params.put("companyName", currentUser.getCompanyName());
+        params.put("companyMailingAddress", currentUser.getCompanyAdd());
         params.put("companyContact", currentUser.getContact());
         params.put("companyEmailID", currentUser.getEmail());
         params.put("invoiceNo", accSaleInvoiceGenerationDTO.getInvoiceNo());

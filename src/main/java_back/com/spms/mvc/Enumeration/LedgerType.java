@@ -15,7 +15,8 @@ public enum LedgerType {
     MATERIAL(9, "Material"),
     PF_EMPLOYER(10, "PF(Employer)"),
     SALARY_Production(11, "Salary Production"),
-    TDS(12, "TDS");
+    TDS_PAYABLE(12, "TDS Payable"),
+    TDS_RECEIVABLE(13, "TDS Receivable");
 
     Integer value;
     String text;

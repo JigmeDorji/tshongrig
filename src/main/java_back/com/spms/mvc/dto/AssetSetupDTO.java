@@ -1,6 +1,7 @@
 package com.spms.mvc.dto;
 
 import java.math.BigInteger;
+import java.util.Date;
 
 /**
  * Description: AssetSetupDTO
@@ -32,6 +33,7 @@ public class AssetSetupDTO {
     private String groupName;
     private BigInteger qty;
     private String status;
+    private Date purchaseDate;
 
     public BigInteger getAssetId() {
         return assetId;
@@ -143,6 +145,14 @@ public class AssetSetupDTO {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Date getPurchaseDate() {
+        return purchaseDate;
+    }
+
+    public void setPurchaseDate(Date purchaseDate) {
+        this.purchaseDate = purchaseDate;
     }
 }
 

@@ -37,7 +37,7 @@ public class AccSaleInvoiceGenerationDao {
     @Transactional(readOnly = true)
     public Boolean isCompanyInvoiceNoExists(Integer companyId) {
         Session session = sessionFactory.getCurrentSession();
-        String sql = "SELECT count(*) from tbl_acc_sale_invoice_counter a where a.companyId=:companyId ";
+        String sql = "SELECT(EXISTS(SELECT * from tbl_acc_sale_invoice_counter a where a.companyId=:companyId)) ";
         return session.createSQLQuery(sql).setParameter("companyId", companyId).uniqueResult().equals(BigInteger
                 .ZERO);
     }

@@ -80,4 +80,24 @@ public class MoneyReceiptDao{
                 .setParameter("companyId",companyId)
                 .setParameter("partyLedgerId", partyLedgerId).uniqueResult();
     }
+
+    @Transactional(readOnly = true)
+    public List<DropdownDTO> getMobilizationPartyLedgerList(Integer companyId) {
+        String query = "SELECT ledgerId AS id,ledgerName AS text FROM tbl_acc_ledger where accTypeId=:accTypeId and companyId=:companyId";
+        Session session = sessionFactory.getCurrentSession();
+        return session.createSQLQuery(query)
+                .setParameter("companyId",companyId)
+                .setParameter("accTypeId", AccountTypeEnum.MOBILIZATION_ADV.getValue())
+                .setResultTransformer(Transformers.aliasToBean(DropdownDTO.class)).list();
+    }
+
+    @Transactional(readOnly = true)
+    public List<DropdownDTO> getMaterialAdvPartyLedgerList(Integer companyId) {
+        String query = "SELECT ledgerId AS id,ledgerName AS text FROM tbl_acc_ledger where accTypeId=:accTypeId and companyId=:companyId";
+        Session session = sessionFactory.getCurrentSession();
+        return session.createSQLQuery(query)
+                .setParameter("companyId",companyId)
+                .setParameter("accTypeId", AccountTypeEnum.MATERIAL_ADV.getValue())
+                .setResultTransformer(Transformers.aliasToBean(DropdownDTO.class)).list();
+    }
 }

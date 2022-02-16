@@ -59,7 +59,7 @@ public class ViewItemDao {
 
     @Transactional(readOnly = true)
     public String getItemName(String itemCode, Integer companyId) {
-        String query = "SELECT itemName FROM tbl_inv_purchase where itemcode=:itemCode and companyId=:companyId";
+        String query = "SELECT itemName FROM tbl_inv_purchase where itemcode=:itemCode and companyId=:companyId limit 1";
         Session session = sessionFactory.getCurrentSession();
         return (String) session.createSQLQuery(query)
                 .setParameter("itemCode", itemCode)

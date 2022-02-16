@@ -23,4 +23,5 @@ public class BaseController {
     protected CurrentUser getCurrentUser(HttpServletRequest request) {
         return (CurrentUser) request.getSession().getAttribute("currentUser");
     }
+
 }

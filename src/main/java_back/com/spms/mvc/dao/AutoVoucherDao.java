@@ -3,6 +3,7 @@ package com.spms.mvc.dao;
 import com.spms.mvc.Enumeration.AccountTypeEnum;
 import com.spms.mvc.dto.AutoVoucherDTO;
 import com.spms.mvc.dto.LoanDTO;
+import com.spms.mvc.entity.LedgerWiseCostType;
 import com.spms.mvc.entity.Loan;
 import com.spms.mvc.library.helper.CurrentUser;
 import com.spms.mvc.library.helper.DropdownDTO;
@@ -59,10 +60,10 @@ public class AutoVoucherDao {
     }
 
     @Transactional(readOnly = true)
-    public List<DropdownDTO> getAllLedgerUnderAdvancePaid(CurrentUser currentUser) {
+    public List<DropdownDTO> getAllLedgerUnderAccountType(CurrentUser currentUser, Integer accountTypeId) {
         String query = "select ledgerId AS id, ledgerName AS text FROM tbl_acc_ledger WHERE accTypeId=:accountTypeId AND companyId=:companyId ";
         return sessionFactory.getCurrentSession().createSQLQuery(query)
-                .setParameter("accountTypeId", AccountTypeEnum.PARTY_ADVANCE_PAID.getValue())
+                .setParameter("accountTypeId", accountTypeId)
                 .setParameter("companyId", currentUser.getCompanyId())
                 .setResultTransformer(Transformers.aliasToBean(DropdownDTO.class)).list();
     }
@@ -116,5 +117,83 @@ public class AutoVoucherDao {
                 .setParameter("accountTypeId", AccountTypeEnum.SECURED_LOAN.getValue())
                 .setParameter("companyId", currentUser.getCompanyId())
                 .setResultTransformer(Transformers.aliasToBean(AutoVoucherDTO.class)).list();
+    }
+
+    @Transactional(readOnly = true)
+    public List<AutoVoucherDTO> getPayableList(CurrentUser currentUser) {
+        String query = "SELECT a.ledgerId AS id, a.ledgerName AS text FROM tbl_acc_ledger a WHERE accTypeId=:accountTypeId AND companyId=:companyId";
+        return sessionFactory.getCurrentSession().createSQLQuery(query)
+                .setParameter("accountTypeId", AccountTypeEnum.PAYABLE.getValue())
+                .setParameter("companyId", currentUser.getCompanyId())
+                .setResultTransformer(Transformers.aliasToBean(AutoVoucherDTO.class)).list();
+    }
+
+    @Transactional(readOnly = true)
+    public Boolean fetchTDSPayableList(CurrentUser currentUser, String ledgerName) {
+        String query = "SELECT count(ledgerId) FROM tbl_acc_ledger WHERE ledgerName=:ledgerName AND companyId=:companyId";
+        return sessionFactory.getCurrentSession().createSQLQuery(query)
+                .setParameter("ledgerName", ledgerName)
+                .setParameter("companyId", currentUser.getCompanyId())
+                .uniqueResult().equals(BigInteger.ZERO);
+    }
+
+    @Transactional(readOnly = true)
+    public List<DropdownDTO> getAllLPayableLedgerExcludingTds(CurrentUser currentUser, String ledgerId) {
+        String query = "select ledgerId AS id, ledgerName AS text FROM tbl_acc_ledger WHERE accTypeId IN(:accountTypeId) AND companyId=:companyId AND ledgerId <> :ledgerId";
+        return sessionFactory.getCurrentSession().createSQLQuery(query)
+                .setParameter("accountTypeId", AccountTypeEnum.PAYABLE.getValue())
+                .setParameter("ledgerId", ledgerId)
+                .setParameter("companyId", currentUser.getCompanyId())
+                .setResultTransformer(Transformers.aliasToBean(DropdownDTO.class)).list();
+    }
+
+    @Transactional(readOnly = true)
+    public Double getAmountByLedgerId(CurrentUser currentUser, String ledgerId) {
+        String query = "SELECT abs(sum(b.drcrAmount)) AS receiptAmount FROM tbl_acc_ledger a\n" +
+                "INNER JOIN tbl_acc_voucher_entries_detail b ON a.ledgerId=b.ledgerId\n" +
+                "WHERE b.ledgerId=:ledgerId AND companyId=:companyId \n" +
+                "group by a.ledgerId";
+        return (Double) sessionFactory.getCurrentSession().createSQLQuery(query)
+                .setParameter("ledgerId", ledgerId)
+                .setParameter("companyId", currentUser.getCompanyId())
+                .uniqueResult();
+    }
+
+    @Transactional(readOnly = true)
+    public BigInteger getMaxId(Integer companyId) {
+        String query = "SELECT max(id) FROM tbl_acc_ledger_wise_cost_type where companyId=:companyId";
+        return (BigInteger) sessionFactory.getCurrentSession().createSQLQuery(query)
+                .setParameter("companyId", companyId)
+                .uniqueResult();
+    }
+
+    @Transactional(readOnly = true)
+    public boolean checkLedgerExists(String ledgerId) {
+        String query = "SELECT count(ledgerId) FROM tbl_acc_ledger_wise_cost_type where ledgerId=:ledgerId";
+        return (Boolean) sessionFactory.getCurrentSession().createSQLQuery(query)
+                .setParameter("ledgerId", ledgerId)
+                .uniqueResult().equals(BigInteger.ZERO);
+    }
+
+    @Transactional(readOnly = true)
+    public BigInteger getIdByLedgerId(String ledgerId) {
+        String query = "SELECT id FROM tbl_acc_ledger_wise_cost_type where ledgerId=:ledgerId";
+        return (BigInteger) sessionFactory.getCurrentSession().createSQLQuery(query)
+                .setParameter("ledgerId", ledgerId)
+                .uniqueResult();
+    }
+
+    @Transactional
+    public void saveOrUpdate(LedgerWiseCostType ledgerWiseCostType) {
+        sessionFactory.getCurrentSession().saveOrUpdate(ledgerWiseCostType);
+    }
+
+    @Transactional(readOnly = true)
+    public Integer getCostTypeByLedgerId(CurrentUser currentUser, String ledgerId) {
+        String query = "SELECT costTypeId FROM tbl_acc_ledger_wise_cost_type where ledgerId=:ledgerId and companyId=:companyId";
+        return (Integer) sessionFactory.getCurrentSession().createSQLQuery(query)
+                .setParameter("ledgerId", ledgerId)
+                .setParameter("companyId", currentUser.getCompanyId())
+                .uniqueResult();
     }
 }

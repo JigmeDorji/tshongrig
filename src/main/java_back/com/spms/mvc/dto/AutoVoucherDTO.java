@@ -1,6 +1,5 @@
 package com.spms.mvc.dto;
 
-import javax.persistence.Column;
 import java.util.Date;
 
 /**
@@ -20,54 +19,46 @@ import java.util.Date;
 public class AutoVoucherDTO {
 
     private Integer autoVoucherId;
-
     private Integer typeId;
-
     private Date autoVoucherDate;
-
     private String paidTo;
-
     private String ledgerId;
-
     private String description;
-
     private Integer paidForTypeId;
-
     private Integer costId;
-
     private Double amount;
-
     private Integer tdsType;
-
     private Double tdsAmount;
-
     private String deductedFrom;
-
     private Double deductedAmount;
-
     private Integer paidInTypeId;
-
     private String bankLedgerId;
-
     private Double amountPaid;
-
     private Integer isCash;
-
     private String text;
-
     private String id;
-
     private Double receiptAmount;
-
     private Integer cashDepositWithdrawalType;
-
     private Double depositedAmount;
 
-    //receipt
+    //Receipt
     private String receiveFrom;
     private Integer receivedFor;
     private Double amountReceived;
+    private String capitalLedgerName;
 
+    //Bank Transfer
+    private String bankLedgerFromId;
+    private String bankLedgerToId;
+
+    //Adjustment
+    private String adjustedAgainst;
+    private String adjustedFrom;
+
+    //payable
+    private String partyLedgerId;
+    private String partyName;
+    private String expenditure;
 
     public Integer getAutoVoucherId() {
         return autoVoucherId;
@@ -267,5 +258,69 @@ public class AutoVoucherDTO {
 
     public void setAmountReceived(Double amountReceived) {
         this.amountReceived = amountReceived;
+    }
+
+    public String getCapitalLedgerName() {
+        return capitalLedgerName;
+    }
+
+    public void setCapitalLedgerName(String capitalLedgerName) {
+        this.capitalLedgerName = capitalLedgerName;
+    }
+
+    public String getBankLedgerFromId() {
+        return bankLedgerFromId;
+    }
+
+    public void setBankLedgerFromId(String bankLedgerFromId) {
+        this.bankLedgerFromId = bankLedgerFromId;
+    }
+
+    public String getBankLedgerToId() {
+        return bankLedgerToId;
+    }
+
+    public void setBankLedgerToId(String bankLedgerToId) {
+        this.bankLedgerToId = bankLedgerToId;
+    }
+
+    public String getAdjustedAgainst() {
+        return adjustedAgainst;
+    }
+
+    public void setAdjustedAgainst(String adjustedAgainst) {
+        this.adjustedAgainst = adjustedAgainst;
+    }
+
+    public String getAdjustedFrom() {
+        return adjustedFrom;
+    }
+
+    public void setAdjustedFrom(String adjustedFrom) {
+        this.adjustedFrom = adjustedFrom;
+    }
+
+    public String getPartyLedgerId() {
+        return partyLedgerId;
+    }
+
+    public void setPartyLedgerId(String partyLedgerId) {
+        this.partyLedgerId = partyLedgerId;
+    }
+
+    public String getPartyName() {
+        return partyName;
+    }
+
+    public void setPartyName(String partyName) {
+        this.partyName = partyName;
+    }
+
+    public String getExpenditure() {
+        return expenditure;
+    }
+
+    public void setExpenditure(String expenditure) {
+        this.expenditure = expenditure;
     }
 }

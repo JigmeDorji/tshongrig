@@ -231,4 +231,11 @@ public class CompanyCreationDao {
                 .setParameter("financialYearId", financialYearId).uniqueResult()
                 .equals(BigInteger.ZERO);
     }
+
+    @Transactional(readOnly = true)
+    public BigInteger getUserIdOfSuperAdmin() {
+        String query = "SELECT userId FROM tbl_user where userRoleTypeId=4";
+        Session session = sessionFactory.getCurrentSession();
+        return (BigInteger) session.createSQLQuery(query).uniqueResult();
+    }
 }

@@ -42,7 +42,10 @@ public enum AccountTypeEnum {
     OFFICE_EQUIPMENT(23, "Office Equipment"),
     BUILDING_AND_AMENITIES(24, "Building and Amenities"),
     MATERIAL(25, "Material"),
-    RAW_MATERIAL(26, "Raw Material");
+    RAW_MATERIAL(26, "Raw Material"),
+    RETENTION(27, "Retention"),
+    MOBILIZATION_ADV(28, "Mobilization Advance"),
+    MATERIAL_ADV(29, "Material Advance");
 
     private final Integer value;
     private final String text;

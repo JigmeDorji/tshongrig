@@ -99,7 +99,7 @@ public class SaleDetailDao {
 
     @Transactional(readOnly = true)
     public Integer getVoucherNoByReceiptMemoNo(String receiptMemoNo, CurrentUser currentUser) {
-        String query = "SELECT voucherNo FROM tbl_inv_sale_record a WHERE a.receiptMemoNo=:receiptMemoNo AND a.companyId=:companyId AND a.financialYearId=:financialYearId";
+        String query = "SELECT voucherNo FROM tbl_inv_sale_record a WHERE a.receiptMemoNo=:receiptMemoNo AND a.companyId=:companyId AND a.financialYearId=:financialYearId group by receiptMemoNo";
         Session session = sessionFactory.getCurrentSession();
         return (Integer) session.createSQLQuery(query)
                 .setParameter("companyId", currentUser.getCompanyId())

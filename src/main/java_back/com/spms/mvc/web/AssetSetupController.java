@@ -76,6 +76,12 @@ public class AssetSetupController extends BaseController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/getAssetItemTxnDetail", method = RequestMethod.GET)
+    public List<AssetSetupDTO> getAssetItemTxnDetail(BigInteger assetDetailId) throws IOException {
+        return assetSetupService.getAssetItemTxnDetail(assetDetailId);
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/saveAssetClass", method = RequestMethod.POST)
     public ResponseMessage saveAssetClass(HttpServletRequest request, AssetSetupDTO assetSetupDTO) {
         return assetSetupService.saveAssetClass(assetSetupDTO, getCurrentUser(request));

@@ -80,11 +80,6 @@ public class FixedAssetSaleDao {
     }
 
     @Transactional
-    public void deleteSaleRelatedVoucher(String receiptMemoNo, CurrentUser currentUser) {
-
-    }
-
-    @Transactional
     public void insertToReceiptSerialCounter(Integer companyId) {
         Session session = sessionFactory.getCurrentSession();
         String sql = "INSERT INTO tbl_fa_receipt_counter VALUES(1,0,:companyId)";

@@ -85,7 +85,6 @@ public class AccBalanceSheetReportService {
         //region this will convert the total amount sign opposite if acc group is capital,NON_CURRENT_LIABILITY, CURRENT_LIABILITY
         List<AccBalanceSheetDTO> accBalanceSheetDTOS = new ArrayList<>();
 
-
         for (AccBalanceSheetDTO accBalanceSheetDTO : accBalanceSheetDTOs1) {
 
             if (accBalanceSheetDTO.getGroupId().equals(AccountTypeEnum.CAPITAL.getValue()) ||
@@ -107,7 +106,7 @@ public class AccBalanceSheetReportService {
                 calendarTo.setTime(preFinancialYearDTO.getFinancialYearTo());
                 Date preToDate = calendarTo.getTime();
                 List<AccProfitAndLossReportDTO> accProfitAndLossReportDTOsPrevious = accProfitAndLossReportService.getProfitAndLossDetails(currentUser.getCompanyId(), preFromDate, preToDate, currentUser.getBusinessType());
-                Double profitAndLossAmountPrevious = accProfitAndLossReportDTOsPrevious.get(accProfitAndLossReportDTOs.size() - 1).getAmount();
+                Double profitAndLossAmountPrevious = accProfitAndLossReportDTOsPrevious.get(accProfitAndLossReportDTOsPrevious.size() - 1).getAmount();
                 accBalanceSheetDTO.setAmount(accBalanceSheetDTO.getAmount() + profitAndLossAmountPrevious);
             }
             accBalanceSheetDTOS.add(accBalanceSheetDTO);

@@ -87,11 +87,13 @@ public class SalarySheetService extends BaseService {
 
         //region Dr voucher preparation
         //(PF)
-        VoucherDetailDTO pFEmployeeVoucherDTO = new VoucherDetailDTO();
-        pFEmployeeVoucherDTO.setDrcrAmount(AccountingUtil.crAmount(salarySheetDTO.getTotalPF()));
-        pFEmployeeVoucherDTO.setLedgerId(ledgerService.getLedgerIdByLedgerName(LedgerType.PF_EMPLOYEE.getText(),
-                currentUser, AccountTypeEnum.PAYABLE.getValue()));
-        voucherDetailDTOs.add(pFEmployeeVoucherDTO);
+        if (salarySheetDTO.getTotalPF() > 0) {
+            VoucherDetailDTO pFEmployeeVoucherDTO = new VoucherDetailDTO();
+            pFEmployeeVoucherDTO.setDrcrAmount(AccountingUtil.crAmount(salarySheetDTO.getTotalPF()));
+            pFEmployeeVoucherDTO.setLedgerId(ledgerService.getLedgerIdByLedgerName(LedgerType.PF_EMPLOYEE.getText(),
+                    currentUser, AccountTypeEnum.PAYABLE.getValue()));
+            voucherDetailDTOs.add(pFEmployeeVoucherDTO);
+        }
 
         //(GIS)
         VoucherDetailDTO gISVoucherDTO = new VoucherDetailDTO();
