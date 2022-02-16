@@ -5,12 +5,14 @@ import com.spms.mvc.dao.CompanyCreationDao;
 import com.spms.mvc.dao.FinancialYearSetupDao;
 import com.spms.mvc.dto.CompanyCreationDTO;
 import com.spms.mvc.dto.FinancialYearDTO;
+import com.spms.mvc.dto.UserDTO;
 import com.spms.mvc.entity.CompanyCreation;
 import com.spms.mvc.entity.FinancialYear;
 import com.spms.mvc.library.helper.CurrentUser;
 import com.spms.mvc.library.helper.DateUtil;
 import com.spms.mvc.library.helper.DropdownDTO;
 import com.spms.mvc.library.helper.ResponseMessage;
+import com.spms.mvc.service.auth.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +35,9 @@ public class CompanyCreationService {
 
     @Autowired
     private FinancialYearSetupDao financialYearSetupDao;
+
+    @Autowired
+    private UserService userService;
 
 
     public List<DropdownDTO> getBusinessTypeDropdown() {
@@ -89,6 +94,15 @@ public class CompanyCreationService {
             financialYear.setCreatedDate(currentUser.getCreatedDate());
             financialYear.setCompanyId(companyId);
             financialYearSetupDao.save(financialYear);
+
+            //mapping all the company for the super admin user
+            UserDTO userDTO = new UserDTO();
+            List<Integer> mappingCompany = new ArrayList<>();
+            mappingCompany.add(companyId);
+            BigInteger userId = companyCreationDao.getUserIdOfSuperAdmin();
+            userDTO.setCompanyMappingId(mappingCompany);
+            userDTO.setUserId(userId);
+            userService.saveUserWiseCompanyMapping(userDTO, userId);
         } else {
             companyId = companyCreationDTO.getCompanyId();
             companyCreation.setId(companyCreationDTO.getCompanyId());

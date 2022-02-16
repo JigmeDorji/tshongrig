@@ -54,7 +54,8 @@
                         </div>
 
                         <div class="col-md-1">
-                            <input type="button" data-toggle="modal" class="btn btn-sm btn-primary btn-xs" value="Add Particular"
+                            <input type="button" data-toggle="modal" class="btn btn-sm btn-primary btn-xs"
+                                   value="Add Particular"
                                    id="btnAddParticular">
                         </div>
                     </div>
@@ -71,7 +72,7 @@
                         <div class="col-md-2"></div>
                         <sec:authorize access="hasAuthority('14-ADD')">
                             <div class="col-md-2 col-lg-offset-2">
-                                <input type="submit" class="btn btn-primary btn-block" value="Save" id="btnSave">
+                                <input type="submit" class="btn btn-primary btn-sm" value="Save" id="btnSave">
                             </div>
                         </sec:authorize>
                     </div>
@@ -132,7 +133,8 @@
                                     <div class="form-group row row">
                                         <label class="col-sm-2 col-form-label">Asset No.</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control form-control-sm" name="assetNo" id="assetNo" readonly>
+                                            <input type="text" class="form-control form-control-sm" name="assetNo"
+                                                   id="assetNo" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row row">
@@ -148,7 +150,8 @@
                                 <div class="col-md-2">
                                 </div>
                                 <div class="col-2">
-                                    <button type="submit" class="btn btn-primary" id="btnSaveDescriptionId">Save</button>
+                                    <button type="submit" class="btn btn-primary" id="btnSaveDescriptionId">Save
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -185,20 +188,21 @@
                 </div>
             </div>
 
-            <div class="modal fade" id="itemTxnModal" tabindex="-1" role="dialog"
-                 data-backdrop="static" data-keyboard="false">
+            <div id="itemTxnModal" class="modal fade show" tabindex="-1" role="dialog">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" id="btnClose" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Asset Transaction Details</h4>
+                            <h5 class="modal-title">Asset Transaction Details</h5>
+                            <button type="button" class="close" id="btnClose" data-dismiss="modal">×</button>
                         </div>
+
                         <div class="modal-body">
 
                             <div class="form-group row">
-                                <label class="col-sm-1 col-form-label">Particular</label>
+                                <label class="col-sm-2 col-form-label">Particular</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control form-control-sm" id="modalParticular" readonly>
+                                    <input type="text" class="form-control form-control-sm" id="modalParticular"
+                                           readonly>
                                 </div>
                                 <label class="col-sm-1 col-form-label">Group</label>
                                 <div class="col-sm-4">
@@ -207,7 +211,8 @@
                                 </div>
                             </div>
                             <fieldset>
-                                <legend class="text-uppercase font-size-sm font-weight-bold">Asset Transaction Detail</legend>
+                                <legend class="text-uppercase font-size-sm font-weight-bold">Asset Transaction Detail
+                                </legend>
                                 <div class="form-group row">
                                     <table class="table table-bordered table-striped editable-grid"
                                            Id="assetTxnGrid">

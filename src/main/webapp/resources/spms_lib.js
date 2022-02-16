@@ -2,7 +2,7 @@
  * Created by Bcass Sawa on 11/27/2018.
  */
 $(document).ajaxSend(function (e, xhr, options) {
-    let token = $('input[name="_csrf"]').val();
+    var token = $('input[name="_csrf"]').val();
     xhr.setRequestHeader("X-CSRF-TOKEN", token);
     NProgress.start();
 }).ajaxStart(function () {
@@ -16,6 +16,7 @@ $(document).ajaxSend(function (e, xhr, options) {
 }).ajaxSuccess(function () {
     NProgress.done();
 });
+
 $(document).ajaxError(function (event, jqxhr, settings, thrownError) {
     switch (jqxhr.status) {
         case 500:
@@ -30,6 +31,7 @@ $(document).ajaxError(function (event, jqxhr, settings, thrownError) {
     }
 });
 
+
 function indexRowNo(tableId) {
     let iterator = 0;
     tableId.find('tbody tr').each(function () {
@@ -41,8 +43,55 @@ function indexRowNo(tableId) {
 
 spms = (function () {
 
-    function isFormValid(form) {
+    /**
+     * validate the date entered
+     * @param $this
+     * @returns {boolean}
+     */
+    function isEnteredDateValid($this) {
+        var date = $this.val();
 
+        if (date === '') {
+            return false;
+        }
+        var rxDatePattern = /^(\d{1,2})(\/|.)(\d{1,2})(\/|.)(\d{4})$/;
+        var dtArray = date.match(rxDatePattern);
+
+        if (dtArray == null) {
+            $this.val('');
+            $this.focus();
+            return false;
+        }
+
+        var dtDay = dtArray[1];
+        var dtMonth = dtArray[3];
+        var dtYear = dtArray[5];
+
+        if (dtMonth < 1 || dtMonth > 12) {
+            $this.val('');
+            $this.focus();
+            return false;
+        } else if (dtDay < 1 || dtDay > 31) {
+            $this.val('');
+            $this.focus();
+            return false;
+        } else if ((dtMonth === 4 || dtMonth === 6 || dtMonth === 9 || dtMonth === 11) && dtDay === 31) {
+            $this.val('');
+            $this.focus();
+            return false;
+            return false;
+        } else if (dtMonth === 2) {
+            var isleap = (dtYear % 4 === 0 && (dtYear % 100 !== 0 || dtYear % 400 === 0));
+            if (dtDay > 29 || (dtDay === 29 && !isleap)) {
+                $this.val('');
+                $this.focus();
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function isFormValid(form) {
         $.validator.setDefaults({
             /*highlight: function (element) {
                 $(element).closest('.form-group').addClass('has-error');
@@ -72,17 +121,16 @@ spms = (function () {
                 $(element).removeClass('error');
             }
         });
-
     }
 
     function getUrl() {
-        // return window.location.protocol + '//' + window.location.host + '/bcs/';
+        // return window.location.protocol + '//' + window.location.host + '/bds/';
         return window.location.protocol + '//' + window.location.host + '/';
         // return 'http://www.autga.bt/bcs/';
     }
 
     function baseReportLocation() {
-        // return window.location.protocol + '//' + window.location.host + '/bcs/resources/reports/';
+        // return window.location.protocol + '//' + window.location.host + '/bds/resources/reports/';
         return window.location.protocol + '//' + window.location.host + '/resources/reports/';
     }
 
@@ -209,7 +257,7 @@ spms = (function () {
      */
     function formattedDate(day, month, year) {
 
-        let monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
         if (parseInt(month) === 1) {
             month = monthNames[0];
@@ -356,6 +404,15 @@ spms = (function () {
 
     }
 
+    function autoSizeInputField(tableTBody) {
+        tableTBody.find('tr').each(function (e) {
+            let selectedRow = $(this).closest('tr');
+            selectedRow.find('.qty').find('.qty-container').css('height',
+                selectedRow.find('.description').height() + 'px');
+
+        })
+    }
+
     return {
         _formIndexing: _formIndexing,
         addRowNumber: addRowNumber,
@@ -373,13 +430,12 @@ spms = (function () {
         isFormValid: isFormValid,
         populateTableData: populateTableData,
         loadSearchList: loadSearchList,
-        numberWithCommas: numberWithCommas
+        numberWithCommas: numberWithCommas,
+        autoSizeInputField: autoSizeInputField
     }
 })();
 
 $(document).ready(function () {
-
-    // $('.select2').select2();
 
     let body = $('body');
     body.on('keypress', '.alphanumeric', function (e) {
@@ -482,7 +538,10 @@ $(document).ready(function () {
             }
         }
     );
-
+    //Tapping on touchpad event for auto suggestion
+    $(document).on('mousedown', '.autocomplete-suggestion', e => {
+        $(e.target).click();
+    });
 
 // Catch the keydown for the entire document
     let next;
@@ -516,10 +575,10 @@ $(document).ready(function () {
 
     // $(document).on('focus', '.select2', function (e) {
     //     //s2element.select2('open');
-    //     let self = $(this), form = self.parents('form:eq(0)'), focusable;
+    //     var self = $(this), form = self.parents('form:eq(0)'), focusable;
     //     // Set focus back to select2 element on closing.
     //     if (e.originalEvent) {
-    //         let s2element = $(this).siblings('select');
+    //         var s2element = $(this).siblings('select');
     //         s2element.on('select2:closing', function (e) {
     //             //s2element.select2('focus');
     //             $('select').select2().trigger("select2:close");
@@ -534,17 +593,19 @@ $(document).ready(function () {
     //     }
     // });
 
-    let formatDate = $('.formatDate');
 
-    formatDate.on('paste', function (e) {
+    body.on('paste', '.formatDate', function (e) {
         e.preventDefault();
     });
 
-    formatDate.on('blur', function (e) {
+    body.on('blur', '.formatDate', function (e) {
+
         if ($(this).val() !== '') {
             // if (e.keyCode == 13) {
             if (isEnteredDateValid($(this))) {
+
                 let dateSplit = $(this).val().split('.');
+
                 let day = dateSplit[0];
                 let month = dateSplit[1];
                 let year = dateSplit[2];
@@ -554,17 +615,20 @@ $(document).ready(function () {
 
                 const financialYearFrom = new Date($('#financialYearFrom').val());
                 const financialYearTo = new Date($('#financialYearTo').val());
+
                 const enteredDate = new Date(date);
                 let currentDate = new Date();
                 let curMonth = currentDate.getUTCMonth() + 1; //months from 1-12
                 let curDay = currentDate.getUTCDate();
                 let curYear = currentDate.getUTCFullYear();
                 let curDate = new Date(spms.formattedDate(curDay, curMonth, curYear));
+
                 if (curDate < enteredDate) {
                     errorMsg("Future date not allowed.");
                     $(this).val('');
                     return false;
                 }
+
                 if (enteredDate >= financialYearFrom && enteredDate <= financialYearTo) {
                     $(this).val(date);
                 } else {
@@ -597,19 +661,64 @@ $(document).ready(function () {
         }
     });
 
+
+    let preDateAllow = $('.preDateAllow');
+
+    preDateAllow.on('paste', function (e) {
+        e.preventDefault();
+    });
+
+    preDateAllow.on('blur', function (e) {
+        if ($(this).val() !== '') {
+            // if (e.keyCode == 13) {
+            if (isEnteredDateValid($(this))) {
+                let dateSplit = $(this).val().split('.');
+                let day = dateSplit[0];
+                let month = dateSplit[1];
+                let year = dateSplit[2];
+
+                //check whether selected date is within a active financial year
+                let date = spms.formattedDate(day, month, year);
+
+                const financialYearFrom = new Date($('#financialYearFrom').val());
+                const financialYearTo = new Date($('#financialYearTo').val());
+                const enteredDate = new Date(date);
+                let currentDate = new Date();
+                let curMonth = currentDate.getUTCMonth() + 1; //months from 1-12
+                let curDay = currentDate.getUTCDate();
+                let curYear = currentDate.getUTCFullYear();
+                alert(spms.formattedDate(curDay, curMonth, curYear))
+                let curDate = new Date(spms.formattedDate(curDay, curMonth, curYear));
+                new Date(curDay, curMonth - 1, curYear);
+                // if (curDate < enteredDate) {
+                //     errorMsg("Future date not allowed.");
+                //     $(this).val('');
+                //     return false;
+                // }
+                $(this).val(date);
+                if (enteredDate >= financialYearFrom && enteredDate <= financialYearTo) {
+
+                } else {
+                    errorMsg("Invalid date.");
+                    $(this).val('');
+                }
+            }
+        }
+    });
+
     /**
      * validate the date entered
      * @param $this
      * @returns {boolean}
      */
     function isEnteredDateValid($this) {
-        let date = $this.val();
+        var date = $this.val();
 
-        if (date == '') {
+        if (date === '') {
             return false;
         }
-        let rxDatePattern = /^(\d{1,2})(\/|.)(\d{1,2})(\/|.)(\d{4})$/;
-        let dtArray = date.match(rxDatePattern);
+        var rxDatePattern = /^(\d{1,2})(\/|.)(\d{1,2})(\/|.)(\d{4})$/;
+        var dtArray = date.match(rxDatePattern);
 
         if (dtArray == null) {
             $this.val('');
@@ -617,9 +726,9 @@ $(document).ready(function () {
             return false;
         }
 
-        let dtDay = dtArray[1];
-        let dtMonth = dtArray[3];
-        let dtYear = dtArray[5];
+        var dtDay = dtArray[1];
+        var dtMonth = dtArray[3];
+        var dtYear = dtArray[5];
 
         if (dtMonth < 1 || dtMonth > 12) {
             $this.val('');
@@ -634,7 +743,7 @@ $(document).ready(function () {
             $this.focus();
             return false;
         } else if (dtMonth == 2) {
-            let isleap = (dtYear % 4 == 0 && (dtYear % 100 != 0 || dtYear % 400 == 0));
+            var isleap = (dtYear % 4 == 0 && (dtYear % 100 != 0 || dtYear % 400 == 0));
             if (dtDay > 29 || (dtDay == 29 && !isleap)) {
                 $this.val('');
                 $this.focus();
@@ -644,31 +753,41 @@ $(document).ready(function () {
         return true;
     }
 
-    // let datePickerOptions = {
-    //     dateFormat: "dd-M-yy",
-    //     changeMonth: true,
-    //     changeYear: true,
-    //     beforeShow: function (input, inst) {
-    //         if ($(input).prop("readonly")) {
-    //             return false;
-    //         }
-    //     }
-    // };
+    var datePickerOptions = {
+        dateFormat: "dd-M-yy",
+        changeMonth: true,
+        changeYear: true,
+        beforeShow: function (input, inst) {
+            if ($(input).prop("readonly")) {
+                return false;
+            }
+        }
+    };
     let datePicker = $(".datepicker");
+    /*
+        datePicker.datepicker(datePickerOptions);
 
-    // datePicker.datepicker(datePickerOptions);
-    //
-    // datePicker.keypress(function (e) {
-    //     if (e.keyCode === 8)
-    //         $(this).val('');
-    //     e.preventDefault();
-    // });
+        datePicker.keypress(function (e) {
+            if (e.keyCode === 8)
+                $(this).val('');
+            e.preventDefault();
+        });
 
-    // body.on('focus', '.datepicker', function () {
-    //     if ($(this).hasClass('dynamic')) {
-    //         $(this).datepicker(datePickerOptions);
-    //     }
-    // });
+        body.on('focus', '.datepicker', function () {
+            if ($(this).hasClass('dynamic')) {
+                $(this).datepicker(datePickerOptions);
+            }
+        });*/
+
+    //modal overlay problem solves
+    $(document).on('show.bs.modal', '.modal', function () {
+        const zIndex = 1040 + 10 * $('.modal:visible').length;
+        $(this).css('z-index', zIndex);
+        setTimeout(() => $('.modal-backdrop')
+            .not('.modal-stack').css('z-index', zIndex - 1)
+            .addClass('modal-stack'));
+    });
+
 
     // $(document).on('keydown', function (e) {
     //     // You may replace `c` with whatever key you want
@@ -701,13 +820,16 @@ $(document).ready(function () {
     // });
 });
 
+
 /**
  * format date
  * @param date
  * @returns {string}
  */
 function formatAsDate(date) {
-    if (date) {
+
+    if (date && date.toString().includes('-')) {
+
         let dateSplit = date.split('-');
         let year = dateSplit[0];
         let month = dateSplit[1];
@@ -717,55 +839,25 @@ function formatAsDate(date) {
 }
 
 function errorMsg(msg, callback) {
-    if (typeof msg !== 'undefined') {
-        $.Toast("Warning", msg, "warning", {
-            has_icon: true,
-            has_close_btn: true,
-            stack: true,
-            fullscreen: true,
-            timeout: 5000,
-            sticky: false,
-            has_progress: true,
-            rtl: false,
-            position_class: "toast-top-right",
-        }, function (e) {
-            if (callback !== undefined)
-                callback(e);
-        });
-    }
-    /* swal({
-         title: msg,
-         text: "Click OK to exit",
-         type: "warning"
-     }, function (e) {
-         if (callback !== undefined)
-             callback(e);
-     });*/
-}
-
-function successMsg(msg, callback) {
-    $.Toast("Success", msg, "success", {
-        has_icon: true,
-        has_close_btn: true,
-        stack: true,
-        fullscreen: true,
-        timeout: 2000,
-        sticky: false,
-        has_progress: true,
-        rtl: false,
-        position_class: "toast-top-right",
+    swal({
+        title: msg,
+        text: "Click OK to exit",
+        type: "warning"
     }, function (e) {
         if (callback !== undefined)
             callback(e);
     });
-    /* swal({
-         title: msg,
-         text: "Click OK to exit",
-         type: "success"
-     }, function (e) {
-         if (callback !== undefined)
-             callback(e);
-     });*/
+}
+
+function successMsg(msg, callback) {
+    swal({
+        title: msg,
+        text: "Click OK to exit",
+        type: "success"
+    }, function (e) {
+        if (callback !== undefined)
+            callback(e);
+    });
 }
 
 function confirmMessage(msg, callback) {
@@ -807,11 +899,11 @@ function populate(data) {
             }
 
             //populate for select
-            if ($("select[name='" + i + "']").hasClass('select2')) {
-                $("select[name='" + i + "']").select2({
-                    data: data[i]
-                })
-            }
+            /* if ($("select[name='" + i + "']").hasClass('select2')) {
+                 $("select[name='" + i + "']").select2({
+                     data: data[i]
+                 })
+             }*/
         }
     }
 
@@ -828,20 +920,20 @@ function populate(data) {
     );
 }
 
-// $.fn.disableElements = function (status) {
-//     $(this).removeClass('error');
-//     $(this).each(
-//         function () {
-//             $(this).attr('readonly', status);
-//             $(this).find('option').prop('disabled', status);
-//
-//             if ($(this).is(':checkbox') || $(this).is(':radio')) {
-//                 $(this).attr('disabled', status);
-//             }
-//             $('input:checkbox[name=checkme]').attr('disabled', status);
-//         }
-//     );
-// };
+$.fn.disableElements = function (status) {
+    $(this).removeClass('error');
+    $(this).each(
+        function () {
+            $(this).attr('readonly', status);
+            $(this).find('option').prop('disabled', status);
+
+            if ($(this).is(':checkbox') || $(this).is(':radio')) {
+                $(this).attr('disabled', status);
+            }
+            $('input:checkbox[name=checkme]').attr('disabled', status);
+        }
+    );
+};
 
 
 

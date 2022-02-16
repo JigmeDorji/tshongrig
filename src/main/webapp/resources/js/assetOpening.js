@@ -107,11 +107,11 @@ assetOpening = (function () {
     function returnRow() {
         iterator = iterator + 1;
         return "<tr>" +
-            "<td><input type='text' readonly class='form-control rowNumber'>" +
+            "<td><div readonly class='form-control rowNumber'></div>" +
             "<input type='hidden' id='assetDetailId" + iterator + "' name='openingAndBuyingListDTO[0].assetDetailId'  class='form-control'>" +
             "<input type='hidden' id='fixedAssetGroupId' name='openingAndBuyingListDTO[0].fixedAssetGroupId'  class='form-control'>" +
             "<input type='hidden' id='faPurchaseId' name='openingAndBuyingListDTO[0].faPurchaseId'  class='form-control'></td>" +
-            "<td><input type='text' id='autoCompleteId" + iterator + "' name='openingAndBuyingListDTO[0].particular' class='form-control particular'></td>" +
+            "<td><input type='text' id='autoCompleteId" + iterator + "' name='openingAndBuyingListDTO[0].particular' class='form-control-td particular'></td>" +
             "<td><input type='text'  name='openingAndBuyingListDTO[0].purchaseDate' class='form-control formatDate'></td>" +
             "<td><input type='text'  name='openingAndBuyingListDTO[0].openingBalance' class='form-control openingBalance right-align'></td>" +
             "<td><input type='text'  name='openingAndBuyingListDTO[0].depreciatedValue' class='form-control depreciatedValue right-align'></td>" +
