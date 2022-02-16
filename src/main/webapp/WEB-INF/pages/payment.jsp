@@ -160,20 +160,18 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
-                        <div id="bankDetails" hidden>
-                            <label class=" col-md-2 right-align required">Select Bank Account</label>
+                    <div id="bankDetails" class="form-group row" hidden>
+                        <label class=" col-md-2 right-align required">Select Bank Account</label>
 
-                            <div class="col-md-3">
-                                <form:select class="form-control form-control-sm resetField" path="bankList"
-                                             id="bankLedgerId"
-                                             cssStyle="width: 100%"
-                                             required="required"
-                                             name="bankLedgerId">
-                                    <form:option value="">---Please Select---</form:option>
-                                    <form:options items="${bankList}" itemValue="id" itemLabel="text"/>
-                                </form:select>
-                            </div>
+                        <div class="col-md-3">
+                            <form:select class="form-control form-control-sm resetField" path="bankList"
+                                         id="bankLedgerId"
+                                         cssStyle="width: 100%"
+                                         required="required"
+                                         name="bankLedgerId">
+                                <form:option value="">---Please Select---</form:option>
+                                <form:options items="${bankList}" itemValue="id" itemLabel="text"/>
+                            </form:select>
                         </div>
                     </div>
 

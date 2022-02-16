@@ -102,14 +102,8 @@ let payment = (function () {
                     data: $(form).serializeArray(),
                     success: function (res) {
                         if (res.status === 1) {
-                            swal({
-                                // timer: 800,
-                                type: "success",
-                                title: res.text,
-                                showConfirmButton: true
-                            }, function () {
-                                window.location.reload();
-                            });
+                            successMsg(res.text);
+                            $('#paymentForm')[0].reset();
                         } else {
                             swal({
                                 type: "warning",

@@ -40,7 +40,8 @@
                         <label class="col-md-3  required">Voucher Date </label>
 
                         <div class="col-md-4">
-                            <input type="text" tabindex="2" class="form-control form-control-sm formatDate" name="autoVoucherDate"
+                            <input type="text" tabindex="2" class="form-control form-control-sm formatDate"
+                                   name="autoVoucherDate"
                                    id="autoVoucherDate" required="true" value="${paymentDate}"/>
                         </div>
                     </div>
@@ -49,7 +50,8 @@
                         <label class="col-md-3 left-label required" id="paidToText">Received From</label>
 
                         <div class="col-md-4">
-                            <input type="text" class="form-control form-control-sm" id="receiveFrom" name="receiveFrom" required>
+                            <input type="text" class="form-control form-control-sm" id="receiveFrom" name="receiveFrom"
+                                   required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -71,23 +73,20 @@
                     <div class="form-group row">
                         <label class="col-md-3 left-label required" id="descriptionText">Description</label>
                         <div class="generalContent col-md-4">
-                            <div class="col-md-12">
-                                <input type="text" tabindex="2" class="form-control form-control-sm" name="description"
-                                       id="description" required="true"/>
+                            <input type="text" tabindex="2" class="form-control form-control-sm" name="description"
+                                   id="description" required="true"/>
 
-                                <input type="hidden" tabindex="2" class="form-control form-control-sm" name="ledgerId"
-                                       id="ledgerId" required="true"/>
-                            </div>
+                            <input type="hidden" tabindex="2" class="form-control form-control-sm" name="ledgerId"
+                                   id="ledgerId" required="true"/>
                         </div>
-                        <div class="capitalContent hidden">
-                            <div class="col-md-3">
-                                <select class="form-control form-control-sm" id="capitalLedgerName" style="width: 100%"
-                                        name="capitalLedgerName">
-                                    <option value="">---Please select ---</option>
-                                    <option value="Capital">Capital</option>
-                                    <option value="Equity">Equity</option>
-                                </select>
-                            </div>
+
+                        <div class="col-md-4 capitalContent" hidden>
+                            <select class="form-control form-control-sm" id="capitalLedgerName"
+                                    name="capitalLedgerName">
+                                <option value="">---Please select ---</option>
+                                <option value="Capital">Capital</option>
+                                <option value="Equity">Equity</option>
+                            </select>
                         </div>
                     </div>
 
@@ -96,7 +95,8 @@
 
                         <div class="col-md-4">
 
-                            <input type="text" tabindex="3" class="form-control form-control-sm " name="amountReceived" required
+                            <input type="text" tabindex="3" class="form-control form-control-sm " name="amountReceived"
+                                   required
                                    id="amountReceived"/>
                         </div>
                         <label class="col-md-2  required" id="paidInText">Received In </label>
@@ -112,16 +112,17 @@
                     </div>
 
                     <div class="form-group row" id="bankDetails" hidden>
-                            <label class=" col-md-3  required">Select Bank Account</label>
+                        <label class=" col-md-3  required">Select Bank Account</label>
 
-                            <div class="col-md-4">
-                                <form:select class="form-control form-control-sm resetField" path="bankList" id="bankLedgerId" required="required"
-                                             cssStyle="width: 100%"
-                                             name="bankLedgerId">
-                                    <form:option value="">---Please Select---</form:option>
-                                    <form:options items="${bankList}" itemValue="id" itemLabel="text"/>
-                                </form:select>
-                            </div>
+                        <div class="col-md-4">
+                            <form:select class="form-control form-control-sm resetField" path="bankList"
+                                         id="bankLedgerId" required="required"
+                                         cssStyle="width: 100%"
+                                         name="bankLedgerId">
+                                <form:option value="">---Please Select---</form:option>
+                                <form:options items="${bankList}" itemValue="id" itemLabel="text"/>
+                            </form:select>
+                        </div>
                     </div>
 
 
@@ -132,7 +133,8 @@
                         </div>
 
                         <div class="col-md-3">
-                            <input type="reset" class="btn btn-primary btn-block" value="Reset" tabindex="8" id="btnReset">
+                            <input type="reset" class="btn btn-primary btn-block" value="Reset" tabindex="8"
+                                   id="btnReset">
                         </div>
                     </div>
                 </fieldset>
@@ -146,7 +148,8 @@
                             <h4 class="modal-title">Loan Details</h4>
                         </div>
                         <div class="modal-body">
-                            <form id="loanDetailForm" action="<c:url value='/receipt'/>" class="form-horizontal loanDetailForm">
+                            <form id="loanDetailForm" action="<c:url value='/receipt'/>"
+                                  class="form-horizontal loanDetailForm">
                                 <fieldset>
                                     <legend class="text-uppercase font-size-sm font-weight-bold">Loan Detail</legend>
 
@@ -157,7 +160,8 @@
                                         <label class="col-md-3  required">Loan Ledger Name</label>
 
                                         <div class="col-md-4">
-                                            <input type="text" tabindex="1" class="form-control form-control-sm resetfield" autofocus
+                                            <input type="text" tabindex="1"
+                                                   class="form-control form-control-sm resetfield" autofocus
                                                    name="loanLedgerName" id="loanLedgerName" required="true"/>
                                         </div>
                                     </div>
@@ -166,7 +170,8 @@
                                         <label class="col-md-3  required">Loan Account No. </label>
 
                                         <div class="col-md-4">
-                                            <input type="text" tabindex="2" class="form-control form-control-sm resetfield"
+                                            <input type="text" tabindex="2"
+                                                   class="form-control form-control-sm resetfield"
                                                    name="loanAccNo"
                                                    id="loanAccNo" required="true"/>
                                         </div>
@@ -176,7 +181,8 @@
                                         <label class="col-md-3  required">Bank</label>
 
                                         <div class="col-md-4">
-                                            <input type="text" tabindex="3" class="form-control form-control-sm resetfield" name="bank"
+                                            <input type="text" tabindex="3"
+                                                   class="form-control form-control-sm resetfield" name="bank"
                                                    id="bank" required="true"/>
                                         </div>
                                     </div>
@@ -185,7 +191,8 @@
                                         <label class="col-md-3 ">Branch </label>
 
                                         <div class="col-md-4">
-                                            <input type="text" tabindex="4" class="form-control form-control-sm resetfield" name="branch"
+                                            <input type="text" tabindex="4"
+                                                   class="form-control form-control-sm resetfield" name="branch"
                                                    id="branch"/>
                                         </div>
                                     </div>
@@ -194,7 +201,8 @@
                                         <label class="col-md-3 ">Monthly EMI</label>
 
                                         <div class="col-md-4">
-                                            <input type="text" tabindex="5" class="form-control form-control-sm resetfield" name="monthlyEmi"
+                                            <input type="text" tabindex="5"
+                                                   class="form-control form-control-sm resetfield" name="monthlyEmi"
                                                    id="monthlyEmi"/>
                                         </div>
                                     </div>
@@ -203,7 +211,8 @@
                                         <div class="col-md-3"></div>
 
                                         <div class="col-md-3">
-                                            <input type="submit" tabindex="9" class="btn btn-primary btn-block resetfield"
+                                            <input type="submit" tabindex="9"
+                                                   class="btn btn-primary btn-block resetfield"
                                                    value="Save" id="saveBtn">
                                         </div>
                                         <div class="col-md-3">

@@ -79,7 +79,7 @@ receipt = (function () {
             if (parseInt($(this).val()) === 1 || parseInt($(this).val()) === 2
                 || parseInt($(this).val()) === 4 || parseInt($(this).val()) === 5) {
 
-                $('.capitalContent').addClass('hidden')
+                $('.capitalContent').attr('hidden')
                 $('.generalContent').removeClass('hidden')
 
                 if (parseInt($(this).val()) === 1 || parseInt($(this).val()) === 2) {
@@ -126,7 +126,7 @@ receipt = (function () {
             }
 
             if (parseInt($(this).val()) === 3) {
-                $('.capitalContent').removeClass('hidden');
+                $('.capitalContent').removeAttr('hidden');
                 $('.generalContent').addClass('hidden')
             }
         })
