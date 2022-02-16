@@ -37,11 +37,11 @@
 
                 <fieldset class="v-no-padding">
                     <legend class="text-uppercase font-size-sm font-weight-bold">Employee detail list</legend>
-                    <div class="row">
+                    <div class="form-group row">
                         <div class="col-md-11"></div>
                         <button type="button" class="btn btn-sm btn-primary col-lg-offset-11" id="btnAddNewEmp">Add New</button>
                     </div>
-                    <div class="row">
+                    <div class="form-group row">
                         <div class="col-md-12">
                             <table class="table" Id="employeeSetUpList">
                                 <thead>
@@ -74,7 +74,7 @@
                             <div class="modal-body">
                                 <fieldset>
                                     <legend class="text-uppercase font-size-sm font-weight-bold">Enter employee details</legend>
-                                    <div class="row">
+                                    <div class="form-group row">
                                         <label class="col-md-2 right-align required">Name </label>
 
                                         <div class="col-md-3">
@@ -93,7 +93,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="row">
+                                    <div class="form-group row">
                                         <label class="col-md-2 right-align required">CID No.</label>
 
                                         <div class="col-md-3">
@@ -110,7 +110,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="row">
+                                    <div class="form-group row">
                                         <label class="col-md-2 right-align">TPN No. </label>
 
                                         <div class="col-md-3">
@@ -129,7 +129,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="row">
+                                    <div class="form-group row">
                                         <label class="col-md-2 right-align required">Basic Salary </label>
 
                                         <div class="col-md-3">
@@ -145,7 +145,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="row">
+                                    <div class="form-group row">
                                         <label class="col-md-2 right-align">Increment amount </label>
 
                                         <div class="col-md-3">
@@ -163,7 +163,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="row">
+                                    <div class="form-group row">
                                         <label class="col-md-2 right-align required">Service type </label>
 
                                         <div class="col-md-3">
@@ -184,7 +184,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="row">
+                                    <div class="form-group row">
                                         <label class="col-md-2 right-align">Email Address </label>
 
                                         <div class="col-md-3">
@@ -200,7 +200,7 @@
                                                    id="village"/>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="form-group row">
                                         <label class="col-md-2 right-align required">Gewog </label>
 
                                         <div class="col-md-3">
@@ -217,7 +217,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="row">
+                                    <div class="form-group row">
                                         <label class="col-md-2 right-align required">Account No </label>
 
                                         <div class="col-md-3">
@@ -234,7 +234,7 @@
                                         </div>
 
                                     </div>
-                                    <div class="row">
+                                    <div class="form-group row">
                                         <label class="col-md-2 right-align">GIS</label>
 
                                         <div class="col-md-3">
@@ -253,7 +253,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="form-group row">
                                         <label class="col-md-2 right-align required">Status</label>
 
                                         <div class="col-md-3">
@@ -266,7 +266,7 @@
                                     </div>
 
 
-                                    <div class="row pt-4">
+                                    <div class="form-group row pt-4">
                                         <div class="col-md-2"></div>
                                         <div class="col-sm-offset-2 col-md-2">
                                             <input type="submit" tabindex="4" class="btn btn-primary btn-block" value="Save"
