@@ -161,10 +161,10 @@
                     </div>
 
                     <div class="form-group row">
-                        <div id="bankDetails" hidden>
+                        <div id="bankDetails" class="col-md-12 row" hidden>
                             <label class=" col-md-2 right-align required">Select Bank Account</label>
 
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <form:select class="form-control form-control-sm resetField" path="bankList"
                                              id="bankLedgerId"
                                              cssStyle="width: 100%"
