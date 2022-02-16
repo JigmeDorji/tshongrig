@@ -67,7 +67,7 @@ public class OtherRemittanceService extends BaseService {
         return responseMessage;
     }
 
-    @Transactional(rollbackFor = Exception.class)
+//    @Transactional(rollbackFor = Exception.class)
     public ResponseMessage remitStatutoryDetail(CurrentUser currentUser, StatutoryRemittanceDTO otherRemittanceDTO) throws ParseException {
         ResponseMessage responseMessage = new ResponseMessage();
 

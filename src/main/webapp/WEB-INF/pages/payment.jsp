@@ -159,7 +159,6 @@
                             </select>
                         </div>
                     </div>
-
                     <div id="bankDetails" class="form-group row" hidden>
                         <label class=" col-md-2 right-align required">Select Bank Account</label>
 
