@@ -717,20 +717,22 @@ function formatAsDate(date) {
 }
 
 function errorMsg(msg, callback) {
-    $.Toast("Warning", msg, "warning", {
-        has_icon: true,
-        has_close_btn: true,
-        stack: true,
-        fullscreen: true,
-        timeout: 5000,
-        sticky: false,
-        has_progress: true,
-        rtl: false,
-        position_class: "toast-top-right",
-    }, function (e) {
-        if (callback !== undefined)
-            callback(e);
-    });
+    if (typeof msg !== 'undefined') {
+        $.Toast("Warning", msg, "warning", {
+            has_icon: true,
+            has_close_btn: true,
+            stack: true,
+            fullscreen: true,
+            timeout: 5000,
+            sticky: false,
+            has_progress: true,
+            rtl: false,
+            position_class: "toast-top-right",
+        }, function (e) {
+            if (callback !== undefined)
+                callback(e);
+        });
+    }
     /* swal({
          title: msg,
          text: "Click OK to exit",

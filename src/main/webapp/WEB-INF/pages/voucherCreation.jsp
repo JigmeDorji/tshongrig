@@ -72,7 +72,7 @@
                            id="voucherCreationGrid">
                         <thead>
                         <tr class="bg-primary text-white">
-                            <th width="7%"></th>
+                            <th width="10%"></th>
                             <th width="50%">Particulars</th>
                             <th width="20%">Debit</th>
                             <th width="20%">Credit</th>

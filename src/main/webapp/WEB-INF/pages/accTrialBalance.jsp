@@ -71,14 +71,12 @@
                             <tfoot>
                             <tr>
                                 <th>Grand Total</th>
-                                <th class="right-align">
-                                    <input type="text" class="right-align" id="totalDrAmount"
-                                           style="border: none;font-size:15px;">
+                                <th class="text-right">
+                                    <label class="text-right parentText" id="totalDrAmount"></label>
                                 </th>
-                                <th class="right-align">
-                                    <input type="text" class="right-align" id="totalCrAmount"
-                                           style="border: none;font-size:15px;"></th>
-                                <th></th>
+                                <th class="text-right">
+                                    <label class="text-right parentText" id="totalCrAmount"></label>
+                                </th>
                             </tr>
                             </tfoot>
                         </table>

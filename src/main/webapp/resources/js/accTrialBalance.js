@@ -28,15 +28,15 @@ accTrialBalance = (function () {
                     var totalCrAmount = 0;
                     //trialBalanceGrid.fnDestroy();
                     var columnDef = [
-                        {data: 'particular', class: 'left-align'},
+                        {data: 'particular', class: 'text-left'},
                         {
-                            data: 'drAmount', class: 'right-align',
+                            data: 'drAmount', class: 'text-right',
                             render: function (data) {
                                 return data !== null ? spms.formatAmount(data.toFixed(2)) : '';
                             }
                         },
                         {
-                            data: 'crAmount', class: 'right-align',
+                            data: 'crAmount', class: 'text-right',
                             render: function (data) {
                                 return data !== null ? spms.formatAmount(data.toFixed(2)) : '';
                             }
@@ -66,9 +66,9 @@ accTrialBalance = (function () {
                                         totalDrAmount = totalDrAmount + parseFloat(spms.removeCommaSeparation($(row).children(':nth-child(2)').text()));
                                     }
                                 }
-                                $(row).children(':nth-child(1)').addClass('parentText left-align');
-                                $(row).children(':nth-child(2)').addClass('parentText');
-                                $(row).children(':nth-child(3)').addClass('parentText');
+                                $(row).children(':nth-child(1)').addClass('parentText text-left');
+                                $(row).children(':nth-child(2)').addClass('parentText text-right');
+                                $(row).children(':nth-child(3)').addClass('parentText text-right');
                             } else {
 
                                 if ($(row).children(':nth-child(3)').text() !== '') {
@@ -81,8 +81,8 @@ accTrialBalance = (function () {
                             }
                         }
                     });
-                    $('#totalDrAmount').val(spms.formatAmount(totalDrAmount.toFixed(2)));
-                    $('#totalCrAmount').val(spms.formatAmount(totalCrAmount.toFixed(2)));
+                    $('#totalDrAmount').text(spms.formatAmount(totalDrAmount.toFixed(2)));
+                    $('#totalCrAmount').text(spms.formatAmount(totalCrAmount.toFixed(2)));
 
                 }
             })
