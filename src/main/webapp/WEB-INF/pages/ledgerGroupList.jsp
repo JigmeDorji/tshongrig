@@ -35,7 +35,7 @@
                     <div class="table-responsive">
                         <table class="table navigatable_table" id="ledgerGroupList">
                             <thead>
-                            <tr>
+                            <tr class="bg-primary text-white">
                                 <th></th>
                                 <th width="70%" height="40px" class="left-align">
                                     <span class="center-label" id="ledgerGroupHeadName"/></th>
