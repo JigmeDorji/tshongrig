@@ -9,6 +9,17 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+
+<html>
+<title class="title">Income & Expenditure</title>
+
+<body>
+<div class="page_title">
+    <span class="title">Accounting</span>
+    <span class="subtitle">Ledgers</span>
+</div>
+
+
 <html>
 <title class="title">Income & Expenditure</title>
 <body>
@@ -37,13 +48,15 @@
                         <label class="col-md-2  required">From</label>
 
                         <div class="col-md-2">
-                            <input type="text" tabindex="1" class="form-control form-control-sm datepicker" name="fromDate"
+                            <input type="text" tabindex="1" class="form-control form-control-sm datepicker"
+                                   name="fromDate"
                                    id="fromDate" required="required" value="${fromDate}"/>
                         </div>
                         <label class="col-md-2  required">To</label>
 
                         <div class="col-md-2">
-                            <input type="text" tabindex="1" class="form-control form-control-sm datepicker" name="toDate"
+                            <input type="text" tabindex="1" class="form-control form-control-sm datepicker"
+                                   name="toDate"
                                    id="toDate" required="required" value="${toDate}"/>
                         </div>
                         <%--  <div class="col-md-2">
@@ -58,8 +71,8 @@
                             <tr class="bg-primary text-white">
                                 <th width="70%" height="40px" class="left-align">Particular</th>
                                 <th width="30%">Amount</th>
-                                <th></th>
-                                <th></th>
+                                <th class="hidden"></th>
+                                <th class="hidden"></th>
                             </tr>
                             </thead>
                             <tbody>

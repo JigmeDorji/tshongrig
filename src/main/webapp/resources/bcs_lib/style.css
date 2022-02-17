@@ -58,20 +58,6 @@ label.required:after {
     display: none !important
 }
 
-.navigation_table td.myGlower {
-    position: relative;
-}
-
-.navigation_table td.myGlower:after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    /*border: 1px solid #467fff !important;*/
-}
-
 
 .parentText {
     font-weight: bold;
@@ -92,34 +78,50 @@ label.required:after {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10px; }
+    padding: 10px;
+}
+
 @media (min-width: 576px) {
     .signin-wrapper {
-        padding: 30px; } }
+        padding: 30px;
+    }
+}
 
 .signin-box {
     width: 400px;
     background-color: #fff;
     border: 1px solid #ced4da;
-    padding: 20px; }
+    padding: 20px;
+}
+
 @media (min-width: 480px) {
     .signin-box {
-        padding: 40px; } }
+        padding: 40px;
+    }
+}
+
 .signin-box .slim-logo {
     margin-right: 0;
-    margin-bottom: 40px; }
+    margin-bottom: 40px;
+}
+
 .signin-box.signup {
-    width: 500px; }
+    width: 500px;
+}
+
 .signin-box.signup .btn-signin {
-    margin-bottom: 20px; }
+    margin-bottom: 20px;
+}
 
 .signin-title-primary {
     font-weight: 300;
-    color: #212529; }
+    color: #212529;
+}
 
 .signin-title-secondary {
     font-weight: 300;
-    margin-bottom: 50px; }
+    margin-bottom: 50px;
+}
 
 .btn-signin {
     font-weight: 500;
@@ -130,7 +132,8 @@ label.required:after {
     border: 0;
     min-height: 40px;
     background-image: linear-gradient(to right, #1b84e7 0%, #4085a8 100%);
-    background-repeat: repeat-x; }
+    background-repeat: repeat-x;
+}
 
 .signin-left,
 .signin-right {
@@ -140,26 +143,36 @@ label.required:after {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 30px; }
+    padding: 30px;
+}
+
 @media (min-width: 768px) {
     .signin-left,
     .signin-right {
-        width: 50%; } }
+        width: 50%;
+    }
+}
+
 .signin-left .signin-box,
 .signin-right .signin-box {
     border: 0;
-    padding: 0; }
+    padding: 0;
+}
 
 .signin-left .signin-box {
-    background-color: transparent; }
+    background-color: transparent;
+}
 
 .signin-right {
-    background-color: #fff; }
+    background-color: #fff;
+}
 
 .signup-separator {
     position: relative;
     text-align: center;
-    margin-bottom: 20px; }
+    margin-bottom: 20px;
+}
+
 .signup-separator::before {
     content: '';
     position: absolute;
@@ -167,22 +180,78 @@ label.required:after {
     left: 0;
     width: 100%;
     height: 1px;
-    background-color: #dee2e6; }
+    background-color: #dee2e6;
+}
+
 .signup-separator span {
     background-color: #fff;
     padding: 0 10px;
     position: relative;
-    z-index: 5; }
+    z-index: 5;
+}
 
 .btn-facebook {
     background-color: #4267B2;
-    color: #fff; }
+    color: #fff;
+}
 
 .btn-twitter {
     background-color: #1DA1F2;
-    color: #fff; }
+    color: #fff;
+}
 
 /********** RTL SUPPORT **********/
 /*********************************/
 [dir="rtl"] .signin-box {
-    text-align: right; }
+    text-align: right;
+}
+
+
+/*
+.myGlower {
+    background-color: gray;
+    color: white;
+    -webkit-animation: glow 1.0s infinite alternate;
+    -webkit-transition: border 1s linear, box-shadow 1s linear;
+    -moz-transition: border 1s linear, box-shadow 1s linear;
+    transition: border 1s linear, box-shadow 1s linear;
+}
+
+
+.navigation_table td .myGlower {
+    position: relative;
+}
+
+.navigation_table td.myGlower:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    !*border: 1px solid #467fff !important;*!
+}*/
+
+
+.myGlower {
+    background-color: gray;
+    color: white;
+    -webkit-animation: glow 1.0s infinite alternate;
+    -webkit-transition: border 1s linear, box-shadow 1s linear;
+    -moz-transition: border 1s linear, box-shadow 1s linear;
+    transition: border 1s linear, box-shadow 1s linear;
+}
+
+.navigatable_table td.myGlower {
+    position: relative;
+}
+
+.navigatable_table td.myGlower:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: 1px solid #467fff !important;
+}

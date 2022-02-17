@@ -31,7 +31,7 @@ accProfitAndLossReport = (function () {
                     var columnDef = [
                         {data: 'ledgerName', class: "ledgerName"},
                         {
-                            data: 'amount',
+                            data: 'amount', class: "amount",
                             render: function (data) {
                                 return spms.formatAmount(data.toFixed(2));
                             }
@@ -90,7 +90,7 @@ accProfitAndLossReport = (function () {
                             if (parseFloat($(row).children(':nth-child(2)').text()) === parseFloat(0.00)) {
                                 $(row).hide();
                             }
-                            if ($(row).children(':nth-child(3)').text() === 'true') {
+                            if ($(row).children(':nth-child(3)').text() == 'true') {
                                 $(row).children(':nth-child(2)').addClass('right-align');
                                 $(row).children(':nth-child(1)').addClass('childText left-align');
                             } else {
@@ -110,92 +110,99 @@ accProfitAndLossReport = (function () {
 
     $(document).keydown(function (e) {
 
-        var is_first_row = start.parent().is("tr:first-child");
-        var is_last_row = start.parent().is("tr:last-child");
-        var is_first_table = start.closest(".navigation_table").is(".navigation_table:first-child");
-        var is_last_table = start.closest(".navigation_table").is(".navigation_table:first tr td:last-of-type");
+        let is_first_row = start.parent().is("tr:first-child");
+        let is_last_row = start.parent().is("tr:last-child");
+        let is_first_table = start.closest(".navigatable_table").is(".navigatable_table:first-child");
+        let is_last_table = start.closest(".navigatable_table").is(".navigatable_table:first tr td:last-of-type");
 
         // BEGIN handle up arrow
-        if (e.which == '38') {
+        if (e.which === 38) {
             // BEGIN up arrow variables
             let idx = start.index();
             let previous_row = start.parent().prev("tr");
             let previous_row_length = previous_row.length;
-            if (previous_row_length != 0) {
+            if (previous_row_length !== 0) {
                 sibling = previous_row.children().eq(idx);
                 selectedSibling(sibling);
             } else if (previous_row_length === 0) {
                 if (is_first_table === false) {
-                    sibling = start.closest(".navigation_table").prev(".navigation_table").find("tr:last").find("td").eq(idx);
+                    sibling = start.closest(".navigatable_table")
+                        .prev(".navigatable_table").find("tr:last").find("td").eq(idx);
                     selectedSibling(sibling);
                 }
             }
-        } else if (e.which == '40') {
+        } else if (e.which === 40) {
             // BEGIN down arrow variables
             idx = start.index();
-            var nextrow = start.parent().next("tr");
-            var nextrow_length = nextrow.length;
-            if (nextrow_length != 0) {
-                sibling = nextrow.children().eq(idx);
+            let nextRow = start.parent().next("tr");
+            let nextRow_length = nextRow.length;
+
+            if (nextRow_length !== 0) {
+                sibling = nextRow.children().eq(idx);
                 selectedSibling(sibling);
-            } else if (nextrow_length === 0) {
-                // BEGIN if there is a next table, move to the next table, at the same index
-                if (is_last_table === false) {
-                    sibling = start.closest(".navigation_table").next(".navigation_table").find("tr:first").find("td").eq(idx);
-                    selectedSibling(sibling);
-                }
+            } else if (nextRow_length === 0) {
+
+                sibling = start.closest(".navigatable_table")
+                    .find("tr td:first");
+                selectedSibling(sibling);
             }
-        } else if (e.which == '37') {
+        } else if (e.which === 37) {
             sibling = start.prev("td");
             sibling_length = sibling.length;
-            if (sibling.length != 0) {
+            if (sibling.length !== 0) {
+                if (start.hasClass("ledgerName")) {
+                    if (is_last_row) {
+                        sibling = start.closest(".navigatable_table")
+                            .find("tr td:first");
+                    } else {
+                        sibling = start.parent().prev("tr").find("td:last-child");
+                    }
+                }
                 selectedSibling(sibling);
             } else if (sibling_length === 0) {
                 if (is_first_row === false) {
                     sibling = start.parent().prev("tr").find("td:last-child");
                     selectedSibling(sibling);
-                } else if (is_first_row === true) {
-                    if (is_first_table === false) {
-                        sibling = start.closest(".navigation_table").prev(".navigation_table").find("td:last");
-                        selectedSibling(sibling);
-                    }
-                    // END if there is table before
                 }
             }
-        } else if (e.which == '39') {
+        } else if (e.which === 39) {
             sibling = start.next("td");
             // BEGIN if there is a next td
-            if (sibling.length != 0) {
-                console.log("there is a next td (sibling_length is not 0)");
+            if (sibling.length !== 0) {
+                if (start.hasClass("amount")) {
+                    if (is_last_row) {
+                        sibling = start.closest(".navigatable_table")
+                            .find("tr td:first");
+                    } else {
+                        sibling = start.parent().next("tr").find("td:first-child");
+                    }
+                }
                 selectedSibling(sibling);
             } else if (sibling_length === 0) {
-                console.log("there is no next td (sibling_length is 0)");
                 // BEGIN if there is a next row, move to the row below
                 if (is_last_row === false) {
                     sibling = start.parent().next("tr").find("td:first-child");
                     selectedSibling(sibling);
                 } else if (is_last_row === true) {
                     if (is_last_table === false) {
-                        sibling = start.closest(".navigation_table").next(".navigation_table").find("td:first");
-                        selectedSibling(sibling);
                     }
                 }
             }
-        } else if (e.which == '13') {
-            var isTopParent = start.closest(".navigation_table tr").find('.isTopParent').text();
-            var ledgerName = start.closest(".navigation_table tr").find('.ledgerName').text();
-            var accTypeId = start.closest(".navigation_table tr").find('.accTypeId').text();
-            var ledgerId = start.closest(".navigation_table tr").find('.ledgerId').text();
+        } else if (e.which === 13) {
+            let isTopParent = start.closest(".navigatable_table tr").find('.isTopParent').text();
+            let ledgerName = start.closest(".navigatable_table tr").find('.ledgerName').text();
+            let accTypeId = start.closest(".navigatable_table tr").find('.accTypeId').text();
+            let ledgerId = start.closest(".navigatable_table tr").find('.ledgerId').text();
 
-            if (accTypeId !== '' && isTopParent == 'true') {
+            if (accTypeId !== '' && isTopParent === 'true') {
                 window.location.href = spms.getUrl() + 'ledgerGroupList?accTypeId='
                     + accTypeId + '&&ledgerName=' + ledgerName + '&&report=' + "PL";
             }
         }
     });
 
-    $(document).on("click", ".navigation_table td", function () {
-        var $this = $(this);
+    $(document).on("click", ".navigatable_table td", function () {
+        let $this = $(this);
         start.removeClass("myGlower");
         start.blur();
         $this.addClass("myGlower");
