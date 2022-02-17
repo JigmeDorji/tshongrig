@@ -130,8 +130,8 @@ accBalanceSheetReport = (function () {
     $(document).keydown(function (e) {
         var is_first_row = start.parent().is("tr:first-child");
         var is_last_row = start.parent().is("tr:last-child");
-        var is_first_table = start.closest(".navigation_table").is(".navigation_table:first-child");
-        var is_last_table = start.closest(".navigation_table").is(".navigation_table:first tr td:last-of-type");
+        var is_first_table = start.closest(".navigatable_table").is(".navigatable_table:first-child");
+        var is_last_table = start.closest(".navigatable_table").is(".navigatable_table:first tr td:last-of-type");
 
         // BEGIN handle up arrow
         if (e.which == '38') {
@@ -145,7 +145,7 @@ accBalanceSheetReport = (function () {
             } else if (previous_row_length === 0) {
                 if (is_first_table === false) {
                     console.log("this td is not in first table (is_first_table is false)");
-                    sibling = start.closest(".navigation_table").prev(".navigation_table").find("tr:last").find("td").eq(idx);
+                    sibling = start.closest(".navigatable_table").prev(".navigatable_table").find("tr:last").find("td").eq(idx);
                     selectedSibling(sibling);
                 }
             }
@@ -161,7 +161,7 @@ accBalanceSheetReport = (function () {
                 // BEGIN if there is a next table, move to the next table, at the same index
                 if (is_last_table === false) {
                     console.log("this td is not in last table (is_last_table is false)");
-                    sibling = start.closest(".navigation_table").next(".navigation_table").find("tr:first").find("td").eq(idx);
+                    sibling = start.closest(".navigatable_table").next(".navigatable_table").find("tr:first").find("td").eq(idx);
                     selectedSibling(sibling);
                 }
             }
@@ -177,7 +177,7 @@ accBalanceSheetReport = (function () {
                 } else if (is_first_row === true) {
                     if (is_first_table === false) {
                         console.log("this td is not in first table (is_first_table is false)");
-                        sibling = start.closest(".navigation_table").prev(".navigation_table").find("td:last");
+                        sibling = start.closest(".navigatable_table").prev(".navigatable_table").find("td:last");
                         selectedSibling(sibling);
                     }
                     // END if there is table before
@@ -197,19 +197,19 @@ accBalanceSheetReport = (function () {
                 } else if (is_last_row === true) {
                     if (is_last_table === false) {
                         console.log("this td is not in last table (is_last_table is false)");
-                        sibling = start.closest(".navigation_table").next(".navigation_table").find("td:first");
+                        sibling = start.closest(".navigatable_table").next(".navigatable_table").find("td:first");
                         selectedSibling(sibling);
                     }
                 }
             }
         } else if (e.which == '13') {
-            var isTopParent = start.closest(".navigation_table tr").find('.isTopParent').text();
+            var isTopParent = start.closest(".navigatable_table tr").find('.isTopParent').text();
             //alert(isTopParent);
-            //var accTypeId = start.closest(".navigation_table tr").find('.accTypeId').text();
-            //var isLedgerGroup = start.closest(".navigation_table tr").find('.isLedgerGroup').text();
-            //var ledgerId = start.closest(".navigation_table tr").find('.ledgerId').text();
-            var ledgerName = start.closest(".navigation_table tr").find('.particular').text();
-            var accTypeId = start.closest(".navigation_table tr").find('.accTypeId').text();
+            //var accTypeId = start.closest(".navigatable_table tr").find('.accTypeId').text();
+            //var isLedgerGroup = start.closest(".navigatable_table tr").find('.isLedgerGroup').text();
+            //var ledgerId = start.closest(".navigatable_table tr").find('.ledgerId').text();
+            var ledgerName = start.closest(".navigatable_table tr").find('.particular').text();
+            var accTypeId = start.closest(".navigatable_table tr").find('.accTypeId').text();
             if (isTopParent == 2) {
                 if (ledgerName === "Inventory") {
                     window.location.href = spms.getUrl() + 'viewItem';
@@ -229,7 +229,7 @@ accBalanceSheetReport = (function () {
     });
 
 
-    $(document).on("click", ".navigation_table td", function () {
+    $(document).on("click", ".navigatable_table td", function () {
         var $this = $(this);
         start.removeClass("myGlower");
         start.blur();
