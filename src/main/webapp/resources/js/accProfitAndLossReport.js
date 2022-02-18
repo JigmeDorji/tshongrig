@@ -87,7 +87,7 @@ accProfitAndLossReport = (function () {
                              },
                          }],*/
                         'rowCallback': function (row) {
-                            if (parseFloat($(row).children(':nth-child(2)').text()) === parseFloat(0.00)) {
+                            if(parseFloat($(row).children(':nth-child(2)').text())===parseFloat(0.00)){
                                 $(row).hide();
                             }
                             if ($(row).children(':nth-child(3)').text() == 'true') {
@@ -109,7 +109,6 @@ accProfitAndLossReport = (function () {
 
 
     $(document).keydown(function (e) {
-
         let is_first_row = start.parent().is("tr:first-child");
         let is_last_row = start.parent().is("tr:last-child");
         let is_first_table = start.closest(".navigatable_table").is(".navigatable_table:first-child");
@@ -196,7 +195,7 @@ accProfitAndLossReport = (function () {
 
             if (accTypeId !== '' && isTopParent === 'true') {
                 window.location.href = spms.getUrl() + 'ledgerGroupList?accTypeId='
-                    + accTypeId + '&&ledgerName=' + ledgerName + '&&report=' + "PL";
+                    + accTypeId + '&&ledgerName=' + ledgerName+ '&&report=' + "PL";
             }
         }
     });

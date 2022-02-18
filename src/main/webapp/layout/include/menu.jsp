@@ -130,7 +130,7 @@
                 </li>
 
                 <%--Fixed Asset--%>
-                <li class="nav-item nav-item-submenu">
+                <%--<li class="nav-item nav-item-submenu">
                     <a href="#" class="nav-link"><i class="icon-package"></i> <span>Fixed Asset Management</span></a>
                     <ul class="nav nav-group-sub" data-submenu-title="Starter kit">
                         <li class="nav-item"><a href="<c:url value='/assetSetup' />" class="nav-link"> Asset setup</a>
@@ -144,10 +144,10 @@
                         <li class="nav-item"><a href="<c:url value='/fixedAssetSchedule' />" class="nav-link"> Fixed
                             Assets Schedule</a></li>
                     </ul>
-                </li>
+                </li>--%>
 
-                <c:if test="${currentUser.businessType ==1}">
-                    <%--Inventory--%>
+              <%--  <c:if test="${currentUser.businessType ==1}">
+                    &lt;%&ndash;Inventory&ndash;%&gt;
                     <li class="nav-item nav-item-submenu">
                         <a href="#" class="nav-link"><i class="icon-list3"></i> <span>Inventory</span></a>
                         <ul class="nav nav-group-sub" data-submenu-title="Starter kit">
@@ -172,7 +172,7 @@
                 </c:if>
 
                 <c:if test="${currentUser.businessType ==4}">
-                    <%--Material--%>
+                    &lt;%&ndash;Material&ndash;%&gt;
                     <li class="nav-item nav-item-submenu">
                         <a href="#" class="nav-link"><i class="icon icon-hammer-wrench"></i> <span>Material</span></a>
                         <ul class="nav nav-group-sub" data-submenu-title="Starter kit">
@@ -210,7 +210,7 @@
                             </li>
                         </ul>
                     </li>
-                    <%--BOQ--%>
+                    &lt;%&ndash;BOQ&ndash;%&gt;
                     <li class="nav-item nav-item-submenu">
                         <a href="#" class="nav-link"><i class="icon-bookmark4"></i> <span>BOQ</span></a>
                         <ul class="nav nav-group-sub" data-submenu-title="Starter kit">
@@ -226,7 +226,7 @@
                                 Bills</a></li>
                         </ul>
                     </li>
-                </c:if>
+                </c:if>--%>
                 <%--Financial Statement--%>
                 <li class="nav-item nav-item-submenu">
                     <a href="#" class="nav-link"><i class="icon icon-cash3"></i> <span>Financial Statement</span></a>
@@ -249,11 +249,11 @@
                                 <a class="nav-link" href="<c:url value='/accTrialBalance' />"> Trial Balance</a>
                             </sec:authorize>
                         </li>
-                        <li class="nav-item">
+                       <%-- <li class="nav-item">
                             <sec:authorize access="hasAuthority('10-VIEW')">
                                 <a class="nav-link" href="<c:url value='/accCashFlow' />"> Cash Flow</a>
                             </sec:authorize>
-                        </li>
+                        </li>--%>
                     </ul>
                 </li>
             </ul>

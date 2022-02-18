@@ -81,7 +81,7 @@
                                     <th width="5%" class="hidden"></th>
                                     <th width="30%">Name</th>
                                     <th width="10%">Account No.</th>
-                                    <th width="20%">Amount</th>
+                                    <th width="20%" class="text-right">Amount</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -92,7 +92,7 @@
                                     <th class="hidden"></th>
                                     <th></th>
                                     <th>Total</th>
-                                    <th><input class="form-control form-control-sm text-center totalAmount"  readonly name="totalAmount" value="0"></th>
+                                    <th><input class="form-control form-control-sm text-right totalAmount"  readonly name="totalAmount" value="0"></th>
                                 </tr>
                                 </tfoot>
                             </table>

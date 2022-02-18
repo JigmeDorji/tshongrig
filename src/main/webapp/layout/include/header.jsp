@@ -31,30 +31,35 @@
 
     <div class="navbar-brand text-center text-lg-left">
         <a href="/" class="d-inline-block">
-            <img src="<c:url value='/resources/limitless/global_assets/images/logobcs.png'/>" width="150%"
-                 height="auto"
+            <img src="<c:url value='/resources/limitless/global_assets/images/logo_trans.png'/>"
+                 style="width: 90px; height: 26px; margin-top: -10px"
                  class="d-none d-sm-block"
                  alt="asdasd">
-            <img src="<c:url value='/resources/limitless/global_assets/images/logobcs.png'/>" class="d-sm-none" alt="">
+            <img src="<c:url value='/resources/limitless/global_assets/images/logo_trans.png'/>" class="d-sm-none" alt="">
         </a>
     </div>
 
 
     <div class="collapse navbar-collapse order-2 order-lg-1" id="navbar_search">
         <div class="navbar-search d-flex align-items-center py-2 py-lg-0">
-            <div class="form-group-feedback form-group-feedback-left flex-grow-1">
-                <span><strong>${currentUser.companyName}</strong></span>
+            <div class="form-group-feedback form-group-feedback-right flex-grow-1">
+                <span><strong>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    ${currentUser.companyName}</strong></span>
             </div>
         </div>
     </div>
 
+
     <div class="order-1 order-lg-2 d-flex flex-1 flex-lg-0 justify-content-end align-items-center">
-        <%--    <span class="mr-2">From</span>
-            <span class="badge badge-light d-none d-lg-inline-block mr-3">${currentUser.financialYearFrom}</span>
-            <span class="mr-2">To</span>
-            <span class="badge badge-light d-none d-lg-inline-block mr-3">${currentUser.financialYearTo}</span>
-    --%>
-        <div class="header-elements  d-none d-lg-inline-block ml-8">
+        <span class="mr-2">From</span>
+        <span class="badge badge-light  d-lg-inline-block mr-3">${currentUser.financialYearFrom}</span>
+        <span class="mr-2">To</span>
+        <span class="badge badge-light  d-lg-inline-block mr-3">${currentUser.financialYearTo}</span>
+        <%--<div class="header-elements  d-none d-lg-inline-block ml-8">
             <ul class="list-inline mb-0">
                 <li class="list-inline-item">
                     <span>From : ${currentUser.financialYearFrom}</span>
@@ -63,7 +68,7 @@
                     <span>To : ${currentUser.financialYearTo}</span>
                 </li>
             </ul>
-        </div>
+        </div>--%>
 
         <ul class="navbar-nav flex-row align-items-center h-100">
 

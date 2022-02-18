@@ -174,7 +174,7 @@
                                 <input type="hidden" id="editLedgerId" name="ledgerId">
                                 <legend class="text-uppercase font-size-sm font-weight-bold">Ledger Details</legend>
                                 <div class="form-group row">
-                                    <label class="col-md-2  required">Ledger Name</label>
+                                    <label class="col-md-4  required">Ledger Name</label>
 
                                     <div class="col-md-4">
                                         <input type="text" tabindex="1" class="form-control form-control-sm"
@@ -183,11 +183,10 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-2  required">Under</label>
+                                    <label class="col-md-4  required">Under</label>
 
                                     <div class="col-md-4">
-                                        <form:select class="resetField select2" name="accTypeId" path="accTypeList"
-                                                     style="width:285px"
+                                        <form:select class="resetField form-control form-control-sm select2" name="accTypeId" path="accTypeList"
                                                      tabindex="2"
                                                      id="editAccTypeId" required="required">
                                             <form:option value="">---Please Select---</form:option>
@@ -198,7 +197,7 @@
                                 </div>
                                 <div class="editBankAccDetail">
                                     <div class="form-group row">
-                                        <label class="col-md-2  bankAccDetail">Reconciliation Date</label>
+                                        <label class="col-md-4  bankAccDetail">Reconciliation Date</label>
                                         <input type="hidden" tabindex="2" class="form-control form-control-sm"
                                                id="bankId" name="bankId"/>
                                         <div class="col-md-4">
@@ -211,7 +210,7 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="col-md-2 text-righ ">Bank account holder details</label>
+                                        <label class="col-md-4 text-righ ">Bank account holder details</label>
 
                                         <div class="col-md-4">
                                             <input type="text" tabindex="3" class="form-control form-control-sm"
@@ -220,7 +219,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-md-2  ">Account holder name</label>
+                                        <label class="col-md-4  ">Account holder name</label>
 
                                         <div class="col-md-4">
                                             <input type="text" tabindex="4" class="form-control form-control-sm "
@@ -229,7 +228,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-md-2  required">Account No.</label>
+                                        <label class="col-md-4  required">Account No.</label>
 
                                         <div class="col-md-4">
                                             <input type="text" required tabindex="5"
@@ -238,7 +237,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-md-2  bankAccDetail">Bank Name</label>
+                                        <label class="col-md-4  bankAccDetail">Bank Name</label>
 
                                         <div class="col-md-4">
                                             <input type="text" tabindex="6" class="form-control form-control-sm "
@@ -247,7 +246,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-md-2 ">Branch</label>
+                                        <label class="col-md-4 ">Branch</label>
 
                                         <div class="col-md-4">
                                             <input type="text" tabindex="7" class="form-control form-control-sm"
@@ -256,7 +255,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-2  required">Opening Balance</label>
+                                    <label class="col-md-4  required">Opening Balance</label>
 
                                     <div class="col-md-4">
                                         <input type="text" tabindex="8" class="form-control form-control-sm amount"
@@ -266,7 +265,7 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <div class="col-md-2"></div>
+                                    <div class="col-md-4"></div>
                                     <div class="col-md-2">
                                         <input type="submit" tabindex="9" class="btn btn-sm btn-primary btn-block"
                                                value="Update"

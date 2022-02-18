@@ -97,7 +97,7 @@
 
                     <div class="form-group row">
                         <div class="col-md-12">
-                            <table class="table  table-hover" id="voucherListGrid">
+                            <table class="table  table-hover table-bordered" id="voucherListGrid">
                                 <thead>
                                 <tr class="bg-primary text-white">
                                     <th width="10%">Date</th>

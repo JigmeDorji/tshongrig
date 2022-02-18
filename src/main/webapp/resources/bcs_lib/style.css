@@ -57,6 +57,14 @@ label.required:after {
 .hidden {
     display: none !important
 }
+.myGlower {
+    background-color: gray;
+    color: white;
+    -webkit-animation: glow 1.0s infinite alternate;
+    -webkit-transition: border 1s linear, box-shadow 1s linear;
+    -moz-transition: border 1s linear, box-shadow 1s linear;
+    transition: border 1s linear, box-shadow 1s linear;
+}
 
 
 .parentText {

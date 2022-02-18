@@ -11,19 +11,20 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <html>
 <title class="title"> Accounting Ledgers </title>
-
 <body>
 <!-- Page header -->
 <div class="page-header page-header-light">
     <div class="breadcrumb-line breadcrumb-line-light header-elements-lg-inline">
         <div class="d-flex">
             <div class="breadcrumb">
-                <span class="breadcrumb-item active"> Accounting Ledgers </span>
+                <a href="." class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Accounting</a>
+                <span class="breadcrumb-item active">Ledger Detail</span>
             </div>
             <a href="." class="header-elements-toggle text-body d-lg-none"><i class="icon-more"></i></a>
         </div>
     </div>
 </div>
+<!-- /page header -->
 
 <div class="content">
     <!-- Form inputs -->
@@ -48,8 +49,6 @@
                     </div>
                 </fieldset>
             </form>
-
-
             <div class="col-sm-offset-1 col-md-2" style="padding-top: 20px">
                 <input type="button" class="btn btn-primary btn-block" value="Return" id="previousPage"
                        tabindex="13">

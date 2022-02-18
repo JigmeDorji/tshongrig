@@ -15,5 +15,7 @@
 <link rel="stylesheet" href="<c:url value='/resources/bcs_lib/style.css' />">
 <link rel="stylesheet" href="<c:url value='/resources/bcs_lib/toast/toast.style.min.css' />">
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/bcs_lib/sweetalert.css' />"/>
+<link rel="stylesheet"  type="text/css" href="<c:url value='/resources/bcs_lib/datepicker.min.css'/>"/>
+
 
 <!-- /global stylesheets -->
