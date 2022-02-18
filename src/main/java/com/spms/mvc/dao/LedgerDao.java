@@ -91,11 +91,11 @@ public class LedgerDao {
 
     @Transactional(readOnly = true)
     public Boolean isLedgerNameExists(String ledgerName, Integer companyId) {
-String sqlQry = "SELECT(EXISTS(SELECT * from tbl_acc_ledger b where b.ledgerName=:ledgerName AND companyId=:companyId))";
-    return sessionFactory.getCurrentSession().createSQLQuery(sqlQry)
+        String sqlQry = "SELECT count(*) from tbl_acc_ledger b where b.ledgerName=:ledgerName AND companyId=:companyId";
+        return sessionFactory.getCurrentSession().createSQLQuery(sqlQry)
                 .setParameter("ledgerName", ledgerName)
                 .setParameter("companyId", companyId)
-                .uniqueResult().equals(BigInteger.ONE);
+                .uniqueResult().equals(BigInteger.ZERO);
     }
 
     @Transactional(readOnly = true)

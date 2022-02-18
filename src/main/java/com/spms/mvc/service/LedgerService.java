@@ -150,7 +150,7 @@ public class LedgerService {
 
     public ResponseMessage isLedgerNameExists(String ledgerName, Integer companyId) {
         ResponseMessage responseMessage = new ResponseMessage();
-        if (ledgerDao.isLedgerNameExists(ledgerName, companyId)) {
+        if (!ledgerDao.isLedgerNameExists(ledgerName, companyId)) {
             responseMessage.setStatus(0);
             responseMessage.setText("Ledger name already exists. Please try with different name.");
         } else {

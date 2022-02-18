@@ -9,17 +9,18 @@ public class MoneyReceiptDTO {
     private String receiptNo;
     private Date receiptDate;
     private String partyLedgerId;
-    private  Double amount;
-    private  Double tDSAmount;
-    private  Double retentionAmount;
-    private  Double mobilizationAdvAmount;
-    private  String mobilizationAdvPartyLedgerId;
-    private  Double materialAdvAmount;
-    private  String materialAdvPartyLedgerId;
+    private Double amount;
+    private Double tDSAmount;
+    private Double retentionAmount;
+    private Double mobilizationAdvAmount;
+    private String mobilizationAdvPartyLedgerId;
+    private Double materialAdvAmount;
+    private String materialAdvPartyLedgerId;
     private Integer isCash;
     private String bankLedgerId;
     private String ledgerName;
-
+    private String ngoDescription;
+    private String receivedFrom;
     public String getReceiptNo() {
         return receiptNo;
     }
@@ -122,5 +123,21 @@ public class MoneyReceiptDTO {
 
     public void setMaterialAdvPartyLedgerId(String materialAdvPartyLedgerId) {
         this.materialAdvPartyLedgerId = materialAdvPartyLedgerId;
+    }
+
+    public String getNgoDescription() {
+        return ngoDescription;
+    }
+
+    public void setNgoDescription(String ngoDescription) {
+        this.ngoDescription = ngoDescription;
+    }
+
+    public String getReceivedFrom() {
+        return receivedFrom;
+    }
+
+    public void setReceivedFrom(String receivedFrom) {
+        this.receivedFrom = receivedFrom;
     }
 }
