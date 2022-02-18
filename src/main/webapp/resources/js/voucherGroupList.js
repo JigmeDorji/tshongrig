@@ -34,18 +34,17 @@ voucherGroupList = (function () {
                     totalDrAmount = res[0].totalDebit;
                     totalCrAmount = res[0].totalCredit;
                     let columnDef = [
-                        {data: 'voucherCreatedDate'},
-                        {data: 'voucherNo', class: 'voucherNo'},
+                        {data: 'voucherCreatedDate', class: 'text-center'},
+                        {data: 'voucherNo', class: 'voucherNo text-center'},
                         {
-                            data: 'voucherTypeName',
+                            data: 'voucherTypeName', class: 'text-center',
                             render: function (data) {
                                 return ledgerName === "Discount" ? "Sales" : data;
                             }
                         },
                         {data: 'voucherTypeId', class: 'hidden voucherTypeId'},
                         {
-                            data: 'debitAmount',
-                            class: 'right-align',
+                            data: 'debitAmount', class: 'text-center',
                             render: function (data) {
                                 let amount = '';
                                 if (data != null) {
@@ -56,7 +55,7 @@ voucherGroupList = (function () {
                         },
                         {
                             data: 'creditAmount',
-                            class: 'right-align',
+                            class: 'text-center',
                             render: function (data) {
                                 let amount = '';
                                 if (data != null) {
@@ -67,11 +66,11 @@ voucherGroupList = (function () {
                         }, {
                             data: 'voucherTypeName',
                             render: function (data, type, row) {
-                               let typeName=row.voucherTypeName;
+                                let typeName = row.voucherTypeName;
                                 let btn = row.voucherTypeName === 'Purchase' || ledgerName === 'Purchase' ? '<a  href=' + "voucherGroupList" + '/navigateToPurchasePage?voucherNo=' +
                                     encodeURIComponent(row.voucherNo) + "&voucherNo=" + row.voucherNo + '>' +
                                     '<input type=button" class="btn btn-sm btn-primary btn-xs" style="width: 70px" value="View"></a>' :
-                                    typeName!=="Salary Admin" && typeName!=="Salary Production"&& typeName!== "GIS" && typeName!== "PF(Employee)" && typeName!== "PF(Employer)"&& typeName!== "Salary Payable"&& typeName!== "HC" && typeName!== "Salary TDS"&& typeName!== "Material" ? '<input type="button" class="btn btn-sm btn-danger btn-xs deleteBtn" style="width: 70px" value="Delete">' : ''
+                                    typeName !== "Salary Admin" && typeName !== "Salary Production" && typeName !== "GIS" && typeName !== "PF(Employee)" && typeName !== "PF(Employer)" && typeName !== "Salary Payable" && typeName !== "HC" && typeName !== "Salary TDS" && typeName !== "Material" ? '<input type="button" class="btn btn-sm btn-danger btn-xs deleteBtn" style="width: 70px" value="Delete">' : ''
                                 //return '<a href=' + "voucherGroupList" + '/deleteLedgerVoucherDetails?voucherNo=' + encodeURIComponent(row.voucherNo) + "&voucherTypeId=" + row.voucherTypeId + '>' + '<input type="button" class="btn btn-danger btn-xs deleteBtn" style="width: 70px" value="Delete"></a>'
                                 return btn
                             }
@@ -150,13 +149,13 @@ voucherGroupList = (function () {
                     $('#bankReconciliationAmount').val(spms.removeCommaSeparation(bookBalanceAmount));
                 }
             }).then(function () {
-                if($('#ledgerName').val()==="Salary Payable" || $('#ledgerName').val()==="Salary Production"
-                    || $('#ledgerName').val()==="Salary Admin"|| $('#ledgerName').val()==="HC"
-                    || $('#ledgerName').val()==="Salary TDS"|| $('#ledgerName').val()==="GIS"
-                    || $('#ledgerName').val()==="PF(Employee)"|| $('#ledgerName').val()==="PF(Employer)"
+                if ($('#ledgerName').val() === "Salary Payable" || $('#ledgerName').val() === "Salary Production"
+                    || $('#ledgerName').val() === "Salary Admin" || $('#ledgerName').val() === "HC"
+                    || $('#ledgerName').val() === "Salary TDS" || $('#ledgerName').val() === "GIS"
+                    || $('#ledgerName').val() === "PF(Employee)" || $('#ledgerName').val() === "PF(Employer)"
 
-                ){
-                    voucherListGrid.find('tbody tr .deleteBtn').addClass('hidden',true);
+                ) {
+                    voucherListGrid.find('tbody tr .deleteBtn').addClass('hidden', true);
                 }
             });
 

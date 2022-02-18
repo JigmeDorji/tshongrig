@@ -48,11 +48,12 @@ public class MoneyReceiptDao{
 
     @Transactional(readOnly = true)
     public List<DropdownDTO> getBankList(Integer companyId) {
-        String query = "SELECT ledgerId AS id,ledgerName AS text FROM tbl_acc_ledger where accTypeId=:accTypeId and companyId=:companyId";
+        String query = "SELECT ledgerId AS id,ledgerName AS text FROM tbl_acc_ledger where accTypeId IN (:accTypeId,:accTypeOverDraftId) and companyId=:companyId";
         Session session = sessionFactory.getCurrentSession();
         return session.createSQLQuery(query)
                 .setParameter("companyId",companyId)
                 .setParameter("accTypeId", AccountTypeEnum.BANK.getValue())
+                .setParameter("accTypeOverDraftId", AccountTypeEnum.BANK_OVER_DRAFT.getValue())
                 .setResultTransformer(Transformers.aliasToBean(DropdownDTO.class)).list();
 
     }

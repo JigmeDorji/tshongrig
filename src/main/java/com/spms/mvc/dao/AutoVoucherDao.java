@@ -1,8 +1,10 @@
 package com.spms.mvc.dao;
 
 import com.spms.mvc.Enumeration.AccountTypeEnum;
+import com.spms.mvc.Enumeration.VoucherTypeEnum;
 import com.spms.mvc.dto.AutoVoucherDTO;
 import com.spms.mvc.dto.LoanDTO;
+import com.spms.mvc.dto.VoucherDetailDTO;
 import com.spms.mvc.entity.LedgerWiseCostType;
 import com.spms.mvc.entity.Loan;
 import com.spms.mvc.library.helper.CurrentUser;
@@ -195,5 +197,21 @@ public class AutoVoucherDao {
                 .setParameter("ledgerId", ledgerId)
                 .setParameter("companyId", currentUser.getCompanyId())
                 .uniqueResult();
+    }
+
+    @Transactional(readOnly = true)
+    public List<VoucherDetailDTO> getVoucherDetail(Integer voucherNo, CurrentUser currentUser) {
+        String query = "SELECT  c.ledgerName as description, b.drcrAmount \n" +
+                "   FROM  tbl_acc_voucher_entries a \n" +
+                "INNER JOIN tbl_acc_voucher_entries_detail b \n" +
+                "INNER JOIN tbl_acc_ledger c ON b.ledgerId=c.ledgerId\n" +
+                "ON a.voucherId=b.voucherId\n" +
+                "WHERE a.companyId=:companyId and a.financialYearId=:financialYearId and a.voucherNo=:voucherNo and voucherTypeId=:voucherTypeId";
+        return sessionFactory.getCurrentSession().createSQLQuery(query)
+                .setParameter("voucherNo", voucherNo)
+                .setParameter("companyId", currentUser.getCompanyId())
+                .setParameter("financialYearId", currentUser.getFinancialYearId())
+                .setParameter("voucherTypeId", VoucherTypeEnum.PAYMENT.getValue())
+                .setResultTransformer(Transformers.aliasToBean(VoucherDetailDTO.class)).list();
     }
 }

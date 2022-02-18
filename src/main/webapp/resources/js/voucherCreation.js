@@ -426,7 +426,7 @@ voucherCreation = (function () {
         $('#totalDebit').val(0);
         $('#voucherCreationGrid tbody tr').each(function () {
             var selectedRow = $(this).closest('tr');
-            if (selectedRow.find(".debitAmount").val() != '') {
+            if (selectedRow.find(".debitAmount").val() !== '') {
                 totalDr = totalDr + parseFloat(spms.removeCommaSeparation(selectedRow.find(".debitAmount").val()));
                 $('#totalDebit').val(spms.formatAmount(totalDr.toFixed(2)));
             }
@@ -438,7 +438,7 @@ voucherCreation = (function () {
         var totalCr = 0;
         $('#voucherCreationGrid tbody').find('tr').each(function () {
             var selectedRow = $(this).closest('tr');
-            if (selectedRow.find(".creditAmount").val() != '') {
+            if (selectedRow.find(".creditAmount").val() !== '') {
                 totalCr = totalCr + parseFloat(spms.removeCommaSeparation(selectedRow.find(".creditAmount").val()));
                 $('#totalCredit').val(spms.formatAmount(totalCr.toFixed(2)));
             }

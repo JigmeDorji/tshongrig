@@ -2,12 +2,13 @@ package com.spms.mvc.web;
 
 import com.spms.mvc.Enumeration.AccountTypeEnum;
 import com.spms.mvc.dto.AutoVoucherDTO;
-import com.spms.mvc.library.helper.CurrentUser;
-import com.spms.mvc.library.helper.DateUtil;
-import com.spms.mvc.library.helper.DropdownDTO;
-import com.spms.mvc.library.helper.ResponseMessage;
+import com.spms.mvc.dto.VoucherDTO;
+import com.spms.mvc.dto.VoucherDetailDTO;
+import com.spms.mvc.library.helper.*;
 import com.spms.mvc.service.AutoVoucherService;
 import com.spms.mvc.service.MoneyReceiptService;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -15,12 +16,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Description: PaymentController
@@ -111,6 +115,34 @@ public class PaymentController extends BaseController {
     @RequestMapping(value = "/getCostTypeByLedgerId", method = RequestMethod.GET)
     public Integer getCostTypeByLedgerId(HttpServletRequest request, String ledgerId) {
         return autoVoucherService.getCostTypeByLedgerId(getCurrentUser(request), ledgerId);
+    }
+
+    @RequestMapping(value = "/generateReport")
+    public ModelAndView generateReport(HttpServletRequest request, Integer voucherNo) {
+        CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
+
+        List<VoucherDetailDTO> voucherDetailDTOList = autoVoucherService.getVoucherDetail(voucherNo,currentUser);
+
+        JRDataSource jrDataSource = new JRBeanCollectionDataSource(voucherDetailDTOList, false);
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("datasource", jrDataSource);
+        params.put("totalBillAmtInWords", NumberInWords.convert(calTotal(voucherDetailDTOList).longValue()));
+        params.put("receiptDate", new Date());
+        params.put("companyName", currentUser.getCompanyName());
+        params.put("companyContact", currentUser.getContact());
+        params.put("companyEmailID", currentUser.getEmail());
+        params.put("mailingAddress", currentUser.getMailingAddress());
+        params.put("printedDate", new Date());
+        params.put("userName", currentUser.getTxtUserName());
+        return new ModelAndView("raBillReport", params);
+    }
+
+    public Double calTotal(List<VoucherDetailDTO> dtoList) {
+        Double totalAmount = 0.0;
+        for (VoucherDetailDTO voucherDetailDTO : dtoList) {
+            totalAmount = totalAmount + (voucherDetailDTO.getDrcrAmount());
+        }
+        return totalAmount;
     }
 
 }

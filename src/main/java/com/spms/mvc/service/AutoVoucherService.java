@@ -177,6 +177,7 @@ public class AutoVoucherService extends BaseService {
                 ledgerWiseCostType.setCreatedBy(currentUser.getLoginId());
                 ledgerWiseCostType.setCreatedDate(currentUser.getCreatedDate());
                 autoVoucherDao.saveOrUpdate(ledgerWiseCostType);
+
             }
 
             if (autoVoucherDTO.getPaidForTypeId() == 2) {
@@ -406,6 +407,7 @@ public class AutoVoucherService extends BaseService {
 
         voucherDTO.setVoucherDetailDTOList(voucherDetailDTOList);
         voucherCreationService.performPurchaseAndSaleVoucherEntry(voucherDTO, currentUser);
+        responseMessage.setDTO(voucherDTO);
         responseMessage.setStatus(1);
         responseMessage.setText("You have successfully saved.");
         return responseMessage;
@@ -631,5 +633,24 @@ public class AutoVoucherService extends BaseService {
 
     public Integer getCostTypeByLedgerId(CurrentUser currentUser, String ledgerId) {
         return autoVoucherDao.getCostTypeByLedgerId(currentUser, ledgerId);
+    }
+
+    public List<VoucherDetailDTO> getVoucherDetail(Integer voucherNo, CurrentUser currentUser) {
+
+        List<VoucherDetailDTO> voucherDetailDTO = new ArrayList<>();
+        List<VoucherDetailDTO> voucherDetailDTOList = autoVoucherDao.getVoucherDetail(voucherNo,
+                currentUser);
+        for (VoucherDetailDTO vDTO : voucherDetailDTOList) {
+            VoucherDetailDTO voucherDetailDTO1 = new VoucherDetailDTO();
+            if (vDTO.getDrcrAmount() > 0) {
+                voucherDetailDTO1.setCreditAmount(vDTO.getDrcrAmount().toString());
+            } else {
+                double amount = Math.abs(vDTO.getDrcrAmount());
+                voucherDetailDTO1.setDebitAmount(Double.toString(amount));
+            }
+            voucherDetailDTO1.setDescription(vDTO.getDescription());
+            voucherDetailDTO.add(voucherDetailDTO1);
+        }
+        return voucherDetailDTO;
     }
 }

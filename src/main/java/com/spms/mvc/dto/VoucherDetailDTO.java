@@ -9,6 +9,7 @@ public class VoucherDetailDTO {
     private Integer voucherDetailId;
     private Integer voucherId;
     private String ledgerId;
+    private String description;
     private String debitAmount;
     private String creditAmount;
     private Double drcrAmount;
@@ -17,22 +18,6 @@ public class VoucherDetailDTO {
     private Integer accTypeId;
     private Integer isCash;
     private String bankLedgerId;
-
-    public Integer getIsCash() {
-        return isCash;
-    }
-
-    public void setIsCash(Integer isCash) {
-        this.isCash = isCash;
-    }
-
-    public Integer getAccTypeId() {
-        return accTypeId;
-    }
-
-    public void setAccTypeId(Integer accTypeId) {
-        this.accTypeId = accTypeId;
-    }
 
     public Integer getVoucherDetailId() {
         return voucherDetailId;
@@ -58,6 +43,14 @@ public class VoucherDetailDTO {
         this.ledgerId = ledgerId;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getDebitAmount() {
         return debitAmount;
     }
@@ -72,6 +65,14 @@ public class VoucherDetailDTO {
 
     public void setCreditAmount(String creditAmount) {
         this.creditAmount = creditAmount;
+    }
+
+    public Double getDrcrAmount() {
+        return drcrAmount;
+    }
+
+    public void setDrcrAmount(Double drcrAmount) {
+        this.drcrAmount = drcrAmount;
     }
 
     public Integer getVoucherTypeId() {
@@ -90,12 +91,20 @@ public class VoucherDetailDTO {
         this.voucherEntryDate = voucherEntryDate;
     }
 
-    public Double getDrcrAmount() {
-        return drcrAmount;
+    public Integer getAccTypeId() {
+        return accTypeId;
     }
 
-    public void setDrcrAmount(Double drcrAmount) {
-        this.drcrAmount = drcrAmount;
+    public void setAccTypeId(Integer accTypeId) {
+        this.accTypeId = accTypeId;
+    }
+
+    public Integer getIsCash() {
+        return isCash;
+    }
+
+    public void setIsCash(Integer isCash) {
+        this.isCash = isCash;
     }
 
     public String getBankLedgerId() {
