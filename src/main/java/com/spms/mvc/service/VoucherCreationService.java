@@ -20,6 +20,7 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -45,7 +46,7 @@ public class VoucherCreationService {
     @Transactional(rollbackFor = Exception.class)
     public ResponseMessage save(VoucherDTO voucherDTO, CurrentUser currentUser) throws ParseException {
 
-        NumberFormat format = NumberFormat.getIntegerInstance();
+        NumberFormat format = NumberFormat.getInstance(Locale.getDefault());;
         format.setMaximumFractionDigits(2);
 
         Integer voucherId;

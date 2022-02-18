@@ -91,11 +91,11 @@ accProfitAndLossReport = (function () {
                                 $(row).hide();
                             }
                             if ($(row).children(':nth-child(3)').text() == 'true') {
-                                $(row).children(':nth-child(2)').addClass('right-align');
-                                $(row).children(':nth-child(1)').addClass('childText left-align');
+                                $(row).children(':nth-child(2)').addClass('text-right');
+                                $(row).children(':nth-child(1)').addClass('childText text-left');
                             } else {
-                                $(row).children(':nth-child(2)').addClass('parentText right-align');
-                                $(row).children(':nth-child(1)').addClass('parentText left-align');
+                                $(row).children(':nth-child(2)').addClass('parentText text-right');
+                                $(row).children(':nth-child(1)').addClass('parentText text-left');
                             }
                         }
                     });

@@ -214,33 +214,6 @@ label.required:after {
     text-align: right;
 }
 
-
-/*
-.myGlower {
-    background-color: gray;
-    color: white;
-    -webkit-animation: glow 1.0s infinite alternate;
-    -webkit-transition: border 1s linear, box-shadow 1s linear;
-    -moz-transition: border 1s linear, box-shadow 1s linear;
-    transition: border 1s linear, box-shadow 1s linear;
-}
-
-
-.navigation_table td .myGlower {
-    position: relative;
-}
-
-.navigation_table td.myGlower:after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    !*border: 1px solid #467fff !important;*!
-}*/
-
-
 .myGlower {
     background-color: gray;
     color: white;

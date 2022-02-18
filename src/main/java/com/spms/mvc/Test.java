@@ -2,10 +2,10 @@ package com.spms.mvc;
 
 import com.spms.mvc.library.helper.DateUtil;
 
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 
 /**
  * Description: Test
@@ -56,5 +56,34 @@ public class Test {
             netValue = purchaseValue - currentYearDepreciation;
         }
         System.out.println(netValue);
+
+
+        /*accounting entry test*/
+
+        NumberFormat format = NumberFormat.getIntegerInstance();
+        format.setMaximumFractionDigits(2);
+
+        List<Double> list = new ArrayList<>();
+        list.add(format.parse("8185").doubleValue());
+        list.add(format.parse("2035").doubleValue());
+        list.add(format.parse("11323").doubleValue());
+        list.add(format.parse("1200").doubleValue());
+        list.add(format.parse("2000").doubleValue());
+        list.add(format.parse("6000").doubleValue());
+        list.add(format.parse("172777").doubleValue());
+        Double va = 0.0;
+        for (Double value : list) {
+            va = va + value;
+        }
+        System.out.println(va);
+
+
+        NumberFormat format2 = NumberFormat.getInstance(Locale.getDefault());
+        format2.setMaximumFractionDigits(2);
+        format2.setMinimumFractionDigits(2);
+
+        System.out.println(format2.parse("1,234.23455").doubleValue());
+
+
     }
 }
