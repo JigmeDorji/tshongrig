@@ -27880,6 +27880,7 @@ body.swal2-toast-column .swal2-toast .swal2-loading {
     border: 0 solid rgba(0, 0, 0, .15);
     z-index: 1070 !important;
     border-radius: .25rem;
+    width: 300px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, .16), 0 3px 6px rgba(0, 0, 0, .23)
 }
 
@@ -27954,6 +27955,7 @@ body.swal2-toast-column .swal2-toast .swal2-loading {
 .ui-datepicker .ui-datepicker-next:after, .ui-datepicker .ui-datepicker-prev:after {
     font-family: icomoon;
     display: block;
+    margin-top: 27px;
     font-size: 1rem;
     width: 1rem;
     text-align: center;

@@ -70,7 +70,7 @@ salaryRemittance = (function () {
                             {data: 'empName'},
                             {data: 'accNo'},
                             {
-                                data: 'takeHome', class: 'takeHome',
+                                data: 'takeHome', class: 'takeHome text-right',
                                 render: function (data) {
                                     return data;
                                 }

@@ -82,7 +82,7 @@ user = (function () {
                                         text: "Click OK to exit",
                                         type: "success"
                                     }, function () {
-                                        $('#userFormId')[0].reset();
+                                    window.location.reload();
                                     }
                                 );
                             } else {
@@ -153,7 +153,7 @@ user = (function () {
 
     //to validate that similar login id doesnt exists
     function checkIfExist() {
-        $('.username').on('blur', function () {
+        $('#username').on('blur', function () {
             let username = $('#username').val();
             if (username === "") {
             } else {

@@ -29,13 +29,28 @@
 <!-- Content area -->
 <div class="content">
     <!-- Form inputs -->
-    <div class="card">
+    <div class="card" id="printableArea">
         <div class="card-body">
+            <div class="row">
+                <div class="col-sm-12 printMe">
+                    <div class="mb-4">
+                        <div class="text-sm-center">
+                            <h4 class="text-primary mb-2 mt-lg-2">${currentUser.companyName}</h4>
+                            <ul class="list list-unstyled mb-0">
+                                <li>Address: <span class="font-weight-semibold">${currentUser.companyAdd}</span></li>
+                                <li>Email: <span class="font-weight-semibold">${currentUser.email}</span></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <form id="ledgerForm" action="<c:url value='/accBalanceSheetReport'/> " class="form-horizontal globalForm">
                 <input type="hidden" id="ledgerId" name="ledgerId">
                 <fieldset>
                     <div class="form-group row">
-                        <label class="col-md-2  required right-label">As On.</label>
+                        <label class="col-md-2  text-right">Financial Position as on</label>
 
                         <div class="col-md-2">
                             <input type="text" tabindex="1" class="form-control form-control-sm datepicker"
@@ -49,7 +64,7 @@
                             <thead>
                             <tr class="bg-primary text-white">
                                 <th width="70%" height="40px" class="left-align">Particular</th>
-                                <th width="30%">Amount</th>
+                                <th class="text-right" width="30%">Amount</th>
                                 <th></th>
                                 <th></th>
                             </tr>
@@ -60,35 +75,33 @@
                         </table>
                     </div>
 
+
                 </fieldset>
             </form>
         </div>
     </div>
+
+    <div class="col-md-12 row mt-5">
+        <div class="col-md-11"></div>
+        <input type="button"  class="btn btn-outline-info fa fa-print" onclick="printDiv('printableArea')" value="Print" />
+    </div>
 </div>
-<%--<style type="text/css">
-    .table > tbody > tr > td {
-        border-top: none;
-        border-right: 1px solid #9d9d9d;
-        border-left: 1px solid #9d9d9d;
-        line-height: 1.42857;
-        padding: 4px;
-        vertical-align: top;
-        text-align: center;
-    }
 
-    .table > thead {
-        border-top: 1px solid #9d9d9d;
-        border-right: 1px solid #9d9d9d;
-        background-color: transparent;
-        color: #000000;
-    }
 
-    .table > caption + thead > tr:first-child > td, .table > caption + thead > tr:first-child > th, .table > colgroup + thead > tr:first-child > td, .table > colgroup + thead > tr:first-child > th, .table > thead:first-child > tr:first-child > td, .table > thead:first-child > tr:first-child > th {
-        border-top: 1px solid #9d9d9d;
-        border-left: 1px solid #9d9d9d;
-        border-right: 1px solid #9d9d9d;
+
+
+<script>
+    function printDiv(divName) {
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
     }
-</style>--%>
+</script>
 </body>
 </html>
 

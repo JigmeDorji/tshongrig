@@ -124,13 +124,13 @@ spms = (function () {
     }
 
     function getUrl() {
-        // return window.location.protocol + '//' + window.location.host + '/bds/';
+        // return window.location.protocol + '//' + window.location.host + '/cab/';
         return window.location.protocol + '//' + window.location.host + '/';
         // return 'http://www.autga.bt/bcs/';
     }
 
     function baseReportLocation() {
-        // return window.location.protocol + '//' + window.location.host + '/bds/resources/reports/';
+        // return window.location.protocol + '//' + window.location.host + '/cab/resources/reports/';
         return window.location.protocol + '//' + window.location.host + '/resources/reports/';
     }
 
@@ -764,7 +764,6 @@ $(document).ready(function () {
         }
     };
     let datePicker = $(".datepicker");
-    /*
         datePicker.datepicker(datePickerOptions);
 
         datePicker.keypress(function (e) {
@@ -777,7 +776,7 @@ $(document).ready(function () {
             if ($(this).hasClass('dynamic')) {
                 $(this).datepicker(datePickerOptions);
             }
-        });*/
+        });
 
     //modal overlay problem solves
     $(document).on('show.bs.modal', '.modal', function () {
