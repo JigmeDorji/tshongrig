@@ -2,10 +2,6 @@
  * Created by jigmePc on 7/30/2019.
  */
 
-/**
- * Created by jigmePc on 5/17/2019.
- */
-
 accTrialBalance = (function () {
     var baseURL = 'accTrialBalance/';
     var trialBalanceGrid = $('#trialBalanceGrid');
@@ -98,7 +94,6 @@ accTrialBalance = (function () {
             getTrialBalance($('#fromDate').val(), $(this).val());
         });
     }
-
 
     return {
         getTrialBalance: getTrialBalance,

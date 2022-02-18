@@ -70,13 +70,13 @@
                             </tbody>
                             <tfoot>
                             <tr>
-                                <th>Grand Total</th>
-                                <th class="text-right">
+                                <td>Grand Total</td>
+                                <td>
                                     <label class="text-right parentText" id="totalDrAmount"></label>
-                                </th>
-                                <th class="text-right">
+                                </td>
+                                <td>
                                     <label class="text-right parentText" id="totalCrAmount"></label>
-                                </th>
+                                </td>
                             </tr>
                             </tfoot>
                         </table>

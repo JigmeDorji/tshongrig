@@ -1834,12 +1834,17 @@ pre code {
     color: #333
 }
 
-.table td, .table th {
-    padding: 0.1rem 1.25rem;
+.table td{
+    padding: 0rem 0rem;
     vertical-align: top;
     border-top: 1px solid #ddd
 }
 
+.table th {
+    padding: 0.1rem 1.25rem;
+    vertical-align: top;
+    border-top: 1px solid #ddd
+}
 
 .table thead th {
     vertical-align: bottom;

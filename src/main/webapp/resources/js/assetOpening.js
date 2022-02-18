@@ -107,18 +107,18 @@ assetOpening = (function () {
     function returnRow() {
         iterator = iterator + 1;
         return "<tr>" +
-            "<td><div readonly class='form-control rowNumber'></div>" +
+            "<td><input type='text' readonly class='form-control rowNumber'>" +
             "<input type='hidden' id='assetDetailId" + iterator + "' name='openingAndBuyingListDTO[0].assetDetailId'  class='form-control'>" +
             "<input type='hidden' id='fixedAssetGroupId' name='openingAndBuyingListDTO[0].fixedAssetGroupId'  class='form-control'>" +
             "<input type='hidden' id='faPurchaseId' name='openingAndBuyingListDTO[0].faPurchaseId'  class='form-control'></td>" +
-            "<td><input type='text' id='autoCompleteId" + iterator + "' name='openingAndBuyingListDTO[0].particular' class='form-control-td particular'></td>" +
+            "<td><input type='text' id='autoCompleteId" + iterator + "' name='openingAndBuyingListDTO[0].particular' class='form-control particular'></td>" +
             "<td><input type='text'  name='openingAndBuyingListDTO[0].purchaseDate' class='form-control formatDate'></td>" +
             "<td><input type='text'  name='openingAndBuyingListDTO[0].openingBalance' class='form-control openingBalance right-align'></td>" +
             "<td><input type='text'  name='openingAndBuyingListDTO[0].depreciatedValue' class='form-control depreciatedValue right-align'></td>" +
             "<td><input type='text'  name='openingAndBuyingListDTO[0].rate' class='form-control rate right-align'></td>" +
             "<td><input type='text'  name='openingAndBuyingListDTO[0].qty' class='form-control qty  right-align'></td>" +
             "<td><input type='text'  name='openingAndBuyingListDTO[0].total' readonly class='form-control total right-align'></td>" +
-            "<td><button class='btn btn-sm btn-danger btn-xs ml-3 d-none d-sm-inline-block removeBtn hidden' type='button' id='removeBtn'><i class='fa fa-trash'></i> Delete</button>" +
+            "<td class='text-center'><button class='btn btn-danger btn-sm ml-3 d-none d-sm-inline-block removeBtn hidden' type='button' id='removeBtn'><i class='fa fa-trash'></i> Delete</button>" +
             "<button class='btn  btn-sm btn-success d-sm-inline-block addBtn' type='button' id='addBtn'><i class='fa fa-plus'></i> Add More</button></td>" +
             "</tr>";
     }
@@ -209,7 +209,7 @@ assetOpening = (function () {
                     "<td><input type='hidden' id='initialQty' readonly class='form-control initialQty right-align'><input type='text' id='qty' readonly class='form-control qty right-align amount'   name='purchaseDTOS[" + i + "].qty' value=" + res[i].qty + " ></td>" +
                     "<td><input type='hidden' readonly name='purchaseDTOS[" + i + "].unitId' class='form-control costPrice right-align' value='" + res[i].unitId + "'><input type='text' readonly  class='form-control costPrice right-align' value='" + res[i].unitName + "'></td>" +
                     "<td><input type='text' readonly class='form-control totalAmount right-align totalAmount' id='totalAmount'  name='purchaseDTOS[" + i + "].totalAmount' value=" + res[i].costPrice + " ></td>" +
-                    "<td><input type='button'  id='itemEditBtn' class='btn btn-primary btn-xs fa fa-trash' value='Edit'><input type='button'  id='btnDeleteItem' class='btn btn-danger btn-xs fa fa-trash' value='Delete'></td>" +
+                    "<td><input type='button'  id='itemEditBtn' class='btn btn-primary btn-sm fa fa-trash' value='Edit'><input type='button'  id='btnDeleteItem' class='btn btn-danger btn-sm fa fa-trash' value='Delete'></td>" +
                     "</tr>";
                 tableGrid.find('tbody').append(row);
                 calculateTotal();
