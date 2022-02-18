@@ -86,12 +86,12 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th class="hidden"></th>
-                                    <th></th>
-                                    <th>Total</th>
-                                    <th><input class="form-control form-control-sm text-center totalPF"  readonly name="pF" value="0"></th>
-                                    <th><input class="form-control form-control-sm text-center totalGIS" readonly name="gIS" value="0"></th>
-                                    <th><input class="form-control form-control-sm text-center grandAmt"  readonly name="totalAmount" value="0"></th>
+                                    <td class="hidden"></td>
+                                    <td></td>
+                                    <td>Total</td>
+                                    <td><input class="form-control form-control-sm text-center totalPF"  readonly name="pF" value="0"></td>
+                                    <td><input class="form-control form-control-sm text-center totalGIS" readonly name="gIS" value="0"></td>
+                                    <td><input class="form-control form-control-sm text-center grandAmt"  readonly name="totalAmount" value="0"></td>
                                 </tr>
                                 </tfoot>
                             </table>

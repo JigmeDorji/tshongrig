@@ -88,11 +88,11 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th></th>
-                                    <th class="hidden"></th>
-                                    <th></th>
-                                    <th>Total</th>
-                                    <th><input class="form-control form-control-sm text-right totalAmount"  readonly name="totalAmount" value="0"></th>
+                                    <td></td>
+                                    <td class="hidden"></td>
+                                    <td></td>
+                                    <td>Total</td>
+                                    <td><input class="form-control form-control-sm text-right totalAmount"  readonly name="totalAmount" value="0"></td>
                                 </tr>
                                 </tfoot>
                             </table>

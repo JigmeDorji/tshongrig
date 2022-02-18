@@ -90,10 +90,10 @@
                                 </tbody>
                                 <tfoot>
                                 <tr role="row" class="odd">
-                                    <th></th>
-                                    <th></th>
-                                    <th>Total</th>
-                                    <th></th>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Total</td>
+                                    <td></td>
                                     <td><input type="text" class="form-control form-control-sm" readonly name="totalBasicSalary"
                                                id="totalBasicSalary"></td>
                                     <td><input type="text" class="form-control form-control-sm" readonly name="totalAllowance" id="totalAllowance">
@@ -101,20 +101,20 @@
                                     <td><input type="text" class="form-control form-control-sm" readonly name="totalAllowance" id="absentDays"></td>
                                     <td><input type="text" class="form-control form-control-sm" readonly name="totalDeduction" id="totalDeduction">
                                     </td>
-                                    <th><input type="text" class="form-control form-control-sm" readonly name="totalGrossSalary"
-                                               id="totalGrossSalary"></th>
-                                    <th><input type="text" class="form-control form-control-sm" readonly name="totalPF" id="totalPF"></th>
-                                    <th><input type="text" class="form-control form-control-sm" readonly name="totalGIS" id="totalGIS"></th>
-                                    <th><input type="text" class="form-control form-control-sm" readonly name="totalNetSalary" id="totalNetSalary">
-                                    </th>
-                                    <th><input type="text" class="form-control form-control-sm" readonly name="totalTDS" id="totalTDS"></th>
-                                    <th><input type="text" class="form-control form-control-sm" readonly name="totalHC" id="totalHC"></th>
-                                    <th><input type="text" class="form-control form-control-sm" readonly name="totalAdvance" id="totalAdvance"></th>
-                                    <th><input type="text" class="form-control form-control-sm" readonly name="totalTotalRecovery"
-                                               id="totalTotalRecovery"></th>
-                                    <th><input type="text" class="form-control form-control-sm" readonly name="totalTakeHome" id="totalTakeHome">
-                                    </th>
-                                    <th hidden></th>
+                                    <td><input type="text" class="form-control form-control-sm" readonly name="totalGrossSalary"
+                                               id="totalGrossSalary"></td>
+                                    <td><input type="text" class="form-control form-control-sm" readonly name="totalPF" id="totalPF"></td>
+                                    <td><input type="text" class="form-control form-control-sm" readonly name="totalGIS" id="totalGIS"></td>
+                                    <td><input type="text" class="form-control form-control-sm" readonly name="totalNetSalary" id="totalNetSalary">
+                                    </td>
+                                    <td><input type="text" class="form-control form-control-sm" readonly name="totalTDS" id="totalTDS"></td>
+                                    <td><input type="text" class="form-control form-control-sm" readonly name="totalHC" id="totalHC"></td>
+                                    <td><input type="text" class="form-control form-control-sm" readonly name="totalAdvance" id="totalAdvance"></td>
+                                    <td><input type="text" class="form-control form-control-sm" readonly name="totalTotalRecovery"
+                                               id="totalTotalRecovery"></td>
+                                    <td><input type="text" class="form-control form-control-sm" readonly name="totalTakeHome" id="totalTakeHome">
+                                    </td>
+                                    <td hidden></td>
                                 </tr>
                                 </tfoot>
                             </table>
