@@ -234,7 +234,7 @@ voucherGroupList = (function () {
             }
             rows[selectedRow].style.backgroundColor = "#B0BED9";
         };
-        rows[0].style.backgroundColor = "#B0BED9";
+        // rows[0].style.backgroundColor = "#B0BED9";
     }
 
     function getVoucherDetailsBasedOnDateRage() {

@@ -71,11 +71,8 @@
                             </thead>
                             <tbody>
                             </tbody>
-
                         </table>
                     </div>
-
-
                 </fieldset>
             </form>
         </div>

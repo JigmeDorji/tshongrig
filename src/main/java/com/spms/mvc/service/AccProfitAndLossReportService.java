@@ -213,15 +213,16 @@ public class AccProfitAndLossReportService {
     private List<AccProfitAndLossReportDTO> getOtherIncomeList(Double totalOtherIncome) {
 
         List<AccProfitAndLossReportDTO> accProfitAndLossReportDTOList = new ArrayList<>();
-        AccProfitAndLossReportDTO accProfitAndLossReportIndirectIncomeDTO = new AccProfitAndLossReportDTO();
+        if (totalOtherIncome > 0) {
+            AccProfitAndLossReportDTO accProfitAndLossReportIndirectIncomeDTO = new AccProfitAndLossReportDTO();
 
-        accProfitAndLossReportIndirectIncomeDTO.setLedgerName(AccountTypeEnum.OTHER_INCOME.getText());
-        accProfitAndLossReportIndirectIncomeDTO.setAccTypeId(AccountTypeEnum.OTHER_INCOME.getValue());
-        accProfitAndLossReportIndirectIncomeDTO.setAccTypeId(AccountTypeEnum.OTHER_INCOME.getValue());
-        accProfitAndLossReportIndirectIncomeDTO.setAmount(totalOtherIncome);
-        accProfitAndLossReportIndirectIncomeDTO.setIsTopParent(Boolean.TRUE);
-        accProfitAndLossReportDTOList.add(accProfitAndLossReportIndirectIncomeDTO);
-
+            accProfitAndLossReportIndirectIncomeDTO.setLedgerName(AccountTypeEnum.OTHER_INCOME.getText());
+            accProfitAndLossReportIndirectIncomeDTO.setAccTypeId(AccountTypeEnum.OTHER_INCOME.getValue());
+            accProfitAndLossReportIndirectIncomeDTO.setAccTypeId(AccountTypeEnum.OTHER_INCOME.getValue());
+            accProfitAndLossReportIndirectIncomeDTO.setAmount(totalOtherIncome);
+            accProfitAndLossReportIndirectIncomeDTO.setIsTopParent(Boolean.TRUE);
+            accProfitAndLossReportDTOList.add(accProfitAndLossReportIndirectIncomeDTO);
+        }
         return accProfitAndLossReportDTOList;
     }
 
