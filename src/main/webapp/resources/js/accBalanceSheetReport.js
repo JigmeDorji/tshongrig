@@ -27,7 +27,7 @@ accBalanceSheetReport = (function () {
                     var columnDef = [
                         {data: 'particular', class: "particular"},
                         {
-                            data: 'amount',
+                            data: 'amount', class: 'text-right',
                             render: function (data) {
                                 data = data != null ? data.toFixed(2) : 0.00;
                                 return spms.formatAmount(data);

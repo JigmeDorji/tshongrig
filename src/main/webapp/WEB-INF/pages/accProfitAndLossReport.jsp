@@ -85,7 +85,7 @@
                             <tr class="bg-primary text-white">
                                 <th width="70%" height="40px" class="left-align">Particular</th>
 
-                                <th width="30%">Amount</th>
+                                <th width="30%" class="text-right">Amount</th>
                                 <th class="hidden"></th>
                                 <th class="hidden"></th>
                             </tr>
