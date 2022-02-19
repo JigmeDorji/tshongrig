@@ -78,7 +78,7 @@
                             business efficiently at ease. It has all the features required in the daily operation of
                             business.</p>
 
-                        <p>Browse our site and see for yourself why you need Slim.</p>
+                        <p>Browse our site and explorer Tshong Rig.</p>
 
                         <p><a href="" class="btn btn-outline-secondary pd-x-25">Explore Tshong Rig Packages Offer </a>
                         </p>
