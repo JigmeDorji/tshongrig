@@ -29,6 +29,11 @@
           p:url="classpath:jasperreport/spms/summarySaleReport.jrxml"
           p:reportDataKey="datasource"/>
 
+    <bean id="voucherReport"
+          class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
+          p:url="classpath:jasperreport/spms/voucherReport.jrxml"
+          p:reportDataKey="datasource"/>
+
 </beans>
 
 

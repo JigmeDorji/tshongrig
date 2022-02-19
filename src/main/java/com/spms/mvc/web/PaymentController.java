@@ -2,7 +2,6 @@ package com.spms.mvc.web;
 
 import com.spms.mvc.Enumeration.AccountTypeEnum;
 import com.spms.mvc.dto.AutoVoucherDTO;
-import com.spms.mvc.dto.VoucherDTO;
 import com.spms.mvc.dto.VoucherDetailDTO;
 import com.spms.mvc.library.helper.*;
 import com.spms.mvc.service.AutoVoucherService;
@@ -121,7 +120,7 @@ public class PaymentController extends BaseController {
     public ModelAndView generateReport(HttpServletRequest request, Integer voucherNo) {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
 
-        List<VoucherDetailDTO> voucherDetailDTOList = autoVoucherService.getVoucherDetail(voucherNo,currentUser);
+        List<VoucherDetailDTO> voucherDetailDTOList = autoVoucherService.getVoucherDetail(voucherNo, currentUser);
 
         JRDataSource jrDataSource = new JRBeanCollectionDataSource(voucherDetailDTOList, false);
         Map<String, Object> params = new HashMap<String, Object>();
@@ -130,11 +129,12 @@ public class PaymentController extends BaseController {
         params.put("receiptDate", new Date());
         params.put("companyName", currentUser.getCompanyName());
         params.put("companyContact", currentUser.getContact());
+        params.put("voucherNo", voucherNo);
         params.put("companyEmailID", currentUser.getEmail());
         params.put("mailingAddress", currentUser.getMailingAddress());
         params.put("printedDate", new Date());
         params.put("userName", currentUser.getTxtUserName());
-        return new ModelAndView("raBillReport", params);
+        return new ModelAndView("voucherReport", params);
     }
 
     public Double calTotal(List<VoucherDetailDTO> dtoList) {
