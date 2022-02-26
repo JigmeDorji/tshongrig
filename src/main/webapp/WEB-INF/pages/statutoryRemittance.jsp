@@ -93,19 +93,19 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th class="hidden"></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th>Total</th>
-                                    <th><input class="form-control form-control-sm text-center tDS" readonly name="tDS" value="0"></th>
-                                    <th><input class="form-control form-control-sm text-center hC" readonly name="hC" value="0"></th>
-                                    <th><input class="form-control form-control-sm text-center totalAmount" readonly name="totalAmount" value="0">
-                                    </th>
+                                    <td class="hidden"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Total</td>
+                                    <td><input class="form-control form-control-sm text-center tDS" readonly name="tDS" value="0"></td>
+                                    <td><input class="form-control form-control-sm text-center hC" readonly name="hC" value="0"></td>
+                                    <td><input class="form-control form-control-sm text-center totalAmount" readonly name="totalAmount" value="0">
+                                    </td>
                                 </tr>
                                 </tfoot>
                             </table>

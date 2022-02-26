@@ -20,6 +20,8 @@ receipt = (function () {
                                 type: "success",
                                 title: res.text,
                             }, function () {
+                                window.location = spms.getUrl() + 'payment/' + 'generateReport?voucherNo=' +
+                                    encodeURIComponent(res.dto.voucherNo) + '&type=' + 2;
                                 window.location.reload();
                             });
                         } else {

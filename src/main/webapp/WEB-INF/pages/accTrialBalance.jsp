@@ -58,7 +58,7 @@
                             <thead>
                             <tr class="bg-primary text-white">
                                 <th rowspan="2"><p style="text-align:center">Particulars</p></th>
-                                <th colspan="3">Closing Balance</th>
+                                <th colspan="3" class="text-center">Closing Balance</th>
                             </tr>
                             <tr class="bg-primary text-white">
                                 <th width="15%">Debit</th>

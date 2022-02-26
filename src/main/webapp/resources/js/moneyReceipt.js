@@ -32,17 +32,31 @@ moneyReceipt = (function () {
                                 title: res.text,
                                 showConfirmButton: false
                             }, function () {
-                                window.open(
-                                    spms.getUrl() + baseURL + '/generateMoneyReceipt?moneyReceiptNo=' + encodeURIComponent(moneyReceiptNo) +
-                                    "&partyName=" + partyName +
-                                    "&amount=" + amount +
-                                    "&tDSAmount=" + tDSAmount +
-                                    "&retentionAmount=" + retentionAmount +
-                                    "&mobilizationAdvAmount=" + mobilizationAdvAmount +
-                                    "&materialAdvAmount=" + materialAdvAmount +
-                                    "&paymentMode=" + paymentMode,
-                                    '_blank' // <- This is what makes it open in a new window.
-                                );
+                                if ($('#businessType').val() != 7) {
+                                    window.open(
+                                        spms.getUrl() + baseURL + '/generateMoneyReceipt?moneyReceiptNo=' + encodeURIComponent(moneyReceiptNo) +
+                                        "&partyName=" + partyName +
+                                        "&amount=" + amount +
+                                        "&tDSAmount=" + tDSAmount +
+                                        "&retentionAmount=" + retentionAmount +
+                                        "&mobilizationAdvAmount=" + mobilizationAdvAmount +
+                                        "&materialAdvAmount=" + materialAdvAmount +
+                                        "&paymentMode=" + paymentMode,
+                                        '_blank'
+                                    );
+                                } else {
+                                    window.open(
+                                        spms.getUrl() + baseURL + 'generateMoneyReceipt?moneyReceiptNo=' + encodeURIComponent(moneyReceiptNo) +
+                                        "&partyName=" + $('#receivedFrom').val() +
+                                        "&amount=" + amount +
+                                        "&tDSAmount=" + 0 +
+                                        "&retentionAmount=" + 0 +
+                                        "&mobilizationAdvAmount=" + 0 +
+                                        "&materialAdvAmount=" + 0 +
+                                        "&paymentMode=" + paymentMode,
+                                        '_blank'
+                                    );
+                                }
                                 window.location.reload();
                             });
                         } else {
@@ -94,22 +108,22 @@ moneyReceipt = (function () {
                 return false;
             }
 
-            var tDSAmt='';
+            var tDSAmt = '';
             if (tDSType !== '') {
 
-                if(tDSType == 1){
-                    tDSAmt=receivedAmt * 0.02;
+                if (tDSType == 1) {
+                    tDSAmt = receivedAmt * 0.02;
                     $('#tDSPercentage').val('2%')
                 }
-                if(tDSType == 2){
-                    tDSAmt=receivedAmt * 0.05;
+                if (tDSType == 2) {
+                    tDSAmt = receivedAmt * 0.05;
                     $('#tDSPercentage').val('5%')
                 }
-                if(tDSType == 3){
-                    tDSAmt=receivedAmt * 0.03;
+                if (tDSType == 3) {
+                    tDSAmt = receivedAmt * 0.03;
                     $('#tDSPercentage').val('3%')
                 }
-                if(tDSType == 4){
+                if (tDSType == 4) {
                     $('#tDSPercentage').val(0)
                     $('#tDSAmount').val(0)
                 }
@@ -118,10 +132,30 @@ moneyReceipt = (function () {
         })
     }
 
+    function getAllLedgerUnderIncome() {
+        $.ajax({
+            url: baseURL + 'getAllLedgerUnderIncome',
+            type: 'GET',
+            success: function (res) {
+                $('#ngoDescription').devbridgeAutocomplete({
+                    lookup: $.map(res, function (value) {
+                        return {data: value.id, value: value.text}
+                    }), onSelect: function (suggestion) {
+                        $('#ngoDescription').val(suggestion.value);
+                        // $('#ledgerId').val(suggestion.data);
+                        // loadClosingBalance(suggestion.data);
+                    }
+                })
+            }
+        });
+    }
+
+
     return {
         save: save,
         onSelectParty: onSelectParty,
-        calculateTDS: calculateTDS
+        calculateTDS: calculateTDS,
+        getAllLedgerUnderIncome: getAllLedgerUnderIncome
     }
 })();
 
@@ -129,6 +163,7 @@ $(document).ready(function () {
     moneyReceipt.save();
     moneyReceipt.onSelectParty();
     moneyReceipt.calculateTDS();
+    moneyReceipt.getAllLedgerUnderIncome();
 
 });
 

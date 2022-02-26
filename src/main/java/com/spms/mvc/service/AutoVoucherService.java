@@ -635,20 +635,21 @@ public class AutoVoucherService extends BaseService {
         return autoVoucherDao.getCostTypeByLedgerId(currentUser, ledgerId);
     }
 
-    public List<VoucherDetailDTO> getVoucherDetail(Integer voucherNo, CurrentUser currentUser) {
+    public List<VoucherDetailDTO> getVoucherDetail(Integer voucherNo, CurrentUser currentUser, Integer type) {
 
         List<VoucherDetailDTO> voucherDetailDTO = new ArrayList<>();
         List<VoucherDetailDTO> voucherDetailDTOList = autoVoucherDao.getVoucherDetail(voucherNo,
-                currentUser);
+                currentUser,type);
         for (VoucherDetailDTO vDTO : voucherDetailDTOList) {
             VoucherDetailDTO voucherDetailDTO1 = new VoucherDetailDTO();
-            if (vDTO.getDrcrAmount() > 0) {
-                voucherDetailDTO1.setCreditAmount(vDTO.getDrcrAmount().toString());
-            } else {
+            if (vDTO.getDrcrAmount() < 0) {
                 double amount = Math.abs(vDTO.getDrcrAmount());
-                voucherDetailDTO1.setDebitAmount(Double.toString(amount));
+                voucherDetailDTO1.setDrAmount(amount);
+            } else {
+                voucherDetailDTO1.setCrAmount(vDTO.getDrcrAmount());
             }
             voucherDetailDTO1.setDescription(vDTO.getDescription());
+            voucherDetailDTO1.setDrcrAmount(vDTO.getDrcrAmount());
             voucherDetailDTO.add(voucherDetailDTO1);
         }
         return voucherDetailDTO;

@@ -3,6 +3,7 @@ package com.spms.mvc.dao;
 import com.spms.mvc.Enumeration.AccountTypeEnum;
 import com.spms.mvc.dto.MoneyReceiptDTO;
 import com.spms.mvc.entity.MoneyReceipt;
+import com.spms.mvc.library.helper.CurrentUser;
 import com.spms.mvc.library.helper.DropdownDTO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -23,7 +24,7 @@ public class MoneyReceiptDao{
 
     @Transactional(readOnly = true)
     public List<DropdownDTO> getPartyLedgerList(Integer companyId) {
-        String query = "SELECT ledgerId AS id,ledgerName AS text FROM tbl_acc_ledger where accTypeId=:accTypeId and companyId=:companyId and ledgerName!='TDS'";
+        String query = "SELECT ledgerId AS id,ledgerName AS text FROM tbl_acc_ledger where accTypeId=:accTypeId and companyId=:companyId and ledgerName!='TDS Receivable'";
         Session session = sessionFactory.getCurrentSession();
         return session.createSQLQuery(query)
                 .setParameter("companyId",companyId)
@@ -99,6 +100,15 @@ public class MoneyReceiptDao{
         return session.createSQLQuery(query)
                 .setParameter("companyId",companyId)
                 .setParameter("accTypeId", AccountTypeEnum.MATERIAL_ADV.getValue())
+                .setResultTransformer(Transformers.aliasToBean(DropdownDTO.class)).list();
+    }
+
+    @Transactional(readOnly = true)
+    public List<DropdownDTO> getAllLedgerUnderIncome(CurrentUser currentUser) {
+        String query = "select ledgerId AS id, ledgerName AS text FROM tbl_acc_ledger WHERE accTypeId =:incomeAccountType AND companyId=:companyId";
+        return sessionFactory.getCurrentSession().createSQLQuery(query)
+                .setParameter("incomeAccountType", AccountTypeEnum.DIRECT_INCOME.getValue())
+                .setParameter("companyId", currentUser.getCompanyId())
                 .setResultTransformer(Transformers.aliasToBean(DropdownDTO.class)).list();
     }
 }

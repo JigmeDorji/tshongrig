@@ -17,7 +17,7 @@
         <!-- Header -->
         <div class="sidebar-section sidebar-header bg-indigo" style="background-color: #4085a8 !important;">
             <div class="sidebar-section-body d-flex align-items-center justify-content-center pb-0">
-                <h6 class="sidebar-resize-hide flex-1 mb-0 text-white"><strong>Dashboard</strong></h6>
+                <a href="." class="sidebar-resize-hide flex-1 mb-0 text-white"><strong><i class="icon-home8"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HOME</strong></a>
                 <div>
                     <button type="button"
                             class="btn btn-outline-light text-body border-transparent btn-icon rounded-pill btn-sm sidebar-control sidebar-main-resize d-none d-lg-inline-flex">
@@ -72,7 +72,7 @@
 
                 <%--Human Resource--%>
                 <li class="nav-item nav-item-submenu">
-                    <a href="#" class="nav-link"><i class="icon-users4"></i> <span>Human Resources</span></a>
+                    <a href="#" class="nav-link"><i class="icon-users"></i><span>Human Resources</span></a>
 
                     <ul class="nav nav-group-sub" data-submenu-title="Themes">
                         <li class="nav-item"><a href="<c:url value='/employeeSetup'/>" class="nav-link"> Employee
@@ -146,8 +146,8 @@
                     </ul>
                 </li>--%>
 
-              <%--  <c:if test="${currentUser.businessType ==1}">
-                    &lt;%&ndash;Inventory&ndash;%&gt;
+                <c:if test="${currentUser.businessType ==1}">
+                    <%--Inventory--%>
                     <li class="nav-item nav-item-submenu">
                         <a href="#" class="nav-link"><i class="icon-list3"></i> <span>Inventory</span></a>
                         <ul class="nav nav-group-sub" data-submenu-title="Starter kit">
@@ -172,7 +172,7 @@
                 </c:if>
 
                 <c:if test="${currentUser.businessType ==4}">
-                    &lt;%&ndash;Material&ndash;%&gt;
+                    <%--Material--%>
                     <li class="nav-item nav-item-submenu">
                         <a href="#" class="nav-link"><i class="icon icon-hammer-wrench"></i> <span>Material</span></a>
                         <ul class="nav nav-group-sub" data-submenu-title="Starter kit">
@@ -210,7 +210,7 @@
                             </li>
                         </ul>
                     </li>
-                    &lt;%&ndash;BOQ&ndash;%&gt;
+                    <%--BOQ--%>
                     <li class="nav-item nav-item-submenu">
                         <a href="#" class="nav-link"><i class="icon-bookmark4"></i> <span>BOQ</span></a>
                         <ul class="nav nav-group-sub" data-submenu-title="Starter kit">
@@ -226,7 +226,7 @@
                                 Bills</a></li>
                         </ul>
                     </li>
-                </c:if>--%>
+                </c:if>
                 <%--Financial Statement--%>
                 <li class="nav-item nav-item-submenu">
                     <a href="#" class="nav-link"><i class="icon icon-cash3"></i> <span>Financial Statement</span></a>

@@ -35,18 +35,17 @@
 
 
         <!-- Footer -->
-        <div class="navbar navbar-expand-lg navbar-light border-bottom-0 border-top">
-            <div class="text-center d-lg-none w-100">
+        <div class="navbar navbar-expand-lg navbar-light border-bottom-0 border-top" style="margin-bottom: -20px">
+            <div class="text-center d-lg-none w-100" >
                 <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse"
                         data-target="#navbar-footer">
                     <i class="icon-unfold mr-2"></i>
                     Footer
                 </button>
             </div>
-
-            <div class="navbar-collapse collapse" id="navbar-footer">
+            <div class="navbar-collapse collapse" id="navbar-footer" style="margin-top: -15px">
 						<span class="navbar-text">
-							&copy; 2018 - 2022. <a href="tshongrig.com">Tshong Rig Private Limitted</a>
+							&copy; 2018 - 2022. <a href="tshongrig.com">Tshong Rig</a>
 						</span>
 
                 <ul class="navbar-nav ml-lg-auto">
@@ -56,7 +55,8 @@
                                             target="_blank"><i class="icon-file-text2 mr-2"></i> Docs</a></li>
                     <li class="nav-item"><a href="http://www.tshongrig.com/price-packages-2/"
                                             class="navbar-nav-link font-weight-semibold" target="_blank"><span
-                            class="text-success"><i class="icon-cart2 mr-2"></i> Purchase Tshong Rig Packages</span></a></li>
+                            class="text-success"><i class="icon-cart2 mr-2"></i> Purchase Tshong Rig Packages</span></a>
+                    </li>
                 </ul>
             </div>
         </div>

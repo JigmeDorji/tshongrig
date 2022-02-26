@@ -78,7 +78,7 @@
                             business efficiently at ease. It has all the features required in the daily operation of
                             business.</p>
 
-                        <p>Browse our site and see for yourself why you need Slim.</p>
+                        <p>Browse our site and explorer Tshong Rig.</p>
 
                         <p><a href="" class="btn btn-outline-secondary pd-x-25">Explore Tshong Rig Packages Offer </a>
                         </p>
@@ -86,76 +86,7 @@
                 </div><!-- signin-left -->
             </div>
             <!-- Content area -->
-            <%--  <div class="content d-flex justify-content-center align-items-center">
 
-                  <!-- Login card -->
-                  <form action="<c:url value='/auth'/>" method="post" class="login-form">
-                      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                      <div class="card mb-0">
-                          <div class="card-body">
-                              <div class="text-center mb-3 col-md-12">
-                                  <img src="<c:url value='/resources/images/logobcs.png'/>" class="img-fluid" alt="logo">
-                                  <h5 class="mb-0">Login to your account</h5>
-                                  <span class="d-block text-muted">Your credentials</span>
-                              </div>
-
-                              <div class="form-group form-group-feedback form-group-feedback-left">
-                                  <form:select required="true" path="companyList" cssStyle="margin-bottom: 4%"
-                                               class="form-control form-select field select2-validationSelect2-container"
-                                               id="companyId"
-                                               name="companyId">
-                                      <form:option
-                                              value="">---Select Company---</form:option>
-                                      <form:options items="${companyList}"
-                                                    itemValue="value"
-                                                    itemLabel="text"/>
-                                  </form:select>
-                                  <div class="form-control-feedback">
-                                      <i class="icon-user text-muted"></i>
-                                  </div>
-                              </div>
-                              <div class="form-group form-group-feedback form-group-feedback-left">
-                                  <input type="text" id="inputEmail" name="username" class="form-control"
-                                         placeholder="Username">
-                                  <div class="form-control-feedback">
-                                      <i class="icon-user text-muted"></i>
-                                  </div>
-                              </div>
-
-                              <div class="form-group form-group-feedback form-group-feedback-left">
-                                  <input type="password" id="inputPassword" name="password" class="form-control"
-                                         placeholder="Password">
-                                  <div class="form-control-feedback">
-                                      <i class="icon-lock2 text-muted"></i>
-                                  </div>
-                              </div>
-
-                              <div class="form-group d-flex align-items-center">
-                                  <label class="custom-control custom-checkbox">
-                                      <input type="checkbox" name="remember" class="custom-control-input" checked>
-                                      <span class="custom-control-label">Remember</span>
-                                  </label>
-
-                                  <a href="login_password_recover.html" class="ml-auto">Forgot password?</a>
-                              </div>
-
-                              <div class="form-group">
-                                  <button type="submit" class="btn btn-primary btn-block">Sign in</button>
-                              </div>
-
-                              <c:if test="${not empty error}">
-                                  <div class="form-group">
-                                      <div class="alert alert-danger border-0 alert-dismissible">
-                                          <button type="button" class="close" data-dismiss="alert"><span>×</span></button>
-                                          <span class="font-weight-semibold"></span> <spring:message code="${error}"/>
-                                      </div>
-                                  </div>
-                              </c:if>
-                          </div>
-                      </div>
-                  </form>
-                  <!-- /login card -->
-              </div>--%>
             <!-- /content area -->
             <!-- Footer -->
             <div class="navbar navbar-expand-lg navbar-light border-bottom-0 border-top">
@@ -169,7 +100,7 @@
 
                 <div class="navbar-collapse collapse" id="navbar-footer">
 						<span class="navbar-text">
-							&copy; 2018 - 2022. <a href="tshongrig.com">Tshong Rig Private Limitted</a>
+							&copy; 2018 - 2022. <a href="tshongrig.com">Tshong Rig</a>
 						</span>
 
                     <ul class="navbar-nav ml-lg-auto">

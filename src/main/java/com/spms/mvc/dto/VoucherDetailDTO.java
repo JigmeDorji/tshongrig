@@ -12,6 +12,8 @@ public class VoucherDetailDTO {
     private String description;
     private String debitAmount;
     private String creditAmount;
+    private Double drAmount;
+    private Double crAmount;
     private Double drcrAmount;
     private Integer voucherTypeId;
     private Date voucherEntryDate;
@@ -65,6 +67,22 @@ public class VoucherDetailDTO {
 
     public void setCreditAmount(String creditAmount) {
         this.creditAmount = creditAmount;
+    }
+
+    public Double getDrAmount() {
+        return drAmount;
+    }
+
+    public void setDrAmount(Double drAmount) {
+        this.drAmount = drAmount;
+    }
+
+    public Double getCrAmount() {
+        return crAmount;
+    }
+
+    public void setCrAmount(Double crAmount) {
+        this.crAmount = crAmount;
     }
 
     public Double getDrcrAmount() {

@@ -3,10 +3,7 @@ package com.spms.mvc.web;
 import com.spms.mvc.dto.AccSaleInvoiceGenerationDTO;
 import com.spms.mvc.dto.AccSaleInvoiceGenerationListDTO;
 import com.spms.mvc.dto.MoneyReceiptDTO;
-import com.spms.mvc.library.helper.CurrentUser;
-import com.spms.mvc.library.helper.DateUtil;
-import com.spms.mvc.library.helper.NumberInWords;
-import com.spms.mvc.library.helper.ResponseMessage;
+import com.spms.mvc.library.helper.*;
 import com.spms.mvc.service.AccSaleInvoiceGenerationService;
 import com.spms.mvc.service.MoneyReceiptService;
 import net.sf.jasperreports.engine.JRDataSource;
@@ -29,7 +26,7 @@ import java.util.*;
  */
 @Controller
 @RequestMapping("/moneyReceipt")
-public class MoneyReceiptController {
+public class MoneyReceiptController extends BaseController {
 
     @Autowired
     private MoneyReceiptService moneyReceiptService;
@@ -95,5 +92,11 @@ public class MoneyReceiptController {
         params.put("paymentMode", paymentMode);
         modelAndView = new ModelAndView("moneyReceiptReport", params);
         return modelAndView;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getAllLedgerUnderIncome", method = RequestMethod.GET)
+    public List<DropdownDTO> getAllLedgerUnderIncome(HttpServletRequest request) {
+        return moneyReceiptService.getAllLedgerUnderIncome(getCurrentUser(request));
     }
 }
