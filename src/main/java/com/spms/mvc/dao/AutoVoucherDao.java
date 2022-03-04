@@ -1,7 +1,6 @@
 package com.spms.mvc.dao;
 
 import com.spms.mvc.Enumeration.AccountTypeEnum;
-import com.spms.mvc.Enumeration.VoucherTypeEnum;
 import com.spms.mvc.dto.AutoVoucherDTO;
 import com.spms.mvc.dto.LoanDTO;
 import com.spms.mvc.dto.VoucherDetailDTO;
@@ -200,7 +199,7 @@ public class AutoVoucherDao {
     }
 
     @Transactional(readOnly = true)
-    public List<VoucherDetailDTO> getVoucherDetail(Integer voucherNo, CurrentUser currentUser) {
+    public List<VoucherDetailDTO> getVoucherDetail(Integer voucherNo, CurrentUser currentUser, Integer type) {
         String query = "SELECT  c.ledgerName as description, b.drcrAmount \n" +
                 "   FROM  tbl_acc_voucher_entries a \n" +
                 "INNER JOIN tbl_acc_voucher_entries_detail b \n" +
@@ -211,7 +210,7 @@ public class AutoVoucherDao {
                 .setParameter("voucherNo", voucherNo)
                 .setParameter("companyId", currentUser.getCompanyId())
                 .setParameter("financialYearId", currentUser.getFinancialYearId())
-                .setParameter("voucherTypeId", VoucherTypeEnum.PAYMENT.getValue())
+                .setParameter("voucherTypeId", type)
                 .setResultTransformer(Transformers.aliasToBean(VoucherDetailDTO.class)).list();
     }
 }

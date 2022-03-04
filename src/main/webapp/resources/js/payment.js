@@ -102,7 +102,10 @@ let payment = (function () {
                     data: $(form).serializeArray(),
                     success: function (res) {
                         if (res.status === 1) {
-                            window.location = spms.getUrl() + baseURL + '/generateReport?voucherNo=' + encodeURIComponent(res.dto.voucherDTO.voucherNo);
+                            if (parseInt($('#paidForId').val()) === 1) {
+                                window.location = spms.getUrl() + baseURL() + 'generateReport?voucherNo=' +
+                                    encodeURIComponent(res.dto.voucherNo) + '&type=' + 1;
+                            }
                             successMsg(res.text);
                             $('#paymentForm')[0].reset();
                         } else {

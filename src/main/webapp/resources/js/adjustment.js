@@ -16,6 +16,8 @@ adjustment = (function () {
                                 type: "success",
                                 title: res.text,
                             }, function () {
+                                window.location = spms.getUrl() + 'payment/' + 'generateReport?voucherNo=' +
+                                    encodeURIComponent(res.dto.voucherNo) + '&type=' + 3;
                                 window.location.reload();
                             });
                         } else {

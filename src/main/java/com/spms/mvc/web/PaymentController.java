@@ -2,7 +2,6 @@ package com.spms.mvc.web;
 
 import com.spms.mvc.Enumeration.AccountTypeEnum;
 import com.spms.mvc.dto.AutoVoucherDTO;
-import com.spms.mvc.dto.VoucherDTO;
 import com.spms.mvc.dto.VoucherDetailDTO;
 import com.spms.mvc.library.helper.*;
 import com.spms.mvc.service.AutoVoucherService;
@@ -118,10 +117,10 @@ public class PaymentController extends BaseController {
     }
 
     @RequestMapping(value = "/generateReport")
-    public ModelAndView generateReport(HttpServletRequest request, Integer voucherNo) {
+    public ModelAndView generateReport(HttpServletRequest request, Integer voucherNo, Integer type) {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
 
-        List<VoucherDetailDTO> voucherDetailDTOList = autoVoucherService.getVoucherDetail(voucherNo,currentUser);
+        List<VoucherDetailDTO> voucherDetailDTOList = autoVoucherService.getVoucherDetail(voucherNo, currentUser,type);
 
         JRDataSource jrDataSource = new JRBeanCollectionDataSource(voucherDetailDTOList, false);
         Map<String, Object> params = new HashMap<String, Object>();
@@ -130,19 +129,38 @@ public class PaymentController extends BaseController {
         params.put("receiptDate", new Date());
         params.put("companyName", currentUser.getCompanyName());
         params.put("companyContact", currentUser.getContact());
+        params.put("voucherNo", voucherNo);
         params.put("companyEmailID", currentUser.getEmail());
         params.put("mailingAddress", currentUser.getMailingAddress());
+        params.put("reportName", reportName(type));
         params.put("printedDate", new Date());
         params.put("userName", currentUser.getTxtUserName());
-        return new ModelAndView("raBillReport", params);
+        return new ModelAndView("voucherReport", params);
+    }
+
+    public String reportName(Integer type) {
+        String reportName = "";
+        switch (type) {
+            case 1:
+                reportName = "Payment Voucher";
+                break;
+            case 2:
+                reportName = "Receipt Voucher";
+                break;
+            case 3:
+                reportName = "Adjustment Voucher";
+                break;
+        }
+        return reportName;
     }
 
     public Double calTotal(List<VoucherDetailDTO> dtoList) {
-        Double totalAmount = 0.0;
+        double totalAmount = 0.0;
         for (VoucherDetailDTO voucherDetailDTO : dtoList) {
-            totalAmount = totalAmount + (voucherDetailDTO.getDrcrAmount());
+            if (voucherDetailDTO.getDrcrAmount() > 0) {
+                totalAmount = totalAmount + (voucherDetailDTO.getDrcrAmount());
+            }
         }
         return totalAmount;
     }
-
 }

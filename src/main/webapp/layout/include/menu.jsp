@@ -72,7 +72,7 @@
 
                 <%--Human Resource--%>
                 <li class="nav-item nav-item-submenu">
-                    <a href="#" class="nav-link"><i class="icon-users4"></i> <span>Human Resources</span></a>
+                    <a href="#" class="nav-link"><i class="icon-users"></i><span>Human Resources</span></a>
 
                     <ul class="nav nav-group-sub" data-submenu-title="Themes">
                         <li class="nav-item"><a href="<c:url value='/employeeSetup'/>" class="nav-link"> Employee
