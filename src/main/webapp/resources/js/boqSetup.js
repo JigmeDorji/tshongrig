@@ -32,28 +32,31 @@ boqSetup = (function () {
         let columnDef = [
             {
                 data: 'index',
+                class: 'text-center',
                 render: function (index) {
                     return index + 1;
                 }
             },
-            {data: 'code', class: 'bvsCode'},
-            {data: 'description'},
-            {data: 'unitOfMeasurement'},
+            {data: 'code', class: 'text-center bvsCode'},
+            {data: 'description', class: 'text-center'},
+            {data: 'unitOfMeasurement', class: 'text-center'},
             {
                 data: 'qty',
+                class: 'text-center',
                 render: function (data) {
                     return data.toFixed(3)
                 }
             },
             {
                 data: 'rate',
+                class: 'text-center',
                 render: function (data) {
                     return data.toFixed(3)
                 }
             },
-            {data: 'rateInWords'},
+            {data: 'rateInWords', class: 'text-center'},
             {
-                data: 'amount', render: function (index, type, row) {
+                data: 'amount', class: 'text-center', render: function (index, type, row) {
                     if (row.amount == null) {
                         return (row.qty * row.rate).toFixed(3);
                     } else {
@@ -61,7 +64,7 @@ boqSetup = (function () {
                     }
                 }
             },
-            {data: 'totalAmountInWords'}
+            {data: 'totalAmountInWords', class: 'text-center'}
         ];
 
         let t = $('#boqDataListGrid').DataTable({
@@ -82,16 +85,20 @@ boqSetup = (function () {
 
     function saveBOQDetail() {
         $("#btnSave").on('click', function () {
-            spms.ajax_with_attachment('boqSetup/saveBOQDetail',
-                'POST', new FormData($('.xlsFileForm')[0])
-                , function (res) {
-                    if (res.status === 1) {
-                        successMsg(res.text);
-                        window.location.reload();
-                    } else {
-                        errorMsg("Could not save the detail.")
-                    }
-                });
+            let form = $('.xlsFileForm');
+            spms.isFormValid(form);
+            if (form.valid()) {
+                spms.ajax_with_attachment('boqSetup/saveBOQDetail',
+                    'POST', new FormData(form[0])
+                    , function (res) {
+                        if (res.status === 1) {
+                            successMsg(res.text);
+                            window.location.reload();
+                        } else {
+                            errorMsg("Could not save the detail.")
+                        }
+                    });
+            }
         });
     }
 

@@ -42,6 +42,7 @@ financialYearSetup = (function () {
                 var data = res;
                 var dataTableDefinition = [
                     {
+                        class: "text-center",
                         "mRender": function (data, type, row, meta) {
                             return meta.row + 1;
                         }
@@ -49,33 +50,34 @@ financialYearSetup = (function () {
 
                     {
                         "data": "financialYearId",
-                        class: "financialYearId hidden",
+                        class: "financialYearId text-center hidden",
                         render: function (financialYearId) {
                             return financialYearId <= 9 ? "0" + financialYearId : financialYearId
                         }
                     }
                     , {
                         "data": "financialYearFrom",
-                        class: "financialYearFrom",
+                        class: "financialYearFrom text-center",
                         render: function (financialYearFrom) {
                             return formatAsDate(financialYearFrom)
                         }
                     }
                     , {
                         "data": "financialYearTo",
-                        class: "financialYearTo",
+                        class: "financialYearTo text-center",
                         render: function (financialYearTo) {
                             return formatAsDate(financialYearTo)
                         }
                     }
                     , {
                         "data": "status",
-                        class: "",
+                        class: "text-center",
                         render: function (status) {
                             return status === 'A' ? "Active" : "Inactive"
                         }
                     }, {
                         "data": "status",
+                        class: "text-center",
                         render: function (data) {
                             if (data === 'A') {
                                 return '';
