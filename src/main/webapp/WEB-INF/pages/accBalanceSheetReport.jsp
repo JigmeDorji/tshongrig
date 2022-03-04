@@ -50,7 +50,7 @@
                 <input type="hidden" id="ledgerId" name="ledgerId">
                 <fieldset>
                     <div class="form-group row">
-                        <label class="col-md-2  text-right">Financial Position as on</label>
+                        <label class="col-md-3  text-left">Financial Position as on</label>
 
                         <div class="col-md-2">
                             <input type="text" tabindex="1" class="form-control form-control-sm datepicker"

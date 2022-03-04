@@ -130,11 +130,8 @@
             </li>
         </ul>--%>
 
-        <span class="badge badge-light  my-3 my-lg-0 ml-lg-3">${currentUser.companyName}</span><br>
-        <span class="mr-2 my-3 my-lg-0 ml-lg-3">From</span>
-        <span class="badge badge-light  my-3 my-lg-0 ml-lg-3">${currentUser.financialYearFrom}</span>
-        <span class="mr-2 my-3 my-lg-0 ml-lg-3">To</span>
-        <span class="badge badge-light  my-3 my-lg-0 ml-lg-3">${currentUser.financialYearTo}</span>
+        <span class="badge badge-light  my-3 my-lg-0 ml-lg-3 ">${currentUser.companyName}</span><br>
+
         <%--this ll used if needed in future--%>
         <%--<ul class="navbar-nav ml-lg-auto">
             <li class="nav-item dropdown">
@@ -321,6 +318,10 @@
                 </div>
             </div>
         </li>--%>
+           <span class="mr-2 my-3 my-lg-0 ml-lg-3">From</span>
+           <span class="badge badge-light  my-3 my-lg-0 ml-lg-3">${currentUser.financialYearFrom}</span>
+           <span class="mr-2 my-3 my-lg-0 ml-lg-3">To</span>
+           <span class="badge badge-light  my-3 my-lg-0 ml-lg-3">${currentUser.financialYearTo}</span>
 
         <li class="nav-item nav-item-dropdown-lg dropdown dropdown-user h-100">
             <a href="#" class="navbar-nav-link navbar-nav-link-toggler dropdown-toggle d-inline-flex align-items-center h-100" data-toggle="dropdown">
