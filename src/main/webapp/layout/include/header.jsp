@@ -45,7 +45,7 @@
         </a>
     </div>--%>
 
-    <div class="collapse navbar-collapse order-2 order-lg-1" id="navbar-mobile">
+    <div class="collapse navbar-collapse order-2 order-lg-1 ml-5 pl-5" id="navbar-mobile">
        <%-- <ul class="navbar-nav">
             <li class="nav-item dropdown">
                 <a href="#" class="navbar-nav-link" data-toggle="dropdown">
