@@ -29,7 +29,7 @@
         </button>
     </div>
 
-    <div class="navbar-brand text-center text-lg-left">
+    <div class="navbar-brand text-left">
         <a href="/" class="d-inline-block">
             <img src="<c:url value='/resources/limitless/global_assets/images/logo_trans.png'/>"
                  style="width: 90px; height: 26px; margin-top: -10px"
@@ -41,13 +41,16 @@
     </div>
 
     <div class="collapse navbar-collapse order-2 order-lg-1" id="navbar-mobile">
-        <ul class="navbar-nav">
-            <span class="badge badge-light my-1 text-left">${currentUser.companyName}</span>
-        </ul>
+        <div class="">
+            <ul class="navbar-nav">
+                <span class="badge  badge-light badge-pill my-1">${currentUser.companyName}</span>
+            </ul>
+        </div>
+
         <ul class="navbar-nav ml-lg-auto">
             <li class="nav-item dropdown row align-content-center">
-                <span class="badge badge-light  ml-2">From: ${currentUser.financialYearFrom}</span> &nbsp;
-                <span class="badge badge-light">To: ${currentUser.financialYearTo}</span>
+                <span class="badge badge-light badge-pill ml-2">From: ${currentUser.financialYearFrom}</span> &nbsp;
+                <span class="badge badge-light badge-pill">To: ${currentUser.financialYearTo}</span>
             </li>
         </ul>
     </div>

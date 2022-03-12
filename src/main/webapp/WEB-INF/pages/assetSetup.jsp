@@ -80,11 +80,10 @@
 
                 <fieldset class="hidden" id="initialTable">
                     <legend class="text-uppercase font-size-sm font-weight-bold">Asset Setup Detail</legend>
-                    <br/>
                     <div class="col-md-12">
                         <table class="table table-bordered table-striped editable-grid" id="fixedAssetItemDetailGrid">
                             <thead>
-                            <tr>
+                            <tr class="bg-primary text-white">
                                 <th hidden></th>
                                 <th hidden></th>
                                 <th hidden></th>
@@ -158,20 +157,23 @@
                     </div>
                 </div>
             </form>
-            <div class="modal fade" id="itemDetailModal" tabindex="-1" role="dialog"
+
+            <div class="modal fade show" id="itemDetailModal" tabindex="-1" role="dialog"
                  data-backdrop="static" data-keyboard="false">
                 <div class="modal-dialog modal-xl">
                     <div class="modal-content">
                         <div class="modal-header">
+                            <h4 class="modal-title">
+                                <legend>Item Details</legend>
+                            </h4>
                             <button type="button" class="close" id="closeBtn" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Item Details</h4>
                         </div>
                         <div class="modal-body">
-                            <div class="form-group row">
+                            <div class="form-group">
                                 <table class="table table-bordered table-striped editable-grid"
-                                       Id="itemDetailGrid">
+                                       id="itemDetailGrid">
                                     <thead>
-                                    <tr>
+                                    <tr class="bg-primary text-white">
                                         <th width="5%">Sl No.</th>
                                         <th width="20%">Item Name</th>
                                         <th width="20%">Asset Code</th>
@@ -213,7 +215,7 @@
                             <fieldset>
                                 <legend class="text-uppercase font-size-sm font-weight-bold">Asset Transaction Detail
                                 </legend>
-                                <div class="form-group row">
+                                <div class="form-group">
                                     <table class="table table-bordered table-striped editable-grid"
                                            Id="assetTxnGrid">
                                         <thead>
@@ -224,7 +226,6 @@
                                             <th width="20%">Particular</th>
                                             <th width="20%">Rate</th>
                                             <th width="15%">qty</th>
-                                            <th width="15%">Balance</th>
                                             <th width="15%">Action</th>
                                         </tr>
                                         </thead>

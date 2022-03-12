@@ -125,13 +125,13 @@ spms = (function () {
     }
 
     function getUrl() {
-        return window.location.protocol + '//' + window.location.host + '/bds/';
+        return window.location.protocol + '//' + window.location.host + '/cab/';
         // return window.location.protocol + '//' + window.location.host + '/';
         // return 'http://www.autga.bt/bcs/';
     }
 
     function baseReportLocation() {
-        return window.location.protocol + '//' + window.location.host + '/bds/resources/reports/';
+        return window.location.protocol + '//' + window.location.host + '/cab/resources/reports/';
         // return window.location.protocol + '//' + window.location.host + '/resources/reports/';
     }
 
@@ -789,22 +789,14 @@ $(document).ready(function () {
     });
 
 
-    // $(document).on('keydown', function (e) {
-    //     // You may replace `c` with whatever key you want
-    //     if ((e.metaKey || e.ctrlKey) && (String.fromCharCode(e.which).toLowerCase() === 'c')) {
-    //         $('#exampleModal').modal('show');
-    //     }
-    // });
+    $(document).on('keydown', function (e) {
+        // You may replace `c` with whatever key you want
+        if ((e.metaKey || e.ctrlKey) && (String.fromCharCode(e.which).toLowerCase() === 'c')) {
+            alert("ff")
+            $('#exampleModal').modal('show');
+        }
+    });
 
-    // $('body').dbKeypress(17, function (e) {
-    //     alert("ff");
-    //     if (e.keyCode == 16) {
-    //         alert('SHIFT key was double-pressed');
-    //
-    //     } else if (e.keyCode == 17) {
-    //         alert('CTRL key was double-pressed');
-    //     }
-    // });
 
     // $(document).on('keypress', function (e) {
     //     switch (e.which) {

@@ -104,19 +104,20 @@ assetSetup = (function () {
                     {data: 'faPurchaseId', class: 'faPurchaseId hidden'},
                     {data: 'assetDetailId', class: 'assetDetailId hidden'},
                     {
-                        data: 'rowNo',
+                        data: 'rowNo', class: 'text-center',
                         render: function () {
                             return i++;
                         }
-                    }, {data: 'description', class: 'description'},
+                    }, {data: 'description', class: 'description text-center'},
                     {
-                        data: 'particular', class: 'particular'
+                        data: 'particular', class: 'particular text-center'
                     },
 
-                    {data: 'groupName', class: 'groupName'},
-                    {data: 'qty', class: 'qty'},
+                    {data: 'groupName', class: 'groupName text-center'},
+                    {data: 'qty', class: 'qty text-center'},
                     {
                         data: 'action',
+                        class: 'text-center',
                         render: function (detail, type, row) {
 
                             let deleteBtn = '';
@@ -171,24 +172,26 @@ assetSetup = (function () {
                     let columnDef = [
                         {
                             data: 'rowNo',
+                            class: 'text-center',
                             render: function () {
                                 return i++;
                             }
                         },
                         {data: 'faPurchaseId', class: 'faPurchaseId hidden'},
-                        {data: 'purchaseDate', class: 'purchaseDate'},
-                        {data: 'description', class: 'description'},
-                        {data: 'rate', class: 'rate'},
-                        {data: 'qty', class: 'qty'},
-                        {data: 'status', class: 'status'},
+                        {data: 'purchaseDate', class: 'purchaseDate text-center'},
+                        {data: 'description', class: 'description text-center'},
+                        {data: 'rate', class: 'rate text-center'},
+                        {data: 'qty', class: 'qty text-center'},
                         {
                             data: 'action',
+                            class: 'text-center',
                             render: function (detail, type, row) {
                                 let editBtn = '', hasEditRole = $('#hasEditRole').val();
                                 if (hasEditRole.toString() === 'true') {
-                                    editBtn = '<button type="button" class="btn btn-primary btn-xs" id="btnEdit"><i class="fa fa-edit"></i> Edit</button>';
+                                    let url = row.description === "Opening" ? 'navigateToOpening' : 'navigateToPurchase';
+                                    editBtn = '<a href="assetSetup/' + url + '?faPurchaseId=' + encodeURIComponent(row.faPurchaseId) + '"><button type=button" class="btn btn-primary btn-sm">Edit</button></a>';
                                 }
-                                return editBtn + '<a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#itemSaleDetailModal"><button  type="button" class="btn btn-info btn-xs" id="btnDetailView"><i class="fa fa-info-circle"></i> Detail</button></a>';
+                                return editBtn + '<a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#itemSaleDetailModal"><button  type="button" class="btn btn-info btn-sm" id="btnDetailView"><i class="fa fa-info-circle"></i> Detail</button></a>';
                             }
                         },
                     ];
@@ -242,14 +245,15 @@ assetSetup = (function () {
                     let columnDef = [
                         {
                             data: 'rowNo',
+                            class: 'text-center',
                             render: function () {
                                 return i++;
                             }
                         },
-                        {data: 'particular', class: 'particular'},
-                        {data: 'assetCode', class: 'assetCode'},
-                        {data: 'rate', class: 'rate'},
-                        {data: 'status', class: 'status'},
+                        {data: 'particular', class: 'particular text-center'},
+                        {data: 'assetCode', class: 'assetCode text-center'},
+                        {data: 'rate', class: 'rate text-center'},
+                        {data: 'status', class: 'status text-center'},
                     ];
                     spms.populateTableData($('#itemDetailGrid'), columnDef, res);
                     $('#itemDetailGrid').css('width', '100%');

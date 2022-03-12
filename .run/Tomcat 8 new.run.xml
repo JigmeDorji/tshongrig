@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Tomcat 9" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.37" ALTERNATIVE_JRE_ENABLED="false" show_console_on_std_err="true" show_console_on_std_out="true">
-    <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8088/" />
+    <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8089/" />
     <option name="BROWSER_ID" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
     <option name="SHOW_DIALOG_ON_UPDATE" value="false" />
     <deployment>
@@ -12,8 +12,7 @@
     </deployment>
     <server-settings>
       <option name="BASE_DIRECTORY_NAME" value="Unnamed_bcs_3" />
-      <option name="HTTP_PORT" value="8088" />
-      <option name="JNDI_PORT" value="1095" />
+      <option name="HTTP_PORT" value="8089" />
     </server-settings>
     <output_file is_save="true" />
     <log_file alias="Tomcat Host Manager Log" path="%IDEA_RUN:CATALINA_BASE%/logs/host-manager.*" />

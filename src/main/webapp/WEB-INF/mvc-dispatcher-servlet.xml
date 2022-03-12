@@ -42,20 +42,20 @@
     </bean>
 
     <!--Database connection config-->
-        <bean id="spmsDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-            <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-            <property name="url" value="jdbc:mysql://localhost:3307/bcs_db"/>
-            <property name="username" value="root"/>
-            <property name="password" value="root"/>
-            <!--<property name="username" value="bcs_user"/>
-            <property name="password" value="bcs@2021"/>-->
-            <property name="validationQuery" value="SELECT 1"/>
-        </bean>
-
-    <!--Linux-->
-   <!-- <bean id="spmsDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+    <bean id="spmsDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/bds_db"/>
+        <property name="url" value="jdbc:mysql://localhost:3307/bcs_db"/>
+        <property name="username" value="root"/>
+        <property name="password" value="root"/>
+        <!--<property name="username" value="bcs_user"/>
+        <property name="password" value="bcs@2021"/>-->
+        <property name="validationQuery" value="SELECT 1"/>
+    </bean>
+<!--
+    &lt;!&ndash;Linux&ndash;&gt;
+    <bean id="spmsDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/bcs_db"/>
         <property name="username" value="bcs_user"/>
         <property name="password" value="bcs@2022"/>
         <property name="validationQuery" value="SELECT 1"/>

@@ -144,7 +144,7 @@ public class AssetSetupDao extends BaseDao {
                 "LEFT JOIN tbl_fa_purchase e ON e.assetDetailId=b.assetDetailId\n" +
                 "LEFT JOIN tbl_fa_purchase_detail f ON f.faPurchaseId=e.faPurchaseId\n" +
                 " where a.companyId=:companyId\n" +
-                " group by e.assetDetailId";
+                " group by b.assetDetailId";
         Session session = sessionFactory.getCurrentSession();
         return session.createSQLQuery(query)
                 .setParameter("companyId", companyId)

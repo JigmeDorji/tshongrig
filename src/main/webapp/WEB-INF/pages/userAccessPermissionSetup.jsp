@@ -26,7 +26,9 @@
             <form id="folktaleCreationFrom" action="<c:url value='/userAccessPermission'/> " class="globalForm">
                 <input type="hidden" id="locationSetUpId" name="locationSetUpId">
                 <fieldset>
-                    <legend class="text-uppercase font-size-sm font-weight-bold">Set user permission based on user role type</legend>
+                    <legend class="text-uppercase font-size-sm font-weight-bold">Set user permission based on user role
+                        type
+                    </legend>
                     <div class="form-group row">
                         <label class="col-md-2  required">User Roles</label>
 
@@ -49,20 +51,32 @@
                             <tr class="bg-primary text-white">
                                 <th class="">Screen Id</th>
                                 <th class="">Screen Name</th>
-                                <th class="">View Access
-                                    <input type="checkbox"
-                                           id="checkAllScreenAccessAllow"></th>
+                                <th class="text-center">
+                                    View Access
+                                    <div class="d-flex justify-content-center">
+                                        <input type="checkbox"
+                                               id="checkAllScreenAccessAllow">
+                                    </div>
                                 </th>
-                                <th class="">Edit Access
-                                    <input type="checkbox"
-                                           id="checkAllEditAccessAllow"></th>
-                                <th class="">Delete Access
-                                    <input type="checkbox"
-                                           id="checkAllDeleteAccessAllow"></th>
+                                <th class="text-center">
+                                    Edit Access
+                                    <div class="d-flex justify-content-center">
+                                        <input type="checkbox"
+                                               id="checkAllEditAccessAllow">
+                                    </div>
                                 </th>
-                                <th class="">Save Access
-                                    <input type="checkbox"
-                                           id="checkAllSaveAccessAllow"></th>
+                                <th class="text-center">
+                                    Delete Access
+                                    <div class="d-flex justify-content-center">
+                                        <input type="checkbox"
+                                               id="checkAllDeleteAccessAllow">
+                                    </div>
+                                </th>
+                                <th class="text-center">Save Access
+                                    <div class="d-flex justify-content-center">
+                                        <input type="checkbox"
+                                               id="checkAllSaveAccessAllow">
+                                    </div>
                                 </th>
                             </tr>
                             </thead>
@@ -71,7 +85,8 @@
                         </table>
                         <sec:authorize access="hasAuthority('2-ADD')">
                             <div class="col-sm-offset-4 col-md-2 pt-3">
-                                <input type="submit" tabindex="5" class="btn btn-primary btn-block" value="Save" id="btnSave">
+                                <input type="submit" tabindex="5" class="btn btn-primary btn-block" value="Save"
+                                       id="btnSave">
                             </div>
                         </sec:authorize>
                     </div>
