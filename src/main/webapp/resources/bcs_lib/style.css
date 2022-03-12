@@ -241,3 +241,9 @@ label.required:after {
 .error {
     color: red;
 }
+
+.content-center {
+    margin-left: auto;
+    margin-right: auto;
+    width: 8em
+}

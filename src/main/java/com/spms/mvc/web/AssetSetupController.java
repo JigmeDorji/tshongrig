@@ -12,10 +12,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -92,6 +94,18 @@ public class AssetSetupController extends BaseController {
     @RequestMapping(value = "/saveAssetSubClassCategories", method = RequestMethod.POST)
     public ResponseMessage saveAssetSubClassCategories(HttpServletRequest request, AssetSetupDTO assetSetupDTO) {
         return assetSetupService.saveAssetSubClassCategories(assetSetupDTO, getCurrentUser(request));
+    }
+
+    @RequestMapping(value = "/navigateToOpening", method = RequestMethod.GET)
+    public String navigateToOpening(BigInteger faPurchaseId, RedirectAttributes redirectAttributes) throws ParseException {
+        redirectAttributes.addFlashAttribute("faPurchaseId", faPurchaseId);
+        return "redirect:/assetOpening";
+    }
+
+    @RequestMapping(value = "/navigateToPurchase", method = RequestMethod.GET)
+    public String navigateToPurchase(BigInteger faPurchaseId, RedirectAttributes redirectAttributes) throws ParseException {
+        redirectAttributes.addFlashAttribute("faPurchaseId", faPurchaseId);
+        return "redirect:/assetBuying";
     }
 
 }

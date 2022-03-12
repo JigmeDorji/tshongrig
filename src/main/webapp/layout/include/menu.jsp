@@ -130,7 +130,7 @@
                 </li>
 
                 <%--Fixed Asset--%>
-                <%--<li class="nav-item nav-item-submenu">
+                <li class="nav-item nav-item-submenu">
                     <a href="#" class="nav-link"><i class="icon-package"></i> <span>Fixed Asset Management</span></a>
                     <ul class="nav nav-group-sub" data-submenu-title="Starter kit">
                         <li class="nav-item"><a href="<c:url value='/assetSetup' />" class="nav-link"> Asset setup</a>
@@ -144,7 +144,7 @@
                         <li class="nav-item"><a href="<c:url value='/fixedAssetSchedule' />" class="nav-link"> Fixed
                             Assets Schedule</a></li>
                     </ul>
-                </li>--%>
+                </li>
 
                 <c:if test="${currentUser.businessType ==1}">
                     <%--Inventory--%>
@@ -249,11 +249,11 @@
                                 <a class="nav-link" href="<c:url value='/accTrialBalance' />"> Trial Balance</a>
                             </sec:authorize>
                         </li>
-                       <%-- <li class="nav-item">
-                            <sec:authorize access="hasAuthority('10-VIEW')">
-                                <a class="nav-link" href="<c:url value='/accCashFlow' />"> Cash Flow</a>
-                            </sec:authorize>
-                        </li>--%>
+                        <%-- <li class="nav-item">
+                             <sec:authorize access="hasAuthority('10-VIEW')">
+                                 <a class="nav-link" href="<c:url value='/accCashFlow' />"> Cash Flow</a>
+                             </sec:authorize>
+                         </li>--%>
                     </ul>
                 </li>
             </ul>

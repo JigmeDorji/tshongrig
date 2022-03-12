@@ -70,7 +70,9 @@ userAccessPermission = (function () {
                     let row;
                     row = '\
                    <tr>\
-                        <td><input type="hidden" id="id" name="userAccessPermissionListDTO[' + i + '].userAccessPermissionId" class="form-control form-control-sm"  value="' + userAccessPermissionId + '"><input type="hidden" id="screenId" name="userAccessPermissionListDTO[' + i + '].screenId" class=" form-control form-control-sm" readonly="true" value="' + res[i].screenId + '">' + res[i].screenId + '</td>\
+                        <td class="text-center">\
+                        <input type="hidden" id="id" name="userAccessPermissionListDTO[' + i + '].userAccessPermissionId" class="form-control form-control-sm"  value="' + userAccessPermissionId + '">' +
+                        '<input type="hidden" id="screenId" name="userAccessPermissionListDTO[' + i + '].screenId" class=" form-control form-control-sm text-center" readonly="true" value="' + res[i].screenId + '">' + res[i].screenId + '</td>\
                         <td class="left-align"><input type="hidden" id="screenName" class="form-control form-control-sm" readonly="true" value="' + res[i].screenName + '">&nbsp;&nbsp;' + res[i].screenName + '</td>\
                         <td><div align="center">\
                         <input type="checkbox" ' + isScreenAccessAllowed + ' id="checkMe" class="isScreenAccessAllowed">\
@@ -126,11 +128,39 @@ userAccessPermission = (function () {
         });
     }
 
+    function accessPermission() {
+        $('#userAccessPermissionGrid').on('click', 'input[type="checkbox"]', function () {
+            let _this = $(this);
+            if (_this.hasClass('isDeleteAccessAllowed')) {
+                if (_this.prop('checked'))
+                    _this.parents('td').siblings('td').find('input[type="checkbox"]').prop('checked', _this.prop('checked'));
+            }
+            if (_this.hasClass('isEditAccessAllowed')) {
+                if (_this.prop('checked'))
+                    _this.parents('td').siblings('td').find('input[type="checkbox"]').not('.isDeleteAccessAllowed').prop('checked', _this.prop('checked'));
+                else
+                    _this.parents('td').siblings('td').find('.isDeleteAccessAllowed').prop('checked', _this.prop('checked'));
+            }
+            if (_this.hasClass('isSaveAccessAllowed')) {
+                if (_this.prop('checked'))
+                    _this.parents('td').siblings('td').find('input[type="checkbox"]').not('.isDeleteAccessAllowed, .isEditAccessAllowed').prop('checked', _this.prop('checked'));
+                else
+                    _this.parents('td').siblings('td').find('.isDeleteAccessAllowed, .isEditAccessAllowed').prop('checked', _this.prop('checked'));
+            }
+            if (_this.hasClass('isScreenAccessAllowed')) {
+                if (!_this.prop('checked'))
+                    _this.parents('td').siblings('td').find('.isDeleteAccessAllowed, .isEditAccessAllowed, .isSaveAccessAllowed').prop('checked', _this.prop('checked'));
+            }
+        });
+    }
+
     return {
-        save: save
+        save: save,
+        accessPermission: accessPermission
     }
 })();
 
 $(document).ready(function () {
     userAccessPermission.save();
+    userAccessPermission.accessPermission();
 });

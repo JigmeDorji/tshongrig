@@ -51,7 +51,6 @@
                 </fieldset>
                 <fieldset>
                     <legend class="text-uppercase font-size-sm font-weight-bold">Opening Asset List</legend>
-                    <br/>
                     <div class="col-md-12">
                         <table class="table table-bordered table-striped editable-grid" id="fixedAssetOpeningGrid">
                             <thead>
