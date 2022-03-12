@@ -51,8 +51,9 @@
         <property name="password" value="bcs@2021"/>-->
         <property name="validationQuery" value="SELECT 1"/>
     </bean>
-<!--
-    &lt;!&ndash;Linux&ndash;&gt;
+
+
+<!--    &lt;!&ndash;Linux&ndash;&gt;
     <bean id="spmsDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://localhost:3306/bcs_db"/>

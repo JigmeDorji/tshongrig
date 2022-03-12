@@ -16,7 +16,7 @@ accBalanceSheetReport = (function () {
         if (typeof toDate === '' || typeof toDate === 'undefined') {
             toDate = $('#toDate').val()
         }
-        if (toDate != '') {
+        if (toDate !=='') {
             $('#balanceSheetTable').dataTable().fnDestroy();
             $.ajax({
                 url: baseURL + 'getAccBalanceSheetReport',
@@ -24,7 +24,9 @@ accBalanceSheetReport = (function () {
                 async: false,
                 data: {asOnDate: toDate},
                 success: function (res) {
-                    var columnDef = [
+
+
+                    let columnDef = [
                         {data: 'particular', class: "particular"},
                         {
                             data: 'amount', class: 'text-right',
@@ -36,14 +38,15 @@ accBalanceSheetReport = (function () {
                         {data: 'groupLevel', class: 'hidden isTopParent'},
                         {data: 'accTypeId', class: 'hidden accTypeId'}
                     ];
+
                     $('#balanceSheetTable').DataTable({
+                        columns: columnDef,
                         data: res,
                         sorting: false,
                         paging: false,
                         info: false,
                         searching: false,
                         ordering: false,
-                        columns: columnDef,
                         /*dom: 'Bfrtip',
                             buttons: [{
                                 customize: function (doc) {

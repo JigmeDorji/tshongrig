@@ -40,6 +40,7 @@
         </a>
     </div>
 
+
     <div class="collapse navbar-collapse order-2 order-lg-1" id="navbar-mobile">
         <div class="">
             <ul class="navbar-nav">
@@ -56,6 +57,7 @@
     </div>
 
     <ul class="navbar-nav flex-row order-1 order-lg-2 flex-1 flex-lg-0 justify-content-end align-items-center">
+
         <li class="nav-item nav-item-dropdown-lg dropdown dropdown-user h-100">
             <a href="#"
                class="navbar-nav-link navbar-nav-link-toggler dropdown-toggle d-inline-flex align-items-center h-100"

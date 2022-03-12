@@ -106,15 +106,16 @@
                                         <div class="col-md-3">
                                             <input type="text" tabindex="8" maxlength="8" class="form-control form-control-sm resetfield"
                                                    name="contactNo"
+                                                   required
                                                    id="contactNo"/>
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="col-md-2 right-align">TPN No. </label>
+                                        <label class="col-md-2 right-align required">TPN No. </label>
 
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control form-control-sm resetfield" name="tpnNo" id="tpnNo"/>
+                                            <input type="text" required class="form-control form-control-sm resetfield" name="tpnNo" id="tpnNo"/>
                                         </div>
 
                                         <label class="col-md-2 right-align required">Date of appointment/Joining
@@ -138,27 +139,29 @@
                                                    id="basicSalary"/>
                                         </div>
 
-                                        <label class="col-md-2 right-align ">Designation </label>
+                                        <label class="col-md-2 right-align required">Designation </label>
 
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control form-control-sm resetfield" name="post" id="post"/>
+                                            <input type="text" required class="form-control form-control-sm resetfield" name="post" id="post"/>
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="col-md-2 right-align">Increment amount </label>
+                                        <label class="col-md-2 right-align required">Increment amount </label>
 
                                         <div class="col-md-3">
                                             <input type="text" class="form-control form-control-sm resetfield right-align"
                                                    name="incrementAmount"
+                                                   required
                                                    id="incrementAmount"/>
                                         </div>
 
-                                        <label class="col-md-2 right-align">Increment effect date </label>
+                                        <label class="col-md-2 right-align required">Increment effect date </label>
 
                                         <div class="col-md-3">
                                             <input type="text" class="form-control form-control-sm dateFormat2 resetfield right-align"
                                                    name="incrementEffectDate"
+                                                   required
                                                    id="incrementEffectDate" placeholder="DD.MM.YYYY"/>
                                         </div>
                                     </div>
@@ -167,8 +170,8 @@
                                         <label class="col-md-2 right-align required">Service type </label>
 
                                         <div class="col-md-3">
-                                            <form:select class="form-control form-control-sm resetfield" name="serviceType"
-                                                         path="serviceTypeList"
+                                            <form:select class="form-control form-control-sm resetfield"  name="serviceType"
+                                                         path="serviceTypeList" required="true"
                                                          id="serviceType" tabindex="12">
                                                 <form:option value="">---Please Select---</form:option>
                                                 <form:options items="${serviceTypeList}" itemValue="valueInteger"
@@ -176,7 +179,7 @@
                                             </form:select>
                                         </div>
 
-                                        <label class="col-md-2 right-align ">Allowance</label>
+                                        <label class="col-md-2 right-align required">Allowance</label>
 
                                         <div class="col-md-3">
                                             <input type="text" class="form-control form-control-sm resetfield right-align" name="allowance"
@@ -235,11 +238,11 @@
 
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-md-2 right-align">GIS</label>
+                                        <label class="col-md-2 right-align required">GIS</label>
 
                                         <div class="col-md-3">
                                             <input type="text" class="form-control form-control-sm resetfield amount" name="gIS"
-                                                   id="gIS"/>
+                                                   id="gIS" required/>
                                         </div>
 
                                         <label class="col-md-2 right-align required">Cost</label>

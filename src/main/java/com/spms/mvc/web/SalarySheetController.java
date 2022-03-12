@@ -101,7 +101,7 @@ public class SalarySheetController extends BaseController {
 
         try {
             ReportResponseDto reportResponseDto = salaryRemittanceService.generateReport(reportFormat, params,
-                    reportSourcePath, reportOutputPath, currentUser.getLoginId(), reportJRXML, "Salary Remittance");
+                    reportSourcePath, reportOutputPath, currentUser.getLoginId(), reportJRXML, "Salary Sheet");
             responseMessage.setDTO(reportResponseDto);
             responseMessage.setStatus(1);
         } catch (Exception ex) {
