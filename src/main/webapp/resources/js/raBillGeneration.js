@@ -54,40 +54,41 @@ raBillGeneration = (function () {
         let columnDef = [
             {
                 data: 'index',
+                class: "text-center",
                 render: function (index) {
                     return index + 1;
                 }
             },
             {
-                data: 'boqDetailId', class: 'hidden',
+                data: 'boqDetailId', class: 'hidden text-center',
                 render: function (data) {
                     return '<input class="form-control text-center" name="boqDetailsListDTO[0].boqDetailId" id="boqDetailId" value="' + data + '" >'
                 }
             }, {
-                data: 'raBillDetailId', class: 'hidden',
+                data: 'raBillDetailId', class: 'hidden text-center',
                 render: function (data) {
                     data = data == null ? '' : data;
                     return '<input class="form-control text-center" name="boqDetailsListDTO[0].raBillDetailId" id="raBillDetailId" value="' + data + '" >'
                 }
             },
-            {data: 'code', class: 'code'},
-            {data: 'description', class: 'description'},
-            {data: 'unitOfMeasurement'},
+            {data: 'code', class: 'code text-center'},
+            {data: 'description', class: 'description text-center'},
+            {data: 'unitOfMeasurement', class: 'text-center'},
             {
-                data: 'rate', class: 'rate',
+                data: 'rate', class: 'rate text-center',
                 render: function (data) {
                     return data.toFixed(3)
                 }
             },
             {
-                data: 'qty', class: 'qty',
+                data: 'qty', class: 'qty text-center',
                 render: function (data) {
                     data = data == null ? '' : data;
                     return '<input class="form-control text-center numeric qty-container" name="boqDetailsListDTO[0].qty" id="qty" value="' + data + '"/>'
                 }
             },
             {
-                data: 'amount', class: 'amount',
+                data: 'amount', class: 'amount text-center',
                 render: function (index, type, row) {
                     if (row.qty !== null) {
                         return (row.rate * row.qty);

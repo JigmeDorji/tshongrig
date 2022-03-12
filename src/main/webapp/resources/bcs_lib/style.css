@@ -57,6 +57,7 @@ label.required:after {
 .hidden {
     display: none !important
 }
+
 .myGlower {
     background-color: gray;
     color: white;
@@ -235,4 +236,8 @@ label.required:after {
     bottom: 0;
     left: 0;
     border: 1px solid #467fff !important;
+}
+
+.error {
+    color: red;
 }

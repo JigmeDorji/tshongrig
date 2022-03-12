@@ -18,8 +18,14 @@ import com.spms.mvc.report.domain.dto.ReportRequestDto;
 import com.spms.mvc.report.domain.dto.ReportResponseDto;
 import com.spms.mvc.service.ReportService;
 import net.sf.jasperreports.engine.JRException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.internal.SessionImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -33,6 +39,20 @@ public class BaseService {
     protected ResponseMessage responseMessage;
     //endregion
 
+    @Autowired
+    SessionFactory sessionFactory;
+
+//    protected EntityManager em;
+
+//    @PersistenceContext(unitName = "default")
+//    public void setEm(EntityManager em) {
+//        this.em = em;
+//    }
+
+    protected Session getCurrentSession() {
+        return sessionFactory.getCurrentSession();
+    }
+
     //region setter and getter
     public void setResponseMessage(ResponseMessage responseMessage) {
         this.responseMessage = responseMessage;
@@ -43,9 +63,10 @@ public class BaseService {
                                             String outputPath, String userId, String reportJRXML,
                                             String reportName) throws ClassNotFoundException, SQLException, JRException {
 
-        Class.forName("com.mysql.jdbc.Driver");
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/bcs_db?zeroDateTimeBehavior=convertToNull", "root", "root");
-
+//        Class.forName("com.mysql.jdbc.Driver");
+//        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/bcs_db?zeroDateTimeBehavior=convertToNull", "root", "root");
+//
+        Connection connection = ((SessionImpl) getCurrentSession()).connection();
         reportPath = reportPath.replace("\\", "/");
 
         String headerName = "";

@@ -14,26 +14,28 @@ raBillDetail = (function () {
                 let columnDef = [
                     {
                         data: 'index',
+                        class: 'text-center',
                         render: function (index) {
                             return index + 1;
                         }
                     },
                     {data: 'boqId', class: 'boqId hidden'},
                     {data: 'voucherNo', class: 'voucherNo hidden'},
-                    {data: 'raSerialNo', class: 'raSerialNo'},
-                    {data: 'workOrderNo', class: 'workOrderNo'},
-                    {data: 'raBillNo'},
+                    {data: 'raSerialNo', class: 'raSerialNo text-center'},
+                    {data: 'workOrderNo', class: 'workOrderNo text-center'},
+                    {data: 'raBillNo', class: 'text-center'},
                     {
-                        data: 'billDate',
+                        data: 'billDate', class: 'text-center',
                         render: function (data) {
                             return formatAsDate(data);
                         }
                     },
                     {
                         data: 'action',
+                        class: 'text-center',
                         render: function () {
-                            return '<button type="button" id="edit" class="btn btn-info btn-xs edit"><i class="fa fa-edit"></i>Edit</button>' +
-                                '<button type="button" id="delete" class="btn btn-danger btn-xs delete"><i class="fa fa-trash"></i>Delete</button>'
+                            return '<button type="button" id="edit" class="btn btn-info btn-sm edit"><i class="fa fa-edit"></i>Edit</button>' +
+                                '<button type="button" id="delete" class="btn btn-danger btn-sm delete"><i class="fa fa-trash"></i>Delete</button>'
                         }
                     },
 

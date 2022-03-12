@@ -167,6 +167,8 @@ employeeSetup = (function () {
 
     function onClickNewEmp() {
         $('#btnAddNewEmp').on('click', function () {
+            $('#empId').val('');
+            $('#itemSetupFrom').trigger("reset");
             $('#employeeDetailModal').modal('show');
         })
     }

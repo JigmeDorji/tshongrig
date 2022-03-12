@@ -146,10 +146,10 @@ voucherCreation = (function () {
 
     function _addRow(tableBody, row, index) {
         var row = '<tr>\
-            <td><select class="form-control voucherDetail crOrDr" id="crOrDr' + index + '"><option value="1">Dr</option> <option value="0">Cr</option></select></td> \
-            <td><select  name="voucherDetailDTOList[0].ledgerId" class="form-control voucherDetail ledgerId required"  id="ledgerId' + index + '" > </select></td> \
-            <td><input  type="text" name="voucherDetailDTOList[0].debitAmount"  class="form-control right-align voucherDetail debitAmount"  id="debitAmount' + index + '"><input type="hidden" name="voucherDetailDTOList[0].voucherDetailId"  class="form-control voucherDetailId"  id="voucherDetailId' + index + '"></td> \
-            <td><input type="text" name="voucherDetailDTOList[0].creditAmount" class="form-control   right-align voucherDetail creditAmount" id="creditAmount' + index + '" ></td> \
+            <td><select class="form-control  form-control-sm voucherDetail crOrDr" id="crOrDr' + index + '"><option value="1">Dr</option> <option value="0">Cr</option></select></td> \
+            <td><select  name="voucherDetailDTOList[0].ledgerId" class="form-control  form-control-sm voucherDetail ledgerId required"  id="ledgerId' + index + '" > </select></td> \
+            <td><input  type="text" name="voucherDetailDTOList[0].debitAmount"  class="form-control  form-control-sm right-align voucherDetail debitAmount"  id="debitAmount' + index + '"><input type="hidden" name="voucherDetailDTOList[0].voucherDetailId"  class="form-control voucherDetailId"  id="voucherDetailId' + index + '"></td> \
+            <td><input type="text" name="voucherDetailDTOList[0].creditAmount" class="form-control   form-control-sm  right-align voucherDetail creditAmount" id="creditAmount' + index + '" ></td> \
             </tr>';
 
         tableBody.append(row);

@@ -44,7 +44,7 @@
 
                         <div class="col-md-4">
                             <input type="text" class="form-control form-control-sm" name="workOrderNo"
-                                   id="workOrderNo" required="true"/>
+                                   id="workOrderNo" required/>
                         </div>
                         <label class=" col-md-2 right-align required">Employing Agency</label>
 
@@ -66,7 +66,8 @@
                         <label class=" col-md-2 right-align required">Work Order Date</label>
 
                         <div class="col-md-4">
-                            <input type="text" class="form-control form-control-sm dateFormat2" name="workOrderDate" placeholder="DD.MM.YYYY"
+                            <input type="text" class="form-control form-control-sm dateFormat2" name="workOrderDate"
+                                   placeholder="DD.MM.YYYY"
                                    id="workOrderDate" required="true"/>
                         </div>
                     </div>
@@ -76,14 +77,16 @@
                         <label class=" col-md-2 right-align required">Work Start Date</label>
 
                         <div class="col-md-4">
-                            <input type="text" class="form-control form-control-sm dateFormat2" name="workStartDate" placeholder="DD.MM.YYYY"
+                            <input type="text" class="form-control form-control-sm dateFormat2" name="workStartDate"
+                                   placeholder="DD.MM.YYYY"
                                    id="workStartDate" required="true"/>
                         </div>
 
                         <label class=" col-md-2 right-align required">Completion Date</label>
 
                         <div class="col-md-4">
-                            <input type="text" tabindex="1" class="form-control form-control-sm dateFormat2" name="completionDate"
+                            <input type="text" tabindex="1" class="form-control form-control-sm dateFormat2"
+                                   name="completionDate"
                                    placeholder="DD.MM.YYYY"
                                    id="completionDate" required="true"/>
                         </div>
@@ -136,7 +139,6 @@
         </div>
     </div>
 </div>
-
 
 
 </body>

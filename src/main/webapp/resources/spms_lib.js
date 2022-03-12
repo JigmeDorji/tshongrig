@@ -110,28 +110,29 @@ spms = (function () {
             }
         });
         form.validate({
-            // ignore: 'input[type=hidden]',
             errorElement: 'span',
             errorPlacement: function (error, element) {
-                error.addClass('error');
-                element.closest('.col-sm-10').append(error);
-            }, highlight: function (element) {
-                $(element).addClass('error');
-            }, unhighlight: function (element) {
-                $(element).removeClass('error');
+                error.addClass('invalid-feedback');
+                element.closest('.col-4').append(error);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
             }
         });
     }
 
     function getUrl() {
-        // return window.location.protocol + '//' + window.location.host + '/bds/';
-        return window.location.protocol + '//' + window.location.host + '/';
+        return window.location.protocol + '//' + window.location.host + '/bcs/';
+        // return window.location.protocol + '//' + window.location.host + '/';
         // return 'http://www.autga.bt/bcs/';
     }
 
     function baseReportLocation() {
-        // return window.location.protocol + '//' + window.location.host + '/bds/resources/reports/';
-        return window.location.protocol + '//' + window.location.host + '/resources/reports/';
+        return window.location.protocol + '//' + window.location.host + '/bcs/resources/reports/';
+        // return window.location.protocol + '//' + window.location.host + '/resources/reports/';
     }
 
     //index the table gridaccProfitAndLossReport
@@ -764,19 +765,19 @@ $(document).ready(function () {
         }
     };
     let datePicker = $(".datepicker");
-        datePicker.datepicker(datePickerOptions);
+    datePicker.datepicker(datePickerOptions);
 
-        datePicker.keypress(function (e) {
-            if (e.keyCode === 8)
-                $(this).val('');
-            e.preventDefault();
-        });
+    datePicker.keypress(function (e) {
+        if (e.keyCode === 8)
+            $(this).val('');
+        e.preventDefault();
+    });
 
-        body.on('focus', '.datepicker', function () {
-            if ($(this).hasClass('dynamic')) {
-                $(this).datepicker(datePickerOptions);
-            }
-        });
+    body.on('focus', '.datepicker', function () {
+        if ($(this).hasClass('dynamic')) {
+            $(this).datepicker(datePickerOptions);
+        }
+    });
 
     //modal overlay problem solves
     $(document).on('show.bs.modal', '.modal', function () {

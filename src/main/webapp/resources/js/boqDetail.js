@@ -14,33 +14,35 @@ boqDetail = (function () {
                 let columnDef = [
                     {
                         data: 'index',
+                        class: 'text-center',
                         render: function (index) {
                             return index + 1;
                         }
                     },
-                    {data: 'boqId', class: 'boqId hidden'},
-                    {data: 'workOrderNo', class: 'workOrderNo'},
-                    {data: 'nameOfWork'},
-                    {data: 'employingAgency'},
+                    {data: 'boqId', class: 'boqId hidden text-center'},
+                    {data: 'workOrderNo', class: 'workOrderNo text-center'},
+                    {data: 'nameOfWork', class: 'text-center'},
+                    {data: 'employingAgency', class: 'text-center'},
                     {
-                        data: 'workOrderDate', render: function (data) {
+                        data: 'workOrderDate', class: 'text-center', render: function (data) {
                             return formatAsDate(data);
                         }
                     },
                     {
-                        data: 'workStartDate', render: function (data) {
+                        data: 'workStartDate', class: 'text-center', render: function (data) {
                             return formatAsDate(data);
                         }
                     },
                     {
-                        data: 'completionDate', render: function (data) {
+                        data: 'completionDate', class: 'text-center', render: function (data) {
                             return formatAsDate(data);
                         }
                     },
                     {
                         data: 'action',
+                        class: 'text-center',
                         render: function () {
-                            return '<button type="button" id="edit" class="btn btn-info btn-xs edit"><i class="fa fa-edit"></i>Edit</button>';
+                            return '<button type="button" id="edit" class="btn btn-info btn-sm edit"><i class="fa fa-edit"></i>Edit</button>';
                         }
                     },
 

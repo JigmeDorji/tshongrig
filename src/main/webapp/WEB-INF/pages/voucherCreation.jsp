@@ -38,9 +38,9 @@
                 <%--                <fieldset>--%>
                 <legend class="text-uppercase font-size-sm font-weight-bold">Voucher Details</legend>
                 <div class="form-group row">
-                    <label class="  col-md-2  required">Voucher Type:</label>
+                    <label class=" col-md-2  required">Voucher Type:</label>
 
-                    <div class="col-md-3" style="margin-left: -30px">
+                    <div class="col-md-3">
                         <form:select class="form-control form-control-sm select2" name="voucherTypeId"
                                      path="voucherTypeList"
                                      id="voucherTypeId" required="required" tabindex="1" autofocus="true">
@@ -52,7 +52,7 @@
 
                     <label class="col-md-2  required">Voucher No: </label>
 
-                    <div class="col-md-1" style="margin-left: -30px">
+                    <div class="col-md-1">
                         <input type="text" class="form-control form-control-sm resetfield right-align"
                                name="voucherNo"
                                id="voucherNo" value="${currentVoucherNo}" readonly/>
@@ -67,12 +67,12 @@
                     </div>
                 </div>
 
-                <div class="col-md-12 form-group row table-responsive" style="margin-top: 20px">
+                <div class="table-responsive">
                     <table class="table table-bordered editable-grid tableGrid"
                            id="voucherCreationGrid">
                         <thead>
                         <tr class="bg-primary text-white">
-                            <th width="10%"></th>
+                            <th></th>
                             <th width="50%">Particulars</th>
                             <th width="20%">Debit</th>
                             <th width="20%">Credit</th>
@@ -105,11 +105,11 @@
                         <tr>
                             <td></td>
                             <td><b>Total</b></td>
-                            <td style="padding-right: 1px"><input type="text" name="totalDebit"
+                            <td><input type="text" name="totalDebit"
                                                                   class="form-control form-control-sm   right-align"
                                                                   value="0"
                                                                   id="totalDebit" readonly></td>
-                            <td style="padding-right: 1px"><input type="text" name="totalCredit"
+                            <td><input type="text" name="totalCredit"
                                                                   class="form-control form-control-sm   right-align"
                                                                   value="0"
                                                                   id="totalCredit" readonly></td>
