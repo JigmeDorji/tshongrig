@@ -63,7 +63,7 @@
                                 <th width="5%">Purchase Rate</th>
                                 <th width="5%">Qty</th>
                                 <th width="5%">Purchase Value</th>
-                                <th width="10%">Action</th>
+                                <th width="11%">Action</th>
                             </tr>
                             </thead>
                             <tbody>

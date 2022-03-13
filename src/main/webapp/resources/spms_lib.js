@@ -125,8 +125,8 @@ spms = (function () {
     }
 
     function getUrl() {
-        return window.location.protocol + '//' + window.location.host + '/bcs/';
-        // return window.location.protocol + '//' + window.location.host + '/';
+        // return window.location.protocol + '//' + window.location.host + '/bcs/';
+        return window.location.protocol + '//' + window.location.host + '/';
         // return 'http://www.autga.bt/bcs/';
     }
 
@@ -788,28 +788,6 @@ $(document).ready(function () {
             .addClass('modal-stack'));
     });
 
-
-    $(document).on('keydown', function (e) {
-        // You may replace `c` with whatever key you want
-        if ((e.metaKey || e.ctrlKey) && (String.fromCharCode(e.which).toLowerCase() === 'c')) {
-            alert("ff")
-            $('#exampleModal').modal('show');
-        }
-    });
-
-
-    // $(document).on('keypress', function (e) {
-    //     switch (e.which) {
-    //         case 38:
-    //             log("event:UP ARROW key in input.tInput");
-    //             focusPrevious($(this).data('index'));
-    //             break;
-    //         case 40:
-    //             log('event:DOWN ARROW key in input.tInput');
-    //             focusNext($(this).data('index'));
-    //             break;
-    //     }
-    // });
 });
 
 

@@ -62,7 +62,7 @@
                                 <th width="5%">Rate</th>
                                 <th width="5%">Qty</th>
                                 <th width="8%">Total</th>
-                                <th width="4%">Action</th>
+                                <th width="4%" class="text-center">Action</th>
                             </tr>
                             </thead>
                             <tbody>

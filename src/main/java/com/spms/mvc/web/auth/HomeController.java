@@ -7,6 +7,7 @@ import com.spms.mvc.dto.FinancialYearDTO;
 import com.spms.mvc.dto.UserDTO;
 import com.spms.mvc.library.helper.CurrentUser;
 import com.spms.mvc.library.helper.DateUtil;
+import com.spms.mvc.library.helper.DropdownDTO;
 import com.spms.mvc.service.CompanyCreationService;
 import com.spms.mvc.service.FinancialYearSetupService;
 import org.apache.commons.lang.time.DateUtils;
@@ -24,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "")
@@ -103,6 +105,7 @@ public class HomeController {
         currentUser.setContact(companyCreationDTO.getMobileNo());
         currentUser.setMailingAddress(companyCreationDTO.getMailingAddress());
         currentUser.setBusinessType(companyCreationDTO.getBusinessType());
+        currentUser.setUserId(userDTO.getUserId());
         request.getSession().setAttribute("currentUser", currentUser);
         modelAndView.setViewName("home");
         return modelAndView;
@@ -113,6 +116,14 @@ public class HomeController {
     public CompanyCreationDTO getTotalSale(HttpServletRequest request) {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
         return companyCreationService.getTotalSale(currentUser.getCompanyId(), currentUser.getFinancialYearId());
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getScreenList", method = RequestMethod.GET)
+    public List<DropdownDTO> getScreenList(HttpServletRequest request) {
+        CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
+        return companyCreationService.getScreenList(currentUser.getUserId());
+
     }
 
 }

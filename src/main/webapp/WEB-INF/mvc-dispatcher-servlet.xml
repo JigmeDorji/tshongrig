@@ -100,16 +100,6 @@
         <property name="order" value="0"/>
     </bean>
 
-    <!--Bean Configuration in Create User Controller-->
-    <bean class="com.spms.mvc.web.CreateUserController" id="createUserController">
-        <property name="createUserService" ref="createUserService"/>
-    </bean>
-
-    <!--Bean Configuration in Create User Service-->
-    <bean class="com.spms.mvc.service.CreateUserService" id="createUserService">
-        <property name="passwordEncoder" ref="passwordEncoder"/>
-    </bean>
-
     <!--Bean Configuration in Change Password Service-->
     <bean id="changePasswordService" class="com.spms.mvc.service.ChangePasswordService">
         <property name="passwordEncoder" ref="passwordEncoder"/>

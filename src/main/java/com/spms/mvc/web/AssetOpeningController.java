@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -61,6 +62,12 @@ public class AssetOpeningController extends BaseController {
     @RequestMapping(value = "/getItemSuggestionList", method = RequestMethod.GET)
     public List<OpeningAndBuyingDTO> getItemSuggestionList(HttpServletRequest request) {
         return assetOpeningService.getItemSuggestionList(getCurrentUser(request));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/loadAssetOpeningList", method = RequestMethod.GET)
+    public List<OpeningAndBuyingDTO> loadAssetOpeningList(HttpServletRequest request, BigInteger faPurchaseId) {
+        return assetOpeningService.loadAssetOpeningList(getCurrentUser(request),faPurchaseId);
     }
 
 }

@@ -68,10 +68,10 @@ assetOpening = (function () {
             fixedAssetOpeningGrid.find('tbody').append(returnRow());
             selectedRow.find('.addBtn').addClass('hidden');
             selectedRow.find('.removeBtn').removeClass('hidden');
-            spms._formIndexing(fixedAssetOpeningGrid.find('tbody'), fixedAssetOpeningGrid.find('tbody tr'));
-            // $('#autoCompleteId' + iterator).devbridgeAutocomplete({
-            //     lookup: valueList
-            // });
+
+            spms._formIndexing(fixedAssetOpeningGrid.find('tbody'),
+                fixedAssetOpeningGrid.find('tbody tr'));
+
             let items = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -118,8 +118,8 @@ assetOpening = (function () {
             "<td><input type='text'  name='openingAndBuyingListDTO[0].rate' class='form-control rate right-align'></td>" +
             "<td><input type='text'  name='openingAndBuyingListDTO[0].qty' class='form-control qty  right-align'></td>" +
             "<td><input type='text'  name='openingAndBuyingListDTO[0].total' readonly class='form-control total right-align'></td>" +
-            "<td class='text-center'><button class='btn btn-danger btn-sm ml-3 d-none d-sm-inline-block removeBtn hidden' type='button' id='removeBtn'><i class='fa fa-trash'></i> Delete</button>" +
-            "<button class='btn  btn-sm btn-success d-sm-inline-block addBtn' type='button' id='addBtn'><i class='fa fa-plus'></i> Add More</button></td>" +
+            "<td class='text-center'><button class='btn btn-danger btn-xm  d-sm-inline-block removeBtn' type='button' id='removeBtn'><i class='fa fa-trash'></i> Delete</button>" +
+            "<button class='btn btn-xm btn-success d-sm-inline-block addBtn' type='button' id='addBtn'><i class='fa fa-plus'></i> Add More</button></td>" +
             "</tr>";
     }
 
@@ -144,6 +144,11 @@ assetOpening = (function () {
                     );
                 } else {
                     selectedRow.remove();
+
+                    if (parseInt($('#fixedAssetOpeningGrid tbody tr').length) === 1) {
+                        $('#fixedAssetOpeningGrid tr').last().find('.removeBtn').addClass('hidden');
+                    }
+                    $('#fixedAssetOpeningGrid tr').last().find('.addBtn').removeClass('hidden');
                 }
                 indexRowNo(fixedAssetOpeningGrid);
             }
@@ -165,75 +170,31 @@ assetOpening = (function () {
         $('#grandTotalAmount').val(grandTotalAmount.toFixed(2));
     }
 
-    function _disPlayData(data) {
-        if (data.status === 1) {
-            $('#purchaseItemTable tbody tr').remove();
-            let res = data.dto;
-            for (let i = 0; i < res.length; i++) {
-                $('#purchaseDate').val(formatAsDate(res[i].purchaseDate))
-                $('#purchaseVoucherNo').val(res[i].purchaseVoucherNo);
-                $('#purchaseInvoiceNo').val(res[i].purchaseInvoiceNo);
-                $('#supplierName').val(res[i].supplierName);
-                $('#isCash').val(res[i].isCash);
-                if (res[i].isCash === 2) {
-                    $('#bankDetails').attr('hidden', false);
-                    $('#bankLedgerId').val(res[0].bankLedgerId);
-                } else {
-                    $('#bankDetails').attr('hidden', true);
+    function _disPlayData() {
+        spms.ajax(baseURL() + 'loadAssetOpeningList', 'GET', {
+            faPurchaseId: $('#faPurchaseId').val()
+        }, function (res) {
+            if (res.status === 1) {
+                for (let i = 0; i < res.length; i++) {
+                    let row = "<tr>" +
+                        "<td><input type='text' readonly class='form-control rowNumber'>" +
+                        "<input type='hidden' id='assetDetailId" + iterator + "' name='openingAndBuyingListDTO[0].assetDetailId'  class='form-control'>" +
+                        "<input type='hidden' id='fixedAssetGroupId' name='openingAndBuyingListDTO[0].fixedAssetGroupId'  class='form-control'>" +
+                        "<input type='hidden' id='faPurchaseId' name='openingAndBuyingListDTO[0].faPurchaseId'  class='form-control'></td>" +
+                        "<td><input type='text' id='autoCompleteId" + iterator + "' name='openingAndBuyingListDTO[0].particular' class='form-control particular'></td>" +
+                        "<td><input type='text'  name='openingAndBuyingListDTO[0].purchaseDate' class='form-control formatDate' value='" + res[i].purchaseDate + "'></td>" +
+                        "<td><input type='text'  name='openingAndBuyingListDTO[0].openingBalance' class='form-control openingBalance right-align' value='" + res[i].openingBalance + "'></td>" +
+                        "<td><input type='text'  name='openingAndBuyingListDTO[0].depreciatedValue' class='form-control depreciatedValue right-align'value='" + res[i].depreciatedValue + "'></td>" +
+                        "<td><input type='text'  name='openingAndBuyingListDTO[0].rate' class='form-control rate right-align' value='" + res[i].rate + "'></td>" +
+                        "<td><input type='text'  name='openingAndBuyingListDTO[0].qty' class='form-control qty  right-align' value='" + res[i].qty + "'></td>" +
+                        "<td><input type='text'  name='openingAndBuyingListDTO[0].total' readonly class='form-control total right-align'></td>" +
+                        "<td class='text-center'><button class='btn btn-danger btn-xm  d-sm-inline-block removeBtn' type='button' id='removeBtn'><i class='fa fa-trash'></i> Delete</button>" +
+                        "<button class='btn btn-xm btn-success d-sm-inline-block addBtn' type='button' id='addBtn'><i class='fa fa-plus'></i> Add More</button></td>" +
+                        "</tr>";
+                    fixedAssetOpeningGrid.find('tbody').append(row);
                 }
-                if (res[i].isCash === 3) {
-                    getSupplierDropdownList();
-                    $('.creditDetails').attr('hidden', false);
-                    setTimeout(function () {
-                        $('#supplierId').val(res[0].supplierId);
-                    }, 100);
-                } else {
-                    $('.creditDetails').attr('hidden', true);
-                }
-
-                let tableGrid = $('#purchaseItemTable');
-                let tableBody = tableGrid.find('tbody');
-                let row = "<tr>" +
-                    "<td><input type='text' id='index' readonly class='form-control' value='" + parseInt(i + 1) + "'>" +
-                    "<input type='hidden' id='index' name='purchaseDTOS[" + i + "].type'  class='form-control' value='" + res[i].type + "'>" +
-                    "<input type='hidden' id='index' name='purchaseDTOS[" + i + "].purchaseId'  class='form-control' value='" + res[i].purchaseId + "'>" +
-                    "<input type='hidden' id='index' name='purchaseDTOS[" + i + "].purchaseAuditId'  class='form-control' value='" + res[i].purchaseAuditId + "'>" +
-                    "<input type='hidden' id='brandName' name='purchaseDTOS[" + i + "].brandName'  class='form-control' value='" + res[i].brandName + "'>" +
-                    "<input type='hidden' id='prefixCode' name='purchaseDTOS[" + i + "].prefixCode'  class='form-control' value='" + res[i].prefixCode + "'>" +
-                    "<input type='hidden' id='index' name='purchaseDTOS[" + i + "].locationId'  class='form-control' value='" + res[i].locationId + "'></td>" +
-                    "<td><input type='text' id='itemCode' readonly name='purchaseDTOS[" + i + "].itemCode' class='form-control' value='" + res[i].itemCode.toUpperCase() + "'></td>" +
-                    "<td><input type='text' readonly name='purchaseDTOS[" + i + "].itemName' class='form-control' value='" + res[i].itemName + "'></td>" +
-                    "<td><input type='text' readonly name='purchaseDTOS[" + i + "].partNo' class='form-control partNo' value='" + res[i].partNo + "'></td>" +
-                    "<td><input type='text' readonly name='purchaseDTOS[" + i + "].sellingPrice' class='form-control sellingPrice right-align' value='" + res[i].sellingPrice + "'></td>" +
-                    "<td><input type='text' readonly name='purchaseDTOS[" + i + "].costPrice' class='form-control costPrice right-align' value='" + res[i].costPrice + "'></td>" +
-                    "<td><input type='hidden' id='initialQty' readonly class='form-control initialQty right-align'><input type='text' id='qty' readonly class='form-control qty right-align amount'   name='purchaseDTOS[" + i + "].qty' value=" + res[i].qty + " ></td>" +
-                    "<td><input type='hidden' readonly name='purchaseDTOS[" + i + "].unitId' class='form-control costPrice right-align' value='" + res[i].unitId + "'><input type='text' readonly  class='form-control costPrice right-align' value='" + res[i].unitName + "'></td>" +
-                    "<td><input type='text' readonly class='form-control totalAmount right-align totalAmount' id='totalAmount'  name='purchaseDTOS[" + i + "].totalAmount' value=" + res[i].costPrice + " ></td>" +
-                    "<td><input type='button'  id='itemEditBtn' class='btn btn-primary btn-sm fa fa-trash' value='Edit'><input type='button'  id='btnDeleteItem' class='btn btn-danger btn-sm fa fa-trash' value='Delete'></td>" +
-                    "</tr>";
-                tableGrid.find('tbody').append(row);
-                calculateTotal();
-                $('#btnSave').attr('disabled', false)
-                // if (!isValid(tableBody, itemCode)) {
-                //     let noMatch = $(tableBody).find('td').first().html();
-                //     if (noMatch == 'No data available in table') {
-                //         $(tableBody).find('tr').remove();
-                //     }
-                //     tableGrid.find('tbody').append(row);
-                //
-                //     let allRow = tableBody.find('tr');
-                //     spms._formIndexing(tableBody, allRow);
-                //     $('.common').val('');
-                //     calculateTotal();
-                //     // $('#printBtn').attr('disabled', false)
-                // }
-                // $('#itemCode').focus();
             }
-        } else {
-            // $('#purchaseInvoiceNo').val('')
-            // $('#purchaseInvoiceNo').focus()
-            // errorMsg(data.text);
-        }
+        })
     }
 
     function onQtyChange() {
@@ -257,10 +218,11 @@ assetOpening = (function () {
                 });
 
                 fixedAssetOpeningGrid.find('tbody').append(returnRow());
-                spms._formIndexing(fixedAssetOpeningGrid.find('tbody'), fixedAssetOpeningGrid.find('tbody tr'));
-                // $('#autoCompleteId' + iterator).devbridgeAutocomplete({
-                //     lookup: valueList
-                // });
+                spms._formIndexing(fixedAssetOpeningGrid.find('tbody'),
+                    fixedAssetOpeningGrid.find('tbody tr'));
+
+                fixedAssetOpeningGrid.find('tbody tr')
+                    .find('.removeBtn').addClass('hidden');
                 let items = new Bloodhound({
                     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
                     queryTokenizer: Bloodhound.tokenizers.whitespace,

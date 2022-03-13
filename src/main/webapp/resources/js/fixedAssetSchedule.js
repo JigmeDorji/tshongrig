@@ -60,7 +60,7 @@ fixedAssetSchedule = (function () {
                     if (parseInt(item.groupId) === 1) {
                         if (status) {
                             totalHTMLContent()
-                            htmlTableContent = htmlTableContent + '<tr>\n' +
+                            htmlTableContent = htmlTableContent + '<tr class="text-center">\n' +
                                 '                 <td><b>' + item.particular + '</b></td>\n' +
                                 '              </tr>\n';
 
@@ -76,7 +76,7 @@ fixedAssetSchedule = (function () {
                                 }
                             }
                             status = true;
-                            htmlTableContent = htmlTableContent + '<tr>\n' +
+                            htmlTableContent = htmlTableContent + '<tr class="text-center">\n' +
                                 '                 <td><b>' + item.particular + '</b></td>\n' +
                                 '              </tr>\n';
                         }
@@ -103,7 +103,7 @@ fixedAssetSchedule = (function () {
                         totalDepAsOnEndFinancialYear = totalDepAsOnEndFinancialYear + depAsOnEndFinancialYear;
                         totalNetValue = totalNetValue + netValue;
 
-                        htmlTableContent = htmlTableContent + '<tr>\n' +
+                        htmlTableContent = htmlTableContent + '<tr  class="text-center">\n' +
                             '                        <td>' + item.particular + '</td>\n' +
                             '                        <td>' + purchaseDate + '</td>\n' +
                             '                        <td>' + spms.numberWithCommas(rate.toFixed(2)) + '</td>\n' +
@@ -120,7 +120,7 @@ fixedAssetSchedule = (function () {
                     }
 
                     function totalHTMLContent() {
-                        htmlTableContent = htmlTableContent + '<tr>\n' +
+                        htmlTableContent = htmlTableContent + '<tr class="text-center">\n' +
                             '                        <td><b>Total(' + arrayCharacter()[characterCounter] + ')</b></td>\n' +
                             '                        <td></td>\n' +
                             '                        <td><b>' + spms.numberWithCommas(totalRate.toFixed(2)) + '</b></td>\n' +
@@ -151,7 +151,7 @@ fixedAssetSchedule = (function () {
                     if (totalSize === 1) {
                         calculateGrandTotal();
                         totalHTMLContent();
-                        htmlTableContent = htmlTableContent + '<tr>\n' +
+                        htmlTableContent = htmlTableContent + '<tr class="text-center">\n' +
                             '                        <td><b>Total(' + getFinalCharacter(characterCounter) + ')</b></td>\n' +
                             '                        <td></td>\n' +
                             '                        <td><b>' + spms.numberWithCommas(grandTotalRate.toFixed(2)) + '</b></td>\n' +

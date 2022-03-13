@@ -305,4 +305,8 @@ public class AssetOpeningService {
         voucherDTO.setVoucherDetailDTOList(voucherDetailDTOs);
         voucherCreationService.performPurchaseAndSaleVoucherEntry(voucherDTO, currentUser);
     }
+
+    public List<OpeningAndBuyingDTO> loadAssetOpeningList(CurrentUser currentUser, BigInteger faPurchaseId) {
+        return assetOpeningDao.loadAssetOpeningList(faPurchaseId);
+    }
 }

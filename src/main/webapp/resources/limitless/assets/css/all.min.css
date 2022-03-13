@@ -4706,6 +4706,12 @@ a.btn.disabled, fieldset:disabled a.btn {
     line-height: 1.6924;
     border-radius: .1875rem
 }
+.btn-group-sm > .btn, .btn-xm {
+    padding: .275rem .575rem;
+    font-size: .5rem;
+    line-height: 1.5;
+    border-radius: .1875rem
+}
 
 .btn-block {
     display: block;
