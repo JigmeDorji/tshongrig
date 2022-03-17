@@ -59,6 +59,8 @@ assetBuying = (function () {
                     });
                     fixedAssetBuyingGrid.find('tbody').append(returnRow());
 
+                    fixedAssetBuyingGrid.find('tbody tr')
+                        .find('.removeBtn').addClass('hidden');
                     items = new Bloodhound({
                         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
                         queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -144,8 +146,8 @@ assetBuying = (function () {
                 "<td><input type='text'  name='openingAndBuyingListDTO[0].rate' class='form-control  rate'></td>" +
                 "<td><input type='text'  name='openingAndBuyingListDTO[0].qty' class='form-control  qty right-align'></td>" +
                 "<td><input type='text' readonly name='openingAndBuyingListDTO[0].totalAmount' class='form-control   totalAmount right-align'></td>" +
-                "<td><button class='btn btn-danger btn-xs ml-3 d-none d-sm-inline-block removeBtn hidden' type='button' id='removeBtn'><i class='fa fa-trash'></i> Delete</button>" +
-                "<button class='btn  btn-sm btn-success d-sm-inline-block addBtn' type='button' id='addBtn'><i class='fa fa-plus'></i> Add More</button></td></tr>";
+                "<td class='text-center'><button class='btn btn-danger btn-xm d-none d-sm-inline-block removeBtn' type='button' id='removeBtn'><i class='fa fa-trash'></i> Delete</button>" +
+                "<button class='btn  btn-xm btn-success d-sm-inline-block addBtn' type='button' id='addBtn'><i class='fa fa-plus'></i> Add More</button></td></tr>";
         }
 
         function deleteItem() {
@@ -168,6 +170,10 @@ assetBuying = (function () {
                         );
                     } else {
                         selectedRow.remove();
+                        if (parseInt($('#fixedAssetBuyingGrid tbody tr').length) === 1) {
+                            $('#fixedAssetBuyingGrid tr').last().find('.removeBtn').addClass('hidden');
+                        }
+                        $('#fixedAssetBuyingGrid tr').last().find('.addBtn').removeClass('hidden');
                     }
                     indexRowNo(fixedAssetBuyingGrid);
                 }

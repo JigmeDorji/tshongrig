@@ -80,7 +80,7 @@ public class StatutoryRemittanceDao {
                 "e.accNo FROM tbl_hr_employeesetup e\n" +
                 "INNER JOIN tbl_hr_salary_sheet s ON e.empId=s.empId\n" +
                 "INNER JOIN tbl_hr_statutory_remittance sr ON s.salarySheetId=sr.salarySheetId\n" +
-                "WHERE e.cost=:cost and s.monthId=:month and e.companyId=:companyId and s.financialYearId=:financialYearId AND (:bankLedgerId is null OR sr.bankLedgerId=:bankLedgerId)";
+                "WHERE e.cost=:cost and sr.month=:month and sr.companyId=:companyId and sr.financialYearId=:financialYearId AND (:bankLedgerId is null OR sr.bankLedgerId=:bankLedgerId)";
         Session session = sessionFactory.getCurrentSession();
         return session.createSQLQuery(query)
                 .setParameter("companyId", companyId)

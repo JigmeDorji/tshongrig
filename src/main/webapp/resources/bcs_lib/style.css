@@ -17,8 +17,8 @@ label.required:after {
 }
 
 .autocomplete-suggestion {
-    padding: 8px 2px;
-    font-size: 0.9em;
+    padding: 8px 4px 4px;
+    font-size: 1.2em;
     white-space: nowrap;
     overflow: hidden;
 }
@@ -51,6 +51,7 @@ label.required:after {
     font-size: 12px;
     color: #000;
     display: block;
+    border-radius: 25px;
     border-bottom: 1px solid #000;
 }
 

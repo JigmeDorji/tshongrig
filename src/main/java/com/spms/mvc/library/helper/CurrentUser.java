@@ -16,6 +16,7 @@
  */
 package com.spms.mvc.library.helper;
 
+import java.math.BigInteger;
 import java.util.Date;
 
 public class CurrentUser {
@@ -36,6 +37,7 @@ public class CurrentUser {
     private Character permissionType;
     private Integer businessType;
     private String mailingAddress;
+    private BigInteger userId;
     //endregion
 
     //region public setter and getter
@@ -159,5 +161,13 @@ public class CurrentUser {
     public void setMailingAddress(String mailingAddress) {
         this.mailingAddress = mailingAddress;
     }
-//endregion
+
+    public BigInteger getUserId() {
+        return userId;
+    }
+
+    public void setUserId(BigInteger userId) {
+        this.userId = userId;
+    }
+    //endregion
 }

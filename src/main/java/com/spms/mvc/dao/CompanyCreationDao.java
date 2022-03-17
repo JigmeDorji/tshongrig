@@ -238,4 +238,19 @@ public class CompanyCreationDao {
         Session session = sessionFactory.getCurrentSession();
         return (BigInteger) session.createSQLQuery(query).uniqueResult();
     }
+
+    @Transactional(readOnly = true)
+    public List<DropdownDTO> getScreenList(BigInteger userId) {
+        String query = "SELECT b.screenUrl As id,\n" +
+                " b.screenName as text \n" +
+                "FROM bcs_db.tbl_useraccesspermission a\n" +
+                "INNER JOIN tbl_screen b ON a.screenId=b.screenId\n" +
+                "INNER JOIN tbl_user_role_type c ON a.userRoleTypeId=c.userRoleTypeId\n" +
+                "INNER JOIN tbl_user d ON c.userRoleTypeId=d.userRoleTypeId\n" +
+                "WHERE userId=:userId and a.isScreenAccessAllowed='Y'\n";
+        Session session = sessionFactory.getCurrentSession();
+        return session.createSQLQuery(query)
+                .setParameter("userId", userId)
+                .setResultTransformer(Transformers.aliasToBean(DropdownDTO.class)).list();
+    }
 }

@@ -171,4 +171,8 @@ public class CompanyCreationService {
     public List<Integer> loadMappedCompany(BigInteger userId) {
         return companyCreationDao.loadMappedCompany(userId);
     }
+
+    public List<DropdownDTO> getScreenList(BigInteger userId) {
+        return companyCreationDao.getScreenList(userId);
+    }
 }

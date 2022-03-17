@@ -99,11 +99,11 @@ public class StatutoryRemittanceController extends BaseController {
         String reportSourcePath = getReportSourcePath(request);
         String reportOutputPath = getReportOutputPath(request);
 
-        String reportJRXML = "/statutoryRemittanceReport.jrxml";
+        String reportJRXML = "/statutoryRemittance.jrxml";
 
         try {
             ReportResponseDto reportResponseDto = statutoryRemittanceService.generateReport(reportFormat, params,
-                    reportSourcePath, reportOutputPath, currentUser.getLoginId(), reportJRXML, "Salary Remittance");
+                    reportSourcePath, reportOutputPath, currentUser.getLoginId(), reportJRXML, "Statutory Remittance");
             responseMessage.setDTO(reportResponseDto);
             responseMessage.setStatus(1);
         } catch (Exception ex) {

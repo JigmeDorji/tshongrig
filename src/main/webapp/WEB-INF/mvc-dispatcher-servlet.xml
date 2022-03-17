@@ -42,25 +42,23 @@
     </bean>
 
     <!--Database connection config-->
-        <bean id="spmsDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-            <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-            <property name="url" value="jdbc:mysql://localhost:3306/bcs_db"/>
-            <property name="username" value="root"/>
-            <property name="password" value="root"/>
-            <!--<property name="username" value="bcs_user"/>
-            <property name="password" value="bcs@2021"/>-->
-            <property name="validationQuery" value="SELECT 1"/>
-        </bean>
-
-    <!--Linux-->
    <!-- <bean id="spmsDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://localhost:3306/bcs_db"/>
-        <property name="username" value="bcs_user"/>
-        <property name="password" value="bcs@2022"/>
+        <property name="username" value="root"/>
+        <property name="password" value="root"/>
         <property name="validationQuery" value="SELECT 1"/>
-    </bean>
--->
+    </bean>-->
+
+    <!--Linux-->
+     <bean id="spmsDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+         <property name="url" value="jdbc:mysql://localhost:3306/bcs_db"/>
+         <property name="username" value="bcs_user"/>
+         <property name="password" value="bcs@2022"/>
+         <property name="validationQuery" value="SELECT 1"/>
+     </bean>
+
     <!-- Hibernate Session Factory -->
     <bean id="spmsSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="spmsDataSource"/>
@@ -97,16 +95,6 @@
     <bean id="xmlViewResolver" class="org.springframework.web.servlet.view.XmlViewResolver">
         <property name="location" value="/WEB-INF/config/report-config.xml"/>
         <property name="order" value="0"/>
-    </bean>
-
-    <!--Bean Configuration in Create User Controller-->
-    <bean class="com.spms.mvc.web.CreateUserController" id="createUserController">
-        <property name="createUserService" ref="createUserService"/>
-    </bean>
-
-    <!--Bean Configuration in Create User Service-->
-    <bean class="com.spms.mvc.service.CreateUserService" id="createUserService">
-        <property name="passwordEncoder" ref="passwordEncoder"/>
     </bean>
 
     <!--Bean Configuration in Change Password Service-->

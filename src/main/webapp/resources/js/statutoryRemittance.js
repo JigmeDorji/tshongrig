@@ -19,6 +19,19 @@ statutoryRemittance = (function () {
     }
 
     function getCompanyStatutoryDetails() {
+        $('#monthId').on('change', function () {
+            let monthId = $('#monthId').val();
+            let cost = $(this).val();
+            if (cost === '') {
+                $(this).val('');
+                errorMsg("Please select cost.");
+                return false;
+            }
+            if ($('#monthId').val() !== '' && $('#cost').val() !== '') {
+                fetchStatutoryDetail(monthId, cost, $('#bankLedgerId').val())
+            }
+        });
+
         $('#cost').on('change', function () {
             let monthId = $('#monthId').val();
             let cost = $(this).val();
@@ -27,11 +40,14 @@ statutoryRemittance = (function () {
                 errorMsg("Please select month.");
                 return false;
             }
-            fetchStatutoryDetail(monthId, cost, $('#bankLedgerId').val())
+            if ($('#monthId').val() !== '' && $('#cost').val() !== '') {
+                fetchStatutoryDetail(monthId, cost, $('#bankLedgerId').val())
+            }
+
         });
-        // $('#bankLedgerId').on('change', function () {
-        //     fetchStatutoryDetail($('#monthId').val(), $(this).val());
-        // });
+
+
+
     }
 
     function fetchStatutoryDetail(month, cost, bankLedgerId) {
@@ -68,10 +84,10 @@ statutoryRemittance = (function () {
                             {data: 'pF'},
                             {data: 'gIS'},
                             {data: 'netSalary'},
-                            {data: 'tDS', class: 'tDS'},
-                            {data: 'hC', class: 'hC'},
+                            {data: 'tDS', class: 'tDS text-center'},
+                            {data: 'hC', class: 'hC text-center'},
                             {
-                                data: 'totalAmount', class: 'totalAmount',
+                                data: 'totalAmount', class: 'totalAmount text-center',
                                 render: function (data, type, row) {
                                     return (row.tDS + row.hC).toFixed(2);
                                 }

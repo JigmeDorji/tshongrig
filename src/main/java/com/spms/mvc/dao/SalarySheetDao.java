@@ -93,7 +93,7 @@ public class SalarySheetDao {
 
     @Transactional(readOnly = true)
     public double getBalanceAdvance(String ledgerId, Integer companyId) {
-        String query = "SELECT sum(a.drcrAmount*-1) \n" +
+        String query = "SELECT ifnull(sum(a.drcrAmount*-1),0) \n" +
                 "FROM tbl_acc_voucher_entries_detail a\n" +
                 "inner join tbl_acc_voucher_entries b on a.voucherId=b.voucherId\n" +
                 "where a.ledgerId=:ledgerId and b.companyId=:companyId";

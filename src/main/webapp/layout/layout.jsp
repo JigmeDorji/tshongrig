@@ -30,13 +30,14 @@
         <!-- Inner content -->
         <div class="content-inner">
             <sitemesh:write property="body"/>
+            <jsp:include page="/layout/include/shortcutModal.jsp"/>
         </div>
         <!-- /inner content -->
 
 
         <!-- Footer -->
         <div class="navbar navbar-expand-lg navbar-light border-bottom-0 border-top" style="margin-bottom: -20px">
-            <div class="text-center d-lg-none w-100" >
+            <div class="text-center d-lg-none w-100">
                 <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse"
                         data-target="#navbar-footer">
                     <i class="icon-unfold mr-2"></i>

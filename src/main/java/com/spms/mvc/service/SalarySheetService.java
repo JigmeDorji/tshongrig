@@ -279,7 +279,9 @@ public class SalarySheetService extends BaseService {
                 } else {
                     employeeSetupDTO.setBalanceAdvance(0);
                 }
-                employeeSetupDTO.settDS(salarySheetDao.getTDSAmount(employeeSetupDTO.getNetSalary()));
+                Double tdsAmt =salarySheetDao.getTDSAmount(employeeSetupDTO.getNetSalary());
+                tdsAmt=tdsAmt==null?0.25*(employeeSetupDTO.getNetSalary()-83333)+11875:tdsAmt;
+                employeeSetupDTO.settDS(tdsAmt);
                 if (salarySheetGeneratedData.size() > 0) {
                     employeeSetupDTO.setTakeHome(employeeSetupDTO.getTakeHome());
                 } else {

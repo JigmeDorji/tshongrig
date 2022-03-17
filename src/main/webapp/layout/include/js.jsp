@@ -44,4 +44,8 @@
 <script defer type="text/javascript"
         src="<c:url value='/resources/limitless/global_assets/js/plugins/forms/inputs/typeahead/typeahead.bundle.min.js'/>"></script>
 
+<script defer type="text/javascript"
+        src="<c:url value='/resources/bcs_lib/jquery.double-keypress.js'/>"></script>
+<script defer type="text/javascript" src="<c:url value='/resources/shortcut-key.js'/>"></script>
+
 
