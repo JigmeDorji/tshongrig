@@ -49,7 +49,8 @@ public class VoucherGroupListService {
             currentPeriodFrom = fromDate;
             currentPeriodTo = toDate;
         }
-        for (AccProfitAndLossReportDTO accProfitAndLossReportDTO : voucherGroupListDao.getVoucherDetailsByAccTypeAndLedgerType(ledgerId, currentPeriodFrom, currentPeriodTo, fromDate, toDate, currentUser.getCompanyId())) {
+        for (AccProfitAndLossReportDTO accProfitAndLossReportDTO : voucherGroupListDao.getVoucherDetailsByAccTypeAndLedgerType(ledgerId, currentPeriodFrom, currentPeriodTo, fromDate, toDate, currentUser.getCompanyId(),
+                currentUser.getFinancialYearId())) {
             AccProfitAndLossReportDTO profitAndLossReportDTO = new AccProfitAndLossReportDTO();
 
             if (accProfitAndLossReportDTO.getDrcrAmount() > 0) {
