@@ -96,11 +96,14 @@ public class SalarySheetService extends BaseService {
         }
 
         //(GIS)
-        VoucherDetailDTO gISVoucherDTO = new VoucherDetailDTO();
-        gISVoucherDTO.setDrcrAmount(AccountingUtil.crAmount(salarySheetDTO.getTotalGIS()));
-        gISVoucherDTO.setLedgerId(ledgerService.getLedgerIdByLedgerName(LedgerType.GIS.getText(),
-                currentUser, AccountTypeEnum.PAYABLE.getValue()));
-        voucherDetailDTOs.add(gISVoucherDTO);
+        if (salarySheetDTO.getTotalGIS() > 0) {
+            VoucherDetailDTO gISVoucherDTO = new VoucherDetailDTO();
+            gISVoucherDTO.setDrcrAmount(AccountingUtil.crAmount(salarySheetDTO.getTotalGIS()));
+            gISVoucherDTO.setLedgerId(ledgerService.getLedgerIdByLedgerName(LedgerType.GIS.getText(),
+                    currentUser, AccountTypeEnum.PAYABLE.getValue()));
+            voucherDetailDTOs.add(gISVoucherDTO);
+        }
+
 
         //(Advance)
 //        VoucherDetailDTO advanceVoucherDTO = new VoucherDetailDTO();
@@ -110,11 +113,13 @@ public class SalarySheetService extends BaseService {
 //        voucherDetailDTOs.add(advanceVoucherDTO);
 
         //(HC)
-        VoucherDetailDTO hCVoucherDTO = new VoucherDetailDTO();
-        hCVoucherDTO.setDrcrAmount(AccountingUtil.crAmount(salarySheetDTO.getTotalHC()));
-        hCVoucherDTO.setLedgerId(ledgerService.getLedgerIdByLedgerName(LedgerType.HC.getText(),
-                currentUser, AccountTypeEnum.PAYABLE.getValue()));
-        voucherDetailDTOs.add(hCVoucherDTO);
+        if (salarySheetDTO.getTotalHC() > 0) {
+            VoucherDetailDTO hCVoucherDTO = new VoucherDetailDTO();
+            hCVoucherDTO.setDrcrAmount(AccountingUtil.crAmount(salarySheetDTO.getTotalHC()));
+            hCVoucherDTO.setLedgerId(ledgerService.getLedgerIdByLedgerName(LedgerType.HC.getText(),
+                    currentUser, AccountTypeEnum.PAYABLE.getValue()));
+            voucherDetailDTOs.add(hCVoucherDTO);
+        }
 
         //(Salary TDS)
         if (salarySheetDTO.getTotalTDS() > 0) {
@@ -127,11 +132,14 @@ public class SalarySheetService extends BaseService {
 
 
         //(Salary Payable)
-        VoucherDetailDTO salaryPayableVoucherDTO = new VoucherDetailDTO();
-        salaryPayableVoucherDTO.setDrcrAmount(AccountingUtil.crAmount(salarySheetDTO.getTotalTakeHome()));
-        salaryPayableVoucherDTO.setLedgerId(ledgerService.getLedgerIdByLedgerName(LedgerType.SALARY_PAYABLE.getText(),
-                currentUser, AccountTypeEnum.PAYABLE.getValue()));
-        voucherDetailDTOs.add(salaryPayableVoucherDTO);
+        if (salarySheetDTO.getTotalTakeHome() > 0) {
+            VoucherDetailDTO salaryPayableVoucherDTO = new VoucherDetailDTO();
+            salaryPayableVoucherDTO.setDrcrAmount(AccountingUtil.crAmount(salarySheetDTO.getTotalTakeHome()));
+            salaryPayableVoucherDTO.setLedgerId(ledgerService.getLedgerIdByLedgerName(LedgerType.SALARY_PAYABLE.getText(),
+                    currentUser, AccountTypeEnum.PAYABLE.getValue()));
+            voucherDetailDTOs.add(salaryPayableVoucherDTO);
+        }
+
 
 
 //        responseMessage = voucherCreationService.performPurchaseAndSaleVoucherEntry(voucherDTO, currentUser);
@@ -271,7 +279,9 @@ public class SalarySheetService extends BaseService {
                 } else {
                     employeeSetupDTO.setBalanceAdvance(0);
                 }
-                employeeSetupDTO.settDS(salarySheetDao.getTDSAmount(employeeSetupDTO.getNetSalary()));
+                Double tdsAmt =salarySheetDao.getTDSAmount(employeeSetupDTO.getNetSalary());
+                tdsAmt=tdsAmt==null?0.25*(employeeSetupDTO.getNetSalary()-83333)+11875:tdsAmt;
+                employeeSetupDTO.settDS(tdsAmt);
                 if (salarySheetGeneratedData.size() > 0) {
                     employeeSetupDTO.setTakeHome(employeeSetupDTO.getTakeHome());
                 } else {

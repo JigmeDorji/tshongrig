@@ -57,14 +57,13 @@ public class VoucherCreationService {
             responseMessage.setText("Debit Credit not equal.");
             return responseMessage;
         }
-
         if (checkCashBalance(voucherDTO.getVoucherDetailDTOList(), currentUser, format, voucherDTO.getVoucherTypeId()).getStatus() == 0) {
             responseMessage.setStatus(0);
             responseMessage.setText("Cash Insufficient.");
             return responseMessage;
         }
 
-        if (voucherCreationDao.isVoucherIdExists(voucherDTO.getVoucherNo(), currentUser.getCompanyId(), voucherDTO.getVoucherTypeId())) {
+        if (voucherCreationDao.isVoucherIdExists(voucherDTO.getVoucherNo(), currentUser.getCompanyId(),currentUser.getFinancialYearId(), voucherDTO.getVoucherTypeId())) {
             //delete from voucher details
             voucherCreationDao.getVoucherIdByVoucherNo(voucherDTO.getVoucherNo(), currentUser.getCompanyId(), currentUser.getFinancialYearId(),
                     voucherDTO.getVoucherTypeId()).forEach(voucherCreationDao::deleteVoucherDetailList);
