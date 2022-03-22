@@ -97,7 +97,7 @@ voucherCreation = (function () {
                         let creditAmount = spms.removeCommaSeparation(totalDebit.val()) - spms.removeCommaSeparation(totalCredit.val());
                         $('#creditAmount' + index).val(spms.formatAmount(creditAmount.toFixed(2)));
                         if (selectedTd.find('.debitAmount').val() !== '') {
-                            selectedTd.find('.debitAmount').val(spms.formatAmount((parseInt(spms.removeCommaSeparation(selectedTd.find('.debitAmount').val()))).toFixed(2)));
+                            selectedTd.find('.debitAmount').val(spms.formatAmount((parseFloat(spms.removeCommaSeparation(selectedTd.find('.debitAmount').val()))).toFixed(2)));
                         }
                         _calculateTotalCr();
 

@@ -114,7 +114,7 @@ public class VoucherCreationDao {
                 .uniqueResult().equals(BigInteger.ONE);
     }
 
-//    @Transactional(readOnly = true)
+    @Transactional(readOnly = true)
     public List<Integer> getVoucherIdByVoucherNo(Integer voucherNo, Integer companyId, Integer financialYearId, Integer voucherTypeId) {
         String query = "SELECT voucherId AS voucherId FROM tbl_acc_voucher_entries where voucherNo=:voucherNo and companyId=:companyId and financialYearId=:financialYearId and voucherTypeId=:voucherTypeId";
         Session session = sessionFactory.getCurrentSession();
