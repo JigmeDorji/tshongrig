@@ -24,12 +24,16 @@ public class CompanyCreationDTO {
     private Date fnYrStart;
 
     private Integer businessType;
+    private Character status;
+    private String contactPerson;
+    private String remarks;
 
     private Double totalSale;
     private BigDecimal pfPercentage;
     private List<Double> totalListSale;
 
     private Date saleDate;
+    private Date trialExpiryDate;
     private List<Date> saleListDate;
 
     public Integer getCompanyId() {
@@ -134,5 +138,37 @@ public class CompanyCreationDTO {
 
     public void setPfPercentage(BigDecimal pfPercentage) {
         this.pfPercentage = pfPercentage;
+    }
+
+    public Character getStatus() {
+        return status;
+    }
+
+    public void setStatus(Character status) {
+        this.status = status;
+    }
+
+    public String getContactPerson() {
+        return contactPerson;
+    }
+
+    public void setContactPerson(String contactPerson) {
+        this.contactPerson = contactPerson;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public Date getTrialExpiryDate() {
+        return trialExpiryDate;
+    }
+
+    public void setTrialExpiryDate(Date trialExpiryDate) {
+        this.trialExpiryDate = trialExpiryDate;
     }
 }

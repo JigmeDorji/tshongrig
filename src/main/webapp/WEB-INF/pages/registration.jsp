@@ -1,328 +1,160 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: vcass
-  Date: 11/30/2016
-  Time: 8:48 AM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
-<html>
-<title class="title">Registration</title>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="decorator" content="/layout/login-layout.jsp"/>
+    <%--    <link rel="icon" href="favicon.ico">--%>
+    <title>BCS-Registration</title>
+</head>
+<body class="light">
 
-<body>
-<div class="page_title">
-    <span class="title">Stock Management</span>
-    <span class="subtitle">Registration</span>
-</div>
-<form id="registrationForm" action="<c:url value='/registration'/> " class="form-horizontal globalForm">
-    <fieldset>
-        <legend>Enter registration detail</legend>
-        <input type="hidden"   name="isEdit" id="isEdit" value="0"/>
-        <div class="form-group">
-            <label class="col-md-2 text-right required">Registration Number</label>
+<!-- Page content -->
+<div class="page-content">
 
-            <div class="col-md-2">
-                <input type="text" tabindex="1" class="form-control resetfield" name="registration_no"
-                       id="registration_no" required="true"/>
+    <!-- Main content -->
+    <div class="content-wrapper">
+        <!-- Inner content -->
+        <div class="content-inner">
+            <div class="d-md-flex flex-row-reverse">
+                <div class="signin-right col-md-8">
+                    <div class="card col-md-10">
+                        <div class="card-body p-3">
+                            <div class="responseMsg"></div>
+                            <form id="registrationForm" action="<c:url value='/registration/'/>"
+                                  class="form-horizontal registrationForm">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                <div class="">
+                                    <h1 class="signin-title-primary">Enter your business firm detail here</h1>
+                                    <div class="form-group row">
+                                        <div class="form-group form-group-float col-md-6">
+                                            <label class="form-group-float-label animate required">Company Name</label>
+                                            <input type="text" class="form-control field"id="companyName" name="companyName" required placeholder="Company Name">
+                                        </div>
+
+                                        <div class="form-group form-group-float col-md-6">
+                                            <label class="form-group-float-label animate required">Business Type</label>
+                                            <form:select class="form-control resetfield field" name="businessType"
+                                                         placeholder="Business Type"
+                                                         path="businessTypeList"
+                                                         id="businessType" tabindex="8" required="true">
+                                                <form:option value="">-- Select Business Type --</form:option>
+                                                <form:options items="${businessTypeList}" itemValue="valueInteger"
+                                                              itemLabel="text"/>
+                                            </form:select>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="form-group form-group-float col-md-6">
+                                            <label class="form-group-float-label animate required">Contact Person</label>
+                                            <input type="text" name="mobileNo" id="mobileNo" class="form-control field" placeholder="Contact Person">
+                                        </div>
+                                        <div class="form-group form-group-float col-md-6">
+
+                                            <label class="form-group-float-label animate required">Contact No.</label>
+                                            <input type="text" class="form-control field" placeholder="Contact No.">
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="form-group form-group-float col-md-6">
+                                            <label class="form-group-float-label animate required">Mailing Address</label>
+                                            <textarea type="text" class="form-control field" name="mailingAddress" id="mailingAddress" required placeholder="Mailing Address"></textarea>
+                                        </div>
+
+                                        <div class="form-group form-group-float col-md-6">
+                                            <label class="form-group-float-label animate required">Email ID</label>
+                                            <input type="text" name="email" id="email" required class="form-control field" placeholder="Email ID">
+                                        </div>
+                                    </div>
+
+
+                                    <button type="submit" class="btn btn-primary btn-block btn-signin mt-4" id="btnSubmit">Submit</button>
+                                    <%--                        <p class="mg-b-0">Don't have an account? <a href="page-signup2.html">Sign Up</a></p>--%>
+                                    <c:if test="${not empty error}">
+                                        <div class="form-group">
+                                            <div class="alert alert-danger border-0 alert-dismissible">
+                                                    <%--                                        <button type="button" class="close" data-dismiss="alert"><span>×</span></button>--%>
+                                                <span class="font-weight-semibold"></span> <spring:message
+                                                    code="${error}"/>
+                                            </div>
+                                        </div>
+                                    </c:if>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div><!-- signin-right -->
+                <div class="signin-left col-md-4 text-center">
+                    <div class="signin-box">
+                        <%--                        <h2 class="slim-logo"><a href="index.html">slim<span>.</span></a></h2>--%>
+                        <img src="<c:url value='/resources/images/logobcs.png'/>" class="img-fluid pb-2" alt="logo">
+                        <h1>Start a 30-day free trial</h1>
+                        <h5>Subscribe Tshong Rig ERP system today to power your business.</h5>
+                        <p class="pt-5"><a href="/login" class="btn btn-outline-secondary pd-x-25"><i class="icon-arrow-left32"></i> Go back</a>
+                        </p>
+
+                    </div>
+
+                </div><!-- signin-left -->
             </div>
+            <!-- Content area -->
 
-            <%-- <div class="col-md-2">
-                 <input type="button" class="btn btn-primary btn-block" value="Search"
-                        id="searchBtnId">
-             </div>--%>
-
-            <div class="col-md-3">
-                <input type="button" class="btn btn-primary btn-block" value="Generate Registration No."
-                       id="autoGeneRegNo">
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-md-2 text-right required">Customer Name </label>
-
-            <div class="col-md-3">
-                <input type="text" tabindex="2" class="form-control resetfield" name="customer_name"
-                       id="customer_name" required="true"/>
-            </div>
-
-
-        </div>
-
-        <div class="form-group">
-            <label class="col-md-2 text-right required">Vehicle No </label>
-
-            <div class="col-md-3">
-                <input type="text" tabindex="3" class="form-control resetfield" name="vehicle_no"
-                       id="vehicleNo" required="true"/>
-            </div>
-
-
-        </div>
-
-        <div class="form-group">
-            <label class="col-md-2 text-right required">Vehicle Type </label>
-
-            <div class="col-md-3">
-                <input type="text" tabindex="4" class="form-control resetfield" name="vehicle_type"
-                       id="vehicleTypeId" required="true"/>
-            </div>
-
-        </div>
-
-        <div class="form-group">
-            <label class="col-md-2 text-right required">Service Type</label>
-
-            <div class="col-md-3">
-                <input type="text" required="true" tabindex="5" class="form-control resetfield" name="service_type"
-                       id="serviceType"/>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-md-2 text-right  required">Section</label>
-
-            <div class="col-md-3">
-                <input type="text" tabindex="6" class="form-control resetfield" name="section" required="true"
-                       id="sectionId"/>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-md-2 text-right required">Contact Number</label>
-
-            <div class="col-md-3">
-                <input type="text" tabindex="7" class="form-control numeric  resetfield" name="contact_no"
-                       maxlength="8"
-                       id="contact_no" required="true"/>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-md-2 text-right required">Payment Mode</label>
-
-            <div class="col-md-3">
-                <input type="radio" value="1" tabindex="8" id="cash" name="paymentMode" class="resetfield" checked>
-                <label for="cash">Cash</label>
-                <input type="radio" id="bill_no" tabindex="9" value="0" name="paymentMode" class="resetfield">
-                <label for="bill_no">Bill Number</label>
-            </div>
-        </div>
-
-        <div id="billNo" class="form-group">
-            <label class="col-md-2 text-right" style="padding-left: 173px"></label>
-            <fieldset class="col-md-3">
-                <legend>Bill No</legend>
-                <div class="col-md-12">
-                    <input type="text" tabindex="10" class="form-control resetfield" name="bill_no"
-                           placeholder="Enter bill number"
-                           id="bill_no_id" required="true"/>
+            <!-- /content area -->
+            <!-- Footer -->
+            <div class="navbar navbar-expand-lg navbar-light border-bottom-0 border-top">
+                <div class="text-center d-lg-none w-100">
+                    <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse"
+                            data-target="#navbar-footer">
+                        <i class="icon-unfold mr-2"></i>
+                        Footer
+                    </button>
                 </div>
-            </fieldset>
-        </div>
 
-        <div class="form-group">
-            <label class="col-md-2 text-right required">Registration Date</label>
+                <div class="navbar-collapse collapse" id="navbar-footer">
+						<span class="navbar-text">
+							&copy; 2018 - 2022. <a href="tshongrig.com">Tshong Rig</a>
+						</span>
 
-            <div class="col-md-3">
-                <input type="text" class="form-control datepicker resetfield" name="registration_date"
-                       id="registration_date" readonly value="${date}"/>
-            </div>
-
-            <label class="col-md-2 text-right required">Registration Time</label>
-
-            <div class="col-md-3">
-                <input type="text" class="form-control datepicker resetfield" name="registration_time"
-                       id="registration_time" readonly value="${formattedTime}"/>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-md-2 text-right \">Due date for payment/Promise Date</label>
-
-            <div class="col-md-3">
-                <input type="text" tabindex="11" class="form-control datepicker resetfield" name="promise_date"
-                       id="promise_date"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-2 left-label">Mechanic in charge</label>
-
-            <div class="col-md-3">
-                <form:select class="form-control resetfield" name="mechanicalInCharge" path="mechanicalList"
-                             id="mechanicalInCharge" tabindex="12">
-                    <form:option value="">---Please Select---</form:option>
-                    <form:options items="${mechanicalList}" itemValue="value"
-                                  itemLabel="text"/>
-                </form:select>
-            </div>
-            <div class="col-md-1">
-                <input type="button" class="btn btn-primary btn-block btn-xs resetfield" value="Add" tabindex="13"
-                       id="addToServiceGrid">
-            </div>
-            <div class="col-md-6">
-                <table class="table table-bordered table-striped editable-grid tableGrid"
-                       id="serviceDetailsGrid">
-                    <thead>
-                    <tr>
-                        <th width="40%">Mechanic Name</th>
-                        <th width="7%">Action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div class=" form-group">
-            <label class="col-md-2 right-align">Agency Name</label>
-
-            <div class="col-md-3">
-                <form:select class="form-control resetfield" tabindex="1" path="agencyList" id="agencyId"
-                             name="agencyId">
-                    <form:option value="">---Please Select---</form:option>
-                    <form:options items="${agencyList}" itemValue="id"
-                                  itemLabel="text"/>
-                </form:select>
-            </div>
-
-            <label class="col-md-2 right-align">Department</label>
-
-            <div class="col-md-3">
-                <input type="text" tabindex="11" class="form-control resetfield" name="department"
-                       id="department"/>
-            </div>
-        </div>
-
-
-        <div class="form-group">
-            <div class="col-md-2"></div>
-
-            <div class="col-md-2">
-                <input type="reset" tabindex="15" class="btn btn-primary btn-block" value="Reset" id="reRestBtn">
-            </div>
-
-            <div class="col-md-2">
-                <input type="submit" tabindex="14" class="btn btn-primary btn-block resetfield" value="Save" id="saveBtn">
-            </div>
-            <div class="col-md-2">
-                <input type="button" tabindex="16" class="btn btn-primary btn-block" disabled="true" value="Edit" id="btnEdit">
-            </div>
-
-            <%-- <div class="col-md-3">
-                 <input type="button" class="btn btn-primary btn-block" value="Add Work Order Detail"
-                        id="addOrderNo">
-             </div>--%>
-        </div>
-
-    </fieldset>
-
-    <fieldset>
-        <legend>Agency wise registration</legend>
-        <div class="form-group">
-            <div class="col-md-12 " style="overflow-x: scroll;white-space: nowrap; width: 1030px">
-                <table class="table table-bordered table-hover" id="agencyWiseWorkOrderDetailGrid">
-                    <thead>
-                    <tr>
-                        <th width="10%">Action</th>
-                        <th hidden="true">Agency Id</th>
-                        <th width="20%">Agency Name</th>
-                        <th width="10%">Registration Number</th>
-                        <th width="10%">Customer Name</th>
-                        <th width="10%">Vehicle No</th>
-                        <th width="10%">Vehicle Type</th>
-                        <th width="10%">Service Type</th>
-                        <th width="10%">Payment Mode</th>
-                        <th width="10%">Registration Date</th>
-                        <th width="10%">Mechanic</th>
-                        <th width="10%">Service Status</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </fieldset>
-
-    <fieldset>
-        <legend>Registration</legend>
-        <div class="form-group">
-            <div class="col-md-12 ">
-                <table class="table table-bordered table-striped editable-grid tableGrid"
-                       id="registrationInListTable">
-                    <thead>
-                    <tr>
-                        <th width="10%">Action</th>
-                        <th width="10%">Registration Number</th>
-                        <th width="10%">Customer Name</th>
-                        <th width="10%">Vehicle No</th>
-                        <th width="10%">Vehicle Type</th>
-                        <th width="10%">Service Type</th>
-                        <th width="10%">Payment Mode</th>
-                        <th width="10%">Registration Date</th>
-                        <th width="10%">Mechanic</th>
-                        <th width="10%">Service Status</th>
-
-                    </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </fieldset>
-
-    <div class="modal fade" id="myModal" role="dialog" style="width: 50%;">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #0480be">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title" style="color: #ffffff">Confirmation</h4>
-                </div>
-                <div class="modal-body">
-
-                    <div class="form-group">
-                        <div style="text-align: center;"><h5>Are you sure you want to delete?</h5>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div style="text-align: center;"><h6>You will not be able to recover after deletion!</h6>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-sm-offset-4 col-md-3">
-                            <input type="button" tabindex="4" class="btn btn-primary btn-block" value="Cancel"
-                                   id="cancelBtn">
-                        </div>
-                        <div class=" col-md-4">
-                            <input type="submit" tabindex="4" class="btn btn-primary btn-block"
-                                   value="Confirm"
-                                   id="btnConfirm">
-                        </div>
-                    </div>
-                    <div class="form-group">
-
-                        <div class="col-md-3">
-
-                        </div>
-                        <div class="col-sm-offset-7 col-md-3">
-
-                        </div>
-                    </div>
+                    <ul class="navbar-nav ml-lg-auto">
+                        <li class="nav-item"><a href="https://www.tshongrig.com/contact-2/" class="navbar-nav-link"
+                                                target="_blank"><i class="icon-lifebuoy mr-2"></i> Support</a></li>
+                        <li class="nav-item"><a href="http://www.tshongrig.com/price-packages-2/"
+                                                class="navbar-nav-link" target="_blank"><i
+                                class="icon-file-text2 mr-2"></i> Docs</a></li>
+                        <li class="nav-item"><a href="http://www.tshongrig.com/price-packages-2/"
+                                                class="navbar-nav-link font-weight-semibold" target="_blank"><span
+                                class="text-pink"><i
+                                class="icon-cart2 mr-2"></i>  Purchase Tshong Rig Packages</span></a></li>
+                    </ul>
                 </div>
             </div>
+            <!-- /footer -->
 
         </div>
+        <!-- /inner content -->
+
     </div>
+    <!-- /main content -->
 
-</form>
+</div>
+<!-- /page content -->
+
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', 'UA-56159088-1');
+</script>
 </body>
 </html>
-
-

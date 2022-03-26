@@ -42,7 +42,10 @@ public class CompanyCreationDao {
                 " website AS website, " +
                 " fnYrStart AS fnYrStart," +
                 " pfPercentage AS pfPercentage," +
-                " businessType AS businessType FROM tbl_common_company";
+                " contactPerson," +
+                " status," +
+                " trialExpiryDate," +
+                " businessType AS businessType FROM tbl_common_company order by id desc";
         Session session = sessionFactory.getCurrentSession();
         return session.createSQLQuery(query)
                 .setResultTransformer(Transformers.aliasToBean(CompanyCreationDTO.class)).list();
@@ -51,15 +54,17 @@ public class CompanyCreationDao {
     @Transactional(readOnly = true)
     public CompanyCreationDTO populateCompanyDetail(Integer companyId) {
         String query = "SELECT id AS companyId," +
-                " companyName AS companyName," +
-                " mailingAddress AS mailingAddress," +
-                " mobileNo AS mobileNo," +
-                " email AS email," +
-                " website AS website, " +
-                " fnYrStart AS fnYrStart," +
-                " pfPercentage AS pfPercentage," +
-//                " bookYrStart AS bookYrStart, " +
-                " businessType AS businessType FROM tbl_common_company WHERE id=:companyId";
+                " companyName," +
+                " mailingAddress," +
+                " contactPerson," +
+                " mobileNo," +
+                " email," +
+                " website, " +
+                " fnYrStart," +
+                " pfPercentage," +
+                " status, " +
+                " remarks, " +
+                " businessType FROM tbl_common_company WHERE id=:companyId";
         Session session = sessionFactory.getCurrentSession();
         return (CompanyCreationDTO) session.createSQLQuery(query)
                 .setParameter("companyId", companyId)
@@ -234,7 +239,7 @@ public class CompanyCreationDao {
 
     @Transactional(readOnly = true)
     public BigInteger getUserIdOfSuperAdmin() {
-        String query = "SELECT userId FROM tbl_user where userRoleTypeId=4";
+        String query = "SELECT userId FROM tbl_user where userRoleTypeId=0";
         Session session = sessionFactory.getCurrentSession();
         return (BigInteger) session.createSQLQuery(query).uniqueResult();
     }
@@ -252,5 +257,25 @@ public class CompanyCreationDao {
         return session.createSQLQuery(query)
                 .setParameter("userId", userId)
                 .setResultTransformer(Transformers.aliasToBean(DropdownDTO.class)).list();
+    }
+
+    @Transactional(readOnly = true)
+    public List<CompanyCreationDTO> getCompanyLoginCompany(Integer companyId) {
+        String query = "SELECT id AS companyId," +
+                " companyName AS companyName," +
+                " mailingAddress AS mailingAddress," +
+                " mobileNo AS mobileNo," +
+                " email AS email," +
+                " website AS website, " +
+                " fnYrStart AS fnYrStart," +
+                " pfPercentage AS pfPercentage," +
+                " contactPerson," +
+                " status," +
+                " trialExpiryDate," +
+                " businessType AS businessType FROM tbl_common_company where id=:companyId order by id desc";
+        Session session = sessionFactory.getCurrentSession();
+        return session.createSQLQuery(query)
+                .setParameter("companyId",companyId)
+                .setResultTransformer(Transformers.aliasToBean(CompanyCreationDTO.class)).list();
     }
 }

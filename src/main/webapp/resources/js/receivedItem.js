@@ -23,17 +23,14 @@ receivedItem = (function () {
                         data: data,
                         success: function (res) {
                             if (res.status === 1) {
-                                $.Toast("Success", res.text, "success", {
-                                    has_icon: true,
-                                    has_close_btn: true,
-                                    stack: true,
-                                    fullscreen: false,
-                                    timeout: 5000,
-                                    sticky: false,
-                                    has_progress: true,
-                                    rtl: false,
-                                });
-
+                                swal({
+                                        title: res.text,
+                                        text: "Click OK to exit",
+                                        type: "success"
+                                    }, function () {
+                                        window.location.reload();
+                                    }
+                                );
                             } else {
                                 errorMsg(res.text)
                             }

@@ -4,6 +4,7 @@ package com.spms.mvc.Enumeration;
  * Created by jigme.dorji on 23/04/2020.
  */
 public enum UserRoleType {
+    Owner(0, "Owner"),
     Administrator(1, "Administrator"),
     INITIATOR_COMPANY(2, "Initiator"),
     REVIEWER_DHI(3, "Reviewer"),

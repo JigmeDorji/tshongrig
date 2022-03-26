@@ -16,10 +16,16 @@
         <security:intercept-url access="hasAuthority('1-VIEW')" pattern="/createUser"/>
         <security:intercept-url access="hasAuthority('2-VIEW')" pattern="/userAccessPermission"/>
 
-        <security:form-login always-use-default-target="false" authentication-failure-url="/login?error"
+  <!--      <security:form-login always-use-default-target="false" authentication-failure-url="/login?error"
                              default-target-url="/home" login-page="/login" login-processing-url="/auth"
                              username-parameter="username" password-parameter="password"
                              authentication-details-source-ref="bcsWebAuthenticationDetailsSource"
+                             authentication-success-handler-ref="loginSuccessHandler"
+                             authentication-failure-handler-ref="loginFailureHandler"/>
+-->
+        <security:form-login always-use-default-target="false" authentication-failure-url="/login?error"
+                             default-target-url="/home" login-page="/login" login-processing-url="/auth"
+                             username-parameter="username" password-parameter="password"
                              authentication-success-handler-ref="loginSuccessHandler"
                              authentication-failure-handler-ref="loginFailureHandler"/>
 
@@ -34,7 +40,7 @@
 
 
     <bean id="expiredSessionFilter" class="com.spms.mvc.security.ExpiredSessionFilter"/>
-    <bean id="bcsWebAuthenticationDetailsSource" class="com.spms.mvc.security.BcsWebAuthenticationDetailsSource"/>
+<!--    <bean id="bcsWebAuthenticationDetailsSource" class="com.spms.mvc.security.BcsWebAuthenticationDetailsSource"/>-->
 
     <security:authentication-manager alias="authenticationManager" erase-credentials="true">
         <security:authentication-provider ref="authenticationProvider"/>

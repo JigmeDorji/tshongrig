@@ -73,6 +73,8 @@ public class UserService {
     public ResponseMessage isLoginIdAlreadyExists(String username, CurrentUser currentUser) {
         ResponseMessage responseMessage = new ResponseMessage();
 
+        username = username.concat("@").concat(currentUser.getCompanyName().replaceAll("\\B.|\\P{L}", "").toUpperCase());
+
         //check for other user
         if (!userDao.isLoginIdAlreadyExists(username)) {
             responseMessage.setStatus(SystemDataInt.MESSAGE_STATUS_UNSUCCESSFUL.value());
@@ -92,8 +94,13 @@ public class UserService {
      *
      * @return
      */
-    public List<UserDTO> getUserList(Integer companyId) {
-        return userDao.getUserList(companyId);
+    public List<UserDTO> getUserList(Integer companyId, CurrentUser currentUser) {
+        if(currentUser.getUserRoleTypeId().equals(UserRoleType.Owner.getValue())){
+            return  userDao.getOwnerUserList(companyId);
+        }else {
+            return userDao.getUserList(companyId);
+        }
+
     }
 
     private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvxyz0123456789";
@@ -140,6 +147,7 @@ public class UserService {
         }
 
         try {
+            String username=userDTO.getUsername().concat("@").concat(currentUser.getCompanyName().replaceAll("\\B.|\\P{L}", "").toUpperCase());
             user.setUserFullName(userDTO.getUserFullName());
             if (userDTO.getUserId() == null) {
                 String saltValue = generateSaltValue(6);
@@ -149,14 +157,14 @@ public class UserService {
                 BigInteger lastUserId = userDao.getLastUserId();
                 lastUserId = lastUserId == null ? BigInteger.ONE : lastUserId.add(BigInteger.ONE);
                 user.setUserId(lastUserId);
-                user.setUsername(userDTO.getUsername());
+                user.setUsername(username);
                 user.setSaltValue(saltValue);
                 user.setUserPassword(passwordEncoder.encode(saltValue + userDTO.getUserPassword().trim()));
                 user.setUserMobileNo(userDTO.getUserMobileNo());
                 user.setUserStatus(userDTO.getUserStatus());
                 user.setUserRoleTypeId(userDTO.getUserRoleTypeId());
                 user.setEmailId(userDTO.getEmailId());
-                user.setCompanyId(userDTO.getCompanyId());
+                user.setCompanyId(currentUser.getCompanyId());
                 user.setUpdatedBy(null);
                 user.setUpdatedDate(null);
                 user.setCreatedBy(currentUser.getLoginId());
@@ -185,7 +193,7 @@ public class UserService {
                 user.setCreatedBy(userDTOdB.getCreatedBy());
                 user.setCreatedDate(userDTOdB.getCreatedDate());
                 user.setUpdatedBy(currentUser.getLoginId());
-                user.setCompanyId(userDTO.getCompanyId());
+                user.setCompanyId(currentUser.getCompanyId());
                 user.setUpdatedDate(new Date());
                 userDao.updateUserInfo(user);
                 responseMessage.setText("User updated successfully.");

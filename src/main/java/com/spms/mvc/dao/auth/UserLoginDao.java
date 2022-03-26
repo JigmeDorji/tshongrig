@@ -54,7 +54,7 @@ public class UserLoginDao {
                 "A.userPassword, A.createdDate, \n" +
                 "A.updatedDate, A.updatedBy, \n" +
                 "A.userStatus, A.userRoleTypeId, \n" +
-                "A.emailId, B.userRoleTypeName,\n" +
+                "A.emailId,B.userRoleTypeName,\n" +
                 "C.companyId\n" +
                 "from tbl_user A inner join tbl_user_role_type B on A.userRoleTypeId=B.userRoleTypeId \n" +
                 "left join tbl_company_mapping C ON A.userId=C.userId\n" +

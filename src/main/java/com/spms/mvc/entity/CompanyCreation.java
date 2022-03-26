@@ -37,6 +37,20 @@ public class CompanyCreation {
     @Column(name = "pfPercentage")
     private BigDecimal pfPercentage;
 
+    @Column(name = "status")
+    private Character status;
+
+
+    @Column(name = "contactPerson")
+    private String contactPerson;
+
+
+    @Column(name = "remarks")
+    private String remarks;
+
+    @Column(name = "trialExpiryDate")
+    private Date trialExpiryDate;
+
     public Integer getId() {
         return id;
     }
@@ -107,5 +121,37 @@ public class CompanyCreation {
 
     public void setPfPercentage(BigDecimal pfPercentage) {
         this.pfPercentage = pfPercentage;
+    }
+
+    public Character getStatus() {
+        return status;
+    }
+
+    public void setStatus(Character status) {
+        this.status = status;
+    }
+
+    public String getContactPerson() {
+        return contactPerson;
+    }
+
+    public void setContactPerson(String contactPerson) {
+        this.contactPerson = contactPerson;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public Date getTrialExpiryDate() {
+        return trialExpiryDate;
+    }
+
+    public void setTrialExpiryDate(Date trialExpiryDate) {
+        this.trialExpiryDate = trialExpiryDate;
     }
 }

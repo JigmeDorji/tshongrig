@@ -34,7 +34,7 @@ public class User implements Serializable {
     private String userFullName;
 
     @Column(name = "userMobileNo")
-    private BigInteger userMobileNo;
+    private String userMobileNo;
 
     @NotNull
     @Column(name = "userPassword")
@@ -100,11 +100,11 @@ public class User implements Serializable {
         this.userFullName = userFullName;
     }
 
-    public BigInteger getUserMobileNo() {
+    public String getUserMobileNo() {
         return userMobileNo;
     }
 
-    public void setUserMobileNo(BigInteger userMobileNo) {
+    public void setUserMobileNo(String userMobileNo) {
         this.userMobileNo = userMobileNo;
     }
 

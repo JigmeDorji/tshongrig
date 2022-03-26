@@ -125,16 +125,16 @@ spms = (function () {
     }
 
     function getUrl() {
-        return window.location.protocol + '//' + window.location.host + '/cab/';
+        // return window.location.protocol + '//' + window.location.host + '/cab/';
         // return window.location.protocol + '//' + window.location.host + '/bcs/';
-        // return window.location.protocol + '//' + window.location.host + '/';
+        return window.location.protocol + '//' + window.location.host + '/';
         // return 'http://www.autga.bt/bcs/';
     }
 
     function baseReportLocation() {
-        return window.location.protocol + '//' + window.location.host + '/cab/resources/reports/';
+        // return window.location.protocol + '//' + window.location.host + '/cab/resources/reports/';
         // return window.location.protocol + '//' + window.location.host + '/bcs/resources/reports/';
-        // return window.location.protocol + '//' + window.location.host + '/resources/reports/';
+        return window.location.protocol + '//' + window.location.host + '/resources/reports/';
     }
 
     //index the table gridaccProfitAndLossReport
@@ -830,6 +830,11 @@ function successMsg(msg, callback) {
         if (callback !== undefined)
             callback(e);
     });
+}
+function successMsg2(msg) {
+   $('.responseMsg').append('<div class="alert alert-success border-0 alert-dismissible">\n' +
+       '<button type="button" class="close" data-dismiss="alert"><span>×</span></button>\n' +
+       '<span class="font-weight-semibold">Well done! </span>'+msg+'</div>')
 }
 
 function confirmMessage(msg, callback) {

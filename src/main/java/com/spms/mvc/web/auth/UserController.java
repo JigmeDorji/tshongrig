@@ -2,6 +2,7 @@ package com.spms.mvc.web.auth;
 
 import com.spms.mvc.Enumeration.CommonStatus;
 import com.spms.mvc.dto.UserDTO;
+import com.spms.mvc.library.helper.CurrentUser;
 import com.spms.mvc.library.helper.ResponseMessage;
 import com.spms.mvc.service.CompanyCreationService;
 import com.spms.mvc.service.auth.UserAccessPermissionService;
@@ -50,6 +51,7 @@ public class UserController extends BaseController {
         model.addAttribute("statusList", userService.getStatusList());
         DateFormat currentDate = new SimpleDateFormat("dd-MMM-yyyy");
         Date now = new Date();
+        CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
         model.addAttribute("currentDate", currentDate.format(now));
         model.addAttribute("userRoleList", userAccessPermissionService.getUserRoleList());
         model.addAttribute("statusActive", CommonStatus.Active.getValue());
@@ -87,7 +89,8 @@ public class UserController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/getUserList", method = RequestMethod.GET)
     public List<UserDTO> getUserList(HttpServletRequest request) {
-        return userService.getUserList(getCurrentUser(request).getCompanyId());
+        CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
+        return userService.getUserList(getCurrentUser(request).getCompanyId(),currentUser);
     }
 
 

@@ -46,14 +46,14 @@
                 <fieldset>
                     <legend class="text-uppercase font-size-sm font-weight-bold">Purchase Detail</legend>
                     <div class="form-group row row">
-                        <label class="  col-md-2 right-align required">Purchase Date:</label>
+                        <label class="  col-md-2 text-right required text-right">Purchase Date:</label>
 
                         <div class="col-md-3">
-                            <input type="text" tabindex="2" class="form-control form-control-sm   formatDate right-align" value="${date}"
-                                   placeholder="DD.MM.YYYY" id="purchaseDate" name="purchaseDate" readonly="true"/>
+                            <input type="text" tabindex="2" class="form-control form-control-sm   formatDate text-right" value="${date}"
+                                   placeholder="DD.MM.YYYY" id="purchaseDate" name="purchaseDate" />
                         </div>
 
-                        <label class=" col-md-2 right-align required"> &nbsp;Purchase Inv. No:</label>
+                        <label class=" col-md-2 text-right required text-right"> &nbsp;Purchase Inv. No:</label>
 
                         <div class="col-md-3">
                             <input type="text" id="purchaseInvoiceNo" class="form-control form-control-sm " name="purchaseInvoiceNo"
@@ -61,7 +61,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class=" col-md-2 right-align required">Purchase In</label>
+                        <label class=" col-md-2 text-right required">Purchase In</label>
 
                         <div class="col-md-3">
                             <select class="form-control form-control-sm resetField" id="isCash" required="required"
@@ -73,7 +73,7 @@
                             </select>
                         </div>
 
-                        <label class=" col-md-2 right-align bankDetails" hidden>Select Bank Account</label>
+                        <label class=" col-md-2 text-right bankDetails" hidden>Select Bank Account</label>
                         <div class="col-md-3 bankDetails" hidden>
                             <form:select class="form-control form-control-sm resetField" path="bankList" id="bankLedgerId"
                                          required="required"
@@ -82,7 +82,7 @@
                                 <form:options items="${bankList}" itemValue="id" itemLabel="text"/>
                             </form:select>
                         </div>
-                        <label class="col-md-2 right-align required creditDetails" hidden >Supplier Name:</label>
+                        <label class="col-md-2 text-right required creditDetails" hidden >Supplier Name:</label>
 
                         <div class="col-md-3 creditDetails" hidden>
                             <select id="supplierId" required class="form-control form-control-sm " name="supplierId"></select>
@@ -97,7 +97,7 @@
                 <fieldset>
                     <legend>Item Detail</legend>
                     <div class="form-group row">
-                        <label class="col-md-2 right-align">Brand</label>
+                        <label class="col-md-2 text-right">Brand</label>
                         <div class="col-md-3">
                             <input type="text" id="brandId" class="form-control form-control-sm common"
                             />
@@ -106,20 +106,20 @@
                             <input type="button" data-toggle="modal" class="btn btn-sm btn-primary" value="New Brand"
                                    id="btnAddBrand">
                         </div>
-                        <label class="col-md-2 ">Serial:</label>
+                        <label class="col-md-2 text-right">Serial:</label>
                         <div class="col-md-2">
-                            <input type="text" tabindex="2" class="form-control form-control-sm  right-align common"
+                            <input type="text" tabindex="2" class="form-control form-control-sm  text-right common"
                                    id="currentSerial" readonly/>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="  col-md-2 right-align">Item Code:</label>
+                        <label class="  col-md-2 text-right">Item Code:</label>
 
                         <div class="col-md-3">
-                            <input type="text" tabindex="2" class="form-control form-control-sm  right-align common"
+                            <input type="text" tabindex="2" class="form-control form-control-sm  text-right common"
                                    id="itemCode" name="itemCode"/>
                         </div>
-                        <label class="col-md-2 right-align">Type</label>
+                        <label class="col-md-2 text-right">Type</label>
                         <div class="col-md-3">
                             <input type="text" id="type" class="form-control form-control-sm common"
                                    name="type"/>
@@ -127,20 +127,20 @@
 
                         <%--Garment--%>
                         <%--<div class="col-md-3">--%>
-                        <%--<input type="text" tabindex="2" class="form-control form-control-sm  right-align" value="${itemCode}" readonly--%>
+                        <%--<input type="text" tabindex="2" class="form-control form-control-sm  text-right" value="${itemCode}" readonly--%>
                         <%--id="itemCode" name="itemCode"/>--%>
                         <%--</div>--%>
                     </div>
 
 
                     <div class="form-group row">
-                        <label class="  col-md-2 right-align">Part Number:</label>
+                        <label class="  col-md-2 text-right">Part Number:</label>
 
                         <div class="col-md-3">
-                            <input type="text" tabindex="2" class="form-control form-control-sm  right-align common"
+                            <input type="text" tabindex="2" class="form-control form-control-sm  text-right common"
                                    id="partNo" name="partNo"/>
                         </div>
-                        <label class=" col-md-2 right-align">Item Name</label>
+                        <label class=" col-md-2 text-right">Item Name</label>
 
                         <div class="col-md-1" hidden>
                             <input type="text"
@@ -154,13 +154,13 @@
                     </div>
 
                     <div class="form-group row">
-                        <label class=" col-md-2 right-align ">qty</label>
+                        <label class=" col-md-2 text-right ">qty</label>
 
                         <div class="col-md-1">
                             <input type="text" id="qty" class="form-control form-control-sm decimal common" name="qty"/>
                         </div>
 
-                        <label class=" col-md-1 right-align">Unit</label>
+                        <label class=" col-md-1 text-right">Unit</label>
                         <div class="col-md-1">
                             <form:select class="form-control form-control-sm resetField" path="unitList" id="unitId"
                                          name="unitId">
@@ -170,7 +170,7 @@
                         </div>
 
 
-                        <label class=" col-md-2 right-align">Cost Price</label>
+                        <label class=" col-md-2 text-right">Cost Price</label>
 
                         <div class="col-md-3">
                             <input type="text" id="costPrice" class="form-control form-control-sm amount common " name="costPrice"
@@ -180,12 +180,12 @@
 
 
                     <div class="form-group row">
-                        <label class=" col-md-2 right-align">Selling Price</label>
+                        <label class=" col-md-2 text-right">Selling Price</label>
                         <div class="col-md-3">
                             <input type="text" id="sellingPrice" class="form-control form-control-sm amount common"
                                    name="sellingPrice"/>
                         </div>
-                        <label class=" col-md-2 right-align">Location</label>
+                        <label class=" col-md-2 text-right">Location</label>
                         <div class="col-md-3">
                             <form:select class="form-control form-control-sm common" path="locationList" id="locationId"
                                          name="locationId">
@@ -227,7 +227,7 @@
 
                             <div class="col-md-2">
                                 <input type="text"
-                                       class="form-control form-control-sm right-align"
+                                       class="form-control form-control-sm text-right"
                                        value="0" name="totalTranAmount"
                                        id="grandTotalAmount" readonly>
                             </div>
@@ -250,13 +250,13 @@
 
                     <%--
                                 <div class="form-group row">
-                                    &lt;%&ndash;<label class="  col-md-2 right-align required">Amount:</label>
+                                    &lt;%&ndash;<label class="  col-md-2 text-right required">Amount:</label>
 
                                     <div class="col-md-2">
                                         <input type="text" id="amount" class="form-control form-control-sm  "
                                                name="amount"/>
                                     </div>&ndash;%&gt;
-                                    <label class=" col-md-2 right-align required"> Location</label>
+                                    <label class=" col-md-2 text-right required"> Location</label>
 
                                     <div class="col-md-2">
                                         <Select type="text" id="cashOrBank" class="form-control form-control-sm "

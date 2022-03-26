@@ -31,7 +31,7 @@
                                     <h1 class="signin-title-primary">Welcome back!</h1>
                                     <h3 class="signin-title-secondary">Sign in to continue.</h3>
 
-                                    <div class="form-group">
+                                    <%-- <div class="form-group">
                                         <form:select required="true" path="companyList" cssStyle="margin-bottom: 4%"
                                                      class="form-control form-select field select2-validationSelect2-container"
                                                      id="companyId"
@@ -42,7 +42,7 @@
                                                           itemValue="value"
                                                           itemLabel="text"/>
                                         </form:select>
-                                    </div><!-- form-group -->
+                                    </div>--%><!-- form-group -->
                                     <div class="form-group">
                                         <input type="text" id="inputEmail" name="username" class="form-control"
                                                placeholder="Username">
@@ -53,6 +53,19 @@
                                     </div><!-- form-group -->
                                     <button type="submit" class="btn btn-primary btn-block btn-signin">Sign In</button>
                                     <%--                        <p class="mg-b-0">Don't have an account? <a href="page-signup2.html">Sign Up</a></p>--%>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <%--                                           <a class="xl-linklist--link xui-text-decoration-none" data-automationid="ForgottenPassword--link" href="/identity/user/forgot-password">Forgot password?</a>--%>
+                                            <a class="xl-linklist--link xui-text-decoration-none"
+                                               data-automationid="CannotLogin--link"
+                                               href="<c:url value='/registration'/>">Sign up if you are not yet?</a>
+
+                                        </div>
+
+                                    </div>
                                     <c:if test="${not empty error}">
                                         <div class="form-group">
                                             <div class="alert alert-danger border-0 alert-dismissible">
@@ -73,7 +86,7 @@
                     <div class="signin-box">
                         <%--                        <h2 class="slim-logo"><a href="index.html">slim<span>.</span></a></h2>--%>
                         <img src="<c:url value='/resources/images/logobcs.png'/>" class="img-fluid pb-2" alt="logo">
-                            <p style="font-style: italic;font-family:Helvetica">"We care for your Business"</p>
+                        <p style="font-style: italic;font-family:Helvetica">"We care for your Business"</p>
                         <p>Our first product, <strong>Tshong Rig ERP system</strong> is here to help you manage your
                             business efficiently at ease. It has all the features required in the daily operation of
                             business.</p>

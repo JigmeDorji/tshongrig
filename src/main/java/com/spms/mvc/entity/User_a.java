@@ -32,7 +32,7 @@ public class User_a extends BaseEntity implements Serializable {
     private String userFullName;
 
     @Column(name = "userMobileNo")
-    private BigInteger userMobileNo;
+    private String userMobileNo;
 
     @Column(name = "saltValue")
     private String saltValue;
@@ -107,11 +107,11 @@ public class User_a extends BaseEntity implements Serializable {
         this.userFullName = userFullName;
     }
 
-    public BigInteger getUserMobileNo() {
+    public String getUserMobileNo() {
         return userMobileNo;
     }
 
-    public void setUserMobileNo(BigInteger userMobileNo) {
+    public void setUserMobileNo(String userMobileNo) {
         this.userMobileNo = userMobileNo;
     }
 

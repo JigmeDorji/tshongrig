@@ -82,7 +82,7 @@ user = (function () {
                                         text: "Click OK to exit",
                                         type: "success"
                                     }, function () {
-                                    window.location.reload();
+                                        window.location.reload();
                                     }
                                 );
                             } else {
@@ -195,7 +195,7 @@ user = (function () {
                         render: function (data) {
                             let status = null;
                             if (data === statusActive) {
-                                status = "<i class='status-icon bg-success spinner-grow'></i>" + "Active";
+                                status = "<i class='status-icon bg-success'></i>" + "Active";
                             }
                             if (data === statusInactive) {
                                 status = "<i class='status-icon bg-danger'></i>" + "Inactive";
@@ -370,6 +370,17 @@ user = (function () {
                 $('#companyMappingId').select2('val', [res]);
             }
         });
+    }
+
+
+    $('#companyAbbreviation').text("@"+getFirstLetters($('#companyName').val()));
+    function getFirstLetters(str) {
+        const firstLetters = str
+            .split(' ')
+            .map(word => word[0])
+            .join('');
+
+        return firstLetters;
     }
 
     return {

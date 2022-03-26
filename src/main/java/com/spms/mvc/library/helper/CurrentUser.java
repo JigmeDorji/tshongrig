@@ -38,6 +38,7 @@ public class CurrentUser {
     private Integer businessType;
     private String mailingAddress;
     private BigInteger userId;
+    private Integer userRoleTypeId;
     //endregion
 
     //region public setter and getter
@@ -169,5 +170,14 @@ public class CurrentUser {
     public void setUserId(BigInteger userId) {
         this.userId = userId;
     }
+
+    public Integer getUserRoleTypeId() {
+        return userRoleTypeId;
+    }
+
+    public void setUserRoleTypeId(Integer userRoleTypeId) {
+        this.userRoleTypeId = userRoleTypeId;
+    }
+
     //endregion
 }

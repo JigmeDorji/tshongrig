@@ -60,6 +60,7 @@ public class HomeController {
         currentUser.setCreatedDate(userDTO.getCreatedDate());
         currentUser.setTxtUserName(userDTO.getUserFullName());
         currentUser.setUserStatus(userDTO.getUserStatus());
+        currentUser.setUserRoleTypeId(userDTO.getUserRoleTypeId());
 
         CompanyCreationDTO companyCreationDTO = companyCreationService.getSelectedCompanyDetails(userDTO.getCompanyId());
         FinancialYearDTO financialYearDTO = companyCreationService.getCurrentFinancialYearIdByCompany(userDTO.getCompanyId());

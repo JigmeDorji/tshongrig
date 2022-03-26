@@ -46,11 +46,18 @@
 
                 <input type="hidden" id="userId" name="userId">
                 <input type="hidden" id="loginCompanyId" value="${currentUser.companyId}">
+                <input type="hidden" id="companyName" value="${currentUser.companyName}">
 
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2 required ">Username</label>
                     <div class="col-lg-4">
-                        <input type="text" class="form-control form-control-sm" required name="username" id="username">
+                        <div class="input-group">
+                            <input type="text" class="form-control form-control-sm col-md-8" required name="username"
+                                   id="username">
+                            <span class="input-group-prepend">
+								<span class="input-group-text" id="companyAbbreviation"></span>
+							</span>
+                        </div>
                     </div>
                     <label class="col-form-label col-lg-2 required ">Full Name</label>
                     <div class="col-lg-4">
@@ -120,7 +127,7 @@
                     </div>
 
                     <%--                    <div class="companyHiddenId">--%>
-                    <label class="col-form-label col-lg-2 required companyHiddenId ">Company</label>
+                   <%-- <label class="col-form-label col-lg-2 required companyHiddenId ">Company</label>
 
                     <div class="col-md-4 companyHiddenId">
                         <form:select class="form-control form-control-sm select2"
@@ -132,11 +139,11 @@
                             <form:options items="${loginCompany}" itemValue="value"
                                           itemLabel="text"/>
                         </form:select>
-                    </div>
+                    </div>--%>
                     <%--                    </div>--%>
                 </div>
 
-                <div class="form-group mb-3 row" id="mappingId" hidden>
+                <%--<div class="form-group mb-3 row" id="mappingId" hidden>
                     <label class="col-form-label col-lg-2 required">Company Mapping</label>
                     <div class="col-md-4">
                         <form:select multiple="multiple"
@@ -150,7 +157,7 @@
                                           itemLabel="text"/>
                         </form:select>
                     </div>
-                </div>
+                </div>--%>
                 <div class="form-group">
                     <label class="col-md-2"></label>
                     <%--                <sec:authorize access="hasAuthority('1-ADD')">--%>

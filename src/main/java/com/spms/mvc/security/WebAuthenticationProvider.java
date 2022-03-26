@@ -15,6 +15,7 @@ package com.spms.mvc.security;
 
 import com.spms.mvc.Enumeration.LoginErrorCode;
 import com.spms.mvc.Enumeration.Permission;
+import com.spms.mvc.dao.auth.UserDao;
 import com.spms.mvc.dto.UserAccessPermissionListDTO;
 import com.spms.mvc.dto.UserDTO;
 import com.spms.mvc.service.auth.UserAccessPermissionService;
@@ -45,6 +46,9 @@ public class WebAuthenticationProvider implements AuthenticationProvider {
     private UserLoginService userLoginService;
 
     @Autowired
+    private UserDao userDao;
+
+    @Autowired
     private UserAccessPermissionService userAccessPermissionService;
     //endregion
 
@@ -72,7 +76,8 @@ public class WebAuthenticationProvider implements AuthenticationProvider {
         username = username.trim().toUpperCase();
         String password = String.valueOf(auth.getCredentials());
 
-        UserDTO userDTO = userLoginService.login(username, ((BcsWebAuthenticationDetails) auth.getDetails()).getCompanyId());
+//        UserDTO userDTO = userLoginService.login(username, ((BcsWebAuthenticationDetails) auth.getDetails()).getCompanyId());
+        UserDTO userDTO = userLoginService.login(username, userDao.getCompanyId(username));
 
         if (userDTO == null) {
             throw new UsernameNotFoundException(LoginErrorCode.FAILED.getCode());

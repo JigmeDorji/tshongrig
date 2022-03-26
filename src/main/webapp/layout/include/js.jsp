@@ -16,7 +16,8 @@
 <%--Boostrap--%>
 <script defer type="text/javascript"
         src="<c:url value='/resources/limitless/global_assets/js/main/bootstrap.bundle.min.js'/>"></script>
-
+<script defer type="text/javascript"
+        src="<c:url value='/resources/limitless/global_assets/js/demo_pages/form_floating_labels.js'/>"></script>
 <%--select 2--%>
 <script defer type="text/javascript" src="<c:url value='/resources/bcs_lib/select2.full.min.js'/>"></script>
 

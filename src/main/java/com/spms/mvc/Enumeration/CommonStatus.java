@@ -9,10 +9,9 @@ public enum CommonStatus {
     Inactive('I', "Inactive"),
     Submitted('S', "Submitted"),
     Pending('P', "Pending"),
-    Reject('R', "Rejected"),
-    Approve('A', "Approved by Reviewer"),
-    ApproveByDirector('D', "Approved by Director"),
-    ApproveByCeo('C', "Approved by Director");
+    NOT_APPROVED('N', "Not Approved"),
+    Approve('A', "Approved"),
+    SUB_ACTIVATED('S', "Subscription Activated");
 
     private final Character value;
     private final String text;

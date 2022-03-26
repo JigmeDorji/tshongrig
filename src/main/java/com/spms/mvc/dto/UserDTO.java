@@ -15,7 +15,7 @@ public class UserDTO {
 
     private String userFullName;
 
-    private BigInteger userMobileNo;
+    private String userMobileNo;
 
     private String saltValue;
 
@@ -83,11 +83,11 @@ public class UserDTO {
         this.userFullName = userFullName;
     }
 
-    public BigInteger getUserMobileNo() {
+    public String getUserMobileNo() {
         return userMobileNo;
     }
 
-    public void setUserMobileNo(BigInteger userMobileNo) {
+    public void setUserMobileNo(String userMobileNo) {
         this.userMobileNo = userMobileNo;
     }
 
