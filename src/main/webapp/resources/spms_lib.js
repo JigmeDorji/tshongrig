@@ -99,6 +99,7 @@ spms = (function () {
             unhighlight: function (element) {
                 $(element).closest('.form-group').removeClass('has-error');
             },*/
+            ignore: [],
             errorElement: 'span',
             errorClass: 'help-block',
             errorPlacement: function (error, element) {
@@ -125,14 +126,14 @@ spms = (function () {
     }
 
     function getUrl() {
-        return window.location.protocol + '//' + window.location.host + '/cab/';
-        // return window.location.protocol + '//' + window.location.host + '/';
+        // return window.location.protocol + '//' + window.location.host + '/cab/';
+        return window.location.protocol + '//' + window.location.host + '/';
         // return 'http://www.autga.bt/bcs/';
     }
 
     function baseReportLocation() {
-        return window.location.protocol + '//' + window.location.host + '/cab/resources/reports/';
-        // return window.location.protocol + '//' + window.location.host + '/resources/reports/';
+        // return window.location.protocol + '//' + window.location.host + '/cab/resources/reports/';
+        return window.location.protocol + '//' + window.location.host + '/resources/reports/';
     }
 
     //index the table gridaccProfitAndLossReport

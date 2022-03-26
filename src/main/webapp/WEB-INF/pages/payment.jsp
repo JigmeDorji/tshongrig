@@ -34,9 +34,12 @@
 
                         <div class="col-md-3">
                             <input type="text" tabindex="2" class="form-control form-control-sm formatDate"
-                                   name="autoVoucherDate"
-                                   id="autoVoucherDate" required value="${paymentDate}"/>
+                                   name="autoVoucherDate"  placeholder="DD.MM.YYYY"
+                                   id="autoVoucherDate" required />
                         </div>
+                    </div>
+                    <div class="form-group row">
+
                         <label class="col-md-2 right-align required" id="paidToText">Paid To</label>
 
                         <div class="col-md-3">
@@ -61,9 +64,8 @@
 
                     </div>
 
-                    <div class="form-group row">
+                    <div class="form-group row ledgerForNormalEntry">
                         <label class="col-md-2 right-align required" id="descriptionText">Description</label>
-
                         <div class="col-md-3">
                             <input type="text" tabindex="2" class="form-control form-control-sm autocomplete"
                                    name="description"
@@ -72,20 +74,7 @@
                             <input type="hidden" tabindex="2" class="form-control form-control-sm" name="ledgerId"
                                    id="ledgerId" required="true"/>
                         </div>
-                        <label class="col-md-2 right-align required hidden costContent">Cost</label>
 
-                        <div class="col-md-3 hidden costContent">
-                            <select class="form-control form-control-sm" id="costType" style="width: 100%" required
-                                    name="costId">
-                                <option value="">---Please select ---</option>
-                                <option value="1" id="generalId">General</option>
-                                <option value="2" id="productionId">Production</option>
-                            </select>
-                        </div>
-
-                    </div>
-
-                    <div class="form-group row">
 
                         <label class="col-md-2 right-align required">Amount</label>
 
@@ -94,8 +83,67 @@
                                    name="amount"
                                    id="amount" required="true"/>
                         </div>
-
                     </div>
+
+                    <!--region for multi voucher payment-->
+
+                    <div id="multipleCost">
+                        <div class="form-group row hidden multiPaymentVoucher">
+
+                            <label class="col-md-2 right-align required">Description</label>
+                            <div class="col-md-3">
+                                <input type="text" tabindex="2"
+                                       class="form-control costDescription form-control-sm autocomplete"
+                                       name="multiVoucherDTO[0].costDescription"
+                                       id="costDescription" required="true"/>
+
+                                <input type="hidden" tabindex="2" class="form-control form-control-sm costLedgerId"
+                                       name="multiVoucherDTO[0].costLedgerId"
+                                       id="costLedgerId" required="true"/>
+                            </div>
+
+
+                            <label class="col-md-1 right-align required">Amount</label>
+
+                            <div class="col-md-2">
+                                <input type="text" tabindex="3"
+                                       class="form-control costAmount form-control-sm text-right" id="costAmount"
+                                       name="multiVoucherDTO[0].costAmount" required="true"/>
+                            </div>
+
+                            <label class="col-md-1 right-align required">Cost</label>
+
+                            <div class="col-md-2">
+                                <select class="form-control costId form-control-sm" id="costType" required
+                                        name="multiVoucherDTO[0].costId">
+                                    <option value="">---Please select ---</option>
+                                    <option value="1">General</option>
+                                    <option value="2">Production</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-primary btn-sm rounded-pill addMoreBtn"
+                                        id="addMoreBtn">
+                                    <i class="icon-plus2"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!--endregion-->
+
+
+                    <%--  <div class="form-group row">
+
+                              <label class="col-md-2 right-align required">Amount</label>
+
+                              <div class="col-md-3">
+                                  <input type="text" tabindex="3" class="form-control form-control-sm text-right"
+                                         name="amount"
+                                         id="amount" required="true"/>
+                              </div>
+
+                          </div>--%>
 
 
                     <div class="form-group row">
@@ -178,12 +226,9 @@
                     <div class="form-group row">
                         <div class="col-md-2"></div>
                         <div class="col-md-2" id="saveBtnDiv">
-                            <input type="submit" class="btn btn-primary btn-block" value="Save" tabindex="9"
+                            <input type="button" class="btn btn-primary btn-sm" value="Save" tabindex="9"
                                    id="btnSave">
-                        </div>
-
-                        <div class="col-md-2">
-                            <input type="reset" class="btn btn-primary btn-block" value="Reset" tabindex="8"
+                            <input type="reset" class="btn btn-primary btn-sm" value="Reset" tabindex="8"
                                    id="btnReset">
                         </div>
                     </div>

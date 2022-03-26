@@ -44,7 +44,7 @@
     <!--Database connection config-->
     <bean id="spmsDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3307/bcs_db"/>
+        <property name="url" value="jdbc:mysql://localhost:3307/cab_db"/>
         <property name="username" value="root"/>
         <property name="password" value="root"/>
         <property name="validationQuery" value="SELECT 1"/>

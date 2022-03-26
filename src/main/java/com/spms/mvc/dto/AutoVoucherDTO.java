@@ -1,6 +1,8 @@
 package com.spms.mvc.dto;
 
+import java.math.BigInteger;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Description: AutoVoucherDTO
@@ -25,7 +27,6 @@ public class AutoVoucherDTO {
     private String ledgerId;
     private String description;
     private Integer paidForTypeId;
-    private Integer costId;
     private Double amount;
     private Integer tdsType;
     private Double tdsAmount;
@@ -59,6 +60,10 @@ public class AutoVoucherDTO {
     private String partyLedgerId;
     private String partyName;
     private String expenditure;
+    private Integer costId;
+
+    //multi voucher
+    private List<MultiVoucherDTO> multiVoucherDTO;
 
     public Integer getAutoVoucherId() {
         return autoVoucherId;
@@ -114,14 +119,6 @@ public class AutoVoucherDTO {
 
     public void setPaidForTypeId(Integer paidForTypeId) {
         this.paidForTypeId = paidForTypeId;
-    }
-
-    public Integer getCostId() {
-        return costId;
-    }
-
-    public void setCostId(Integer costId) {
-        this.costId = costId;
     }
 
     public Double getAmount() {
@@ -322,5 +319,21 @@ public class AutoVoucherDTO {
 
     public void setExpenditure(String expenditure) {
         this.expenditure = expenditure;
+    }
+
+    public Integer getCostId() {
+        return costId;
+    }
+
+    public void setCostId(Integer costId) {
+        this.costId = costId;
+    }
+
+    public List<MultiVoucherDTO> getMultiVoucherDTO() {
+        return multiVoucherDTO;
+    }
+
+    public void setMultiVoucherDTO(List<MultiVoucherDTO> multiVoucherDTO) {
+        this.multiVoucherDTO = multiVoucherDTO;
     }
 }

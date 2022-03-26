@@ -4,19 +4,24 @@
 
 let payment = (function () {
 
+    let globalForm = $('.globalForm');
+    spms.isFormValid(globalForm);
+
     function baseURL() {
         return 'payment/'
     }
 
     function onSelectEnableDisable() {
         $('#paidForId').on('change', function () {
-            let paidFor = parseInt($(this).val());
-            let description = $('#description'),
+
+
+            let description = $('#description'), paidFor = parseInt($(this).val()),
                 tdsType = $('#tdsType'), tdsAmount = $('#tdsAmount'),
                 deductedFrom = $('#deductedFrom'), amount = $('#amount'),
                 deductedAmount = $('#deductedAmount'),
                 amountPaid = $('#amountPaid'), costContent = $('.costContent'), costType = $('#costType'),
-                descriptionText = $('#descriptionText');
+                descriptionText = $('#descriptionText'), multiPaymentVoucher = $('.multiPaymentVoucher'),
+                ledgerForNormalEntry = $('.ledgerForNormalEntry');
 
             costType.val('');
             tdsType.val('');
@@ -27,19 +32,24 @@ let payment = (function () {
             amount.val('');
             deductedFrom.val('');
             description.attr('readonly', false);
+            multiPaymentVoucher.addClass("hidden");
+            ledgerForNormalEntry.addClass("hidden");
 
             if (paidFor === 1) {
                 descriptionText.text('Description');
-
                 tdsType.attr('disabled', false);
                 tdsAmount.attr('readonly', false);
                 deductedFrom.attr('readonly', false);
                 deductedAmount.attr('readonly', false);
                 amountPaid.attr('readonly', false);
-
                 costContent.removeClass('hidden');
+                multiPaymentVoucher.removeClass("hidden");
+
+                $('#costAmount').val('');
+                $('#costDescription').val('');
+                // $('#multipleCost').empty();
                 //load repayment ledger
-                getAllLedgerUnderExpenseForCost();
+                getAllLedgerUnderExpenseForCost('');
             }
 
             if (paidFor === 2 || paidFor === 4) {
@@ -51,6 +61,7 @@ let payment = (function () {
                     getAllLedgerUnderAdvancePaid(2);
                     descriptionText.text('Party');
                 }
+                ledgerForNormalEntry.removeClass("hidden");
                 tdsType.attr('disabled', true);
                 tdsAmount.attr('readonly', true);
                 deductedFrom.attr('readonly', true);
@@ -63,6 +74,7 @@ let payment = (function () {
             if (paidFor === 3) {
 
                 descriptionText.text('Party');
+                ledgerForNormalEntry.removeClass("hidden");
 
                 tdsType.attr('disabled', true);
                 tdsAmount.attr('readonly', true);
@@ -77,6 +89,7 @@ let payment = (function () {
             if (paidFor === 5) {
 
                 descriptionText.text('Description');
+                ledgerForNormalEntry.removeClass("hidden");
 
                 tdsType.attr('disabled', false);
                 tdsAmount.attr('readonly', false);
@@ -93,13 +106,14 @@ let payment = (function () {
     }
 
     function saveAutoVoucherDetails() {
-        $('.globalForm').validate({
-            submitHandler: function (form) {
-                let paidForId = $('#paidForId');
+        $('#btnSave').on('click', function () {
+
+            // test if form is valid
+            if ($('form.globalForm').validate().form()) {
                 $.ajax({
                     url: baseURL() + 'save',
                     type: 'POST',
-                    data: $(form).serializeArray(),
+                    data: globalForm.serializeArray(),
                     success: function (res) {
                         if (res.status === 1) {
                             if (parseInt($('#paidForId').val()) === 1) {
@@ -116,6 +130,10 @@ let payment = (function () {
                         }
                     }
                 })
+            } else {
+                // prevent default submit action
+                event.preventDefault();
+                console.log("not valid");
             }
         })
     }
@@ -145,13 +163,15 @@ let payment = (function () {
             if ($(this).val() !== '') {
                 tdsAmount.val('');
             }
-            if ($('#amount').val() === '') {
-                swal({
-                    type: "warning",
-                    title: "Please write amount.",
-                });
-                $("#tdsType").val('');
-                return false;
+            if (parseInt($('#paidForId').val()) !== 1) {
+                if ($('#amount').val() === '') {
+                    swal({
+                        type: "warning",
+                        title: "Please write amount.",
+                    });
+                    $("#tdsType").val('');
+                    return false;
+                }
             }
             //calculate TDS
             tdsCalculatedAmount(value, tdsAmount, $('#amount').val());
@@ -274,25 +294,25 @@ let payment = (function () {
         });
     }
 
-    function getAllLedgerUnderExpenseForCost() {
+    function getAllLedgerUnderExpenseForCost(counter) {
         $.ajax({
             url: baseURL() + 'getAllLedgerUnderExpenseForCost',
             type: 'GET',
             success: function (res) {
-                $('#description').devbridgeAutocomplete({
+                $('#costDescription' + counter).devbridgeAutocomplete({
                     lookup: $.map(res, function (value) {
                         return {data: value.id, value: value.text}
                     }), onSelect: function (suggestion) {
 
-                        $('#description').val(suggestion.value);
-                        $('#ledgerId').val(suggestion.data);
+                        $('#costDescription' + counter).val(suggestion.value);
+                        $('#costLedgerId').val(suggestion.data);
 
                         spms.ajax(baseURL() + 'getCostTypeByLedgerId',
                             'GET', {ledgerId: suggestion.data}, function (res) {
                                 if (res !== "") {
-                                    $("#costType").val(res);
+                                    $("#costType" + counter + "").val(res);
                                 } else {
-                                    $("#costType").val('');
+                                    $("#costType" + counter + "").val('');
                                 }
                             })
                     }
@@ -379,28 +399,103 @@ let payment = (function () {
         });
     }
 
+    function addMoreBtn() {
+        let counter = 1;
+
+        $('.addMoreBtn').on('click', function () {
+            $('#multipleCost').append(loadMultiVoucherContent(counter));
+            setTimeout(function () {
+                getAllLedgerUnderExpenseForCost(counter);
+                multiVoucherIndexing();
+                counter = counter + 1;
+            }, 100)
+        });
+
+        $('#multipleCost').on("click", ".removeBtn", function (e) { //user click on remove text
+            $(this).parent('div').parent('div').remove();
+            multiVoucherIndexing();
+        })
+    }
+
+    function multiVoucherIndexing() {
+        $('.multiPaymentVoucher').each(function (i, e) {
+
+            $(e).find('.costDescription').attr('name',
+                "multiVoucherDTO[" + i + "].costDescription");
+
+            $(e).find('.costId').attr('name',
+                "multiVoucherDTO[" + i + "].costId");
+
+            $(e).find('.costAmount').attr('name',
+                "multiVoucherDTO[" + i + "].costAmount");
+        });
+    }
+
+    function calculateTotalAmount() {
+        $(document).on('keyup', '.costAmount', function () {
+            let sum = 0;
+            $('.multiPaymentVoucher').each(function (i, e) {
+                let v = parseFloat($(e).find('.costAmount').val());
+                if (!isNaN(v))
+                    sum += v;
+            });
+            $('#amount').val(sum);
+        })
+    }
+
+    function loadMultiVoucherContent(item) {
+
+        return ' <div class="form-group row multiPaymentVoucher">\n' +
+            '                        <label class="col-md-2 right-align" id="descriptionText"></label>\n' +
+            '                        <div class="col-md-3">\n' +
+            '                            <input type="text" tabindex="2" class="form-control form-control-sm costDescription autocomplete"\n' +
+            '                                   name="multiVoucherDTO[' + item + '].costDescription" required="required"\n' +
+            '                                   id="costDescription' + item + '" />\n' +
+            '                        </div>\n' +
+            '                        <label class="col-md-1 right-align required">Amount</label>\n' +
+            '                        <div class="col-md-2">\n' +
+            '                            <input type="text" tabindex="3" class="form-control form-control-sm costAmount text-right"\n' +
+            '                                 required="required" name="multiVoucherDTO[' + item + '].costAmount" id="costAmount' + item + ' " />\n' +
+            '                        </div>\n' +
+            '                        <label class="col-md-1 right-align required ">Cost</label>\n' +
+            '                        <div class="col-md-2 ">\n' +
+            '                            <select class="form-control form-control-sm costId" id="costType' + item + '" \n' +
+            '                                    required="required" name="multiVoucherDTO[' + item + '].costId">\n' +
+            '                                <option value="">---Please select ---</option>\n' +
+            '                                <option value="1" id="generalId">General</option>\n' +
+            '                                <option value="2" id="productionId">Production</option>\n' +
+            '                            </select>\n' +
+            '                        </div>\n' +
+            '                        <div class="col-md-1"><button type="button" class="btn btn-danger btn-sm rounded-pill removeBtn">\n' +
+            '                                <i class="icon-bin"></i>\n' +
+            '                            </button></div>\n' +
+            '                    </div>';
+    }
+
     return {
         calTDSOnAmountChange: calTDSOnAmountChange,
         calculateTDSAmount: calculateTDSAmount,
-        // fetchPaidToList: fetchPaidToList,
         onSelectEnableDisable: onSelectEnableDisable,
         saveAutoVoucherDetails: saveAutoVoucherDetails,
         onChangePaidIn: onChangePaidIn,
         calAmountToPay: calAmountToPay,
         getAllLedgerUnderAdvanceReceived: getAllLedgerUnderAdvanceReceived,
-        reset: reset
+        reset: reset,
+        addMoreBtn: addMoreBtn,
+        calculateTotalAmount: calculateTotalAmount
     }
-})
-();
+})();
 
 $(document).ready(function () {
     payment.calTDSOnAmountChange();
     payment.calculateTDSAmount();
-    // payment.fetchPaidToList();
     payment.onSelectEnableDisable();
     payment.saveAutoVoucherDetails();
     payment.onChangePaidIn();
     payment.calAmountToPay();
     payment.getAllLedgerUnderAdvanceReceived();
     payment.reset();
+    payment.addMoreBtn();
+    payment.calculateTotalAmount();
+
 });

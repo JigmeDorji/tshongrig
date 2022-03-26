@@ -31,10 +31,10 @@ ledgerGroupList = (function () {
                 var totalAmount = 0;
                 $('#ledgerGroupList').dataTable().fnDestroy();
                 var columnDef = [
-                    {data: 'ledgerId', class: 'text-left ledgerId hidden'},
+                    {data: 'ledgerId', class: 'text-center ledgerId hidden'},
                     {data: 'particular', class: 'text-left ledgerName'},
                     {
-                        data: 'amount',
+                        data: 'amount', class: 'text-right',
                         render: function (data) {
                             if (data === 0) {
                                 return ''

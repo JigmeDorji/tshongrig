@@ -133,15 +133,20 @@ public class VoucherGroupListDao {
 
     @Transactional(readOnly = true)
     public Double getClosingBalOfPreviousYear(Integer companyId, String ledgerId, Date currentPeriodFrom) {
-        String query = "SELECT sum(a.drcrAmount*-1)\n" +
+ /*       String query = "SELECT sum(a.drcrAmount*-1)\n" +
                 "FROM tbl_acc_voucher_entries_detail a\n" +
                 "inner join tbl_acc_voucher_entries b on a.voucherId=b.voucherId\n" +
                 "where a.ledgerId=:ledgerId and b.companyId=:companyId and b.voucherEntryDate<:currentPeriodFrom";
+        */
+        String query = "select sum(a.drcrAmount*-1)\n" +
+                "from tbl_acc_voucher_entries_detail a\n" +
+                "inner join tbl_acc_voucher_entries b on a.voucherId=b.voucherId\n" +
+                "inner join tbl_acc_ledger c ON c.ledgerId=a.ledgerId\n" +
+                "inner join tbl_acc_acctype d on d.accTypeId=c.accTypeId\n" +
+                "inner join tbl_acc_group e on e.groupId=d.groupId\n" +
+                "where a.ledgerId=:ledgerId and b.companyId=:companyId and b.voucherEntryDate <= :currentPeriodFrom\n" +
+                "and e.groupId NOT IN(6,7,8,9)";
 
-//        String query = "SELECT sum(a.drcrAmount*-1) \n" +
-//                "FROM tbl_acc_voucher_entries_detail a\n" +
-//                "inner join tbl_acc_voucher_entries b on a.voucherId=b.voucherId\n" +
-//                "where a.ledgerId=:ledgerId and b.companyId=:companyId and b.voucherEntryDate>=:financialYearFrom and b.voucherEntryDate<=:financialYearTo";
         Session session = sessionFactory.getCurrentSession();
         return (Double) session.createSQLQuery(query)
                 .setParameter("companyId", companyId)
@@ -166,6 +171,7 @@ public class VoucherGroupListDao {
                 .uniqueResult();
         return totalAmount == null ? 0 : totalAmount;
     }
+
 
     /*@Transactional
     public void deleteVoucherFromVoucherTable(Integer voucherNo, Integer voucherTypeId, Integer companyId) {

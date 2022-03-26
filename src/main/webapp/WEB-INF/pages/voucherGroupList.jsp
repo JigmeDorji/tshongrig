@@ -52,12 +52,14 @@
                         <div class="col-md-2">
                             <input type="text" tabindex="2"
                                    class="form-control form-control-sm  datepicker right-align dateRange"
+                                   value="${fromDate}"
                                    id="fromDate"/>
                         </div>
                         <label class="col-md-1 right-align ">To</label>
                         <div class="col-md-2">
                             <input type="text" tabindex="2"
                                    class="form-control form-control-sm right-align datepicker dateRange"
+                                   value="${toDate}"
                                    id="toDate"/>
                         </div>
                     </div>
