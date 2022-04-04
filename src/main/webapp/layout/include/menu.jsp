@@ -171,10 +171,17 @@
                     </li>
                 </c:if>
 
-                <c:if test="${currentUser.businessType ==4}">
+                <c:if test="${currentUser.businessType ==4 || currentUser.businessType ==3}">
                     <%--Material--%>
                     <li class="nav-item nav-item-submenu">
-                        <a href="#" class="nav-link"><i class="icon icon-hammer-wrench"></i> <span>Material</span></a>
+                        <a href="#" class="nav-link"><i class="icon icon-hammer-wrench"></i> <span>
+                            <c:if test="${currentUser.businessType ==4}">
+                                Material
+                            </c:if>
+                            <c:if test="${currentUser.businessType ==3}">
+                                Raw Material
+                            </c:if>
+                            </span></a>
                         <ul class="nav nav-group-sub" data-submenu-title="Starter kit">
                             <li class="nav-item">
                                 <sec:authorize access="hasAuthority('12-VIEW')">
@@ -182,7 +189,6 @@
                                 </sec:authorize>
                             </li>
                             <li class="nav-item">
-
                                 <sec:authorize access="hasAuthority('14-VIEW')">
                                     <a class="nav-link" href="<c:url value='/openingRawMaterialPurchase' />">
                                         Opening</a>
@@ -227,6 +233,7 @@
                         </ul>
                     </li>
                 </c:if>
+
                 <%--Financial Statement--%>
                 <li class="nav-item nav-item-submenu">
                     <a href="#" class="nav-link"><i class="icon icon-cash3"></i> <span>Financial Statement</span></a>

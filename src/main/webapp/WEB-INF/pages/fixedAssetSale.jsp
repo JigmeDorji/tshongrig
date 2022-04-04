@@ -47,7 +47,6 @@
                         <label class="col-md-3 left-label required">Date</label>
                         <div class="col-md-4">
                             <input type="text" tabindex="2" class="form-control form-control-sm  formatDate right-align"
-                                   value="${date}" readonly
                                    placeholder="DD.MM.YYYY" id="saleDate" name="saleDate" required="required"/>
                         </div>
                     </div>

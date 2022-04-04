@@ -97,7 +97,7 @@
                         <img src="<c:url value='/resources/images/logobcs.png'/>" class="img-fluid pb-2" alt="logo">
                         <h1>Start a 30-day free trial</h1>
                         <h5>Subscribe Tshong Rig ERP system today to power your business.</h5>
-                        <p class="pt-5"><a href="/login" class="btn btn-outline-secondary pd-x-25"><i class="icon-arrow-left32"></i> Go back</a>
+                        <p class="pt-5"><a href="<c:url value='/login'/>" class="btn btn-outline-secondary pd-x-25"><i class="icon-arrow-left32"></i> Go back</a>
                         </p>
 
                     </div>

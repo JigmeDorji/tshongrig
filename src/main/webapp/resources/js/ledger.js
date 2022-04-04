@@ -40,20 +40,22 @@ ledger = (function () {
 
     function onSelectAccType() {
         $('#accTypeId').on('change', function () {
-            $.ajax({
-                url: 'ledger/isBankAccType',
-                type: 'GET',
-                data: {accTypeId: $('#accTypeId').val()},
-                success: function (res) {
-                    if (res) {
-                        $('.bankAccDetail').attr('hidden', false);
-                        $('.bankAccDetail').attr('disabled', false);
-                    } else {
-                        $('.bankAccDetail').attr('hidden', true);
-                        $('.bankAccDetail').attr('disabled', true);
+            if ($('#accTypeId').val() !== '') {
+                $.ajax({
+                    url: 'ledger/isBankAccType',
+                    type: 'GET',
+                    data: {accTypeId: $('#accTypeId').val()},
+                    success: function (res) {
+                        if (res) {
+                            $('.bankAccDetail').attr('hidden', false);
+                            $('.bankAccDetail').attr('disabled', false);
+                        } else {
+                            $('.bankAccDetail').attr('hidden', true);
+                            $('.bankAccDetail').attr('disabled', true);
+                        }
                     }
-                }
-            });
+                });
+            }
         })
     }
 

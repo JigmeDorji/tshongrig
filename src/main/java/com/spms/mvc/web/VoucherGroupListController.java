@@ -5,12 +5,14 @@ import com.spms.mvc.dto.BankReconciliationDTO;
 import com.spms.mvc.dto.LedgerDTO;
 import com.spms.mvc.dto.PurchaseDTO;
 import com.spms.mvc.library.helper.CurrentUser;
+import com.spms.mvc.library.helper.DateUtil;
 import com.spms.mvc.library.helper.ResponseMessage;
 import com.spms.mvc.service.AddItemService;
 import com.spms.mvc.service.VoucherGroupListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,7 +32,7 @@ import java.util.List;
 @Controller
 @PreAuthorize("isAuthenticated()")
 @RequestMapping("/voucherGroupList")
-public class VoucherGroupListController {
+public class VoucherGroupListController extends BaseController {
 
     @Autowired
     private VoucherGroupListService voucherGroupListService;
@@ -38,7 +40,17 @@ public class VoucherGroupListController {
     private AddItemService addItemService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ModelAndView list() {
+    public ModelAndView list(HttpServletRequest request, Model model) {
+        CurrentUser currentUser = getCurrentUser(request);
+
+        model.addAttribute("fromDate",
+                DateUtil.format(DateUtil.toDate(currentUser.getFinancialYearFrom()),
+                        DateUtil.DD_MMM_YYYY));
+
+        model.addAttribute("toDate",
+                DateUtil.format(DateUtil.firstDayOfMonth(new Date()),
+                        DateUtil.DD_MMM_YYYY));
+
         return new ModelAndView("voucherGroupList");
     }
 
@@ -46,15 +58,15 @@ public class VoucherGroupListController {
     @RequestMapping(value = "/getVoucherDetailsByLedgerId", method = RequestMethod.GET)
     public List<AccProfitAndLossReportDTO> getVoucherDetailsByLedgerId(HttpServletRequest request, String ledgerId, Date fromDate, Date toDate) throws ParseException {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
-        return voucherGroupListService.getVoucherDetailsByLedgerId(ledgerId,fromDate,toDate,currentUser);
+        return voucherGroupListService.getVoucherDetailsByLedgerId(ledgerId, fromDate, toDate, currentUser);
     }
 
     @ResponseBody
     @RequestMapping(value = "/getOpeningBalance", method = RequestMethod.GET)
-    public LedgerDTO getOpeningBalance(HttpServletRequest request,String ledgerId,Date fromDate,Date toDate) throws ParseException {
+    public LedgerDTO getOpeningBalance(HttpServletRequest request, String ledgerId, Date fromDate, Date toDate) throws ParseException {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
 
-        return voucherGroupListService.getOpeningBalance(ledgerId,fromDate,toDate,currentUser);
+        return voucherGroupListService.getOpeningBalance(ledgerId, fromDate, toDate, currentUser);
     }
 
 
@@ -81,9 +93,9 @@ public class VoucherGroupListController {
     }
 
     @RequestMapping(value = "/navigateToPurchasePage", method = RequestMethod.GET)
-    public String navigateToDetail(HttpServletRequest request,Integer voucherNo,RedirectAttributes redirectAttributes) {
+    public String navigateToDetail(HttpServletRequest request, Integer voucherNo, RedirectAttributes redirectAttributes) {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
-        PurchaseDTO purchaseDTO=addItemService.getPurchaseDetailByVoucherNo(voucherNo,currentUser);
+        PurchaseDTO purchaseDTO = addItemService.getPurchaseDetailByVoucherNo(voucherNo, currentUser);
         redirectAttributes.addFlashAttribute("purchaseId", purchaseDTO.getPurchaseId());
         redirectAttributes.addFlashAttribute("purchaseDate", purchaseDTO.getPurchaseDate());
         redirectAttributes.addFlashAttribute("purchaseVoucherNo", voucherNo);

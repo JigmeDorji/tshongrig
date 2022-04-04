@@ -40,7 +40,7 @@
                         <label class="col-md-2 right-align">Purchase Date:</label>
                         <div class="col-md-3">
                             <input type="text" tabindex="2" class="form-control form-control-sm  right-align common datepicker" name="purchaseDate"
-                                   value="${date}"
+                                   placeholder="DD.MM.YYYY"
                                    id="purchaseDate"/>
                         </div>
 

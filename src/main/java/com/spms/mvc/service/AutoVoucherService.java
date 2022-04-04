@@ -2,10 +2,7 @@ package com.spms.mvc.service;
 
 import com.spms.mvc.Enumeration.*;
 import com.spms.mvc.dao.AutoVoucherDao;
-import com.spms.mvc.dto.AutoVoucherDTO;
-import com.spms.mvc.dto.LoanDTO;
-import com.spms.mvc.dto.VoucherDTO;
-import com.spms.mvc.dto.VoucherDetailDTO;
+import com.spms.mvc.dto.*;
 import com.spms.mvc.entity.LedgerWiseCostType;
 import com.spms.mvc.entity.Loan;
 import com.spms.mvc.global.service.BaseService;
@@ -95,10 +92,18 @@ public class AutoVoucherService extends BaseService {
 
                 double deductedAmount = autoVoucherDTO.getDeductedAmount() == null ? 0.0 : autoVoucherDTO.getDeductedAmount();
 
-                double totalAmount = deductedAmount == 0.0
-                        ? autoVoucherDTO.getAmount() == null ? autoVoucherDTO.getAmountReceived()
-                        : autoVoucherDTO.getAmount() : autoVoucherDTO.getDeductedAmount();
-
+                double totalAmount = 0.0;
+                if (autoVoucherDTO.getTypeId() == 1) {
+                    for (MultiVoucherDTO multiVoucherDTO : autoVoucherDTO.getMultiVoucherDTO()) {
+                        if (multiVoucherDTO.getCostAmount() != null) {
+                            totalAmount = totalAmount + multiVoucherDTO.getCostAmount();
+                        }
+                    }
+                } else {
+                    totalAmount = deductedAmount == 0.0
+                            ? autoVoucherDTO.getAmount() == null ? autoVoucherDTO.getAmountReceived()
+                            : autoVoucherDTO.getAmount() : autoVoucherDTO.getDeductedAmount();
+                }
                 if (addItemService.checkCashBalance(PaymentModeTypeEnum.CASH.getValue(),
                         totalAmount, currentUser).getStatus() == 0) {
                     responseMessage.setStatus(0);
@@ -119,19 +124,43 @@ public class AutoVoucherService extends BaseService {
 
             if (autoVoucherDTO.getPaidForTypeId() == 1) {
                 //region dr voucher preparation
+                int index = 0;
                 String ledgerId;
-                VoucherDetailDTO voucherCostDRDTO = new VoucherDetailDTO();
-                voucherCostDRDTO.setDrcrAmount(AccountingUtil.drAmount(Math.abs(autoVoucherDTO.getAmount())));
-                if (autoVoucherDTO.getCostId().equals(CostEnum.GENERAL.getValue())) {
-                    ledgerId = ledgerService.getLedgerIdByLedgerName(autoVoucherDTO.getDescription(), currentUser,
-                            AccountTypeEnum.INDIRECT_COST.getValue());
-                    voucherCostDRDTO.setLedgerId(ledgerId);
-                } else {
-                    ledgerId = getLedgerId(autoVoucherDTO.getDescription(), currentUser, AccountTypeEnum.DIRECT_COST.getValue());
-                    voucherCostDRDTO.setLedgerId(ledgerId);
-                }
-                voucherDetailDTOList.add(voucherCostDRDTO);
+                for (MultiVoucherDTO multiVoucherDTO : autoVoucherDTO.getMultiVoucherDTO()) {
 
+                    VoucherDetailDTO voucherCostDRDTO = new VoucherDetailDTO();
+                    voucherCostDRDTO.setDrcrAmount(AccountingUtil.drAmount(
+                            Math.abs(multiVoucherDTO.getCostAmount())));
+
+                    if (multiVoucherDTO.getCostId().equals(CostEnum.GENERAL.getValue())) {
+                        ledgerId = ledgerService.getLedgerIdByLedgerName(multiVoucherDTO.getCostDescription(),
+                                currentUser, AccountTypeEnum.INDIRECT_COST.getValue());
+                    } else {
+                        ledgerId = getLedgerId(multiVoucherDTO.getCostDescription(), currentUser,
+                                AccountTypeEnum.DIRECT_COST.getValue());
+                    }
+                    voucherCostDRDTO.setLedgerId(ledgerId);
+                    voucherDetailDTOList.add(voucherCostDRDTO);
+
+                    LedgerWiseCostType ledgerWiseCostType = new LedgerWiseCostType();
+
+                    BigInteger id;
+                    if (autoVoucherDao.checkLedgerExists(ledgerId)) {
+                        id = autoVoucherDao.getMaxId(currentUser.getCompanyId());
+                        id = id == null ? BigInteger.ONE : id.add(BigInteger.ONE);
+                    } else {
+                        id = autoVoucherDao.getIdByLedgerId(ledgerId);
+                    }
+                    ledgerWiseCostType.setId(id);
+                    ledgerWiseCostType.setLedgerId(ledgerId);
+                    ledgerWiseCostType.setCompanyId(currentUser.getCompanyId());
+                    ledgerWiseCostType.setCostTypeId(multiVoucherDTO.getCostId());
+                    ledgerWiseCostType.setCreatedBy(currentUser.getLoginId());
+                    ledgerWiseCostType.setCreatedDate(currentUser.getCreatedDate());
+                    autoVoucherDao.saveOrUpdate(ledgerWiseCostType);
+
+                    index++;
+                }
                 //region cr voucher preparation
                 if (!autoVoucherDTO.getTdsType().equals(TDSTypeEnum.NOT_APPLICABLE.getValue())) {
 
@@ -160,23 +189,6 @@ public class AutoVoucherService extends BaseService {
                 }
                 voucherDetailDTOList.add(voucherBankOrCashDTO);
 
-                LedgerWiseCostType ledgerWiseCostType = new LedgerWiseCostType();
-
-                BigInteger id;
-
-                if (autoVoucherDao.checkLedgerExists(ledgerId)) {
-                    id = autoVoucherDao.getMaxId(currentUser.getCompanyId());
-                    id = id == null ? BigInteger.ONE : id.add(BigInteger.ONE);
-                } else {
-                    id = autoVoucherDao.getIdByLedgerId(ledgerId);
-                }
-                ledgerWiseCostType.setId(id);
-                ledgerWiseCostType.setLedgerId(ledgerId);
-                ledgerWiseCostType.setCompanyId(currentUser.getCompanyId());
-                ledgerWiseCostType.setCostTypeId(autoVoucherDTO.getCostId());
-                ledgerWiseCostType.setCreatedBy(currentUser.getLoginId());
-                ledgerWiseCostType.setCreatedDate(currentUser.getCreatedDate());
-                autoVoucherDao.saveOrUpdate(ledgerWiseCostType);
 
             }
 
@@ -639,7 +651,7 @@ public class AutoVoucherService extends BaseService {
 
         List<VoucherDetailDTO> voucherDetailDTO = new ArrayList<>();
         List<VoucherDetailDTO> voucherDetailDTOList = autoVoucherDao.getVoucherDetail(voucherNo,
-                currentUser,type);
+                currentUser, type);
         for (VoucherDetailDTO vDTO : voucherDetailDTOList) {
             VoucherDetailDTO voucherDetailDTO1 = new VoucherDetailDTO();
             if (vDTO.getDrcrAmount() < 0) {

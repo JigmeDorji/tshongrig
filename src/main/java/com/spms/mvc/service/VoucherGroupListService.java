@@ -49,7 +49,8 @@ public class VoucherGroupListService {
             currentPeriodFrom = fromDate;
             currentPeriodTo = toDate;
         }
-        for (AccProfitAndLossReportDTO accProfitAndLossReportDTO : voucherGroupListDao.getVoucherDetailsByAccTypeAndLedgerType(ledgerId, currentPeriodFrom, currentPeriodTo, fromDate, toDate, currentUser.getCompanyId())) {
+        for (AccProfitAndLossReportDTO accProfitAndLossReportDTO : voucherGroupListDao.getVoucherDetailsByAccTypeAndLedgerType(ledgerId, currentPeriodFrom, currentPeriodTo, fromDate, toDate, currentUser.getCompanyId(),
+                currentUser.getFinancialYearId())) {
             AccProfitAndLossReportDTO profitAndLossReportDTO = new AccProfitAndLossReportDTO();
 
             if (accProfitAndLossReportDTO.getDrcrAmount() > 0) {
@@ -75,18 +76,24 @@ public class VoucherGroupListService {
     }
 
     public LedgerDTO getOpeningBalance(String ledgerId, Date fromDate, Date toDate, CurrentUser currentUser) throws ParseException {
+
         FinancialYearDTO preFinancialYearDTO = financialYearSetupService.getPreviousFinancialYearDetail(currentUser.getCompanyId());
         Date currentPeriodFrom = new SimpleDateFormat("dd-MMM-yyyy").parse(currentUser.getFinancialYearFrom());
         Date currentPeriodTo = new SimpleDateFormat("dd-MMM-yyyy").parse(currentUser.getFinancialYearTo());
+
         if (fromDate != null && toDate != null) {
             currentPeriodFrom = fromDate;
             currentPeriodTo = toDate;
         }
+
         LedgerDTO ledgerDTO = voucherGroupListDao.getOpeningBalance(ledgerId);
         //This will voucher amount before fromDate
-        Double tnxAmtBeforeFromDate = voucherGroupListDao.getClosingBalOfPreviousYear(currentUser.getCompanyId(), ledgerId, currentPeriodFrom);
+        Double tnxAmtBeforeFromDate = voucherGroupListDao.getClosingBalOfPreviousYear(currentUser.getCompanyId(),
+                ledgerId, currentPeriodFrom);
+
         tnxAmtBeforeFromDate = tnxAmtBeforeFromDate == null ? 0 : tnxAmtBeforeFromDate;
-        ledgerDTO.setOpeningBal(ledgerDTO.getOpeningBal() + tnxAmtBeforeFromDate);
+
+        ledgerDTO.setOpeningBal(ledgerDTO.getOpeningBal() + (tnxAmtBeforeFromDate));
 //        if (preFinancialYearDTO != null) {
 //            ledgerDTO.setOpeningBal(voucherGroupListDao.getClosingBalOfPreviousYear(currentUser.getCompanyId(), ledgerId, preFinancialYearDTO.getFinancialYearFrom(), preFinancialYearDTO.getFinancialYearTo()));
 //        }
@@ -94,7 +101,11 @@ public class VoucherGroupListService {
         //To get Net profit from PNL of previous Year
         Double previousYearProfitAndLossAmount = 0.00;
         if (preFinancialYearDTO != null) {
-            List<AccProfitAndLossReportDTO> accProfitAndLossReportDTOs = accProfitAndLossReportService.getProfitAndLossDetails(currentUser.getCompanyId(), preFinancialYearDTO.getFinancialYearFrom(), preFinancialYearDTO.getFinancialYearTo(), currentUser.getBusinessType());
+
+            List<AccProfitAndLossReportDTO> accProfitAndLossReportDTOs = accProfitAndLossReportService.getProfitAndLossDetails(currentUser.getCompanyId(),
+                    preFinancialYearDTO.getFinancialYearFrom(), preFinancialYearDTO.getFinancialYearTo(),
+                    currentUser.getBusinessType());
+
             previousYearProfitAndLossAmount = accProfitAndLossReportDTOs.get(accProfitAndLossReportDTOs.size() - 1).getAmount();
         }
 
@@ -160,7 +171,7 @@ public class VoucherGroupListService {
         voucherCreationDao.getVoucherIdByVoucherNo(voucherNo, currentUser.getCompanyId(), currentUser.getFinancialYearId(),
                 voucherTypeId).forEach(voucherCreationDao::deleteVoucherDetailList);
         //delete from voucher
-        Integer voucherId=voucherCreationDao.getVoucherIdFromVoucherTable(voucherNo, currentUser.getCompanyId(),
+        Integer voucherId = voucherCreationDao.getVoucherIdFromVoucherTable(voucherNo, currentUser.getCompanyId(),
                 currentUser.getFinancialYearId(), voucherTypeId);
         voucherCreationDao.deleteVoucherItemsFromVoucherTable(voucherId);
 

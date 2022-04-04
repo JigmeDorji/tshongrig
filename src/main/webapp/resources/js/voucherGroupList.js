@@ -19,6 +19,10 @@ voucherGroupList = (function () {
     $('#ledgerName').val(ledgerName);
 
     function loadVoucherDetails(fromDate, toDate) {
+
+        fromDate = typeof fromDate === 'undefined' ? $('#fromDate').val() : fromDate;
+        toDate = typeof toDate === 'undefined' ? $('#toDate').val() : toDate;
+
         $.ajax({
             url: 'voucherGroupList/getVoucherDetailsByLedgerId',
             type: 'GET',

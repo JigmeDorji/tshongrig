@@ -32,22 +32,24 @@
         <div class="card-body">
             <form id="ledgerForm" action="<c:url value='/ledgerGroupList'/> " class="form-horizontal globalForm">
                 <input type="hidden" id="ledgerId" name="ledgerId">
-                <fieldset>
-                    <div class="table-responsive">
-                        <table class="table navigatable_table" id="ledgerGroupList">
-                            <thead>
-                            <tr class="bg-primary text-white">
-                                <th></th>
-                                <th width="70%" height="40px" class="left-align">
-                                    <span class="center-label" id="ledgerGroupHeadName"/></th>
-                                <th width="30%">Amount</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                </fieldset>
+                <div class="col-md-12">
+                    <fieldset>
+                        <div class="table-responsive">
+                            <table class="table navigatable_table" id="ledgerGroupList">
+                                <thead>
+                                <tr class="bg-primary text-white">
+                                    <th></th>
+                                    <th width="70%" height="40px" class="left-align">
+                                        <span class="center-label" id="ledgerGroupHeadName"/></th>
+                                    <th width="30%">Amount</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+                </div>
             </form>
             <div class="col-sm-offset-1 col-md-2" style="padding-top: 20px">
                 <input type="button" class="btn btn-primary btn-block" value="Return" id="previousPage"

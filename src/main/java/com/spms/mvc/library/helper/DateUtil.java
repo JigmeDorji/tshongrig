@@ -1,4 +1,4 @@
- /**
+/**
  * Component Name: Spare part management
  * Name: DateUtil
  * Description: See the description at the top of class declaration
@@ -21,7 +21,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.*;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 
 public final class DateUtil {
@@ -614,11 +613,13 @@ public final class DateUtil {
         return simpleDate(localDate);
     }
 
-    public static Model fromTODateModel(CurrentUser currentUser,Model model) {
+    public static Model fromTODateModel(CurrentUser currentUser, Model model) {
         String fromDate;
         String toDate;
+
         Date currentFinancialToDate = DateUtil.toDate(currentUser.getFinancialYearTo());
         Date currentFinancialFromDate = DateUtil.toDate(currentUser.getFinancialYearFrom());
+
         if (new Date().after(currentFinancialFromDate) && new Date().before(currentFinancialToDate)) {
             fromDate = currentUser.getFinancialYearFrom();
             toDate = DateUtil.format(new Date(), DateUtil.DD_MMM_YYYY);

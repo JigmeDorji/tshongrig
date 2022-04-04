@@ -42,7 +42,7 @@
 
                         <div class="col-md-3">
                             <input type="text" tabindex="2" class="form-control form-control-sm formatDate" name="autoVoucherDate"
-                                   id="autoVoucherDate" required="true" value="${paymentDate}"/>
+                                   id="autoVoucherDate" required="true"  placeholder="DD.MM.YYYY"/>
                         </div>
                     </div>
 
