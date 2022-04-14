@@ -215,6 +215,16 @@
                                     </div>
 
                                     <div class="form-group row">
+                                        <div class="form-group form-group-float col-md-6">
+                                            <label class="required">Concat Person </label>
+                                            <input type="text" tabindex="3"
+                                                   class="form-control form-control-sm field numeric"
+                                                   name="contactPerson"
+                                                   id="contactPerson" required="true"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
                                         <div class="col-md-9"></div>
                                         <div class="col-md-1">
                                             <input type="reset" tabindex="10" class="btn btn-danger"

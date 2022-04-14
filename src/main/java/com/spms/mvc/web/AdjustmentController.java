@@ -75,4 +75,11 @@ public class AdjustmentController extends BaseController {
         return autoVoucherService.getAmountByLedgerId((CurrentUser) request.getSession()
                 .getAttribute("currentUser"), ledgerId);
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/getCostTypeByLedgerId", method = RequestMethod.GET)
+    public Integer getCostTypeByLedgerId(HttpServletRequest request, String ledgerId) {
+        return autoVoucherService.getCostTypeByLedgerId(getCurrentUser(request), ledgerId);
+    }
+
 }

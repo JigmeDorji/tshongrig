@@ -1,9 +1,9 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Tomcat 9" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.37" ALTERNATIVE_JRE_ENABLED="false" show_console_on_std_err="true" show_console_on_std_out="true">
-    <option name="BROWSER_ID" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
+    <option name="BROWSER_ID" value="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" />
     <option name="SHOW_DIALOG_ON_UPDATE" value="false" />
     <deployment>
-      <artifact name="bcs:war exploded">
+      <artifact name="tshong-rig:war exploded">
         <settings>
           <option name="CONTEXT_PATH" value="" />
         </settings>
@@ -11,8 +11,8 @@
     </deployment>
     <server-settings>
       <option name="BASE_DIRECTORY_NAME" value="Unnamed_bcs_3" />
-      <option name="HTTP_PORT" value="8087" />
-      <option name="JNDI_PORT" value="1093" />
+      <option name="HTTP_PORT" value="8086" />
+      <option name="JNDI_PORT" value="1094" />
     </server-settings>
     <output_file is_save="true" />
     <log_file alias="Tomcat Host Manager Log" path="%IDEA_RUN:CATALINA_BASE%/logs/host-manager.*" />
@@ -69,9 +69,8 @@
       </SHUTDOWN>
     </ConfigurationWrapper>
     <method v="2">
-      <option name="Make" enabled="true" />
       <option name="BuildArtifacts" enabled="true">
-        <artifact name="bcs:war exploded" />
+        <artifact name="tshong-rig:war exploded" />
       </option>
     </method>
   </configuration>

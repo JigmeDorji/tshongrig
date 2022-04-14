@@ -126,14 +126,14 @@ spms = (function () {
     }
 
     function getUrl() {
-        // return window.location.protocol + '//' + window.location.host + '/tshong-rig';
+        // return window.location.protocol + '//' + window.location.host + '/tshong-rig/';
         return window.location.protocol + '//' + window.location.host + '/';
         // return 'http://www.autga.bt/bcs/';
     }
 
     function baseReportLocation() {
-        // return window.location.protocol + '//' + window.location.host + '/tshong-rig/resources/reports/';
-        return window.location.protocol + '//' + window.location.host + '/resources/reports/';
+        return window.location.protocol + '//' + window.location.host + '/tshong-rig/resources/reports/';
+        // return window.location.protocol + '//' + window.location.host + '/resources/reports/';
     }
 
     //index the table gridaccProfitAndLossReport
@@ -415,6 +415,42 @@ spms = (function () {
         })
     }
 
+    function calculateTdsAmount(value, tdsAmount, amount) {
+        if (typeof amount === 'undefined') {
+            return;
+        }
+        if (value === 1) {
+            tdsAmount.val(calculatedTDS(2, amount));
+        }
+        if (value === 2) {
+            tdsAmount.val(calculatedTDS(5,
+                amount))
+        }
+        if (value === 3) {
+            tdsAmount.val(calculatedTDS(5, amount));
+        }
+        if (value === 4) {
+            tdsAmount.val(calculatedTDS(3, amount))
+        }
+
+        if (value === 5) {
+            tdsAmount.val(0)
+        }
+    }
+
+    function calculatedTDS(percentage, amount) {
+        return ((percentage / 100) * amount).toFixed(2);
+    }
+
+    function calTotalTDSPayableAmount(amount, tdsDeduction, advanceDeduction, amountPaid) {
+
+        if (amount !== '' && tdsDeduction !== '' && advanceDeduction !== '') {
+            amountPaid.val(parseFloat(amount) - (parseFloat(tdsDeduction) + parseFloat(advanceDeduction)));
+        } else {
+            amountPaid.val('')
+        }
+    }
+
     return {
         _formIndexing: _formIndexing,
         addRowNumber: addRowNumber,
@@ -433,7 +469,9 @@ spms = (function () {
         populateTableData: populateTableData,
         loadSearchList: loadSearchList,
         numberWithCommas: numberWithCommas,
-        autoSizeInputField: autoSizeInputField
+        autoSizeInputField: autoSizeInputField,
+        calculateTdsAmount: calculateTdsAmount,
+        calTotalTDSPayableAmount: calTotalTDSPayableAmount
     }
 })();
 
@@ -830,10 +868,11 @@ function successMsg(msg, callback) {
             callback(e);
     });
 }
+
 function successMsg2(msg) {
-   $('.responseMsg').append('<div class="alert alert-success border-0 alert-dismissible">\n' +
-       '<button type="button" class="close" data-dismiss="alert"><span>×</span></button>\n' +
-       '<span class="font-weight-semibold">Well done! </span>'+msg+'</div>')
+    $('.responseMsg').append('<div class="alert alert-success border-0 alert-dismissible">\n' +
+        '<button type="button" class="close" data-dismiss="alert"><span>×</span></button>\n' +
+        '<span class="font-weight-semibold">Well done! </span>' + msg + '</div>')
 }
 
 function confirmMessage(msg, callback) {

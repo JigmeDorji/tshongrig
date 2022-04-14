@@ -149,14 +149,13 @@ public class AutoVoucherDao {
     }
 
     @Transactional(readOnly = true)
-    public Double getAmountByLedgerId(CurrentUser currentUser, String ledgerId) {
-        String query = "SELECT abs(sum(b.drcrAmount)) AS receiptAmount FROM tbl_acc_ledger a\n" +
-                "INNER JOIN tbl_acc_voucher_entries_detail b ON a.ledgerId=b.ledgerId\n" +
-                "WHERE b.ledgerId=:ledgerId AND companyId=:companyId \n" +
-                "group by a.ledgerId";
+    public Double getAmountByLedgerId(String ledgerId) {
+        String query = "SELECT ABS(SUM(IFNULL(A.drcrAmount,0))) \n" +
+                "FROM tbl_acc_voucher_entries_detail A \n" +
+                "INNER JOIN tbl_acc_voucher_entries B ON A.voucherId=B.voucherId \n" +
+                "where A.ledgerId=:ledgerId group by A.ledgerId";
         return (Double) sessionFactory.getCurrentSession().createSQLQuery(query)
                 .setParameter("ledgerId", ledgerId)
-                .setParameter("companyId", currentUser.getCompanyId())
                 .uniqueResult();
     }
 

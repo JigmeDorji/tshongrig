@@ -34,7 +34,8 @@
                                     <div class="form-group row">
                                         <div class="form-group form-group-float col-md-6">
                                             <label class="form-group-float-label animate required">Company Name</label>
-                                            <input type="text" class="form-control field"id="companyName" name="companyName" required placeholder="Company Name">
+                                            <input type="text" class="form-control field" id="companyName"
+                                                   name="companyName" required placeholder="Company Name">
                                         </div>
 
                                         <div class="form-group form-group-float col-md-6">
@@ -52,30 +53,39 @@
                                     </div>
                                     <div class="form-group row">
                                         <div class="form-group form-group-float col-md-6">
-                                            <label class="form-group-float-label animate required">Contact Person</label>
-                                            <input type="text" name="mobileNo" id="mobileNo" class="form-control field" placeholder="Contact Person">
+                                            <label class="form-group-float-label animate required">Contact
+                                                Person</label>
+                                            <input type="text" name="contactPerson" id="mobileNo"
+                                                   class="form-control field" placeholder="Contact Person">
                                         </div>
                                         <div class="form-group form-group-float col-md-6">
 
                                             <label class="form-group-float-label animate required">Contact No.</label>
-                                            <input type="text" class="form-control field" placeholder="Contact No.">
+                                            <input type="text" name="mobileNo" class="form-control field"
+                                                   placeholder="Contact No.">
                                         </div>
 
                                     </div>
                                     <div class="form-group row">
                                         <div class="form-group form-group-float col-md-6">
-                                            <label class="form-group-float-label animate required">Mailing Address</label>
-                                            <textarea type="text" class="form-control field" name="mailingAddress" id="mailingAddress" required placeholder="Mailing Address"></textarea>
+                                            <label class="form-group-float-label animate required">Mailing
+                                                Address</label>
+                                            <textarea type="text" class="form-control field" name="mailingAddress"
+                                                      id="mailingAddress" required
+                                                      placeholder="Mailing Address"></textarea>
                                         </div>
 
                                         <div class="form-group form-group-float col-md-6">
                                             <label class="form-group-float-label animate required">Email ID</label>
-                                            <input type="text" name="email" id="email" required class="form-control field" placeholder="Email ID">
+                                            <input type="text" name="email" id="email" required
+                                                   class="form-control field" placeholder="Email ID">
                                         </div>
                                     </div>
 
 
-                                    <button type="submit" class="btn btn-primary btn-block btn-signin mt-4" id="btnSubmit">Submit</button>
+                                    <button type="submit" class="btn btn-primary btn-block btn-signin mt-4"
+                                            id="btnSubmit">Submit
+                                    </button>
                                     <%--                        <p class="mg-b-0">Don't have an account? <a href="page-signup2.html">Sign Up</a></p>--%>
                                     <c:if test="${not empty error}">
                                         <div class="form-group">
@@ -97,7 +107,8 @@
                         <img src="<c:url value='/resources/images/logobcs.png'/>" class="img-fluid pb-2" alt="logo">
                         <h1>Start a 30-day free trial</h1>
                         <h5>Subscribe Tshong Rig ERP system today to power your business.</h5>
-                        <p class="pt-5"><a href="<c:url value='/login'/>" class="btn btn-outline-secondary pd-x-25"><i class="icon-arrow-left32"></i> Go back</a>
+                        <p class="pt-5"><a href="<c:url value='/login'/>" class="btn btn-outline-secondary pd-x-25"><i
+                                class="icon-arrow-left32"></i> Go back</a>
                         </p>
 
                     </div>

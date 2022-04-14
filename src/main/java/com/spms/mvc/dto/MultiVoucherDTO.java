@@ -18,6 +18,7 @@ package com.spms.mvc.dto;
 public class MultiVoucherDTO {
 
     private String costDescription;
+    private String adjustedAgainst;
     private Double costAmount;
     private Integer costId;
 
@@ -27,6 +28,14 @@ public class MultiVoucherDTO {
 
     public void setCostDescription(String costDescription) {
         this.costDescription = costDescription;
+    }
+
+    public String getAdjustedAgainst() {
+        return adjustedAgainst;
+    }
+
+    public void setAdjustedAgainst(String adjustedAgainst) {
+        this.adjustedAgainst = adjustedAgainst;
     }
 
     public Double getCostAmount() {

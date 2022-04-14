@@ -21,6 +21,7 @@
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
           <factory-entry name="bcs" />
+          <factory-entry name="tshong-rig" />
         </datasource-mapping>
         <naming-strategy-map />
       </configuration>
