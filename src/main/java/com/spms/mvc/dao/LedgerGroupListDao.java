@@ -60,8 +60,8 @@ public class LedgerGroupListDao {
                 "inner join tbl_acc_voucher_entries d on d.voucherId=c.voucherId\n" +
                 "inner join tbl_acc_acctype e on e.accTypeId=a.accTypeId\n" +
                 "inner join tbl_acc_group f on f.groupId=e.groupId\n" +
-                "where a.accTypeId=:accountTypeId and b.companyId=:companyId and d.voucherEntryDate<:toDate\n" +
-                "and d.voucherEntryDate>=:fromDate GROUP BY b.ledgerId\n" +
+                "where a.accTypeId=:accountTypeId and b.companyId=:companyId and d.voucherEntryDate>=:fromDate and d.voucherEntryDate<=:toDate\n" +
+                "GROUP BY b.ledgerId\n" +
                 "UNION \n" +
                 "SELECT  b.ledgerId, b.ledgerName as particular,ifnull(SUM(c.drcrAmount*-1),0) as amount,f.groupId as groupId\n" +
                 "FROM tbl_acc_acctype a\n" +
@@ -70,7 +70,7 @@ public class LedgerGroupListDao {
                 "inner join tbl_acc_voucher_entries d on d.voucherId=c.voucherId\n" +
                 "inner join tbl_acc_acctype e on e.accTypeId=a.accTypeId\n" +
                 "inner join tbl_acc_group f on f.groupId=e.groupId\n" +
-                "where a.accTypeId=:accountTypeId and b.companyId=:companyId and d.voucherEntryDate<:toDate and d.voucherEntryDate>=:fromDate GROUP BY b.ledgerId\n" +
+                "where a.accTypeId=:accountTypeId and b.companyId=:companyId and  d.voucherEntryDate>=:fromDate and d.voucherEntryDate<=:toDate GROUP BY b.ledgerId\n" +
                 "UNION#this will include ledger with only opening bal without any acc transation\n" +
                 "select a.ledgerId,a.ledgerName as particular,ifnull(a.openingBal,0) as amount,c.groupId\n" +
                 "from tbl_acc_ledger a\n" +
@@ -82,8 +82,8 @@ public class LedgerGroupListDao {
         return sessionFactory.getCurrentSession().createSQLQuery(sqlQry)
                 .setParameter("companyId", companyId)
                 .setParameter("accountTypeId", accountTypeId)
-                .setParameter("fromDate", DateUtil.toDate(currentUser.getFinancialYearFrom()))
                 .setParameter("toDate", DateUtil.toDate(currentUser.getFinancialYearTo()))
+                .setParameter("fromDate", DateUtil.toDate(currentUser.getFinancialYearFrom()))
                 .setResultTransformer(Transformers.aliasToBean(AccProfitAndLossReportDTO.class))
                 .list();
     }

@@ -106,9 +106,23 @@ let payment = (function () {
     }
 
     function saveAutoVoucherDetails() {
-        $('#btnSave').on('click', function () {
-
+        $('#btnSave').on('click', function (event) {
             // test if form is valid
+
+            if (parseInt($('#paidForId').val()) === 1) {
+                $('#description').attr('required', false);
+                $('#amount').attr('required', false);
+            } else {
+                $('#description').attr('required', true);
+                $('#amount').attr('required', true);
+            }
+
+            if (parseInt($('#isCash').val()) === 1) {
+                $('#bankLedgerId').attr('required', false);
+            } else {
+                $('#bankLedgerId').attr('required', true);
+            }
+
             if ($('form.globalForm').validate().form()) {
                 $.ajax({
                     url: baseURL() + 'save',
@@ -174,67 +188,36 @@ let payment = (function () {
                 }
             }
             //calculate TDS
-            tdsCalculatedAmount(value, tdsAmount, $('#amount').val());
-            totalAmountTobePaid($('#amount').val(), tdsAmount.val(), $('#deductedAmount').val());
+            spms.calculateTdsAmount(value, tdsAmount, $('#amount').val());
+            spms.calTotalTDSPayableAmount($('#amount').val(), tdsAmount.val(),
+                $('#deductedAmount').val(), $('#amountPaid'));
         })
-    }
-
-    function totalAmountTobePaid(amount, tdsDeduction, advanceDeduction) {
-
-        if (amount !== '' && tdsDeduction !== '' && advanceDeduction !== '') {
-            $('#amountPaid').val(parseFloat(amount) - (parseFloat(tdsDeduction) + parseFloat(advanceDeduction)));
-        } else {
-            $('#amountPaid').val('')
-        }
     }
 
 //calculate total amount paid
     function calAmountToPay() {
+
         $('#amount').on('keyup', function () {
-            totalAmountTobePaid($(this).val(), $('#tdsAmount').val(), $('#deductedAmount').val())
+            spms.calTotalTDSPayableAmount($(this).val(), $('#tdsAmount').val(),
+                $('#deductedAmount').val(), $('#amountPaid'))
         });
 
         $('#deductedAmount').on('keyup', function () {
-            totalAmountTobePaid($('#amount').val(), $('#tdsAmount').val(), $(this).val())
+            spms.calTotalTDSPayableAmount($('#amount').val(), $('#tdsAmount').val(),
+                $(this).val(), $('#amountPaid'))
         })
     }
 
     function calTDSOnAmountChange() {
         $('#amount').on('keyup', function () {
             if ($('#tdsType').val() !== '') {
-                tdsCalculatedAmount(parseInt($('#tdsType').val()), $('#tdsAmount'), $('#amount').val());
+                spms.calculateTdsAmount(parseInt($('#tdsType').val()), $('#tdsAmount'), $('#amount').val());
             } else {
                 $('#tdsAmount').val('');
             }
         })
     }
 
-    function calculatedTDS(percentage, amount) {
-        return (percentage / 100) * amount;
-    }
-
-    function tdsCalculatedAmount(value, tdsAmount, amount) {
-        if (value === 1) {
-            tdsAmount.val(
-                calculatedTDS(2, amount));
-        }
-
-        if (value === 2) {
-            tdsAmount.val(calculatedTDS(5,
-                amount))
-        }
-        if (value === 3) {
-            tdsAmount.val(calculatedTDS(5,
-                amount));
-        }
-        if (value === 4) {
-            tdsAmount.val(calculatedTDS(3,
-                amount))
-        }
-        if (value === 5) {
-            tdsAmount.val(0)
-        }
-    }
 
     function onChangePaidIn() {
         $('#isCash').on('change', function () {

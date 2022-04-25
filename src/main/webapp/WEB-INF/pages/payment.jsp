@@ -34,8 +34,8 @@
 
                         <div class="col-md-3">
                             <input type="text" tabindex="2" class="form-control form-control-sm formatDate"
-                                   name="autoVoucherDate"  placeholder="DD.MM.YYYY"
-                                   id="autoVoucherDate" required />
+                                   name="autoVoucherDate" placeholder="DD.MM.YYYY"
+                                   id="autoVoucherDate" required/>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -72,7 +72,7 @@
                                    id="description" required="true"/>
 
                             <input type="hidden" tabindex="2" class="form-control form-control-sm" name="ledgerId"
-                                   id="ledgerId" required="true"/>
+                                   id="ledgerId"/>
                         </div>
 
 
@@ -86,7 +86,6 @@
                     </div>
 
                     <!--region for multi voucher payment-->
-
                     <div id="multipleCost">
                         <div class="form-group row hidden multiPaymentVoucher">
 
