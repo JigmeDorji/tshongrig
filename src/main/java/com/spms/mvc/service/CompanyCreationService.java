@@ -99,6 +99,7 @@ public class CompanyCreationService extends BaseController {
             companyCreation.setBusinessType(companyCreationDTO.getBusinessType());
             companyCreation.setPfPercentage(companyCreationDTO.getPfPercentage());
             companyCreation.setStatus(CommonStatus.Pending.getValue());
+            companyCreation.setContactPerson(companyCreationDTO.getContactPerson());
             companyId = companyCreationDao.getCompanyId();
             companyCreationDao.saveCompanyDetails(companyCreation);
         } else {//during approval time
