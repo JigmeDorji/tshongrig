@@ -297,7 +297,11 @@ voucherCreation = (function () {
                                             title: res.text,
                                             showConfirmButton: false
                                         }, function () {
-                                            window.location = 'voucherCreation';
+
+                                            window.location = spms.getUrl() + 'payment/generateReport?voucherNo=' +
+                                                encodeURIComponent(res.dto.voucherNo) + '&type=' + $('#voucherTypeId').val();
+
+                                            $('#voucherTypeId').val('');
                                         });
 
                                     } else {

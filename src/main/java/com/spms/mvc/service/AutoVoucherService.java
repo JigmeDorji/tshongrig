@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigInteger;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -141,7 +142,7 @@ public class AutoVoucherService extends BaseService {
                     voucherCostDRDTO.setLedgerId(ledgerId);
                     voucherDetailDTOList.add(voucherCostDRDTO);
 
-                    mapToLedgerWiseTable(currentUser, ledgerId, multiVoucherDTO);
+                    mapToLedgerWiseTable(currentUser, ledgerId, multiVoucherDTO.getCostId());
 
                 }
                 //region cr voucher preparation
@@ -407,7 +408,7 @@ public class AutoVoucherService extends BaseService {
         return responseMessage;
     }
 
-    private void mapToLedgerWiseTable(CurrentUser currentUser, String ledgerId, MultiVoucherDTO multiVoucherDTO) {
+    public void mapToLedgerWiseTable(CurrentUser currentUser, String ledgerId, Integer costType) {
         BigInteger id;
         LedgerWiseCostType ledgerWiseCostType = new LedgerWiseCostType();
 
@@ -420,7 +421,7 @@ public class AutoVoucherService extends BaseService {
         ledgerWiseCostType.setId(id);
         ledgerWiseCostType.setLedgerId(ledgerId);
         ledgerWiseCostType.setCompanyId(currentUser.getCompanyId());
-        ledgerWiseCostType.setCostTypeId(multiVoucherDTO.getCostId());
+        ledgerWiseCostType.setCostTypeId(costType);
         ledgerWiseCostType.setCreatedBy(currentUser.getLoginId());
         ledgerWiseCostType.setCreatedDate(currentUser.getCreatedDate());
         autoVoucherDao.saveOrUpdate(ledgerWiseCostType);
@@ -544,7 +545,7 @@ public class AutoVoucherService extends BaseService {
             }
             voucherCostDRDTO.setLedgerId(ledgerId);
             voucherDetailDTOList.add(voucherCostDRDTO);
-            mapToLedgerWiseTable(currentUser, ledgerId, multiVoucherDTO);
+            mapToLedgerWiseTable(currentUser, ledgerId, multiVoucherDTO.getCostId());
         }
 
         if (autoVoucherDTO.getTdsAmount() > 0) {
@@ -693,8 +694,13 @@ public class AutoVoucherService extends BaseService {
             }
             voucherDetailDTO1.setDescription(vDTO.getDescription());
             voucherDetailDTO1.setDrcrAmount(vDTO.getDrcrAmount());
+            voucherDetailDTO1.setAccTypeId(vDTO.getAccTypeId());
             voucherDetailDTO.add(voucherDetailDTO1);
         }
         return voucherDetailDTO;
+    }
+
+    public Date getVoucherEntryDate(Integer voucherNo, CurrentUser currentUser, Integer type) {
+        return autoVoucherDao.getVoucherEntryDate(voucherNo, currentUser, type);
     }
 }

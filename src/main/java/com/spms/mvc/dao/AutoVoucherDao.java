@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -199,7 +200,7 @@ public class AutoVoucherDao {
 
     @Transactional(readOnly = true)
     public List<VoucherDetailDTO> getVoucherDetail(Integer voucherNo, CurrentUser currentUser, Integer type) {
-        String query = "SELECT  c.ledgerName as description, b.drcrAmount \n" +
+        String query = "SELECT  c.ledgerName as description, accTypeId, b.drcrAmount \n" +
                 "   FROM  tbl_acc_voucher_entries a \n" +
                 "INNER JOIN tbl_acc_voucher_entries_detail b \n" +
                 "INNER JOIN tbl_acc_ledger c ON b.ledgerId=c.ledgerId\n" +
@@ -211,5 +212,19 @@ public class AutoVoucherDao {
                 .setParameter("financialYearId", currentUser.getFinancialYearId())
                 .setParameter("voucherTypeId", type)
                 .setResultTransformer(Transformers.aliasToBean(VoucherDetailDTO.class)).list();
+    }
+
+    @Transactional(readOnly = true)
+    public Date getVoucherEntryDate(Integer voucherNo, CurrentUser currentUser, Integer type) {
+        String query = "SELECT  voucherEntryDate \n" +
+                "FROM  tbl_acc_voucher_entries a \n" +
+                "WHERE a.companyId=:companyId and a.financialYearId=:financialYearId \n" +
+                "and a.voucherNo=:voucherNo and a.voucherTypeId=:voucherTypeId";
+        return (Date) sessionFactory.getCurrentSession().createSQLQuery(query)
+                .setParameter("voucherNo", voucherNo)
+                .setParameter("companyId", currentUser.getCompanyId())
+                .setParameter("financialYearId", currentUser.getFinancialYearId())
+                .setParameter("voucherTypeId", type)
+                .uniqueResult();
     }
 }

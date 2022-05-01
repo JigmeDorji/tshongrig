@@ -342,8 +342,11 @@ let payment = (function () {
 
     function calDeductedAmount(value) {
         if (value === "N/A") {
-            totalAmountTobePaid($("#amount").val(), $('#tdsAmount').val(), 0)
+            spms.calculateTdsAmount($("#amount").val(), $('#tdsAmount').val(), 0);
             $('#deductedAmount').val(0);
+            spms.calTotalTDSPayableAmount($('#amount').val(), $('#tdsAmount').val(),
+                $('#deductedAmount').val(), $('#amountPaid'));
+
             $('#deductedAmount').attr("readOnly", true);
         } else {
             $('#deductedAmount').attr("readOnly", false);

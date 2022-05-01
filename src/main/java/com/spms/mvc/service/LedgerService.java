@@ -22,6 +22,9 @@ public class LedgerService {
     @Autowired
     private LedgerDao ledgerDao;
 
+    @Autowired
+    private AutoVoucherService autoVoucherService;
+
     public ResponseMessage save(LedgerDTO ledgerDTO, CurrentUser currentUser) {
 
         Ledger ledger = new Ledger();
@@ -37,6 +40,7 @@ public class LedgerService {
                 }
             }
         }
+
 
         if (ledgerDTO.getLedgerId().equals("")) {
             String maxLedgerId = ledgerDao.getMaxLedgerId();
@@ -59,6 +63,14 @@ public class LedgerService {
         ledger.setCreatedBy(currentUser.getLoginId());
         ledger.setSetDate(currentUser.getCreatedDate());
         ledgerDao.save(ledger);
+
+        //Save to ledger wise mapping table
+        if (AccountTypeEnum.INDIRECT_COST.getValue().equals(ledgerDTO.getAccTypeId())) {
+            autoVoucherService.mapToLedgerWiseTable(currentUser, ledger.getLedgerId(), 1);
+        }
+        if (AccountTypeEnum.DIRECT_COST.getValue().equals(ledgerDTO.getAccTypeId())) {
+            autoVoucherService.mapToLedgerWiseTable(currentUser, ledger.getLedgerId(), 2);
+        }
 
         responseMessage.setStatus(1);
         responseMessage.setText("Successfully saved.");

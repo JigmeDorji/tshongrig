@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -108,7 +107,7 @@ public class BOQRABillGenerationController {
         params.put("workOrderNo", boqDetailsDTO.getWorkOrderNo());
         params.put("employingAgency", boqDetailsDTO.getEmployingAgency());
         params.put("nameOfWork", boqDetailsDTO.getNameOfWork());
-        params.put("totalBillAmtInWords", NumberInWords.convert(calTotal(dtoList).longValue()));
+        params.put("totalBillAmtInWords", NumberInWords.convert(calTotal(dtoList)));
         params.put("receiptDate", new Date());
         params.put("companyName", currentUser.getCompanyName());
         params.put("companyContact", currentUser.getContact());
@@ -119,10 +118,10 @@ public class BOQRABillGenerationController {
         return new ModelAndView("raBillReport", params);
     }
 
-    public BigDecimal calTotal(List<BOQDetailsListDTO> dtoList) {
-        BigDecimal totalAmount = BigDecimal.ZERO;
+    public double calTotal(List<BOQDetailsListDTO> dtoList) {
+        double totalAmount = 0.0;
         for (BOQDetailsListDTO boqDetailsListDTO : dtoList) {
-            totalAmount = totalAmount.add(boqDetailsListDTO.getAmount());
+            totalAmount = totalAmount + (boqDetailsListDTO.getAmount().doubleValue());
         }
         return totalAmount;
     }

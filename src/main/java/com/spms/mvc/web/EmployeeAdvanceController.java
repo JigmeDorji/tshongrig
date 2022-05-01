@@ -83,7 +83,7 @@ public class EmployeeAdvanceController extends BaseController {
         params.put("userName", currentUser.getLoginId());
         params.put("id",id);
         params.put("voucherNo",voucherNo);
-        params.put("amountInWords", NumberInWords.convert(amount.longValue()));
+        params.put("amountInWords", NumberInWords.convert(amount));
 
 
         String reportSourcePath = getReportSourcePath(request);
