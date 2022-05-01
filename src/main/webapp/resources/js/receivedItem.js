@@ -116,8 +116,8 @@ receivedItem = (function () {
             type: 'GET',
             success: function (res) {
                 if (res !== '') {
-                    $('#purchaseDate').val(formatAsDate(res.purchaseDate));
-                    $('#purchaseInvoiceNo').val(res.purchaseInvoiceNo);
+                    // $('#purchaseDate').val(formatAsDate(res.purchaseDate));
+                    // $('#purchaseInvoiceNo').val(res.purchaseInvoiceNo);
                 }
             }
         });
@@ -413,7 +413,6 @@ receivedItem = (function () {
                     lookup: $.map(res, function (value) {
                         return {data: value.id, value: value.text}
                     }), onSelect: function (suggestion) {
-
                         $.ajax({
                             url: 'receivedItem/getItemDetails',
                             type: 'GET',
@@ -714,12 +713,12 @@ receivedItem = (function () {
                 let delBtn=res[i].purchaseId!==null?'':"<input type='button'  id='btnDeleteItem' class='btn btn-danger btn-xs fa fa-trash' value='Delete'>";
                 let row = "<tr>" +
                     "<td><input type='text' id='index' readonly class='form-control form-control-sm input-group-sm' value='" + parseInt(i + 1) + "'>" +
-                    "<input type='hidden' id='index' name='purchaseDTOS[" + i + "].type'  class='form-control form-control-sm input-group-sm' value='" + res[i].type + "'>" +
-                    "<input type='hidden' id='index' name='purchaseDTOS[" + i + "].purchaseId'  class='form-control form-control-sm input-group-sm' value='" + res[i].purchaseId + "'>" +
-                    "<input type='hidden' id='index' name='purchaseDTOS[" + i + "].purchaseAuditId'  class='form-control form-control-sm input-group-sm' value='" + res[i].purchaseAuditId + "'>" +
+                    "<input type='hidden' id='' name='purchaseDTOS[" + i + "].type'  class='form-control form-control-sm input-group-sm' value='" + res[i].type + "'>" +
+                    "<input type='hidden' id='' name='purchaseDTOS[" + i + "].purchaseId'  class='form-control form-control-sm input-group-sm' value='" + res[i].purchaseId + "'>" +
+                    "<input type='hidden' id='' name='purchaseDTOS[" + i + "].purchaseAuditId'  class='form-control form-control-sm input-group-sm' value='" + res[i].purchaseAuditId + "'>" +
                     "<input type='hidden' id='brandName' name='purchaseDTOS[" + i + "].brandName'  class='form-control form-control-sm input-group-sm' value='" + res[i].brandName + "'>" +
                     "<input type='hidden' id='prefixCode' name='purchaseDTOS[" + i + "].prefixCode'  class='form-control form-control-sm input-group-sm' value='" + res[i].prefixCode + "'>" +
-                    "<input type='hidden' id='index' name='purchaseDTOS[" + i + "].locationId'  class='form-control form-control-sm input-group-sm' value='" + res[i].locationId + "'></td>" +
+                    "<input type='hidden' id='' name='purchaseDTOS[" + i + "].locationId'  class='form-control form-control-sm input-group-sm' value='" + res[i].locationId + "'></td>" +
                     "<td><input type='text' id='itemCode' readonly name='purchaseDTOS[" + i + "].itemCode' class='form-control form-control-sm input-group-sm' value='" + res[i].itemCode.toUpperCase() + "'></td>" +
                     "<td><input type='text' readonly name='purchaseDTOS[" + i + "].itemName' class='form-control form-control-sm input-group-sm' value='" + res[i].itemName + "'></td>" +
                     "<td><input type='text' readonly name='purchaseDTOS[" + i + "].partNo' class='form-control form-control-sm input-group-sm partNo' value='" + res[i].partNo + "'></td>" +

@@ -58,7 +58,8 @@
         <property name="password" value="bcs@2022"/>
         <property name="validationQuery" value="SELECT 1"/>
     </bean>
--->
+    -->
+
     <!--Test Linux-->
     <!-- <bean id="spmsDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
          <property name="driverClassName" value="com.mysql.jdbc.Driver"/>

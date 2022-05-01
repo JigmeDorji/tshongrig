@@ -132,34 +132,37 @@ openingRawMaterialPurchase = (function () {
 
     function getItemDetails() {
         $('#itemCode').on('change', function () {
-            $.ajax({
-                url: 'receivedItem/getItemDetails',
-                type: 'GET',
-                data: {itemCode: $('#itemCode').val()},
-                success: function (res) {
-                    if (res !== '') {
-                        $('#purchaseId').val(res.purchaseId)
-                        $('#brandId').val(res.brandName)
-                        $('#brandNameID').val(res.brandId)
-                        $('#itemCode').val(res.itemCode)
-                        $('#type').val(res.type)
-                        $('#partNo').val(res.partNo)
-                        // $('#costPrice').val(res.costPrice)
-                        // $('#sellingPrice').val(res.sellingPrice)
-                        $('#locationId').val(res.locationId)
-                        $('#qty').val(res.sumQty)
-                        $('#unitId').val(res.unitId)
+            if($('#itemCode').val()!==''||$('#itemCode').val()!==null){
+                $.ajax({
+                    url: 'receivedItem/getItemDetails',
+                    type: 'GET',
+                    data: {itemCode: $('#itemCode').val()},
+                    success: function (res) {
+                        if (res !== '') {
+                            $('#purchaseId').val(res.purchaseId)
+                            $('#brandId').val(res.brandName)
+                            $('#brandNameID').val(res.brandId)
+                            $('#itemCode').val(res.itemCode)
+                            $('#type').val(res.type)
+                            $('#partNo').val(res.partNo)
+                            // $('#costPrice').val(res.costPrice)
+                            // $('#sellingPrice').val(res.sellingPrice)
+                            $('#locationId').val(res.locationId)
+                            $('#qty').val(res.sumQty)
+                            $('#unitId').val(res.unitId)
 
-                        $('#itemName').val(res.itemName)
-                        $('#itemNamePrefix').val(res.itemName.split(':')[0]);
-                        // $('#purchaseDate').val(formatAsDate(res.purchaseDate));
-                        $('#purchaseDate').attr('readOnly', true);
-                    } else {
-                        $('#itemCode').val('');
-                        errorMsg("No matching item found.");
+                            $('#itemName').val(res.itemName)
+                            $('#itemNamePrefix').val(res.itemName.split(':')[0]);
+                            // $('#purchaseDate').val(formatAsDate(res.purchaseDate));
+                            $('#purchaseDate').attr('readOnly', true);
+                        } else {
+                            $('#itemCode').val('');
+                            errorMsg("No matching item found.");
+                        }
                     }
-                }
-            });
+                });
+            }
+
         })
     }
 

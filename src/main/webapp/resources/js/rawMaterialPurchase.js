@@ -120,8 +120,8 @@ rowMaterialPurchase = (function () {
             type: 'GET',
             success: function (res) {
                 if (res !== '') {
-                    $('#purchaseDate').val(formatAsDate(res.purchaseDate));
-                    $('#purchaseInvoiceNo').val(res.purchaseInvoiceNo);
+                    // $('#purchaseDate').val(formatAsDate(res.purchaseDate));
+                    // $('#purchaseInvoiceNo').val(res.purchaseInvoiceNo);
                 }
             }
         });
@@ -130,14 +130,14 @@ rowMaterialPurchase = (function () {
     function onCreditPurchaseSelect() {
         $('#isCash').on('change', function () {
             if ($(this).val() == 2) {
-                $('#bankDetails').attr('hidden', false);
+                $('.bankDetails').attr('hidden', false);
                 $('.creditDetails').attr('hidden', true);
             } else if ($(this).val() == 3) {
                 getSupplierDropdownList();
-                $('#bankDetails').attr('hidden', true);
+                $('.bankDetails').attr('hidden', true);
                 $('.creditDetails').attr('hidden', false);
             } else {
-                $('#bankDetails').attr('hidden', true);
+                $('.bankDetails').attr('hidden', true);
                 $('.creditDetails').attr('hidden', true);
             }
         })
@@ -420,7 +420,6 @@ rowMaterialPurchase = (function () {
                     lookup: $.map(res, function (value) {
                         return {data: value.id, value: value.text}
                     }), onSelect: function (suggestion) {
-
                         $.ajax({
                             url: 'receivedItem/getItemDetails',
                             type: 'GET',

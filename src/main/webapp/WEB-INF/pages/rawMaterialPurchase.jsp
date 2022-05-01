@@ -48,7 +48,7 @@
                         </div><div class="col-md-1"></div>
 
 
-                        <label class=" col-md-2 right-align required"> &nbsp;Purchase Inv. No:</label>
+                        <label class=" col-md-2 text-right required"> &nbsp;Purchase Inv. No:</label>
 
                         <div class="col-md-3">
                             <input type="text" id="purchaseInvoiceNo" class="form-control form-control-sm "
@@ -57,7 +57,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class=" col-md-2 right-align required">Purchase In</label>
+                        <label class=" col-md-2 required">Purchase In</label>
 
                         <div class="col-md-3">
                             <select class="form-control form-control-sm resetField" id="isCash" required="required"
@@ -69,30 +69,24 @@
                             </select>
                         </div>
 
-                        <div class="" id="bankDetails" hidden>
-                            <label class=" col-md-2 right-align">Select Bank Account</label>
-
-                            <div class="col-md-3">
-                                <form:select class="form-control form-control-sm resetField" path="bankList"
-                                             id="bankLedgerId" required="required"
-                                             name="bankLedgerId">
-                                    <form:option value="">---Please Select---</form:option>
-                                    <form:options items="${bankList}" itemValue="id" itemLabel="text"/>
-                                </form:select>
-                            </div>
+                        <label class=" col-md-3 text-right bankDetails" hidden>Select Bank Account</label>
+                        <div class="col-md-3 bankDetails" hidden>
+                            <form:select class="form-control form-control-sm resetField" path="bankList" id="bankLedgerId"
+                                         required="required"
+                                         name="bankLedgerId">
+                                <form:option value="">---Please Select---</form:option>
+                                <form:options items="${bankList}" itemValue="id" itemLabel="text"/>
+                            </form:select>
                         </div>
-                        <div class="creditDetails" hidden>
-                            <label class="col-md-2 right-align required">Supplier Name:</label>
+                        <label class="col-md-3 text-right required creditDetails" hidden >Supplier Name:</label>
 
-                            <div class="col-md-3">
-                                <select id="supplierId" required class="form-control form-control-sm "
-                                        name="supplierId"></select>
-                            </div>
-                            <div class="col-md-1">
-                                <input type="button" data-toggle="modal" class="btn btn-primary btn-xs"
-                                       value="Add Supplier"
-                                       id="btnAddNewSupplier">
-                            </div>
+                        <div class="col-md-3 creditDetails" hidden>
+                            <select id="supplierId" required class="form-control form-control-sm " name="supplierId"></select>
+                        </div>
+                        <div class="col-md-1 creditDetails" hidden>
+                            <input type="button" data-toggle="modal" class="btn btn-sm btn-primary"
+                                   value="Add New"
+                                   id="btnAddNewSupplier">
                         </div>
                     </div>
                 </fieldset>

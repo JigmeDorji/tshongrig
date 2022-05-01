@@ -21,7 +21,7 @@ salaryRemittance = (function () {
             let cost = $(this).val();
             if (monthId === '') {
                 $(this).val('');
-                errorMsg("Please select month.");
+                // errorMsg("Please select month.");
                 return false;
             }
             fetchEmployeeDetail(monthId, $('#bankLedgerId').val(), cost)

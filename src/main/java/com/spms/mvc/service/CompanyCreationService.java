@@ -99,6 +99,7 @@ public class CompanyCreationService extends BaseController {
             companyCreation.setBusinessType(companyCreationDTO.getBusinessType());
             companyCreation.setPfPercentage(companyCreationDTO.getPfPercentage());
             companyCreation.setStatus(CommonStatus.Pending.getValue());
+            companyCreation.setContactPerson(companyCreationDTO.getContactPerson());
             companyId = companyCreationDao.getCompanyId();
             companyCreationDao.saveCompanyDetails(companyCreation);
         } else {//during approval time
@@ -118,6 +119,7 @@ public class CompanyCreationService extends BaseController {
                 String saltValue = generateSaltValue(6);
                 user.setSaltValue(saltValue);
                 user.setUserPassword(passwordEncoder.encode(saltValue + "1234".trim()));
+                user.setUserMobileNo(companyCreation.getMobileNo());
                 user.setUserMobileNo(companyCreation.getMobileNo());
                 user.setUserStatus(CommonStatus.Active.getValue());
                 user.setUserRoleTypeId(UserRoleType.Administrator.getValue());
@@ -160,6 +162,7 @@ public class CompanyCreationService extends BaseController {
             companyCreation.setId(companyCreationDTO.getCompanyId());
             companyCreation.setMailingAddress(companyCreationDTO.getMailingAddress());
             companyCreation.setMobileNo(companyCreationDTO.getMobileNo());
+            companyCreation.setContactPerson(companyCreationDTO.getContactPerson());
             companyCreation.setEmail(companyCreationDTO.getEmail());
             companyCreation.setWebsite(companyCreationDTO.getWebsite());
             companyCreation.setFnYrStart(companyCreationDTO.getFnYrStart());

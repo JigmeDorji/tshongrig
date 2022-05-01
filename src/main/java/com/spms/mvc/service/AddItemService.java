@@ -66,13 +66,13 @@ public class AddItemService {
         ResponseMessage responseMessage = new ResponseMessage();
 
         /*validate item name is exist or not*/
-        for (PurchaseDTO purchaseDTO : purchaseCallingDTO.getPurchaseDTOS()) {
+       /* for (PurchaseDTO purchaseDTO : purchaseCallingDTO.getPurchaseDTOS()) {
             if (addItemDao.checkIsItemNameExist(purchaseDTO.getItemName(), currentUser, purchaseDTO.getItemCode())) {
                 responseMessage.setStatus(SystemDataInt.MESSAGE_STATUS_UNSUCCESSFUL.value());
                 responseMessage.setText("Item name '" + purchaseDTO.getItemName() + "' already exist. Please select existing item '" + purchaseDTO.getItemName() + "' and add again.");
                 return responseMessage;
             }
-        }
+        }*/
 
         //check for cash availability
 //        Double txnAmount = purchaseDTO.getCostPrice() * purchaseDTO.getQty();

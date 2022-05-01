@@ -53,16 +53,15 @@
                                     </div>
                                     <div class="form-group row">
                                         <div class="form-group form-group-float col-md-6">
-                                            <label class="form-group-float-label animate required">Contact
-                                                Person</label>
-                                            <input type="text" name="contactPerson" id="mobileNo"
-                                                   class="form-control field" placeholder="Contact Person">
+                                            <label class="form-group-float-label animate required">Contact Person</label>
+                                            <input type="text" name="contactPerson" id="contactPerson" class="form-control field" placeholder="Contact Person">
+
                                         </div>
                                         <div class="form-group form-group-float col-md-6">
 
                                             <label class="form-group-float-label animate required">Contact No.</label>
-                                            <input type="text" name="mobileNo" class="form-control field"
-                                                   placeholder="Contact No.">
+                                            <input type="text" name="mobileNo" class="form-control field" placeholder="Contact No.">
+
                                         </div>
 
                                     </div>
