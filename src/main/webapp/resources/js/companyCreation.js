@@ -64,10 +64,10 @@ companyCreation = (function () {
                     {
                         data: 'trialExpiryDate', class: 'text-center',
                         render: function (data) {
-                            if(data!==''){
+                            if(data!==null){
                                 return formatAsDate(data);
                             }else {
-                                return '';
+                                return 'Under Review';
                             }
 
                         }

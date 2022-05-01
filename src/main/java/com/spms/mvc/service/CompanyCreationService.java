@@ -120,6 +120,7 @@ public class CompanyCreationService extends BaseController {
                 user.setSaltValue(saltValue);
                 user.setUserPassword(passwordEncoder.encode(saltValue + "1234".trim()));
                 user.setUserMobileNo(companyCreation.getMobileNo());
+                user.setUserMobileNo(companyCreation.getMobileNo());
                 user.setUserStatus(CommonStatus.Active.getValue());
                 user.setUserRoleTypeId(UserRoleType.Administrator.getValue());
                 user.setEmailId(companyCreation.getEmail());
@@ -161,6 +162,7 @@ public class CompanyCreationService extends BaseController {
             companyCreation.setId(companyCreationDTO.getCompanyId());
             companyCreation.setMailingAddress(companyCreationDTO.getMailingAddress());
             companyCreation.setMobileNo(companyCreationDTO.getMobileNo());
+            companyCreation.setContactPerson(companyCreationDTO.getContactPerson());
             companyCreation.setEmail(companyCreationDTO.getEmail());
             companyCreation.setWebsite(companyCreationDTO.getWebsite());
             companyCreation.setFnYrStart(companyCreationDTO.getFnYrStart());

@@ -116,8 +116,8 @@ receivedItem = (function () {
             type: 'GET',
             success: function (res) {
                 if (res !== '') {
-                    $('#purchaseDate').val(formatAsDate(res.purchaseDate));
-                    $('#purchaseInvoiceNo').val(res.purchaseInvoiceNo);
+                    // $('#purchaseDate').val(formatAsDate(res.purchaseDate));
+                    // $('#purchaseInvoiceNo').val(res.purchaseInvoiceNo);
                 }
             }
         });
