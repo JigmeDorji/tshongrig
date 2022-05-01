@@ -413,7 +413,6 @@ receivedItem = (function () {
                     lookup: $.map(res, function (value) {
                         return {data: value.id, value: value.text}
                     }), onSelect: function (suggestion) {
-
                         $.ajax({
                             url: 'receivedItem/getItemDetails',
                             type: 'GET',

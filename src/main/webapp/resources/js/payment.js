@@ -171,26 +171,29 @@ let payment = (function () {
 
     function calculateTDSAmount() {
         $('#tdsType').on('change', function () {
-            let value = parseInt($(this).val());
-            let tdsAmount = $('#tdsAmount');
+            if($(this).val()!==''&& $(this).val()!==null){
+                let value = parseInt($(this).val());
+                let tdsAmount = $('#tdsAmount');
 
-            if ($(this).val() !== '') {
-                tdsAmount.val('');
-            }
-            if (parseInt($('#paidForId').val()) !== 1) {
-                if ($('#amount').val() === '') {
-                    swal({
-                        type: "warning",
-                        title: "Please write amount.",
-                    });
-                    $("#tdsType").val('');
-                    return false;
+                if ($(this).val() !== '') {
+                    tdsAmount.val('');
                 }
+                if (parseInt($('#paidForId').val()) !== 1) {
+                    if ($('#amount').val() === '') {
+                        swal({
+                            type: "warning",
+                            title: "Please write amount.",
+                        });
+                        $("#tdsType").val('');
+                        return false;
+                    }
+                }
+                //calculate TDS
+                spms.calculateTdsAmount(value, tdsAmount, $('#amount').val());
+                spms.calTotalTDSPayableAmount($('#amount').val(), tdsAmount.val(),
+                    $('#deductedAmount').val(), $('#amountPaid'));
             }
-            //calculate TDS
-            spms.calculateTdsAmount(value, tdsAmount, $('#amount').val());
-            spms.calTotalTDSPayableAmount($('#amount').val(), tdsAmount.val(),
-                $('#deductedAmount').val(), $('#amountPaid'));
+
         })
     }
 

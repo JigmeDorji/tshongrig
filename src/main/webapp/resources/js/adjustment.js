@@ -168,25 +168,27 @@ adjustment = (function () {
 
     function calculateTDSAmount() {
         $('#tdsType').on('change', function () {
+            if ($(this).val() !== '' && $(this).val() !== null) {
+                let tdsAmount = $('#tdsAmount');
 
-            let tdsAmount = $('#tdsAmount');
-
-            if ($(this).val() !== '') {
-                tdsAmount.val('');
-            }
-            if (parseInt($('#paidForId').val()) !== 1) {
-                if ($('#amount').val() === '') {
-                    swal({
-                        type: "warning",
-                        title: "Please write amount.",
-                    });
-                    $("#tdsType").val('');
-                    return false;
+                if ($(this).val() !== '') {
+                    tdsAmount.val('');
                 }
+                if (parseInt($('#paidForId').val()) !== 1) {
+                    if ($('#amount').val() === '') {
+                        swal({
+                            type: "warning",
+                            title: "Please write amount.",
+                        });
+                        $("#tdsType").val('');
+                        return false;
+                    }
+                }
+                //calculate TDS
+                spms.calculateTdsAmount(parseInt($(this).val()), tdsAmount, $('#amount').val());
+                calTotalTDSPayableAmount($('#amount').val(), tdsAmount.val());
             }
-            //calculate TDS
-            spms.calculateTdsAmount(parseInt($(this).val()), tdsAmount, $('#amount').val());
-            calTotalTDSPayableAmount($('#amount').val(), tdsAmount.val());
+
         })
     }
 
