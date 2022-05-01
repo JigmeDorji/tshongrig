@@ -10,14 +10,17 @@ otherRemittance = (function () {
 
     function getOtherRemittanceDetails() {
         $('#cost').on('change', function () {
-            let monthId = $('#monthId').val();
-            let cost = $(this).val();
-            if (monthId === '') {
-                $(this).val('');
-                errorMsg("Please select month.");
-                return false;
+            if($(this).val()!==null && $(this).val()!==''){
+                let monthId = $('#monthId').val();
+                let cost = $(this).val();
+                if (monthId === '') {
+                    $(this).val('');
+                    errorMsg("Please select month.");
+                    return false;
+                }
+                fetchOtherRemittanceDetail(monthId, cost, $('#bankLedgerId').val())
             }
-            fetchOtherRemittanceDetail(monthId, cost, $('#bankLedgerId').val())
+
         });
         // $('#bankLedgerId').on('change', function () {
         //     fetchStatutoryDetail($('#monthId').val(), $(this).val());

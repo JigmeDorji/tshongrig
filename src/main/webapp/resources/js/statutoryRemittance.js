@@ -20,29 +20,35 @@ statutoryRemittance = (function () {
 
     function getCompanyStatutoryDetails() {
         $('#monthId').on('change', function () {
-            let monthId = $('#monthId').val();
-            let cost = $(this).val();
-            if (cost === '') {
-                $(this).val('');
-                errorMsg("Please select cost.");
-                return false;
+            if($(this).val()!==null && $(this).val()!==''){
+                let monthId = $('#monthId').val();
+                let cost = $(this).val();
+                if (cost === '') {
+                    $(this).val('');
+                    errorMsg("Please select cost.");
+                    return false;
+                }
+                if ($('#monthId').val() !== '' && $('#cost').val() !== '') {
+                    fetchStatutoryDetail(monthId, cost, $('#bankLedgerId').val())
+                }
             }
-            if ($('#monthId').val() !== '' && $('#cost').val() !== '') {
-                fetchStatutoryDetail(monthId, cost, $('#bankLedgerId').val())
-            }
+
         });
 
         $('#cost').on('change', function () {
-            let monthId = $('#monthId').val();
-            let cost = $(this).val();
-            if (monthId === '') {
-                $(this).val('');
-                errorMsg("Please select month.");
-                return false;
+            if($(this).val()!==null && $(this).val()!==''){
+                let monthId = $('#monthId').val();
+                let cost = $(this).val();
+                if (monthId === '') {
+                    $(this).val('');
+                    errorMsg("Please select month.");
+                    return false;
+                }
+                if ($('#monthId').val() !== '' && $('#cost').val() !== '') {
+                    fetchStatutoryDetail(monthId, cost, $('#bankLedgerId').val())
+                }
             }
-            if ($('#monthId').val() !== '' && $('#cost').val() !== '') {
-                fetchStatutoryDetail(monthId, cost, $('#bankLedgerId').val())
-            }
+
 
         });
 

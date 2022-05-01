@@ -132,7 +132,7 @@ openingBalanceInventory = (function () {
 
     function getItemDetails() {
         $('#itemCode').on('change', function () {
-            if($('#itemCode').val()!==''||$('#itemCode').val()!==null){
+            if($(this).val()!==''&& $(this).val()!==null){
                 $.ajax({
                     url: 'receivedItem/getItemDetails',
                     type: 'GET',
