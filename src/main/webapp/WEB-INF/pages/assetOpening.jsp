@@ -37,14 +37,13 @@
             <form id="openingAndBuyingAssetForm" action="<c:url value='/assetOpening'/> "
                   class="form-horizontal globalForm">
                 <fieldset>
-                    <%--        <legend>Purchase Detail</legend>--%>
+                    <input type="text" value="${faPurchaseId}" id="faPurchaseId" hidden/>
                     <div class="form-group row">
                         <label class="  col-md-2 right-align required">As On:</label>
 
                         <div class="col-md-3">
                             <input type="text" tabindex="2" class="form-control form-control-sm  formatDate right-align"
-                                   readonly
-                                   value="${currentUser.financialYearFrom}" id="asOnDate" name="purchaseDate"
+                                   readonly value="${currentUser.financialYearFrom}" id="asOnDate" name="purchaseDate"
                                    required="required"/>
                         </div>
                     </div>
@@ -75,13 +74,9 @@
                             <sec:authorize access="hasAuthority('14-ADD')">
                                 <div class="col-md-2">
                                     <input type="submit" class="btn btn-primary btn-group-sm" value="Save" id="btnSave">
+                                    <input type="reset" class="btn btn-danger btn-group-sm" value="Reset" id="resetBtn">
                                 </div>
                             </sec:authorize>
-                            <%--                <sec:authorize access="hasAuthority('14-DELETE')">--%>
-                            <%--                    <div class="col-md-2 ">--%>
-                            <%--                        <input type="submit" class="btn btn-danger btn-block" value="Delete" id="btnDelete">--%>
-                            <%--                    </div>--%>
-                            <%--                </sec:authorize>--%>
                         </div>
                     </div>
                 </fieldset>

@@ -158,15 +158,41 @@ public class AssetOpeningDao extends BaseDao {
 
     @Transactional(readOnly = true)
     public List<OpeningAndBuyingDTO> loadAssetOpeningList(BigInteger faPurchaseId) {
-        String sqlQuery = "SELECT a.openingBalance as amount, e.accTypeId  FROM tbl_fa_purchase a\n" +
+        String sqlQuery = "SELECT b.assetId, a.faPurchaseId,\n" +
+                "  b.particular,\n" +
+                "  a.purchaseDate,\n" +
+                "  a.openingBalance as amount, \n" +
+                "  a.depreciatedValue,\n" +
+                "  a.rate,\n" +
+                "  a.qty,\n" +
+                "  e.accTypeId \n" +
+                " FROM tbl_fa_purchase a\n" +
                 "INNER JOIN tbl_fa_item_setup_detail b ON a.assetDetailId=b.assetDetailId\n" +
                 "INNER JOIN tbl_fa_item_setup c ON c.assetId=b.assetId\n" +
                 "INNER JOIN tbl_fa_purchase_mater d ON d.purchaseMasterId=a.purchaseMasterId\n" +
                 "INNER JOIN tbl_fa_group e ON c.assetClassId=e.assetClassId\n" +
-                "WHERE d.purchaseMasterId=:purchaseMasterId";
+                "WHERE a.faPurchaseId=:faPurchaseId";
 
         return sessionFactory.getCurrentSession().createSQLQuery(sqlQuery)
                 .setParameter("faPurchaseId", faPurchaseId)
                 .setResultTransformer(Transformers.aliasToBean(OpeningAndBuyingDTO.class)).list();
+    }
+
+    @Transactional
+    public void deleteItemFromDetail(BigInteger faPurchaseId) {
+        String sqlQuery = "DELETE FROM tbl_fa_purchase_detail where faPurchaseId=:faPurchaseId";
+
+        sessionFactory.getCurrentSession().createSQLQuery(sqlQuery)
+                .setParameter("faPurchaseId", faPurchaseId)
+                .executeUpdate();
+    }
+
+    @Transactional
+    public void deleteItem(BigInteger faPurchaseId) {
+        String sqlQuery = "DELETE FROM tbl_fa_purchase where faPurchaseId=:faPurchaseId";
+
+        sessionFactory.getCurrentSession().createSQLQuery(sqlQuery)
+                .setParameter("faPurchaseId", faPurchaseId)
+                .executeUpdate();
     }
 }

@@ -187,10 +187,10 @@ assetSetup = (function () {
                             class: 'text-center',
                             render: function (detail, type, row) {
                                 let editBtn = '', hasEditRole = $('#hasEditRole').val();
-                                if (hasEditRole.toString() === 'true') {
+                                // if (hasEditRole.toString() === 'true') {
                                     let url = row.description === "Opening" ? 'navigateToOpening' : 'navigateToPurchase';
-                                    editBtn = '<a href="assetSetup/' + url + '?faPurchaseId=' + encodeURIComponent(row.faPurchaseId) + '"><button type=button" class="btn btn-primary btn-sm">Edit</button></a>';
-                                }
+                                    editBtn = '<a href="assetSetup/' + url + '?faPurchaseId=' + encodeURIComponent(row.faPurchaseId) + '"><button type=button"  class="btn btn-primary btn-sm">Edit</button></a>';
+                                // }
                                 return editBtn + '<a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#itemSaleDetailModal"><button  type="button" class="btn btn-info btn-sm" id="btnDetailView"><i class="fa fa-info-circle"></i> Detail</button></a>';
                             }
                         },

@@ -59,6 +59,12 @@ public class AssetOpeningController extends BaseController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/deleteItem", method = RequestMethod.POST)
+    public ResponseMessage deleteItem(HttpServletRequest request, BigInteger faPurchaseId) {
+        return assetOpeningService.deleteItem(faPurchaseId);
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/getItemSuggestionList", method = RequestMethod.GET)
     public List<OpeningAndBuyingDTO> getItemSuggestionList(HttpServletRequest request) {
         return assetOpeningService.getItemSuggestionList(getCurrentUser(request));
@@ -67,7 +73,7 @@ public class AssetOpeningController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/loadAssetOpeningList", method = RequestMethod.GET)
     public List<OpeningAndBuyingDTO> loadAssetOpeningList(HttpServletRequest request, BigInteger faPurchaseId) {
-        return assetOpeningService.loadAssetOpeningList(getCurrentUser(request),faPurchaseId);
+        return assetOpeningService.loadAssetOpeningList(getCurrentUser(request), faPurchaseId);
     }
 
 }

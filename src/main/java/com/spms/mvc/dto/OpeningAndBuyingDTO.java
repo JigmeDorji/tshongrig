@@ -1,5 +1,6 @@
 package com.spms.mvc.dto;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +23,8 @@ public class OpeningAndBuyingDTO {
 
     private String purchaseInvoiceNo;
     private BigInteger assetDetailId;
+    private BigInteger assetId;
+    private BigInteger faPurchaseId;
     private String particular;
 
     private Double amtReceived;
@@ -38,6 +41,9 @@ public class OpeningAndBuyingDTO {
 
 
     private Double amount;
+    private Double rate;
+    private BigDecimal qty;
+    private Double depreciatedValue;
     private Double advanceAmountPaid;
     private Double discountRate;
     private Integer isCash;
@@ -57,20 +63,28 @@ public class OpeningAndBuyingDTO {
         this.purchaseInvoiceNo = purchaseInvoiceNo;
     }
 
-    public List<OpeningAndBuyingListDTO> getOpeningAndBuyingListDTO() {
-        return openingAndBuyingListDTO;
-    }
-
-    public void setOpeningAndBuyingListDTO(List<OpeningAndBuyingListDTO> openingAndBuyingListDTO) {
-        this.openingAndBuyingListDTO = openingAndBuyingListDTO;
-    }
-
     public BigInteger getAssetDetailId() {
         return assetDetailId;
     }
 
     public void setAssetDetailId(BigInteger assetDetailId) {
         this.assetDetailId = assetDetailId;
+    }
+
+    public BigInteger getAssetId() {
+        return assetId;
+    }
+
+    public void setAssetId(BigInteger assetId) {
+        this.assetId = assetId;
+    }
+
+    public BigInteger getFaPurchaseId() {
+        return faPurchaseId;
+    }
+
+    public void setFaPurchaseId(BigInteger faPurchaseId) {
+        this.faPurchaseId = faPurchaseId;
     }
 
     public String getParticular() {
@@ -169,6 +183,30 @@ public class OpeningAndBuyingDTO {
         this.amount = amount;
     }
 
+    public Double getRate() {
+        return rate;
+    }
+
+    public void setRate(Double rate) {
+        this.rate = rate;
+    }
+
+    public BigDecimal getQty() {
+        return qty;
+    }
+
+    public void setQty(BigDecimal qty) {
+        this.qty = qty;
+    }
+
+    public Double getDepreciatedValue() {
+        return depreciatedValue;
+    }
+
+    public void setDepreciatedValue(Double depreciatedValue) {
+        this.depreciatedValue = depreciatedValue;
+    }
+
     public Double getAdvanceAmountPaid() {
         return advanceAmountPaid;
     }
@@ -223,5 +261,13 @@ public class OpeningAndBuyingDTO {
 
     public void setPurchaseMasterId(BigInteger purchaseMasterId) {
         this.purchaseMasterId = purchaseMasterId;
+    }
+
+    public List<OpeningAndBuyingListDTO> getOpeningAndBuyingListDTO() {
+        return openingAndBuyingListDTO;
+    }
+
+    public void setOpeningAndBuyingListDTO(List<OpeningAndBuyingListDTO> openingAndBuyingListDTO) {
+        this.openingAndBuyingListDTO = openingAndBuyingListDTO;
     }
 }

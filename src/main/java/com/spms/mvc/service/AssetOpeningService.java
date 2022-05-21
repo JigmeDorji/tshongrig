@@ -72,6 +72,11 @@ public class AssetOpeningService {
 
         ResponseMessage responseMessage = new ResponseMessage();
 
+        //Delete Existing Delete
+        if (openingAndBuyingDTO.getFaPurchaseId() != null) {
+            deleteItem(openingAndBuyingDTO.getFaPurchaseId());
+        }
+
         //check party name already exists
         Integer partyId = null;
 
@@ -308,5 +313,15 @@ public class AssetOpeningService {
 
     public List<OpeningAndBuyingDTO> loadAssetOpeningList(CurrentUser currentUser, BigInteger faPurchaseId) {
         return assetOpeningDao.loadAssetOpeningList(faPurchaseId);
+    }
+
+    public ResponseMessage deleteItem(BigInteger faPurchaseId) {
+        ResponseMessage responseMessage = new ResponseMessage();
+
+        assetOpeningDao.deleteItemFromDetail(faPurchaseId);
+        assetOpeningDao.deleteItem(faPurchaseId);
+        responseMessage.setStatus(1);
+        responseMessage.setText("You have delete successfully");
+        return responseMessage;
     }
 }
