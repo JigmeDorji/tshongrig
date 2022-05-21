@@ -84,7 +84,7 @@ raBillGeneration = (function () {
                 data: 'qty', class: 'qty text-center',
                 render: function (data) {
                     data = data == null ? '' : data;
-                    return '<input class="form-control text-center numeric qty-container" name="boqDetailsListDTO[0].qty" id="qty" value="' + data + '"/>'
+                    return '<input class="form-control text-center amount qty-container" name="boqDetailsListDTO[0].qty" id="qty" value="' + data + '"/>'
                 }
             },
             {

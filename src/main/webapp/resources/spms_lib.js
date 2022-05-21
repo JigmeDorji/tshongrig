@@ -132,8 +132,8 @@ spms = (function () {
     }
 
     function baseReportLocation() {
-        return window.location.protocol + '//' + window.location.host + '/tshong-rig/resources/reports/';
-        // return window.location.protocol + '//' + window.location.host + '/resources/reports/';
+        // return window.location.protocol + '//' + window.location.host + '/tshong-rig/resources/reports/';
+        return window.location.protocol + '//' + window.location.host + '/resources/reports/';
     }
 
     //index the table gridaccProfitAndLossReport

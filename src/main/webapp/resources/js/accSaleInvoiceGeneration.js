@@ -24,8 +24,11 @@ accSaleInvoiceGeneration = (function () {
                                 title: res.text,
                                 showConfirmButton: false
                             }, function () {
-                                if ($('#isCash').val() ==3) {
-                                    window.location = spms.getUrl() + baseURL + '/generateSaleInvoice?saleInvoiceId=' + encodeURIComponent(res.dto.saleInvoiceId) + "&partyName=" + $('#partyName').val();
+                                if (parseInt($('#isCash').val()) === 3) {
+                                    window.location = spms.getUrl() + baseURL +
+                                        '/generateSaleInvoice?saleInvoiceId=' + encodeURIComponent(res.dto.saleInvoiceId) +
+                                        "&partyName=" + $('#partyName').val();
+                                    $('.amount').val('');
                                 } else {
                                     window.location.reload();
                                 }

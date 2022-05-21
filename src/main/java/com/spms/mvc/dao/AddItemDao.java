@@ -577,7 +577,7 @@ public class AddItemDao {
 
     @Transactional(readOnly = true)
     public List<PurchaseDTO> getItemListByInvoiceNo(String purchaseInvoiceNo, Integer companyId) {
-        String sqlQry = "select a.purchaseDate,\n" +
+        String sqlQry = "select distinct a.purchaseDate,\n" +
                 "a.id as purchaseAuditId,\n" +
                 "b.brandName,\n" +
                 "a.purchaseId,\n" +

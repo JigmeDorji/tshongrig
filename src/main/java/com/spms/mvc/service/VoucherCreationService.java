@@ -4,14 +4,14 @@ import com.spms.mvc.Enumeration.AccountTypeEnum;
 import com.spms.mvc.Enumeration.PaymentModeTypeEnum;
 import com.spms.mvc.Enumeration.VoucherTypeEnum;
 import com.spms.mvc.dao.VoucherCreationDao;
-import com.spms.mvc.dto.DepreciationDTO;
 import com.spms.mvc.dto.VoucherDTO;
 import com.spms.mvc.dto.VoucherDetailDTO;
-import com.spms.mvc.entity.Depreciation;
-import com.spms.mvc.entity.DepreciationDetail;
 import com.spms.mvc.entity.Voucher;
 import com.spms.mvc.entity.VoucherDetail;
-import com.spms.mvc.library.helper.*;
+import com.spms.mvc.library.helper.AccountingUtil;
+import com.spms.mvc.library.helper.CurrentUser;
+import com.spms.mvc.library.helper.DropdownDTO;
+import com.spms.mvc.library.helper.ResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,7 +46,8 @@ public class VoucherCreationService {
     @Transactional(rollbackFor = Exception.class)
     public ResponseMessage save(VoucherDTO voucherDTO, CurrentUser currentUser) throws ParseException {
 
-        NumberFormat format = NumberFormat.getInstance(Locale.getDefault());;
+        NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+        ;
         format.setMaximumFractionDigits(2);
 
         Integer voucherId;
@@ -63,7 +64,7 @@ public class VoucherCreationService {
             return responseMessage;
         }
 
-        if (voucherCreationDao.isVoucherIdExists(voucherDTO.getVoucherNo(), currentUser.getCompanyId(),currentUser.getFinancialYearId(), voucherDTO.getVoucherTypeId())) {
+        if (voucherCreationDao.isVoucherIdExists(voucherDTO.getVoucherNo(), currentUser.getCompanyId(), currentUser.getFinancialYearId(), voucherDTO.getVoucherTypeId())) {
             //delete from voucher details
             voucherCreationDao.getVoucherIdByVoucherNo(voucherDTO.getVoucherNo(), currentUser.getCompanyId(), currentUser.getFinancialYearId(),
                     voucherDTO.getVoucherTypeId()).forEach(voucherCreationDao::deleteVoucherDetailList);
@@ -83,60 +84,9 @@ public class VoucherCreationService {
             voucherCreationDao.saveDetail(voucherDetail);
         }
         saveToVoucherTable(voucherDTO, currentUser, voucherId);
-        Integer depreciationId;
-        //DepreciationDetail saving details
-        if (voucherDTO.getDepreciationDTOList() != null) {
-            if (voucherDTO.getDepreciationDTOList().size() > 0 && !voucherDTO.getDepreciationDTOList().get(0).getDateOfPurchase().equals("")) {
-                for (DepreciationDTO depreciationDTO : voucherDTO.getDepreciationDTOList()) {
-
-                    Depreciation depreciation = new Depreciation();
-                    DepreciationDetail depreciationDetail = new DepreciationDetail();
-                    //save to depreciation table
-                    if (voucherCreationDao.checkItemNameAlreadyExist(depreciationDTO.getItemName(),
-                            currentUser.getCompanyId())) {
-                        depreciationId = voucherCreationDao.getDepreciationIdForUpdate
-                                (depreciationDTO.getItemName(), currentUser.getCompanyId());
-                        depreciation.setDepreciationId(depreciationId);
-                        depreciation.setItemName(depreciationDTO.getItemName());
-                        depreciation.setRateOfDepreciation(depreciationDTO.getRateOfDepreciation());
-                        depreciation.setOpeningBalance(depreciationDTO.getOpeningBalance());
-                        depreciation.setCompanyId(currentUser.getCompanyId());
-                        depreciation.setSetDate(currentUser.getCreatedDate());
-                        depreciation.setCreatedBy(currentUser.getLoginId());
-                        voucherCreationDao.updateDepreciationItemDetails(depreciation);
-                    } else {
-                        depreciation.setItemName(depreciationDTO.getItemName());
-                        depreciation.setRateOfDepreciation(depreciationDTO.getRateOfDepreciation());
-                        depreciation.setOpeningBalance(depreciationDTO.getOpeningBalance());
-                        depreciation.setCompanyId(currentUser.getCompanyId());
-                        depreciation.setSetDate(currentUser.getCreatedDate());
-                        depreciation.setCreatedBy(currentUser.getLoginId());
-                        depreciationId = voucherCreationDao.saveDepreciationItemDetails(depreciation);
-                    }
-
-                    //save to depreciation Details table
-                    depreciationDetail.setVoucherId(voucherId);
-                    depreciationDetail.setDepreciationId(depreciationId);
-                    depreciationDetail.setDateOfPurchase(DateUtil.toDate(depreciationDTO.getDateOfPurchase().trim(),
-                            DateUtil.DD_MMM_YYYY));
-
-                    if (voucherDTO.getVoucherTypeId() == 1) {
-                        depreciationDetail.setAdditionalQty(depreciationDTO.getQty());
-                        depreciationDetail.setAdditional(depreciationDTO.getCost());
-                    }
-                    if (voucherDTO.getVoucherTypeId() == 2) {
-                        depreciationDetail.setDisposalQty(depreciationDTO.getQty());
-                        depreciationDetail.setDisposal(depreciationDTO.getCost());
-                    }
-                    depreciationDetail.setCompanyId(currentUser.getCompanyId());
-                    depreciationDetail.setSetDate(currentUser.getCreatedDate());
-                    depreciationDetail.setCreatedBy(currentUser.getLoginId());
-                    voucherCreationDao.saveDepreciationDetails(depreciationDetail);
-                }
-            }
-        }
 
         responseMessage.setStatus(1);
+        responseMessage.setDTO(voucherDTO);
         responseMessage.setText("Successfully saved.");
         return responseMessage;
     }
@@ -169,8 +119,12 @@ public class VoucherCreationService {
     @Transactional(rollbackFor = Exception.class)
     public void saveToVoucherTable(VoucherDTO voucherDTO, CurrentUser currentUser, Integer voucherId) {
 
-        Integer currentVoucherNo = voucherCreationDao.getCurrentVoucherNo(voucherDTO.getVoucherTypeId(), currentUser.getCompanyId(), currentUser.getFinancialYearId());
-        voucherCreationDao.updateVoucherNo(currentVoucherNo + 1, currentUser.getCompanyId(), voucherDTO.getVoucherTypeId(), currentUser.getFinancialYearId());
+        Integer currentVoucherNo = voucherCreationDao.getCurrentVoucherNo(voucherDTO.getVoucherTypeId(),
+                currentUser.getCompanyId(), currentUser.getFinancialYearId());
+
+        voucherCreationDao.updateVoucherNo((currentVoucherNo + 1),
+                currentUser.getCompanyId(), voucherDTO.getVoucherTypeId(),
+                currentUser.getFinancialYearId());
 
         Voucher voucher = new Voucher();
         voucher.setVoucherId(voucherId);
@@ -186,17 +140,20 @@ public class VoucherCreationService {
     }
 
     public Integer getVoucherId() {
-        return voucherCreationDao.getCurrentVoucherId() == null ? 1 : voucherCreationDao.getCurrentVoucherId() + 1;
+        return voucherCreationDao.getCurrentVoucherId() == null ? 1
+                : voucherCreationDao.getCurrentVoucherId() + 1;
     }
 
 
     public Integer getCurrentVoucherNo(Integer voucherTypeId, Integer companyId, Integer financialYearId) {
-        return voucherCreationDao.getCurrentVoucherNo(voucherTypeId, companyId, financialYearId) == 0 ? 1 : voucherCreationDao.getCurrentVoucherNo(voucherTypeId, companyId, financialYearId) + 1;
+        return voucherCreationDao.getCurrentVoucherNo(voucherTypeId, companyId, financialYearId) == 0 ? 1
+                : voucherCreationDao.getCurrentVoucherNo(voucherTypeId, companyId, financialYearId) + 1;
     }
 
 
     public List<VoucherDetailDTO> getVoucherDetailsByVoucherNo(Integer voucherNo, Integer voucherTypeId, CurrentUser currentUser) {
-        return voucherCreationDao.getVoucherDetailsByVoucherNo(voucherNo, voucherTypeId, currentUser.getCompanyId());
+        return voucherCreationDao.getVoucherDetailsByVoucherNo(voucherNo, voucherTypeId,
+                currentUser.getCompanyId());
     }
 
     public ResponseMessage deleteVoucherDetail(Integer voucherDetailId) {
@@ -223,7 +180,7 @@ public class VoucherCreationService {
         return voucherCreationDao.getRateOfDepreciation(particularId, companyId);
     }
 
-     @Transactional(rollbackFor = Exception.class)
+    @Transactional(rollbackFor = Exception.class)
     public ResponseMessage performPurchaseAndSaleVoucherEntry(VoucherDTO voucherDTO, CurrentUser currentUser) throws ParseException {
         ResponseMessage responseMessage = new ResponseMessage();
         responseMessage = validateDrCrAmount(voucherDTO);

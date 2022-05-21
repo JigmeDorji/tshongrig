@@ -244,10 +244,17 @@
                                     Expenditure</a>
                             </sec:authorize>
                         </li>
-                        <li class="nav-item">
+                      <%--  <li class="nav-item">
 
                             <sec:authorize access="hasAuthority('8-VIEW')">
                                 <a class="nav-link" href="<c:url value='/accBalanceSheetReport' />"> Financial
+                                    Position</a>
+                            </sec:authorize>
+                        </li>--%>
+                        <li class="nav-item">
+
+                            <sec:authorize access="hasAuthority('8-VIEW')">
+                                <a class="nav-link" href="<c:url value='/financialPosition' />"> Financial
                                     Position</a>
                             </sec:authorize>
                         </li>

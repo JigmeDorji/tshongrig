@@ -80,7 +80,7 @@ public class MoneyReceiptController extends BaseController {
         params.put("moneyReceiptNo", moneyReceiptNo);
         params.put("partyName", partyName);
         params.put("amount", amount);
-        params.put("amountInWords", NumberInWords.convert(amount.longValue()));
+        params.put("amountInWords", NumberInWords.convert(amount));
         params.put("tDSAmount", tDSAmount);
         params.put("receiptDate", new Date());
         params.put("companyName", currentUser.getCompanyName());

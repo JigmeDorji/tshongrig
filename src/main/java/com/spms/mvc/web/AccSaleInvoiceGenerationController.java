@@ -97,7 +97,7 @@ public class AccSaleInvoiceGenerationController {
         params.put("companyEmailID", currentUser.getEmail());
         params.put("invoiceNo", accSaleInvoiceGenerationDTO.getInvoiceNo());
         params.put("invoiceDate", accSaleInvoiceGenerationDTO.getInvoiceDate());
-        params.put("totalBillAmtInWords", NumberInWords.convert(accSaleInvoiceGenerationDTO.getAmount().longValue()));
+        params.put("totalBillAmtInWords", NumberInWords.convert(accSaleInvoiceGenerationDTO.getAmount()));
         params.put("printedDate", new Date());
         params.put("userName", currentUser.getTxtUserName());
         modelAndView = new ModelAndView("saleInvoiceReport", params);

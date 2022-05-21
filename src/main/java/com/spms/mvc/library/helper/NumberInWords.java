@@ -64,16 +64,23 @@ public class NumberInWords {
     }
 
 
-    public static String convert(long number) {
+    public static String convert(Double number) {
+
         // 0 to 999 999 999 999
         if (number == 0) {
             return "zero";
         }
+        String snumber = number.toString();
+        String decimalNumber = snumber.split("\\.")[1];
+        return convertWords(number) + " and " + convertWords(Double.parseDouble(decimalNumber)) + " chheltrum";
+    }
 
-        String snumber = Long.toString(number);
-
+    private static String convertWords(Double number) {
         // pad with "0"
         String mask = "000000000000";
+        String snumber = number.toString();
+
+
         DecimalFormat df = new DecimalFormat(mask);
         snumber = df.format(number);
 

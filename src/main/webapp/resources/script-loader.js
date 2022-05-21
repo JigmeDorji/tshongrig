@@ -207,6 +207,9 @@ $(document).ready(function () {
 
     if (document.URL.search("registration") > 1)
         scriptLoader("resources/js/registration.js");
+
+    if (document.URL.search("financialPosition") > 1)
+        scriptLoader("resources/js/financialPosition.js");
 });
 var scriptLoader = function (url) {
     $.ajax({

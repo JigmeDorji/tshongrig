@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2022-02-22T13:30:25 -->
+<!-- 2022-04-24T11:00:36 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="voucherReport" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="20" bottomMargin="20" uuid="31eca624-a6be-45fc-9e5f-2bc1424f048e">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -33,6 +33,7 @@
 	<parameter name="totalBillAmtInWords" class="java.lang.String"/>
 	<parameter name="mailingAddress" class="java.lang.String"/>
 	<parameter name="reportName" class="java.lang.String"/>
+	<parameter name="entryDate" class="java.util.Date"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -82,15 +83,15 @@
 				</textElement>
 				<text><![CDATA[Date:]]></text>
 			</staticText>
-			<textField>
+			<textField isStretchWithOverflow="true" pattern="MMM d, yyyy">
 				<reportElement x="434" y="59" width="100" height="20" uuid="2e1ab13a-d9d2-4e46-b73c-0fcc3af9ec74"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($P{printedDate})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{entryDate}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="434" y="37" width="100" height="20" uuid="c8f449f0-3e65-4436-97e7-4cf0cd0258db"/>
+				<reportElement x="435" y="37" width="100" height="20" uuid="c8f449f0-3e65-4436-97e7-4cf0cd0258db"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
 					<font size="9" isBold="false" isItalic="false"/>
 				</textElement>
@@ -103,7 +104,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Vou No.]]></text>
+				<text><![CDATA[V No.]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -260,7 +261,7 @@
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Singatory Authority]]></text>
+				<text><![CDATA[Signatory Authority]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true">
 				<reportElement stretchType="RelativeToBandHeight" x="268" y="0" width="152" height="18" uuid="29547933-873f-44a1-9294-e28f03cf3260"/>

@@ -120,13 +120,17 @@ public class PaymentController extends BaseController {
     public ModelAndView generateReport(HttpServletRequest request, Integer voucherNo, Integer type) {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
 
-        List<VoucherDetailDTO> voucherDetailDTOList = autoVoucherService.getVoucherDetail(voucherNo, currentUser,type);
+        List<VoucherDetailDTO> voucherDetailDTOList = autoVoucherService.getVoucherDetail(voucherNo, currentUser, type);
 
         JRDataSource jrDataSource = new JRBeanCollectionDataSource(voucherDetailDTOList, false);
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("datasource", jrDataSource);
-        params.put("totalBillAmtInWords", NumberInWords.convert(calTotal(voucherDetailDTOList).longValue()));
-        params.put("receiptDate", new Date());
+
+        //type 4 is for journal
+        params.put("totalBillAmtInWords", type == 4 ? "NIL" :
+                "(" + NumberInWords.convert(calTotal(voucherDetailDTOList)) + ")");
+
+        params.put("entryDate", autoVoucherService.getVoucherEntryDate(voucherNo, currentUser, type));
         params.put("companyName", currentUser.getCompanyName());
         params.put("companyContact", currentUser.getContact());
         params.put("voucherNo", voucherNo);
@@ -157,9 +161,11 @@ public class PaymentController extends BaseController {
     public Double calTotal(List<VoucherDetailDTO> dtoList) {
         double totalAmount = 0.0;
         for (VoucherDetailDTO voucherDetailDTO : dtoList) {
-            if (voucherDetailDTO.getDrcrAmount() > 0) {
-                totalAmount = totalAmount + (voucherDetailDTO.getDrcrAmount());
-            }
+            if (voucherDetailDTO.getAccTypeId().equals(AccountTypeEnum.BANK.getValue()) || voucherDetailDTO.getAccTypeId().equals(AccountTypeEnum.CASH.getValue())
+                    || voucherDetailDTO.getAccTypeId().equals(AccountTypeEnum.BANK_OVER_DRAFT.getValue()))
+                if (voucherDetailDTO.getDrcrAmount() > 0) {
+                    totalAmount = totalAmount + (voucherDetailDTO.getDrcrAmount());
+                }
         }
         return totalAmount;
     }
