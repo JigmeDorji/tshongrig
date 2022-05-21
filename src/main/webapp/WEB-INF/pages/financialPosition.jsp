@@ -11,7 +11,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <html>
-<title class="title">Trial Balance</title>
+<title class="title">Financial Position</title>
 
 <body>
 <!-- Page header -->
@@ -19,8 +19,8 @@
     <div class="breadcrumb-line breadcrumb-line-light header-elements-lg-inline">
         <div class="d-flex">
             <div class="breadcrumb">
-                <a href="." class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Financial Statement</a>
-                <span class="breadcrumb-item active">Trial Balance Report</span>
+                <a href="." class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Financial Position</a>
+                <span class="breadcrumb-item active">Financial Position Report</span>
             </div>
             <a href="." class="header-elements-toggle text-body d-lg-none"><i class="icon-more"></i></a>
         </div>
@@ -30,7 +30,7 @@
 <!-- Content area -->
 <div class="content">
     <!-- Form inputs -->
-    <div class="card" id="printableArea">
+    <div class="card"  id="printableArea">
         <div class="card-body">
             <div class="row">
                 <div class="col-sm-12 printMe">
@@ -49,14 +49,14 @@
             <form id="ledgerForm" action="<c:url value='/accTrialBalance'/> " class="form-horizontal globalForm">
                 <fieldset>
                     <div class="form-group row">
-                        <label class="col-md-2  required">From Date</label>
+                        <label class="col-md-2  required hidden">From Date</label>
 
-                        <div class="col-md-2">
+                        <div class="col-md-2 hidden">
                             <input type="text" tabindex="1" class="form-control form-control-sm datepicker"
                                    name="fromDate"
                                    id="fromDate" required="required" value="${fromDate}"/>
                         </div>
-                        <label class="col-md-2  required">To Date</label>
+                        <label class="col-md-2  required">As on Date</label>
 
                         <div class="col-md-2">
                             <input type="text" tabindex="1" class="form-control form-control-sm datepicker"
@@ -68,30 +68,16 @@
 
                 <fieldset>
                     <div class="table-responsive">
-                        <table class="table navigation_table" id="trialBalanceGrid">
+                        <table class="table navigatable_table" id="trialBalanceGrid">
                             <thead>
-                            <tr class="bg-primary text-white">
-                                <th rowspan="2"><p style="text-align:center">Particulars</p></th>
-                                <th colspan="3" class="text-center">Closing Balance</th>
-                            </tr>
-                            <tr class="bg-primary text-white">
-                                <th width="15%">Debit</th>
-                                <th width="15%">Credit</th>
-                                <th></th>
-                            </tr>
+                            <th class="bg-primary text-white">Particulars</th>
+                            <th class="bg-primary text-white">Amount</th>
+                            <th></th>
+                            <th></th>
                             </thead>
                             <tbody>
                             </tbody>
                             <tfoot>
-                            <tr>
-                                <td>Grand Total</td>
-                                <td>
-                                    <label class="text-right parentText" id="totalDrAmount"></label>
-                                </td>
-                                <td>
-                                    <label class="text-right parentText" id="totalCrAmount"></label>
-                                </td>
-                            </tr>
                             </tfoot>
                         </table>
                     </div>
@@ -99,12 +85,14 @@
             </form>
         </div>
     </div>
+
     <div class="col-md-12 row mt-5">
         <div class="col-md-11"></div>
         <input type="button" class="btn btn-outline-info fa fa-print" onclick="printDiv('printableArea')"
                value="Print"/>
     </div>
 </div>
+
 
 <script>
     function printDiv(divName) {

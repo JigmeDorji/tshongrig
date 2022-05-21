@@ -32,16 +32,28 @@ bankTansfer = (function () {
 
     function validateBankSelection() {
         $('#bankLedgerFromId').on('change', function () {
-            if ($(this).val() === $('#bankLedgerToId').val()) {
-                errorMsg("From and To account is same.");
-                $('#bankLedgerFromId').val('');
+            if($(this).val()!==null && $(this).val()!==''){
+                if ($(this).val() === $('#bankLedgerToId').val()) {
+                    errorMsg("From and To account is same.");
+                    $('#bankLedgerFromId').val('');
+                }
             }
+            if($(this).val()!==null && $(this).val()!==''){
+                if ($(this).val() === $('#bankLedgerToId').val()) {
+                    errorMsg("From and To account is same.");
+                    $('#bankLedgerFromId').val('');
+                }
+            }
+
         });
         $('#bankLedgerToId').on('change', function () {
-            if ($(this).val() === $('#bankLedgerFromId').val()) {
-                errorMsg("From and To account is same.");
-                $('#bankLedgerToId').val('');
+            if($(this).val()!==null && $(this).val()!==''){
+                if ($(this).val() === $('#bankLedgerFromId').val()) {
+                    errorMsg("From and To account is same.");
+                    $('#bankLedgerToId').val('');
+                }
             }
+
         })
     }
 

@@ -11,28 +11,16 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Description: AccTrialBalanceDao
- * Date:  2020-Nov-14
- *
- * @author: Bikash Rai
- * @version: 1.0.0
- * ======================
- * Change History:
- * Version:1.0.0
- * Author:
- * Date: 2020-Nov-14
- * Change Description:
- * Search Tag:
+ * Created by jigme.dorji on 5/21/2022.
  */
-@Repository("accTrialBalanceDao")
-public class AccTrialBalanceDao {
-
+@Repository("financialPositionDao")
+public class FinancialPositionDao {
     @Autowired
     SessionFactory sessionFactory;
 
     @Transactional
     public List<AccTrialBalanceDTO> getTrialBalance(Integer companyId, Integer financialYearId, Date fromDate, Date toDate) {
-        String sqlQry = "CALL sp_acc_get_trail_balance_detail(:companyId, :financialYearId, :fromDate,:toDate)";
+        String sqlQry = "CALL sp_acc_get_financial_position_detail(:companyId, :financialYearId, :fromDate,:toDate)";
         return sessionFactory.getCurrentSession().createSQLQuery(sqlQry)
                 .setParameter("companyId", companyId)
                 .setParameter("financialYearId", financialYearId)
@@ -67,7 +55,7 @@ public class AccTrialBalanceDao {
     }
 
     @Transactional(readOnly = true)
-    public AccTrialBalanceDTO totalAmountByAccType(Integer companyId, Integer financialYearId, Date fromDate, Date toDate, Integer accTypeId) {
+    public AccTrialBalanceDTO   totalAmountByAccType(Integer companyId, Integer financialYearId, Date fromDate, Date toDate, Integer accTypeId) {
         String sqlQry = "SELECT * FROM (SELECT b.ledgerId as ledgerId, a.accTypeName as particular,SUM(c.drcrAmount) + SUM(b.openingBal) as amount,\n" +
                 "a.groupId as groupId, a.accTypeId as accTypeId FROM tbl_acc_acctype a\n" +
                 "LEFT JOIN tbl_acc_ledger b ON a.accTypeId=b.accTypeId\n" +

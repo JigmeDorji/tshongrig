@@ -1,121 +1,130 @@
 /**
- * Created by jigmePc on 5/20/2019.
+ * Created by jigme.dorji on 5/21/2022.
  */
 
-accBalanceSheetReport = (function () {
+financialPosition = (function () {
+    let start;
+    let sibling;
+    let sibling_length;
+    let baseURL = 'financialPosition/';
+    let trialBalanceGrid = $('#trialBalanceGrid');
 
-    var idx;
-    var start;
-    var sibling;
-    var sibling_length;
-    var baseURL = 'accBalanceSheetReport/';
-    var date1 = new Date(new Date().getFullYear(), 0, 1);
-    //$('#fromDate').val(date1);
-    //$('#toDate').val(new Date());
-    function getAccBalanceSheetReport(toDate) {
+    function getTrialBalance(fromDate, toDate) {
+        let totalAssets = 0;
+        let totalLiability = 0;
+        if (typeof fromDate === '' || typeof fromDate === 'undefined') {
+            fromDate = $('#fromDate').val()
+        }
         if (typeof toDate === '' || typeof toDate === 'undefined') {
             toDate = $('#toDate').val()
         }
-        if (toDate !== '') {
-            $('#balanceSheetTable').dataTable().fnDestroy();
+        if (fromDate !== '' && toDate !== '') {
+            let pNLAmount=0;
+            //Get PNL Amount
             $.ajax({
-                url: baseURL + 'getAccBalanceSheetReport',
+                url: baseURL + 'getPNLAmt',
                 type: 'GET',
+                data: {fromDate: fromDate, toDate: toDate},
                 async: false,
-                data: {asOnDate: toDate},
                 success: function (res) {
+                    pNLAmount=res;
+                }
+            })
 
-
-                    let columnDef = [
-                        {data: 'particular', class: "particular"},
+            //financial position data
+            $.ajax({
+                url: baseURL + 'getFinancialPositionData',
+                type: 'GET',
+                data: {fromDate: fromDate, toDate: toDate},
+                async: false,
+                success: function (res) {
+                    var totalDrAmount = 0;
+                    var totalCrAmount = 0;
+                    //trialBalanceGrid.fnDestroy();
+                    var columnDef = [
+                        {data: 'particular', class: 'text-left particular'},
                         {
-                            data: 'amount', class: 'text-right',
-                            render: function (data) {
-                                data = data != null ? data.toFixed(2) : 0.00;
-                                return spms.formatAmount(data);
+                            data: 'drAmount', class: 'text-right',
+                            render: function (data, type, row) {
+                                let drAmount = row.drAmount;
+                                let crAmount = row.crAmount;
+                                let amount = 0;
+                                if (row.groupId === 1 || row.groupId === 2) {
+                                    if (drAmount !== null) {
+                                        amount = amount + (drAmount);
+                                    }
+                                    if (crAmount !== null) {
+                                        amount = amount + (-1 * crAmount);
+                                    }
+
+                                    if (row.groupLevel === 1) {
+                                        totalAssets = totalAssets + amount;
+                                    }
+
+                                }
+                                if (row.particular === "Total Assets") {
+                                    amount = totalAssets;
+                                }
+
+                                if (row.groupId === 3 || row.groupId === 4 || row.groupId === 5) {
+                                    if (drAmount !== null) {
+                                        amount = amount + (-1 * drAmount);
+                                    }
+                                    if (crAmount !== null) {
+                                        amount = amount + (crAmount);
+                                    }
+                                    if (row.groupLevel === 1) {
+                                        totalLiability = totalLiability + amount;
+                                    }
+                                }
+                                if (row.particular === "Income & Expenditure") {
+                                    amount = pNLAmount;
+                                }
+                                if (row.particular === "Total Liability") {
+                                    amount = totalLiability+pNLAmount;
+                                }
+
+                                return spms.formatAmount(amount.toFixed(2));
                             }
                         },
                         {data: 'groupLevel', class: 'hidden isTopParent'},
                         {data: 'accTypeId', class: 'hidden accTypeId'}
-                    ];
 
-                    $('#balanceSheetTable').DataTable({
-                        columns: columnDef,
+                    ];
+                    trialBalanceGrid.DataTable({
                         data: res,
+                        columns: columnDef,
                         sorting: false,
                         paging: false,
                         info: false,
                         searching: false,
                         ordering: false,
-                        /*dom: 'Bfrtip',
-                            buttons: [{
-                                customize: function (doc) {
-                                    doc.defaultStyle.alignment = 'right';
-                                    doc.styles.tableHeader.alignment = 'center';
-                                    doc.content[1].table.widths = ["*", "*"];
-                                    var tblBody = doc.content[1].table.body;
-                                    doc.content[1].layout = {
-                                        hLineWidth: function(i, node) {
-                                            return (i === 0 || i === node.table.body.length) ? 1 : 1;},
-                                        vLineWidth: function(i, node) {
-                                            return (i === 0 || i === node.table.widths.length) ? 1 : 1;},
-                                        hLineColor: function(i, node) {
-                                            return (i === 0 || i === node.table.body.length) ? 'gray' : 'gray';},
-                                        vLineColor: function(i, node) {
-                                            return (i === 0 || i === node.table.widths.length) ? 'gray' : 'gray';}
-                                    };
-
-                                },
-                                extend: 'pdfHtml5',
-                                // messageTop: "Financial Statement",
-                                download: 'open',
-                                pageSize: 'B5',
-                                exportOptions: {
-                                    columns: [0,1]
-                                },
-                                orientation: 'portrait',
-                                // customize: function (doc) {
-                                //     doc.defaultStyle.alignment = 'center';
-                                //     doc.content[1].table.widths =
-                                //         Array(doc.content[1].table.body[0].length + 1).join('*').split('');
-                                // },
-                            }, {
-                                extend: 'excelHtml5',
-                                // messageTop: "Financial Statement",
-                                download: 'open',
-                                exportOptions: {
-                                    columns: [0,1]
-                                },
-                                orientation: 'portrait',
-                                customize: function (doc) {
-                                    doc.defaultStyle.alignment = 'center';
-                                    doc.content[1].table.widths =
-                                        Array(doc.content[1].table.body[0].length + 1).join('*').split('');
-                                },
-                            }, {
-                                extend: 'print',
-                                // messageTop: "Financial Statement",
-                                exportOptions: {
-                                    columns: [0,1]
-                                },
-                            orientation: 'portrait',
-                            customize: function (doc) {
-                                doc.defaultStyle.alignment = 'center';
-                                doc.content[1].table.widths =
-                                    Array(doc.content[1].table.body[0].length + 1).join('*').split('');
-                            },
-                        }],*/
+                        destroy: true,
                         'rowCallback': function (row, data) {
-                            if (parseFloat($(row).children(':nth-child(2)').text()) === parseFloat(0.00)) {
-                                $(row).hide();
-                            }
+                            if (parseInt($(row).children(':nth-child(3)').text()) === 1) {
 
-                            if ($(row).children(':nth-child(3)').text() == 1) {
-                                $(row).children(':nth-child(2)').addClass('parentText right-align');
-                                $(row).children(':nth-child(1)').addClass('parentText left-align');
+                                if ($(row).children(':nth-child(3)').text() !== '') {
+                                    if ($(row).children(':nth-child(1)').text() === "Opening Balance Difference") {
+                                        totalCrAmount = totalCrAmount + parseFloat(spms.removeCommaSeparation($(row).children(':nth-child(3)').text()));
+                                    }
+                                }
+                                if ($(row).children(':nth-child(2)').text() !== '') {
+                                    if ($(row).children(':nth-child(1)').text() === "Opening Balance Difference") {
+                                        totalDrAmount = totalDrAmount + parseFloat(spms.removeCommaSeparation($(row).children(':nth-child(2)').text()));
+                                    }
+                                }
+                                $(row).children(':nth-child(1)').addClass('parentText text-left');
+                                $(row).children(':nth-child(2)').addClass('parentText text-right');
+                                $(row).children(':nth-child(3)').addClass('parentText text-right');
                             } else {
-                                $(row).children(':nth-child(2)').addClass('right-align');
-                                $(row).children(':nth-child(1)').addClass('childText left-align');
+
+                                if ($(row).children(':nth-child(3)').text() !== '') {
+                                    totalCrAmount = totalCrAmount + parseFloat(spms.removeCommaSeparation($(row).children(':nth-child(3)').text()));
+                                }
+                                if ($(row).children(':nth-child(2)').text() !== '') {
+                                    totalDrAmount = totalDrAmount + parseFloat(spms.removeCommaSeparation($(row).children(':nth-child(2)').text()));
+                                }
+                                $(row).children(':nth-child(1)').addClass('childText');
                             }
                         }
                     });
@@ -126,15 +135,24 @@ accBalanceSheetReport = (function () {
                 start.addClass('myGlower');
             });
         }
-
     }
 
+    function fetchTrialBalanceDetailsByDate() {
+        $('#fromDate').on('change', function () {
+            getTrialBalance($(this).val(), $('#toDate').val());
+        });
+
+        $('#toDate').on('change', function () {
+            getTrialBalance($('#fromDate').val(), $(this).val());
+        });
+    }
 
     $(document).keydown(function (e) {
         var is_first_row = start.parent().is("tr:first-child");
         var is_last_row = start.parent().is("tr:last-child");
         var is_first_table = start.closest(".navigatable_table").is(".navigatable_table:first-child");
         var is_last_table = start.closest(".navigatable_table").is(".navigatable_table:first tr td:last-of-type");
+
         // BEGIN handle up arrow
         if (e.which == '38') {
             // BEGIN up arrow variables
@@ -232,8 +250,7 @@ accBalanceSheetReport = (function () {
 
 
     $(document).on("click", ".navigatable_table td", function () {
-        var $this = $(this);
-        alert('hi')
+        let $this = $(this);
         start.removeClass("myGlower");
         start.blur();
         $this.addClass("myGlower");
@@ -251,29 +268,18 @@ accBalanceSheetReport = (function () {
         }
     }
 
-    function getFinancialStatement() {
-        $('#fromDate').on('change', function () {
-            getAccBalanceSheetReport($(this).val(), $('#toDate').val());
-        });
-
-        $('#toDate').on('change', function () {
-            getAccBalanceSheetReport($('#fromDate').val(), $(this).val());
-        });
-    }
-
-
     return {
-        getAccBalanceSheetReport: getAccBalanceSheetReport,
-        getFinancialStatement: getFinancialStatement
-
+        getTrialBalance: getTrialBalance,
+        fetchTrialBalanceDetailsByDate: fetchTrialBalanceDetailsByDate
     }
 
 })();
 
 $(document).ready(function () {
-    // $('#toDate').datepicker('setStartDate', '04/01/2018');
-    // $('#toDate').datepicker('setEndDate', '03/30/2019');
-    accBalanceSheetReport.getAccBalanceSheetReport();
-    accBalanceSheetReport.getFinancialStatement();
+    financialPosition.getTrialBalance();
+    financialPosition.fetchTrialBalanceDetailsByDate();
+
 });
+
+
 

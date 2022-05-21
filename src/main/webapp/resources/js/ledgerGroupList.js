@@ -190,7 +190,7 @@ ledgerGroupList = (function () {
 
     $('#previousPage').on('click', function () {
         if (report === 'BS') {
-            window.location.href = spms.getUrl() + 'accBalanceSheetReport';
+            window.location.href = spms.getUrl() + 'financialPosition';
         } else {
             window.location.href = spms.getUrl() + 'accProfitAndLossReport';
         }

@@ -86,8 +86,6 @@ public class AddItemService {
                     return responseMessage;
                 }
             }
-
-
             VoucherDTO voucherDTO = new VoucherDTO();
             if (purchaseCallingDTO.getIsOpeningEntry() == 'N') {
                 //region accounting
@@ -210,11 +208,11 @@ public class AddItemService {
                 purchase.setCostPrice(purchaseDTO.getCostPrice());
                 purchase.setSellingPrice(purchaseDTO.getSellingPrice());
                 purchase.setItemName(purchaseDTO.getItemName());
-//            if (purchaseDTO.getPurchaseId() == null) {
-//                purchase.setItemName(purchaseDTO.getType() + " : " + purchaseDTO.getItemName());
-//            } else {
-//                purchase.setItemName(purchaseDTO.getItemName());
-//            }
+                //            if (purchaseDTO.getPurchaseId() == null) {
+                //                purchase.setItemName(purchaseDTO.getType() + " : " + purchaseDTO.getItemName());
+                //            } else {
+                //                purchase.setItemName(purchaseDTO.getItemName());
+                //            }
                 purchase.setLocationId(purchaseDTO.getLocationId());
                 purchase.setCompanyId(currentUser.getCompanyId());
                 purchase.setFinancialYearId(currentUser.getFinancialYearId());
@@ -222,11 +220,11 @@ public class AddItemService {
                 purchase.setType(purchaseDTO.getType());
                 purchase.setCreatedBy(currentUser.getLoginId());
                 Integer purchaseId = addItemDao.savePurchaseItem(purchase);
-//            if (purchaseDTO.getPurchaseId() == null) {
-//                String maxSerialNo = addItemDao.getMaxSerialIDByBrand(brandId, currentUser.getCompanyId());
-//                addItemDao.updateBrandWiseSerialNo(brandId,
-//                        (Integer.parseInt(maxSerialNo) + 1), currentUser.getCompanyId());
-//            }
+                //            if (purchaseDTO.getPurchaseId() == null) {
+                //                String maxSerialNo = addItemDao.getMaxSerialIDByBrand(brandId, currentUser.getCompanyId());
+                //                addItemDao.updateBrandWiseSerialNo(brandId,
+                //                        (Integer.parseInt(maxSerialNo) + 1), currentUser.getCompanyId());
+                //            }
 
                 /**
                  * save to Audit
@@ -262,7 +260,6 @@ public class AddItemService {
                 addItemDao.saveToAuditTable(purchase_a);
             }
 
-
             //save supplier vs purchase details if it is credit purchase
             if (Objects.equals(purchaseCallingDTO.getIsCash(), PaymentModeTypeEnum.CREDIT.getValue())) {
                 PurchaseCreditSupplierDetail purchaseCreditSupplierDetail = new PurchaseCreditSupplierDetail();
@@ -273,6 +270,9 @@ public class AddItemService {
             }
         } catch (Exception ex) {
             TransactionInterceptor.currentTransactionStatus().setRollbackOnly();
+            responseMessage.setStatus(0);
+            responseMessage.setText("Error while saving.");
+            return responseMessage;
         }
 
         responseMessage.setStatus(1);
