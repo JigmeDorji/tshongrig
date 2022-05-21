@@ -73,9 +73,9 @@ public class AssetOpeningService {
         ResponseMessage responseMessage = new ResponseMessage();
 
         //Delete Existing Delete
-        if (openingAndBuyingDTO.getFaPurchaseId() != null) {
-            deleteItem(openingAndBuyingDTO.getFaPurchaseId());
-        }
+//        if (openingAndBuyingDTO.getFaPurchaseId() != null) {
+//            deleteItem(openingAndBuyingDTO.getFaPurchaseId());
+//        }
 
         //check party name already exists
         Integer partyId = null;
