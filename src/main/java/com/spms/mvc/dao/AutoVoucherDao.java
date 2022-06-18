@@ -204,7 +204,7 @@ public class AutoVoucherDao {
                 "   FROM  tbl_acc_voucher_entries a \n" +
                 "INNER JOIN tbl_acc_voucher_entries_detail b \n" +
                 "INNER JOIN tbl_acc_ledger c ON b.ledgerId=c.ledgerId\n" +
-                "ON a.voucherId=b.voucherId\n" +
+                "and a.voucherId=b.voucherId\n" +
                 "WHERE a.companyId=:companyId and a.financialYearId=:financialYearId and a.voucherNo=:voucherNo and voucherTypeId=:voucherTypeId";
         return sessionFactory.getCurrentSession().createSQLQuery(query)
                 .setParameter("voucherNo", voucherNo)

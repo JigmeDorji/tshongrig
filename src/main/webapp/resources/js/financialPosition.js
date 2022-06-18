@@ -60,7 +60,6 @@ financialPosition = (function () {
                                     if (row.groupLevel === 1) {
                                         totalAssets = totalAssets + amount;
                                     }
-
                                 }
                                 if (row.particular === "Total Assets") {
                                     amount = totalAssets;
@@ -83,6 +82,7 @@ financialPosition = (function () {
                                 if (row.particular === "Total Liability") {
                                     amount = totalLiability+pNLAmount;
                                 }
+
 
                                 return spms.formatAmount(amount.toFixed(2));
                             }

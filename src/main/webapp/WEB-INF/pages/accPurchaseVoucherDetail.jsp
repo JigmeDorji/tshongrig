@@ -32,14 +32,12 @@
 
         <div class="form-group">
             <label class="col-md-2  text-right">&nbsp;<b>Ledger Name:</b></label>
-
             <div class="col-md-3" style="right: 6%">
                 <input type="text" class="form-control resetfield left-align"
                        style="border-radius: 0; height: 28px !important;"
                        readonly name="ledgerName" id="ledgerName"/>
             </div>
         </div>
-
         <div class="form-group">
             <div class="col-md-12">
                 <table class="table table-bordered table-hover" id="voucherListGrid">
