@@ -158,7 +158,9 @@ public class AssetOpeningDao extends BaseDao {
 
     @Transactional(readOnly = true)
     public List<OpeningAndBuyingDTO> loadAssetOpeningList(BigInteger faPurchaseId) {
-        String sqlQuery = "SELECT b.assetId, a.faPurchaseId,\n" +
+        String sqlQuery = "SELECT b.assetId,b.assetDetailId, " +
+                "  a.faPurchaseId," +
+                "  d.purchaseMasterId,\n" +
                 "  b.particular,\n" +
                 "  a.purchaseDate,\n" +
                 "  a.openingBalance as amount, \n" +
@@ -194,5 +196,43 @@ public class AssetOpeningDao extends BaseDao {
         sessionFactory.getCurrentSession().createSQLQuery(sqlQuery)
                 .setParameter("faPurchaseId", faPurchaseId)
                 .executeUpdate();
+    }
+
+    @Transactional(readOnly = true)
+    public boolean isOpeningAssetCount(BigInteger purchaseMasterId) {
+        String sqlQuery = "SELECT COUNT(*) FROM tbl_fa_purchase where purchaseMasterId=:purchaseMasterId";
+        return sessionFactory.getCurrentSession().createSQLQuery(sqlQuery)
+                .setParameter("purchaseMasterId", purchaseMasterId)
+                .uniqueResult().equals(BigInteger.ONE);
+    }
+
+    @Transactional
+    public void deleteItemFromMaster(BigInteger purchaseMasterId) {
+        String sqlQuery = "DELETE FROM tbl_fa_purchase_mater where purchaseMasterId=:purchaseMasterId";
+        sessionFactory.getCurrentSession().createSQLQuery(sqlQuery)
+                .setParameter("purchaseMasterId", purchaseMasterId)
+                .executeUpdate();
+    }
+
+    @Transactional(readOnly = true)
+    public List<OpeningAndBuyingDTO> loadAssetBuyingList(BigInteger purchaseMasterId) {
+        String sqlQuery = "SELECT b.assetId,\n" +
+                "  b.assetDetailId,  \n" +
+                "  a.faPurchaseId, \n" +
+                "  b.particular,\n" +
+                "  a.purchaseDate,\n" +
+                "  a.rate,\n" +
+                "  a.qty,\n" +
+                "  e.accTypeId \n" +
+                " FROM tbl_fa_purchase a\n" +
+                "INNER JOIN tbl_fa_item_setup_detail b ON a.assetDetailId=b.assetDetailId\n" +
+                "INNER JOIN tbl_fa_item_setup c ON c.assetId=b.assetId\n" +
+                "INNER JOIN tbl_fa_purchase_mater d ON d.purchaseMasterId=a.purchaseMasterId\n" +
+                "INNER JOIN tbl_fa_group e ON c.assetClassId=e.assetClassId\n" +
+                "WHERE d.purchaseMasterId=:purchaseMasterId";
+
+        return sessionFactory.getCurrentSession().createSQLQuery(sqlQuery)
+                .setParameter("purchaseMasterId", purchaseMasterId)
+                .setResultTransformer(Transformers.aliasToBean(OpeningAndBuyingDTO.class)).list();
     }
 }

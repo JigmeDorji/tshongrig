@@ -51,7 +51,7 @@ public class AccBalanceSheetReportService {
         inventory.setGroupLevel(2);
 
         //To get Net profit from PNL
-        List<AccProfitAndLossReportDTO> accProfitAndLossReportDTOs = accProfitAndLossReportService.getProfitAndLossDetails(currentUser.getCompanyId(), null, asOnDate, currentUser.getBusinessType());
+        List<AccProfitAndLossReportDTO> accProfitAndLossReportDTOs = accProfitAndLossReportService.getProfitAndLossDetails(currentUser.getCompanyId(), null, asOnDate, currentUser.getBusinessType(), currentUser.getFinancialYearId());
 
 
         Double profitAndLossAmount = accProfitAndLossReportDTOs.get(accProfitAndLossReportDTOs.size() - 1).getReturnPNLAmount();
@@ -105,7 +105,7 @@ public class AccBalanceSheetReportService {
                 Calendar calendarTo = Calendar.getInstance();
                 calendarTo.setTime(preFinancialYearDTO.getFinancialYearTo());
                 Date preToDate = calendarTo.getTime();
-                List<AccProfitAndLossReportDTO> accProfitAndLossReportDTOsPrevious = accProfitAndLossReportService.getProfitAndLossDetails(currentUser.getCompanyId(), preFromDate, preToDate, currentUser.getBusinessType());
+                List<AccProfitAndLossReportDTO> accProfitAndLossReportDTOsPrevious = accProfitAndLossReportService.getProfitAndLossDetails(currentUser.getCompanyId(), preFromDate, preToDate, currentUser.getBusinessType(), currentUser.getFinancialYearId());
                 Double profitAndLossAmountPrevious = accProfitAndLossReportDTOsPrevious.get(accProfitAndLossReportDTOsPrevious.size() - 1).getAmount();
                 accBalanceSheetDTO.setAmount(accBalanceSheetDTO.getAmount() + profitAndLossAmountPrevious);
             }

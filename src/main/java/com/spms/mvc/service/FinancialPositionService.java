@@ -4,9 +4,7 @@ import com.spms.mvc.Enumeration.AccountTypeEnum;
 import com.spms.mvc.Enumeration.BusinessType;
 import com.spms.mvc.dao.AccBalanceSheetReportDao;
 import com.spms.mvc.dao.AccProfitAndLossReportDao;
-import com.spms.mvc.dao.AccTrialBalanceDao;
 import com.spms.mvc.dao.FinancialPositionDao;
-import com.spms.mvc.dto.AccBalanceSheetDTO;
 import com.spms.mvc.dto.AccProfitAndLossReportDTO;
 import com.spms.mvc.dto.AccTrialBalanceDTO;
 import com.spms.mvc.dto.FinancialYearDTO;
@@ -181,7 +179,7 @@ public class FinancialPositionService {
             Date preToDate = calendarTo.getTime();
 
             List<AccProfitAndLossReportDTO> accProfitAndLossReportDTOs = accProfitAndLossReportService.getProfitAndLossDetails(
-                    currentUser.getCompanyId(), null, preToDate, currentUser.getBusinessType());
+                    currentUser.getCompanyId(), null, preToDate, currentUser.getBusinessType(), currentUser.getFinancialYearId());
 
             return accProfitAndLossReportDTOs.get(accProfitAndLossReportDTOs.size() - 1).getAmount();
         }
@@ -253,7 +251,7 @@ public class FinancialPositionService {
 
     public Double getPNLAmt(CurrentUser currentUser, Date fromDate, Date toDate) {
         //To get Net profit from PNL
-        List<AccProfitAndLossReportDTO> accProfitAndLossReportDTOs = accProfitAndLossReportService.getProfitAndLossDetails(currentUser.getCompanyId(), null, toDate, currentUser.getBusinessType());
+        List<AccProfitAndLossReportDTO> accProfitAndLossReportDTOs = accProfitAndLossReportService.getProfitAndLossDetails(currentUser.getCompanyId(), null, toDate, currentUser.getBusinessType(), currentUser.getFinancialYearId());
         return accProfitAndLossReportDTOs.get(accProfitAndLossReportDTOs.size() - 1).getReturnPNLAmount();
     }
 }

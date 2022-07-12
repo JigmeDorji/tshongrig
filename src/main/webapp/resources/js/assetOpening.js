@@ -30,7 +30,7 @@ assetOpening = (function () {
                                     title: res.text,
                                     showConfirmButton: false
                                 }, function () {
-                                    localStorage.setItem('faPurchaseId', '');
+                                    // localStorage.setItem('faPurchaseId', '');
                                     window.location = 'assetOpening';
                                 });
                             } else {
@@ -177,9 +177,9 @@ assetOpening = (function () {
     function _disPlayData() {
         let faPurchaseId = $('#faPurchaseId');
 
-        if (faPurchaseId.val() !== '') {
-            localStorage.setItem('faPurchaseId', faPurchaseId.val())
-        }
+        // if (faPurchaseId.val() !== '') {
+        //     localStorage.setItem('faPurchaseId', faPurchaseId.val())
+        // }
         spms.ajax(baseURL() + 'loadAssetOpeningList', 'GET', {
             faPurchaseId: faPurchaseId.val() === '' ? localStorage.getItem('faPurchaseId')
                 : faPurchaseId.val()
@@ -190,12 +190,12 @@ assetOpening = (function () {
 
                 let row = "<tr>" +
                     "<td><input type='text' readonly class='form-control rowNumber'>" +
-                    "<input type='hidden' id='assetDetailId" + iterator + "' name='openingAndBuyingListDTO[0].assetDetailId'  class='form-control'>" +
+                    "<input type='hidden' id='assetDetailId" + iterator + "' name='openingAndBuyingListDTO[0].assetDetailId'  class='form-control' value='" + res[i].assetDetailId + "'>" +
                     "<input type='hidden' id='fixedAssetGroupId' name='openingAndBuyingListDTO[0].fixedAssetGroupId'  class='form-control'>" +
                     "<input type='hidden' id='faPurchaseId' name='openingAndBuyingListDTO[0].faPurchaseId'  class='form-control faPurchaseId' value='" + res[i].faPurchaseId + "'></td>" +
-                    "<td><input type='text' id='autoCompleteId" + iterator + "' name='openingAndBuyingListDTO[0].particular' value='" + res[i].particular + "' class='form-control particular'></td>" +
+                    "<td><input type='text' name='openingAndBuyingListDTO[0].particular' value='" + res[i].particular + "' class='form-control particular'></td>" +
                     "<td><input type='text'  name='openingAndBuyingListDTO[0].purchaseDate' class='form-control formatDate' value='" + formatAsDate(res[i].purchaseDate) + "'></td>" +
-                    "<td><input type='text'  name='openingAndBuyingListDTO[0].amount' class='form-control openingBalance right-align' value='" + res[i].amount + "'></td>" +
+                    "<td><input type='text'  name='openingAndBuyingListDTO[0].openingBalance' class='form-control openingBalance right-align' value='" + res[i].amount + "'></td>" +
                     "<td><input type='text'  name='openingAndBuyingListDTO[0].depreciatedValue' class='form-control depreciatedValue right-align'value='" + res[i].depreciatedValue + "'></td>" +
                     "<td><input type='text'  name='openingAndBuyingListDTO[0].rate' class='form-control rate right-align' value='" + res[i].rate + "'></td>" +
                     "<td><input type='text'  name='openingAndBuyingListDTO[0].qty' class='form-control qty  right-align' value='" + res[i].qty + "'></td>" +
@@ -205,9 +205,7 @@ assetOpening = (function () {
                     "</tr>";
 
                 $('#fixedAssetOpeningGrid tr').last().find('.addBtn').removeClass('hidden');
-
                 fixedAssetOpeningGrid.find('tbody').append(row);
-                loadDropdown(); //load dropdown
                 indexRowNo(fixedAssetOpeningGrid);
                 iterator = iterator + 1;
             }
@@ -235,51 +233,49 @@ assetOpening = (function () {
                     return {value: value.particular, id: value.assetDetailId};
                 });
 
-                if ($('#faPurchaseId').val() === '' && localStorage.getItem('faPurchaseId') === '') {
 
-                    fixedAssetOpeningGrid.find('tbody').append(returnRow());
-                    spms._formIndexing(fixedAssetOpeningGrid.find('tbody'),
-                        fixedAssetOpeningGrid.find('tbody tr'));
+                fixedAssetOpeningGrid.find('tbody').append(returnRow());
+                spms._formIndexing(fixedAssetOpeningGrid.find('tbody'),
+                    fixedAssetOpeningGrid.find('tbody tr'));
 
-                    fixedAssetOpeningGrid.find('tbody tr')
-                        .find('.removeBtn').addClass('hidden');
-                    let items = new Bloodhound({
-                        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-                        queryTokenizer: Bloodhound.tokenizers.whitespace,
-                        local: valueList
-                    });
+                fixedAssetOpeningGrid.find('tbody tr')
+                    .find('.removeBtn').addClass('hidden');
+                let items = new Bloodhound({
+                    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+                    queryTokenizer: Bloodhound.tokenizers.whitespace,
+                    local: valueList
+                });
 
-                    // items.initialize();
+                // items.initialize();
 
-                    $('#autoCompleteId' + iterator).typeahead({
-                            hint: true,
-                            highlight: true,
-                        },
-                        {
-                            name: 'items',
-                            displayKey: 'value',
-                            source: items.ttAdapter(),
-                            templates: {
-                                notFound: '<div>Not Found</div>',
-                                pending: '<div>Loading...</div>',
-                                suggestion: function (data) {
-                                    return '<div>' + data.value + '</div>'
-                                },
-                            }
-                        }).on('typeahead:selected', function (event, data) {
-                        $('#assetDetailId' + iterator).val(data.id);
-                    });
+                $('#autoCompleteId' + iterator).typeahead({
+                        hint: true,
+                        highlight: true,
+                    },
+                    {
+                        name: 'items',
+                        displayKey: 'value',
+                        source: items.ttAdapter(),
+                        templates: {
+                            notFound: '<div>Not Found</div>',
+                            pending: '<div>Loading...</div>',
+                            suggestion: function (data) {
+                                return '<div>' + data.value + '</div>'
+                            },
+                        }
+                    }).on('typeahead:selected', function (event, data) {
+                    $('#assetDetailId' + iterator).val(data.id);
+                });
 
-                    indexRowNo(fixedAssetOpeningGrid);
-                }
+                indexRowNo(fixedAssetOpeningGrid);
             }
         });
     }
 
-    $('#resetBtn').on('click', function () {
-        localStorage.setItem('faPurchaseId', '');
-        window.location.reload();
-    });
+    // $('#resetBtn').on('click', function () {
+    //     localStorage.setItem('faPurchaseId', '');
+    //     window.location.reload();
+    // });
 
     return {
         loadInitialGrid: loadInitialGrid,

@@ -65,6 +65,8 @@ public class AssetOpeningService {
     //    @Transactional(rollbackFor = Exception.class)
     public ResponseMessage save(CurrentUser currentUser, OpeningAndBuyingDTO openingAndBuyingDTO) throws ParseException {
 
+        Integer voucherNo = null;
+        Integer voucherTypeId = null;
         String ledgerName = null;
         BigInteger purchaseMasterId;
         BigInteger purchaseId;
@@ -72,15 +74,37 @@ public class AssetOpeningService {
 
         ResponseMessage responseMessage = new ResponseMessage();
 
-        //Delete Existing Delete
-//        if (openingAndBuyingDTO.getFaPurchaseId() != null) {
-//            deleteItem(openingAndBuyingDTO.getFaPurchaseId());
-//        }
+        //Delete the existing data
+        if (openingAndBuyingDTO.getFaPurchaseId() != null && openingAndBuyingDTO.getPurchaseMasterId() != null) {
+            assetOpeningDao.deleteItemFromDetail(openingAndBuyingDTO.getFaPurchaseId());
+            assetOpeningDao.deleteItem(openingAndBuyingDTO.getFaPurchaseId());
+            if (assetOpeningDao.isOpeningAssetCount(openingAndBuyingDTO.getPurchaseMasterId())) {
+                assetOpeningDao.deleteItemFromMaster(openingAndBuyingDTO.getPurchaseMasterId());
+            }
+            openingAndBuyingDTO.setPurchaseMasterId(null);
+            openingAndBuyingDTO.setFaPurchaseId(null);
+        }
 
+        if (openingAndBuyingDTO.getPurchaseInvoiceNo() != null) {
+            if (openingAndBuyingDTO.getVoucherNo() == null) {
+                if (Objects.equals(openingAndBuyingDTO.getIsCash(), PaymentModeTypeEnum.CASH.getValue()) || Objects.equals(openingAndBuyingDTO.getIsCash(), PaymentModeTypeEnum.BANK.getValue())) {
+                    voucherNo = voucherCreationService.getCurrentVoucherNo(VoucherTypeEnum.PAYMENT.getValue(),
+                            currentUser.getCompanyId(), currentUser.getFinancialYearId());
+                    voucherTypeId = VoucherTypeEnum.PAYMENT.getValue();
+                } else {
+                    voucherNo = voucherCreationService.getCurrentVoucherNo(VoucherTypeEnum.JOURNAL.getValue(),
+                            currentUser.getCompanyId(), currentUser.getFinancialYearId());
+                    voucherTypeId = VoucherTypeEnum.JOURNAL.getValue();
+                }
+            } else {
+                voucherNo = openingAndBuyingDTO.getVoucherNo();
+            }
+        }
         //check party name already exists
         Integer partyId = null;
 
-        if (Objects.equals(openingAndBuyingDTO.getIsCash(), PaymentModeTypeEnum.CREDIT.getValue()) || (openingAndBuyingDTO.getPartyName() != null && !openingAndBuyingDTO.getPartyName().equals(""))) { //applies to only party
+        if (Objects.equals(openingAndBuyingDTO.getIsCash(), PaymentModeTypeEnum.CREDIT.getValue())
+                || (openingAndBuyingDTO.getPartyName() != null && !openingAndBuyingDTO.getPartyName().equals(""))) { //applies to only party
 
             partyId = accSaleInvoiceGenerationDao.getPartyIdIFExists(currentUser.getCompanyId(),
                     openingAndBuyingDTO.getPartyName());
@@ -117,6 +141,7 @@ public class AssetOpeningService {
         faPurchaseMaster.setPaidInType(openingAndBuyingDTO.getPaidInType());
         faPurchaseMaster.setVoucherNo(openingAndBuyingDTO.getVoucherNo());
         faPurchaseMaster.setCompanyId(currentUser.getCompanyId());
+        faPurchaseMaster.setVoucherNo(voucherNo);
         faPurchaseMaster.setCreatedBy(currentUser.getLoginId());
         faPurchaseMaster.setCreatedDate(currentUser.getCreatedDate());
         assetOpeningDao.saveToMasterTable(faPurchaseMaster);
@@ -171,9 +196,8 @@ public class AssetOpeningService {
 
         //perform account
         if (openingAndBuyingDTO.getPurchaseInvoiceNo() != null) {
-            performAccounting(openingAndBuyingDTO, currentUser);
+            performAccounting(openingAndBuyingDTO, currentUser, voucherNo, voucherTypeId);
         } else {
-
             List<OpeningAndBuyingDTO> openingAndBuyingDTOList = assetOpeningDao.getOpeningInvoiceDetailList(
                     currentUser.getCompanyId());
 
@@ -211,23 +235,14 @@ public class AssetOpeningService {
         return assetOpeningDao.getItemSuggestionList(currentUser.getCompanyId());
     }
 
-    public void performAccounting(OpeningAndBuyingDTO openingAndBuyingDTO, CurrentUser currentUser) throws ParseException {
+    public void performAccounting(OpeningAndBuyingDTO openingAndBuyingDTO, CurrentUser currentUser, Integer voucherNo, Integer voucherTypeId) throws ParseException {
 
         //region cr voucher preparation
-        Integer voucherNo;
         String ledgerName;
         VoucherDTO voucherDTO = new VoucherDTO();
         List<VoucherDetailDTO> voucherDetailDTOs = new ArrayList<>();
 
-        if (Objects.equals(openingAndBuyingDTO.getIsCash(), PaymentModeTypeEnum.CASH.getValue()) || Objects.equals(openingAndBuyingDTO.getIsCash(), PaymentModeTypeEnum.BANK.getValue())) {
-            voucherNo = voucherCreationService.getCurrentVoucherNo(VoucherTypeEnum.PAYMENT.getValue(),
-                    currentUser.getCompanyId(), currentUser.getFinancialYearId());
-            voucherDTO.setVoucherTypeId(VoucherTypeEnum.PAYMENT.getValue());
-        } else {
-            voucherNo = voucherCreationService.getCurrentVoucherNo(VoucherTypeEnum.JOURNAL.getValue(),
-                    currentUser.getCompanyId(), currentUser.getFinancialYearId());
-            voucherDTO.setVoucherTypeId(VoucherTypeEnum.JOURNAL.getValue());
-        }
+        voucherDTO.setVoucherTypeId(voucherTypeId);
         voucherDTO.setNarration("Buying fix asset");
         voucherDTO.setVoucherEntryDate(openingAndBuyingDTO.getPurchaseDate());
         voucherDTO.setVoucherNo(voucherNo);
@@ -323,5 +338,9 @@ public class AssetOpeningService {
         responseMessage.setStatus(1);
         responseMessage.setText("You have delete successfully");
         return responseMessage;
+    }
+
+    public List<OpeningAndBuyingDTO> loadAssetBuyingList(BigInteger purchaseMasterId) {
+        return assetOpeningDao.loadAssetBuyingList(purchaseMasterId);
     }
 }

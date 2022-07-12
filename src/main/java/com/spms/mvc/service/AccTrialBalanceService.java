@@ -219,7 +219,7 @@ public class AccTrialBalanceService {
             Date preToDate = calendarTo.getTime();
 
             List<AccProfitAndLossReportDTO> accProfitAndLossReportDTOs = accProfitAndLossReportService.getProfitAndLossDetails(
-                    currentUser.getCompanyId(), null, preToDate, currentUser.getBusinessType());
+                    currentUser.getCompanyId(), null, preToDate, currentUser.getBusinessType(), currentUser.getFinancialYearId());
 
             return accProfitAndLossReportDTOs.get(accProfitAndLossReportDTOs.size() - 1).getAmount();
         }

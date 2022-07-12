@@ -53,7 +53,7 @@ public class LedgerGroupListService {
                 calendarTo.setTime(preFinancialYearDTO.getFinancialYearTo());
                 Date preToDate = calendarTo.getTime();
                 List<AccProfitAndLossReportDTO> accProfitAndLossReportDTOsPrevious = accProfitAndLossReportService.getProfitAndLossDetails(currentUser.getCompanyId(),
-                        preFromDate, preToDate, currentUser.getBusinessType());
+                        preFromDate, preToDate, currentUser.getBusinessType(), currentUser.getFinancialYearId());
                 Double profitAndLossAmountPrevious = accProfitAndLossReportDTOsPrevious.get(accProfitAndLossReportDTOsPrevious.size() - 1).getAmount();
                 accProfitAndLossReportDTOParticular.setAmount(profitAndLossAmountPrevious);
                 accProfitAndLossReportDTOS.add(accProfitAndLossReportDTOParticular);
