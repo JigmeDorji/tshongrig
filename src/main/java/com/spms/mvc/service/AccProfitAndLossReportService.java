@@ -65,12 +65,13 @@ public class AccProfitAndLossReportService {
     /**
      * get profit and lost details for running format
      *
-     * @param companyId    companyId
+     * @param companyId       companyId
      * @param fromDate
-     * @param toDate       @return List<AccProfitAndLossReportDTO>  List<AccProfitAndLossReportDTO>
+     * @param toDate          @return List<AccProfitAndLossReportDTO>  List<AccProfitAndLossReportDTO>
      * @param businessType
+     * @param financialYearId
      */
-    public List<AccProfitAndLossReportDTO> getProfitAndLossDetails(Integer companyId, Date fromDate, Date toDate, Integer businessType) {
+    public List<AccProfitAndLossReportDTO> getProfitAndLossDetails(Integer companyId, Date fromDate, Date toDate, Integer businessType, Integer financialYearId) {
 
         Double profitOrLossAmt;
         Double totalSales = 0.0;
@@ -82,7 +83,7 @@ public class AccProfitAndLossReportService {
 
         if (BusinessType.Trading.getValue().equals(businessType)) {
             //Sale
-            totalSales = getTotalAmountByAccountTypeId(companyId, AccountTypeEnum.SALES.getValue(), fromDate, toDate);
+            totalSales = getTotalAmountByAccountTypeId(companyId, AccountTypeEnum.SALES.getValue(), fromDate, toDate, financialYearId);
             accProfitAndLossReportDTOList.addAll(getSaleDetailList(totalSales));
             //Cost of Good Sold
             totalCostOfGoodAmt = accProfitAndLossReportDao.getTotalGoodSoldAmount(companyId, fromDate, toDate);
@@ -92,7 +93,7 @@ public class AccProfitAndLossReportService {
 
         //Direct Income
         Double totalDirectIncome = getTotalAmountByAccountTypeId(companyId, AccountTypeEnum.DIRECT_INCOME.getValue(),
-                fromDate, toDate);
+                fromDate, toDate, financialYearId);
 
         if (totalDirectIncome != 0) {
             accProfitAndLossReportDTOList.addAll(getDirectIncomeList(totalDirectIncome));
@@ -100,7 +101,7 @@ public class AccProfitAndLossReportService {
 
         //Direct Expense/Cost
         Double totalDirectCost = getTotalAmountByAccountTypeId(companyId, AccountTypeEnum.DIRECT_COST.getValue(),
-                fromDate, toDate);
+                fromDate, toDate, financialYearId);
         accProfitAndLossReportDTOList.addAll(getDirectCostList(totalDirectCost));
 
 
@@ -118,12 +119,12 @@ public class AccProfitAndLossReportService {
 
         //Indirect/other Income
         Double totalOtherIncome = getTotalAmountByAccountTypeId(companyId, AccountTypeEnum.OTHER_INCOME.getValue(),
-                fromDate, toDate);
+                fromDate, toDate, financialYearId);
         accProfitAndLossReportDTOList.addAll(getOtherIncomeList(totalOtherIncome));
 
         //Indirect/other Cost
         Double totalOtherCost = getTotalAmountByAccountTypeId(companyId, AccountTypeEnum.INDIRECT_COST.getValue(),
-                fromDate, toDate);
+                fromDate, toDate, financialYearId);
         accProfitAndLossReportDTOList.addAll(getOtherCostList(totalOtherCost));
 
         //region net total profit or loss
@@ -151,10 +152,11 @@ public class AccProfitAndLossReportService {
      * @param accountTypeId accountTypeId
      * @param fromDate      fromDate
      * @param toDate        toDate
+     * @param financialYearId
      * @return Double
      */
-    private Double getTotalAmountByAccountTypeId(Integer companyId, Integer accountTypeId, Date fromDate, Date toDate) {
-        return Math.abs(accProfitAndLossReportDao.getTotalAmountForSelectedAccountType(companyId, accountTypeId, fromDate, toDate));
+    private Double getTotalAmountByAccountTypeId(Integer companyId, Integer accountTypeId, Date fromDate, Date toDate, Integer financialYearId) {
+        return Math.abs(accProfitAndLossReportDao.getTotalAmountForSelectedAccountType(companyId, accountTypeId, fromDate, toDate,financialYearId));
     }
 
 

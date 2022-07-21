@@ -433,57 +433,31 @@ assetBuying = (function () {
             })
         }
 
-        function _disPlayData(data) {
-            if (data.status === 1) {
-                $('#purchaseItemTable tbody tr').remove();
-                let res = data.dto;
-                for (let i = 0; i < res.length; i++) {
-                    $('#purchaseDate').val(formatAsDate(res[i].purchaseDate))
-                    $('#purchaseVoucherNo').val(res[i].purchaseVoucherNo);
-                    $('#purchaseInvoiceNo').val(res[i].purchaseInvoiceNo);
-                    $('#supplierName').val(res[i].supplierName);
-                    $('#isCash').val(res[i].isCash);
-                    if (res[i].isCash === 2) {
-                        $('#bankDetails').attr('hidden', false);
-                        $('#bankLedgerId').val(res[0].bankLedgerId);
-                    } else {
-                        $('#bankDetails').attr('hidden', true);
-                    }
-                    if (res[i].isCash === 3) {
-                        getSupplierDropdownList();
-                        $('.creditDetails').attr('hidden', false);
-                        setTimeout(function () {
-                            $('#supplierId').val(res[0].supplierId);
-                        }, 100);
-                    } else {
-                        $('.creditDetails').attr('hidden', true);
-                    }
+        function _disPlayData() {
+            spms.ajax(baseURL() + 'loadAssetBuyingList', 'GET', {
+                voucherNo: $('#voucherNo').val(),
+                purchaseMasterId: $('#purchaseMasterId').val()
+            }, function (res) {
+                $('#fixedAssetBuyingGrid tbody tr').remove();
 
-                    let tableGrid = $('#purchaseItemTable');
-                    let tableBody = tableGrid.find('tbody');
+                for (let i = 0; i < res.length; i++) {
                     let row = "<tr>" +
-                        "<td><input type='text' id='index' readonly class='form-control ' value='" + parseInt(i + 1) + "'>" +
-                        "<input type='hidden' id='index' name='purchaseDTOS[" + i + "].type'  class='form-control ' value='" + res[i].type + "'>" +
-                        "<input type='hidden' id='index' name='purchaseDTOS[" + i + "].purchaseId'  class='form-control ' value='" + res[i].purchaseId + "'>" +
-                        "<input type='hidden' id='index' name='purchaseDTOS[" + i + "].purchaseAuditId'  class='form-control ' value='" + res[i].purchaseAuditId + "'>" +
-                        "<input type='hidden' id='brandName' name='purchaseDTOS[" + i + "].brandName'  class='form-control ' value='" + res[i].brandName + "'>" +
-                        "<input type='hidden' id='prefixCode' name='purchaseDTOS[" + i + "].prefixCode'  class='form-control ' value='" + res[i].prefixCode + "'>" +
-                        "<input type='hidden' id='index' name='purchaseDTOS[" + i + "].locationId'  class='form-control ' value='" + res[i].locationId + "'></td>" +
-                        "<td><input type='text' id='itemCode' readonly name='purchaseDTOS[" + i + "].itemCode' class='form-control ' value='" + res[i].itemCode.toUpperCase() + "'></td>" +
-                        "<td><input type='text' readonly name='purchaseDTOS[" + i + "].itemName' class='form-control ' value='" + res[i].itemName + "'></td>" +
-                        "<td><input type='text' readonly name='purchaseDTOS[" + i + "].partNo' class='form-control  partNo' value='" + res[i].partNo + "'></td>" +
-                        "<td><input type='text' readonly name='purchaseDTOS[" + i + "].sellingPrice' class='form-control  sellingPrice right-align' value='" + res[i].sellingPrice + "'></td>" +
-                        "<td><input type='text' readonly name='purchaseDTOS[" + i + "].costPrice' class='form-control  costPrice right-align' value='" + res[i].costPrice + "'></td>" +
-                        "<td><input type='hidden' id='initialQty' readonly class='form-control  initialQty right-align'><input type='text' id='qty' readonly class='form-control  qty right-align amount'   name='purchaseDTOS[" + i + "].qty' value=" + res[i].qty + " ></td>" +
-                        "<td><input type='hidden' readonly name='purchaseDTOS[" + i + "].unitId' class='form-control  costPrice right-align' value='" + res[i].unitId + "'><input type='text' readonly  class='form-control  costPrice right-align' value='" + res[i].unitName + "'></td>" +
-                        "<td><input type='text' readonly class='form-control  totalAmount right-align totalAmount' id='totalAmount'  name='purchaseDTOS[" + i + "].totalAmount' value=" + res[i].costPrice + " ></td>" +
-                        "<td><input type='button'  id='itemEditBtn' class='btn btn-primary btn-sm fa fa-trash' value='Edit'><input type='button'  id='btnDeleteItem' class='btn btn-danger btn-xs fa fa-trash' value='Delete'></td>" +
+                        "<td><input type='text' readonly class='form-control  rowNumber'>" +
+                        "<input type='hidden'  id='assetDetailId" + iterator + "' name='openingAndBuyingListDTO[0].assetDetailId'  class='form-control  assetDetailId'></td>" + "<td>" +
+                        "<input type='hidden' id='faPurchaseId' name='openingAndBuyingListDTO[0].faPurchaseId'  class='form-control faPurchaseId'>" +
+                        "<input type='text' id='autoCompleteId" + iterator + "' class='form-control  particular' name='openingAndBuyingListDTO[0].particular'>" + "</td>" +
+                        "<td><input type='text'  name='openingAndBuyingListDTO[0].rate' class='form-control  rate'></td>" +
+                        "<td><input type='text'  name='openingAndBuyingListDTO[0].qty' class='form-control  qty right-align'></td>" +
+                        "<td><input type='text' readonly name='openingAndBuyingListDTO[0].totalAmount' class='form-control   totalAmount right-align'></td>" +
+                        "<td class='text-center'><button class='btn btn-danger btn-xm d-none d-sm-inline-block removeBtn' type='button' id='removeBtn'><i class='fa fa-trash'></i> Delete</button>" +
+                        "<button class='btn  btn-xm btn-success d-sm-inline-block addBtn' type='button' id='addBtn'><i class='fa fa-plus'></i> Add More</button></td>" +
                         "</tr>";
-                    tableGrid.find('tbody').append(row);
+
+                    fixedAssetBuyingGrid.find('tbody').append(row);
                     calculateTotal();
                     $('#btnSave').attr('disabled', false)
                 }
-            }
+            });
         }
 
         function onQtyChange() {

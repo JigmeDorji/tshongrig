@@ -33,20 +33,28 @@
     <!-- Form inputs -->
     <div class="card">
         <div class="card-body">
-            <form id="openingAndBuyingAssetForm" action="<c:url value='/assetBuying'/> " class="form-horizontal globalForm">
+            <form id="openingAndBuyingAssetForm" action="<c:url value='/assetBuying'/> "
+                  class="form-horizontal globalForm">
                 <fieldset>
                     <legend class="text-uppercase font-size-sm font-weight-bold">Purchase Detail</legend>
+                    <input type="text" value="${voucherNo}" id="voucherNo" name="voucherNo" hidden/>
+                    <input type="text" value="${faPurchaseId}" id="faPurchaseId" name="faPurchaseId" hidden/>
+                    <input type="text" value="${purchaseMasterId}" id="purchaseMasterId" hidden
+                           name="purchaseMasterId"/>
                     <div class="form-group row">
                         <label class="col-md-2 right-align">Purchase Date:</label>
                         <div class="col-md-3">
-                            <input type="text" tabindex="2" class="form-control form-control-sm  right-align common datepicker" name="purchaseDate"
+                            <input type="text" tabindex="2"
+                                   class="form-control form-control-sm  right-align common datepicker"
+                                   name="purchaseDate"
                                    placeholder="DD.MM.YYYY"
                                    id="purchaseDate"/>
                         </div>
 
                         <label class="col-md-2 right-align">Purchase Invoice:</label>
                         <div class="col-md-3">
-                            <input type="text" tabindex="2" class="form-control form-control-sm  right-align common" required
+                            <input type="text" tabindex="2" class="form-control form-control-sm  right-align common"
+                                   required
                                    name="purchaseInvoiceNo" id="purchaseInvoiceNo"/>
                         </div>
                     </div>
@@ -112,7 +120,8 @@
                         <div class="form-group row">
                             <div class="col-md-7">
                             </div>
-                            <label class="col-md-2 right-label col-lg-offset-7" id="amountReceivedText">Amount Received</label>
+                            <label class="col-md-2 right-label col-lg-offset-7" id="amountReceivedText">Amount
+                                Received</label>
 
                             <div class="col-md-3">
                                 <input type="text"
@@ -127,7 +136,8 @@
                             <label class="col-md-2 right-label col-lg-offset-7">Select Bank Account</label>
 
                             <div class="col-md-3">
-                                <form:select class="form-control form-control-sm resetField" path="bankList" id="bankLedgerId"
+                                <form:select class="form-control form-control-sm resetField" path="bankList"
+                                             id="bankLedgerId"
                                              required="required"
                                              name="bankLedgerId">
                                     <form:option id="empyId" value="">---Please Select---</form:option>
@@ -143,7 +153,8 @@
 
                             <div class="col-md-3">
                                 <input type="text"
-                                       class="form-control form-control-sm right-align amount" name="amountReceivedInBank"
+                                       class="form-control form-control-sm right-align amount"
+                                       name="amountReceivedInBank"
                                        id="amountReceivedInBank" value="0">
                             </div>
                         </div>
@@ -153,7 +164,8 @@
                             <label class="col-md-2 right-label col-lg-offset-7">Returnable Amount</label>
 
                             <div class="col-md-3">
-                                <input type="text" class="form-control form-control-sm   right-align" value="0" name="amtReturn"
+                                <input type="text" class="form-control form-control-sm   right-align" value="0"
+                                       name="amtReturn"
                                        id="amtReturn" readonly>
                             </div>
                         </div>
@@ -166,7 +178,8 @@
                                 <label class="col-md-2 right-label col-lg-offset-7 required">Party Name</label>
 
                                 <div class="col-md-3">
-                                    <input type="text" tabindex="2" class="form-control form-control-sm  resetField right-align" id="partyName"
+                                    <input type="text" tabindex="2"
+                                           class="form-control form-control-sm  resetField right-align" id="partyName"
                                            name="partyName"/>
                                 </div>
                             </div>
@@ -176,7 +189,8 @@
                                 <label class="col-md-2 right-label col-lg-offset-7 required">Address </label>
 
                                 <div class="col-md-3">
-                                    <input type="text" tabindex="4" class="form-control form-control-sm resetfield" name="partyAddress"
+                                    <input type="text" tabindex="4" class="form-control form-control-sm resetfield"
+                                           name="partyAddress"
                                            id="partyAddress" required="true"/>
                                 </div>
 
@@ -188,7 +202,8 @@
                                 <label class="col-md-2 right-label col-lg-offset-7 required">Contact No.</label>
 
                                 <div class="col-md-3">
-                                    <input type="text" required="true" tabindex="5" class="form-control form-control-sm resetfield"
+                                    <input type="text" required="true" tabindex="5"
+                                           class="form-control form-control-sm resetfield"
                                            name="partyContactNo"
                                            id="partyContactNo"/>
                                 </div>
@@ -200,7 +215,8 @@
                                 <label class="col-md-2 right-label col-lg-offset-7">Email ID.</label>
 
                                 <div class="col-md-3">
-                                    <input type="text" tabindex="6" class="form-control form-control-sm resetfield" name="partyEmail" required
+                                    <input type="text" tabindex="6" class="form-control form-control-sm resetfield"
+                                           name="partyEmail" required
                                            id="partyEmail"/>
                                 </div>
                             </div>

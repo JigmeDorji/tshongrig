@@ -37,7 +37,9 @@
             <form id="openingAndBuyingAssetForm" action="<c:url value='/assetOpening'/> "
                   class="form-horizontal globalForm">
                 <fieldset>
-                    <input type="text" value="${faPurchaseId}" id="faPurchaseId" hidden/>
+                    <input type="text" value="${faPurchaseId}" id="faPurchaseId" name="faPurchaseId" hidden/>
+                    <input type="text" value="${purchaseMasterId}" id="purchaseMasterId" hidden
+                           name="purchaseMasterId"/>
                     <div class="form-group row">
                         <label class="  col-md-2 right-align required">As On:</label>
 
@@ -74,7 +76,7 @@
                             <sec:authorize access="hasAuthority('14-ADD')">
                                 <div class="col-md-2">
                                     <input type="submit" class="btn btn-primary btn-group-sm" value="Save" id="btnSave">
-                                    <input type="reset" class="btn btn-danger btn-group-sm" value="Reset" id="resetBtn">
+<%--                                    <input type="reset" class="btn btn-danger btn-group-sm" value="Reset" id="resetBtn">--%>
                                 </div>
                             </sec:authorize>
                         </div>

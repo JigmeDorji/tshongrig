@@ -43,7 +43,8 @@ public class AccProfitAndLossReportController {
     @RequestMapping(value = "/getProfitAndLossDetails", method = RequestMethod.GET)
     public List<AccProfitAndLossReportDTO> getProfitAndLossDetails(HttpServletRequest request, Date fromDate, Date toDate) {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
-        return accProfitAndLossReportService.getProfitAndLossDetails(currentUser.getCompanyId(), fromDate, toDate,currentUser.getBusinessType());
+        return accProfitAndLossReportService.getProfitAndLossDetails(currentUser.getCompanyId(), fromDate,
+                toDate,currentUser.getBusinessType(),currentUser.getFinancialYearId());
     }
 
 }

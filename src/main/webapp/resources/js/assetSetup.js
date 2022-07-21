@@ -178,6 +178,8 @@ assetSetup = (function () {
                             }
                         },
                         {data: 'faPurchaseId', class: 'faPurchaseId hidden'},
+                        {data: 'purchaseMasterId', class: 'purchaseMasterId hidden'},
+                        {data: 'voucherNo', class: 'voucherNo hidden'},
                         {data: 'purchaseDate', class: 'purchaseDate text-center'},
                         {data: 'description', class: 'description text-center'},
                         {data: 'rate', class: 'rate text-center'},
@@ -188,10 +190,12 @@ assetSetup = (function () {
                             render: function (detail, type, row) {
                                 let editBtn = '', hasEditRole = $('#hasEditRole').val();
                                 // if (hasEditRole.toString() === 'true') {
-                                    let url = row.description === "Opening" ? 'navigateToOpening' : 'navigateToPurchase';
-                                    editBtn = '<a href="assetSetup/' + url + '?faPurchaseId=' + encodeURIComponent(row.faPurchaseId) + '"><button type=button"  class="btn btn-primary btn-sm">Edit</button></a>';
+                                let url = row.description === "Opening" ? 'navigateToOpening' : 'navigateToPurchase';
+                                editBtn = '<a href="assetSetup/' + url + '?faPurchaseId=' + encodeURIComponent(row.faPurchaseId) + '&&purchaseMasterId=' + encodeURIComponent(row.purchaseMasterId) + '"><button type=button"  class="btn btn-primary btn-sm">Edit</button></a>';
                                 // }
-                                return editBtn + '<a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#itemSaleDetailModal"><button  type="button" class="btn btn-info btn-sm" id="btnDetailView"><i class="fa fa-info-circle"></i> Detail</button></a>';
+                                return editBtn + '<a href="assetSetup/' + url + '?faPurchaseId=' + encodeURIComponent(row.faPurchaseId) +
+                                    '&&purchaseMasterId=' + encodeURIComponent(row.purchaseMasterId) + '&&voucherNo=' + encodeURIComponent(row.voucherNo) + '">' +
+                                    '<button  type="button" class="btn btn-info btn-sm" id="btnDetailView"><i class="fa fa-info-circle"></i> Detail</button></a>';
                             }
                         },
                     ];

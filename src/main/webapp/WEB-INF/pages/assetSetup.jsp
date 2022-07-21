@@ -222,6 +222,8 @@
                                         <tr class="bg-primary text-white">
                                             <th width="5%">Sl No.</th>
                                             <th hidden></th>
+                                            <th hidden></th>
+                                            <th hidden></th>
                                             <th width="20%">Transaction Date</th>
                                             <th width="20%">Particular</th>
                                             <th width="20%">Rate</th>
