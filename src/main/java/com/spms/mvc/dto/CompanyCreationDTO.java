@@ -1,5 +1,7 @@
 package com.spms.mvc.dto;
 
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -21,6 +23,7 @@ public class CompanyCreationDTO {
 
     private String website;
 
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fnYrStart;
 
     private Integer businessType;
