@@ -52,16 +52,17 @@ financialPosition = (function () {
                                 let drAmount = row.drAmount;
                                 let crAmount = row.crAmount;
                                 let amount = 0;
-                                if (row.groupId === 1 || row.groupId === 2) {
+                                if (row.groupId === 1 || row.groupId === 2 ||row.groupId == null) {
                                     if (drAmount !== null) {
                                         amount = amount + (drAmount);
                                     }
                                     if (crAmount !== null) {
-                                        amount = amount + (-1 * crAmount);
+                                        amount = amount + (crAmount);
                                     }
 
-                                    if (row.groupLevel === 1) {
+                                    if (row.groupLevel === 1 && row.particular!=="Total Assets") {
                                         totalAssets = totalAssets + amount;
+
                                     }
                                 }
                                 if (row.particular === "Total Assets") {
@@ -84,7 +85,7 @@ financialPosition = (function () {
                                 }
 
 
-                                if (row.particular === "Opening Balance Difference") {
+                                if (row.particular === "Opening Balance Difference" && row.crAmount!==null) {
                                     amount = amount + drAmount==null?0:drAmount+crAmount==null?0:crAmount;
                                     openingBalDiff=crAmount;
                                 }
@@ -149,11 +150,11 @@ financialPosition = (function () {
 
     function fetchTrialBalanceDetailsByDate() {
         $('#fromDate').on('change', function () {
-            getTrialBalance($(this).val(), $('#toDate').val());
+            getFinancialPositionData($(this).val(), $('#toDate').val());
         });
 
         $('#toDate').on('change', function () {
-            getTrialBalance($('#fromDate').val(), $(this).val());
+            getFinancialPositionData($('#fromDate').val(), $(this).val());
         });
     }
 

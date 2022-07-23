@@ -41,46 +41,6 @@ public class AccTrialBalanceService {
     public List<AccTrialBalanceDTO> getTrialBalance(CurrentUser currentUser, Date fromDate, Date toDate) {
         return accTrialBalanceDao.getTrialBalance(currentUser.getCompanyId(), currentUser.getFinancialYearId(),
                 fromDate, toDate);
-
-//
-//        //Non Current Assets
-//        List<AccTrialBalanceDTO> accTrialBalanceDTOs = new ArrayList<>();
-//        accTrialBalanceDTOs.addAll(formatDataList(accTrialBalanceDao.getTrialBalance(currentUser.getCompanyId(), currentUser.getFinancialYearId(),
-//                fromDate, toDate, AccountTypeEnum.NON_CURRENT_ASSET.getValue()), fromDate, toDate, currentUser));
-//        //Current Assets
-//        accTrialBalanceDTOs.addAll(formatDataList(accTrialBalanceDao.getTrialBalance(currentUser.getCompanyId(), currentUser.getFinancialYearId(),
-//                fromDate, toDate, AccountTypeEnum.CURRENT_ASSET.getValue()), fromDate, toDate, currentUser));
-//
-//        //Capital
-//        accTrialBalanceDTOs.addAll(formatDataList(accTrialBalanceDao.getTrialBalance(currentUser.getCompanyId(), currentUser.getFinancialYearId(),
-//                fromDate, toDate, AccountTypeEnum.CAPITAL.getValue()), fromDate, toDate, currentUser));
-//
-//        //sale
-//        accTrialBalanceDTOs.addAll(formatDataList(accTrialBalanceDao.getTrialBalance(currentUser.getCompanyId(), currentUser.getFinancialYearId(),
-//                fromDate, toDate, AccountTypeEnum.PARENT_SALE.getValue()), fromDate, toDate, currentUser));
-//
-//        //Non current Liability
-//        accTrialBalanceDTOs.addAll(formatDataList(accTrialBalanceDao.getTrialBalance(currentUser.getCompanyId(), currentUser.getFinancialYearId(),
-//                fromDate, toDate, AccountTypeEnum.NON_CURRENT_LIABILITY.getValue()), fromDate, toDate, currentUser));
-//
-//        //current Liability
-//        accTrialBalanceDTOs.addAll(formatDataList(accTrialBalanceDao.getTrialBalance(currentUser.getCompanyId(), currentUser.getFinancialYearId(),
-//                fromDate, toDate, AccountTypeEnum.CURRENT_LIABILITY.getValue()), fromDate, toDate, currentUser));
-//
-//        //Direct Income
-//        accTrialBalanceDTOs.addAll(formatDataListForAccountType(currentUser, AccountTypeEnum.DIRECT_INCOME.getValue(), fromDate, toDate));
-//
-//        //Direct Cost
-//        accTrialBalanceDTOs.addAll(formatDataListForAccountType(currentUser, AccountTypeEnum.DIRECT_COST.getValue(), fromDate, toDate));
-//
-//        //Other Income
-//        accTrialBalanceDTOs.addAll(formatDataListForAccountType(currentUser, AccountTypeEnum.OTHER_INCOME.getValue(), fromDate, toDate));
-//
-//        //Indirect Cost
-//        accTrialBalanceDTOs.addAll(formatDataListForAccountType(currentUser, AccountTypeEnum.INDIRECT_COST.getValue(), fromDate, toDate));
-//
-//        //Opening Balance Difference
-//        accTrialBalanceDTOs.addAll(openingBalance(currentUser.getCompanyId(), fromDate, toDate));
     }
 
     private List<AccTrialBalanceDTO> openingBalance(Integer companyId, Date fromDate, Date toDate) {
