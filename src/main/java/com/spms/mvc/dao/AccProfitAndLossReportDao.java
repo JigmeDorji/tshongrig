@@ -21,18 +21,21 @@ public class AccProfitAndLossReportDao {
     SessionFactory sessionFactory;
 
     @Transactional(readOnly = true)
-    public Double getTotalAmountForSelectedAccountType(Integer companyId, Integer accountTypeId, Date fromDate, Date toDate) {
+    public Double getTotalAmountForSelectedAccountType(Integer companyId, Integer accountTypeId, Date fromDate, Date toDate, Integer financialYearId) {
         String sqlQry = "SELECT SUM(drcrAmount) FROM tbl_acc_voucher_entries_detail A\n" +
                 "INNER JOIN tbl_acc_voucher_entries B ON A.voucherId=B.voucherId\n" +
                 "LEFT JOIN tbl_acc_ledger C ON C.ledgerId=A.ledgerId\n" +
                 "LEFT JOIN tbl_acc_acctype E ON E.accTypeId=C.accTypeId\n" +
-                "WHERE (:fromDate is null or B.voucherEntryDate>=:fromDate)  AND B.voucherEntryDate<=:toDate  AND E.accTypeId=:accountTypeId AND B.companyId=:companyId";
+                "WHERE (:fromDate is null or B.voucherEntryDate>=:fromDate)  AND B.voucherEntryDate<=:toDate  AND E.accTypeId=:accountTypeId " +
+                "AND B.companyId=:companyId AND B.financialYearId=:financialYearId";
         Double totalAmount = (Double) sessionFactory.getCurrentSession()
                 .createSQLQuery(sqlQry)
                 .setParameter("companyId", companyId)
                 .setParameter("accountTypeId", accountTypeId)
                 .setParameter("fromDate", fromDate)
-                .setParameter("toDate", toDate).uniqueResult();
+                .setParameter("toDate", toDate)
+                .setParameter("financialYearId", financialYearId)
+                .uniqueResult();
 
         return totalAmount == null ? 0 : totalAmount;
     }

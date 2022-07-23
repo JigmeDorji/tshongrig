@@ -97,14 +97,18 @@ public class AssetSetupController extends BaseController {
     }
 
     @RequestMapping(value = "/navigateToOpening", method = RequestMethod.GET)
-    public String navigateToOpening(BigInteger faPurchaseId, RedirectAttributes redirectAttributes) throws ParseException {
+    public String navigateToOpening(BigInteger faPurchaseId, BigInteger purchaseMasterId, RedirectAttributes redirectAttributes) throws ParseException {
         redirectAttributes.addFlashAttribute("faPurchaseId", faPurchaseId);
+        redirectAttributes.addFlashAttribute("purchaseMasterId", purchaseMasterId);
+
         return "redirect:/assetOpening";
     }
 
     @RequestMapping(value = "/navigateToPurchase", method = RequestMethod.GET)
-    public String navigateToPurchase(BigInteger faPurchaseId, RedirectAttributes redirectAttributes) throws ParseException {
+    public String navigateToPurchase(BigInteger faPurchaseId, BigInteger purchaseMasterId, Integer voucherNo, RedirectAttributes redirectAttributes) throws ParseException {
         redirectAttributes.addFlashAttribute("faPurchaseId", faPurchaseId);
+        redirectAttributes.addFlashAttribute("purchaseMasterId", purchaseMasterId);
+        redirectAttributes.addFlashAttribute("voucherNo", voucherNo);
         return "redirect:/assetBuying";
     }
 

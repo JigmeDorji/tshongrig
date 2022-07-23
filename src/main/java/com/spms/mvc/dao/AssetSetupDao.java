@@ -172,7 +172,7 @@ public class AssetSetupDao extends BaseDao {
 
     @Transactional(readOnly = true)
     public List<AssetSetupDTO> getAssetItemTxnDetail(BigInteger assetDetailId) {
-        String query = "SELECT  e.faPurchaseId, \n" +
+        String query = "SELECT  e.faPurchaseId, e.purchaseMasterId,g.voucherNo, \n" +
                 "CASE WHEN e.openingBalance IS NULL THEN \"Purchase\" \n" +
                 "ELSE \"Opening\" END AS description,\n" +
                 "e.purchaseDate,\n" +
@@ -183,7 +183,8 @@ public class AssetSetupDao extends BaseDao {
                 "INNER JOIN tbl_fa_group c ON c.assetClassId=a.assetClassId\n" +
                 "INNER JOIN tbl_acc_acctype d ON d.accTypeId=c.accTypeId\n" +
                 "LEFT JOIN tbl_fa_purchase e ON e.assetDetailId=b.assetDetailId\n" +
-                "LEFT JOIN tbl_fa_purchase_detail f ON f.faPurchaseId=e.faPurchaseId\n" +
+                "INNER JOIN tbl_fa_purchase_mater g ON g.purchaseMasterId=e.purchaseMasterId\n" +
+                "INNER JOIN tbl_fa_purchase_detail f ON f.faPurchaseId=e.faPurchaseId\n" +
                 "where e.assetDetailId=:assetDetailId\n" +
                 "group by e.faPurchaseId,a.assetId,b.particular\n" +
                 "ORDER BY purchaseDate ASC;";

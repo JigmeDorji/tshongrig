@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -38,7 +39,7 @@ import java.util.List;
 @Controller
 @PreAuthorize("isAuthenticated()")
 @RequestMapping("/assetBuying")
-public class AssetBuyingController {
+public class AssetBuyingController extends BaseController {
 
     @Autowired
     private AssetOpeningService assetOpeningService;
@@ -59,7 +60,6 @@ public class AssetBuyingController {
         model.addAttribute("bankList",
                 moneyReceiptService.getBankList(currentUser.getCompanyId()));
 
-
         return "assetBuying";
     }
 
@@ -76,4 +76,10 @@ public class AssetBuyingController {
         return assetOpeningService.getFixedAssetGroupList();
     }
 
+
+    @ResponseBody
+    @RequestMapping(value = "/loadAssetBuyingList", method = RequestMethod.GET)
+    public List<OpeningAndBuyingDTO> loadAssetBuyingList(BigInteger purchaseMasterId) {
+        return assetOpeningService.loadAssetBuyingList(purchaseMasterId);
+    }
 }

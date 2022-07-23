@@ -22,10 +22,12 @@ public class AssetSetupDTO {
     private BigInteger assetId;
     private BigInteger assetDetailId;
     private BigInteger faPurchaseId;
+    private BigInteger purchaseMasterId;
     private String description;
     private String assetNo;
     private String particular;
     private Integer assetClassId;
+    private Integer voucherNo;
     private Integer groupId;
     private String parentAssetCode;
     private String assetCode;
@@ -59,6 +61,14 @@ public class AssetSetupDTO {
         this.faPurchaseId = faPurchaseId;
     }
 
+    public BigInteger getPurchaseMasterId() {
+        return purchaseMasterId;
+    }
+
+    public void setPurchaseMasterId(BigInteger purchaseMasterId) {
+        this.purchaseMasterId = purchaseMasterId;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -89,6 +99,14 @@ public class AssetSetupDTO {
 
     public void setAssetClassId(Integer assetClassId) {
         this.assetClassId = assetClassId;
+    }
+
+    public Integer getVoucherNo() {
+        return voucherNo;
+    }
+
+    public void setVoucherNo(Integer voucherNo) {
+        this.voucherNo = voucherNo;
     }
 
     public Integer getGroupId() {

@@ -104,7 +104,7 @@ public class VoucherGroupListService {
 
             List<AccProfitAndLossReportDTO> accProfitAndLossReportDTOs = accProfitAndLossReportService.getProfitAndLossDetails(currentUser.getCompanyId(),
                     preFinancialYearDTO.getFinancialYearFrom(), preFinancialYearDTO.getFinancialYearTo(),
-                    currentUser.getBusinessType());
+                    currentUser.getBusinessType(), currentUser.getFinancialYearId());
 
             previousYearProfitAndLossAmount = accProfitAndLossReportDTOs.get(accProfitAndLossReportDTOs.size() - 1).getAmount();
         }

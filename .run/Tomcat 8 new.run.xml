@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Tomcat 9" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.37" ALTERNATIVE_JRE_ENABLED="false" show_console_on_std_err="true" show_console_on_std_out="true">
+  <configuration default="false" name="Tomcat 9" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat Server" ALTERNATIVE_JRE_ENABLED="false" show_console_on_std_err="true" show_console_on_std_out="true">
     <option name="BROWSER_ID" value="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" />
     <option name="UPDATE_ON_FRAME_DEACTIVATION" value="true" />
     <option name="UPDATE_CLASSES_ON_FRAME_DEACTIVATION" value="true" />
@@ -14,7 +14,7 @@
     <server-settings>
       <option name="BASE_DIRECTORY_NAME" value="Unnamed_bcs_3" />
       <option name="HTTP_PORT" value="8086" />
-      <option name="JNDI_PORT" value="1094" />
+      <option name="JNDI_PORT" value="1090" />
     </server-settings>
     <output_file is_save="true" />
     <log_file alias="Tomcat Host Manager Log" path="%IDEA_RUN:CATALINA_BASE%/logs/host-manager.*" />
@@ -23,7 +23,7 @@
     <predefined_log_file enabled="true" id="Tomcat Catalina" />
     <predefined_log_file enabled="true" id="Tomcat Manager" />
     <RunnerSettings RunnerId="Debug">
-      <option name="DEBUG_PORT" value="51149" />
+      <option name="DEBUG_PORT" value="51155" />
     </RunnerSettings>
     <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
       <option name="USE_ENV_VARIABLES" value="true" />
