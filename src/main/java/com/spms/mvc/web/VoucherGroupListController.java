@@ -48,7 +48,7 @@ public class VoucherGroupListController extends BaseController {
                         DateUtil.DD_MMM_YYYY));
 
         model.addAttribute("toDate",
-                DateUtil.format(DateUtil.firstDayOfMonth(new Date()),
+                DateUtil.format(new Date(),
                         DateUtil.DD_MMM_YYYY));
 
         return new ModelAndView("voucherGroupList");

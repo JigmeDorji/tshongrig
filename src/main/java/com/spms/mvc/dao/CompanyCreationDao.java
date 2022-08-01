@@ -34,18 +34,21 @@ public class CompanyCreationDao {
 
     @Transactional(readOnly = true)
     public List<CompanyCreationDTO> getCompanyDetailList() {
-        String query = "SELECT id AS companyId," +
-                " companyName AS companyName," +
-                " mailingAddress AS mailingAddress," +
-                " mobileNo AS mobileNo," +
-                " email AS email," +
-                " website AS website, " +
-                " fnYrStart AS fnYrStart," +
-                " pfPercentage AS pfPercentage," +
-                " contactPerson," +
-                " status," +
-                " trialExpiryDate," +
-                " businessType AS businessType FROM tbl_common_company order by id desc";
+        String query = "SELECT c.id AS companyId,\n" +
+                "CONCAT(c.companyName,\" (\",u.username,\")\") AS companyName,\n" +
+                "c.mailingAddress AS mailingAddress,\n" +
+                "c.mobileNo AS mobileNo,\n" +
+                "c.email AS email,\n" +
+                "c.website AS website, \n" +
+                "c.fnYrStart AS fnYrStart,\n" +
+                "c.pfPercentage AS pfPercentage,\n" +
+                "c.contactPerson,\n" +
+                "c.status,\n" +
+                "c.trialExpiryDate,\n" +
+                "c.businessType AS businessType\n" +
+                "FROM tbl_common_company c \n" +
+                "inner join tbl_user u on c.id=u.companyId \n" +
+                "order by id desc";
         Session session = sessionFactory.getCurrentSession();
         return session.createSQLQuery(query)
                 .setResultTransformer(Transformers.aliasToBean(CompanyCreationDTO.class)).list();
