@@ -112,6 +112,15 @@ public class HomeController {
         return modelAndView;
     }
 
+
+    @RequestMapping(value = { "redirectHome"})
+    public ModelAndView redirectHome(HttpServletRequest request, HttpServletResponse response, Model model, Authentication authentication) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("home");
+        return modelAndView;
+    }
+
+
     @ResponseBody
     @RequestMapping(value = "/getTotalSale", method = RequestMethod.GET)
     public CompanyCreationDTO getTotalSale(HttpServletRequest request) {
