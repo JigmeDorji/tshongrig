@@ -43,6 +43,10 @@ function indexRowNo(tableId) {
 
 spms = (function () {
 
+    $('.homeBtn').on('click',function (){
+       window.location.href='/redirectHome';
+    })
+
     /**
      * validate the date entered
      * @param $this
