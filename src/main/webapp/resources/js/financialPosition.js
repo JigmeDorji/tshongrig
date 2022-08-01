@@ -9,7 +9,7 @@ financialPosition = (function () {
     let baseURL = 'financialPosition/';
     let trialBalanceGrid = $('#trialBalanceGrid');
 
-    function getTrialBalance(fromDate, toDate) {
+    function getFinancialPositionData(fromDate, toDate) {
         let totalAssets = 0;
         let totalLiability = 0;
         if (typeof fromDate === '' || typeof fromDate === 'undefined') {
@@ -20,6 +20,8 @@ financialPosition = (function () {
         }
         if (fromDate !== '' && toDate !== '') {
             let pNLAmount=0;
+            let openingBalDiff=0;
+
             //Get PNL Amount
             $.ajax({
                 url: baseURL + 'getPNLAmt',
@@ -38,10 +40,11 @@ financialPosition = (function () {
                 data: {fromDate: fromDate, toDate: toDate},
                 async: false,
                 success: function (res) {
-                    var totalDrAmount = 0;
-                    var totalCrAmount = 0;
+                    let totalDrAmount = 0;
+                    let totalCrAmount = 0;
+
                     //trialBalanceGrid.fnDestroy();
-                    var columnDef = [
+                    let columnDef = [
                         {data: 'particular', class: 'text-left particular'},
                         {
                             data: 'drAmount', class: 'text-right',
@@ -49,18 +52,18 @@ financialPosition = (function () {
                                 let drAmount = row.drAmount;
                                 let crAmount = row.crAmount;
                                 let amount = 0;
-                                if (row.groupId === 1 || row.groupId === 2) {
+                                if (row.groupId === 1 || row.groupId === 2 ||row.groupId == null) {
                                     if (drAmount !== null) {
                                         amount = amount + (drAmount);
                                     }
                                     if (crAmount !== null) {
-                                        amount = amount + (-1 * crAmount);
+                                        amount = amount + (crAmount);
                                     }
 
-                                    if (row.groupLevel === 1) {
+                                    if (row.groupLevel === 1 && row.particular!=="Total Assets") {
                                         totalAssets = totalAssets + amount;
-                                    }
 
+                                    }
                                 }
                                 if (row.particular === "Total Assets") {
                                     amount = totalAssets;
@@ -80,10 +83,18 @@ financialPosition = (function () {
                                 if (row.particular === "Income & Expenditure") {
                                     amount = pNLAmount;
                                 }
+
+
+                                if (row.particular === "Opening Balance Difference" && row.crAmount!==null) {
+                                    amount = amount + drAmount==null?0:drAmount+crAmount==null?0:crAmount;
+                                    openingBalDiff=crAmount;
+                                }
                                 if (row.particular === "Total Liability") {
-                                    amount = totalLiability+pNLAmount;
+                                    amount = totalLiability+pNLAmount+openingBalDiff;
                                 }
 
+
+                                amount=amount==null?0:amount;
                                 return spms.formatAmount(amount.toFixed(2));
                             }
                         },
@@ -103,27 +114,27 @@ financialPosition = (function () {
                         'rowCallback': function (row, data) {
                             if (parseInt($(row).children(':nth-child(3)').text()) === 1) {
 
-                                if ($(row).children(':nth-child(3)').text() !== '') {
-                                    if ($(row).children(':nth-child(1)').text() === "Opening Balance Difference") {
-                                        totalCrAmount = totalCrAmount + parseFloat(spms.removeCommaSeparation($(row).children(':nth-child(3)').text()));
-                                    }
-                                }
-                                if ($(row).children(':nth-child(2)').text() !== '') {
-                                    if ($(row).children(':nth-child(1)').text() === "Opening Balance Difference") {
-                                        totalDrAmount = totalDrAmount + parseFloat(spms.removeCommaSeparation($(row).children(':nth-child(2)').text()));
-                                    }
-                                }
+                                // if ($(row).children(':nth-child(3)').text() !== '') {
+                                //     if ($(row).children(':nth-child(1)').text() === "Opening Balance Difference") {
+                                //         // totalCrAmount = totalCrAmount + parseFloat(spms.removeCommaSeparation($(row).children(':nth-child(3)').text()));
+                                //     }
+                                // }
+                                // if ($(row).children(':nth-child(2)').text() !== '') {
+                                //     if ($(row).children(':nth-child(1)').text() === "Opening Balance Difference") {
+                                //         // totalDrAmount = totalDrAmount + parseFloat(spms.removeCommaSeparation($(row).children(':nth-child(2)').text()));
+                                //     }
+                                // }
                                 $(row).children(':nth-child(1)').addClass('parentText text-left');
                                 $(row).children(':nth-child(2)').addClass('parentText text-right');
                                 $(row).children(':nth-child(3)').addClass('parentText text-right');
                             } else {
 
-                                if ($(row).children(':nth-child(3)').text() !== '') {
-                                    totalCrAmount = totalCrAmount + parseFloat(spms.removeCommaSeparation($(row).children(':nth-child(3)').text()));
-                                }
-                                if ($(row).children(':nth-child(2)').text() !== '') {
-                                    totalDrAmount = totalDrAmount + parseFloat(spms.removeCommaSeparation($(row).children(':nth-child(2)').text()));
-                                }
+                                // if ($(row).children(':nth-child(3)').text() !== '') {
+                                //     totalCrAmount = totalCrAmount + parseFloat(spms.removeCommaSeparation($(row).children(':nth-child(3)').text()));
+                                // }
+                                // if ($(row).children(':nth-child(2)').text() !== '') {
+                                //     totalDrAmount = totalDrAmount + parseFloat(spms.removeCommaSeparation($(row).children(':nth-child(2)').text()));
+                                // }
                                 $(row).children(':nth-child(1)').addClass('childText');
                             }
                         }
@@ -139,11 +150,11 @@ financialPosition = (function () {
 
     function fetchTrialBalanceDetailsByDate() {
         $('#fromDate').on('change', function () {
-            getTrialBalance($(this).val(), $('#toDate').val());
+            getFinancialPositionData($(this).val(), $('#toDate').val());
         });
 
         $('#toDate').on('change', function () {
-            getTrialBalance($('#fromDate').val(), $(this).val());
+            getFinancialPositionData($('#fromDate').val(), $(this).val());
         });
     }
 
@@ -269,14 +280,14 @@ financialPosition = (function () {
     }
 
     return {
-        getTrialBalance: getTrialBalance,
+        getFinancialPositionData: getFinancialPositionData,
         fetchTrialBalanceDetailsByDate: fetchTrialBalanceDetailsByDate
     }
 
 })();
 
 $(document).ready(function () {
-    financialPosition.getTrialBalance();
+    financialPosition.getFinancialPositionData();
     financialPosition.fetchTrialBalanceDetailsByDate();
 
 });

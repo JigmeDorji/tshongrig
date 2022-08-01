@@ -148,7 +148,8 @@ public class LedgerDao {
         return (String) sessionFactory.getCurrentSession()
                 .createSQLQuery(sqlQry)
                 .setParameter("ledgerName", ledgerName)
-                .setParameter("companyId", companyId).uniqueResult();
+                .setParameter("companyId", companyId)
+                .uniqueResult();
     }
 
     @Transactional(readOnly = true)

@@ -24,7 +24,6 @@ import java.util.Date;
 @Entity
 @Table(name = "tbl_fa_purchase_mater")
 public class FaPurchaseMaster extends BaseEntity {
-
     @Id
     @Column(name = "purchaseMasterId")
     private BigInteger purchaseMasterId;
@@ -46,6 +45,9 @@ public class FaPurchaseMaster extends BaseEntity {
 
     @Column(name = "asOnDate")
     private Date asOnDate;
+
+    @Column(name = "amtReceived")
+    private Double amtReceived;
 
     public BigInteger getPurchaseMasterId() {
         return purchaseMasterId;
@@ -101,5 +103,13 @@ public class FaPurchaseMaster extends BaseEntity {
 
     public void setAsOnDate(Date asOnDate) {
         this.asOnDate = asOnDate;
+    }
+
+    public Double getAmtReceived() {
+        return amtReceived;
+    }
+
+    public void setAmtReceived(Double amtReceived) {
+        this.amtReceived = amtReceived;
     }
 }
