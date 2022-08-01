@@ -55,11 +55,11 @@ public class CompanyCreationController extends BaseController {
         ResponseMessage responseMessage= new ResponseMessage();
         CurrentUser currentUser=getCurrentUser(request);
         CompanyCreationDTO companyCreationDTO = companyCreationService.getSelectedCompanyDetails(companyId);
-       if(companyCreationDTO.getStatus()==null){
-           responseMessage.setStatus(SystemDataInt.MESSAGE_STATUS_UNSUCCESSFUL.value());
-           responseMessage.setText("Company is in pending state.");
-           return responseMessage;
-       }
+//       if(companyCreationDTO.getStatus()==null){
+//           responseMessage.setStatus(SystemDataInt.MESSAGE_STATUS_UNSUCCESSFUL.value());
+//           responseMessage.setText("Company is in pending state.");
+//           return responseMessage;
+//       }
         FinancialYearDTO financialYearDTO = companyCreationService.getCurrentFinancialYearIdByCompany(companyId);
 
         currentUser.setCompanyName(companyCreationDTO.getCompanyName());
