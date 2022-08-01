@@ -52,7 +52,6 @@ public class CompanyCreationService extends BaseController {
     private BCryptPasswordEncoder passwordEncoder;
 
 
-
     public List<DropdownDTO> getBusinessTypeDropdown() {
         return companyCreationDao.getBusinessTypeDropdown();
     }
@@ -62,9 +61,9 @@ public class CompanyCreationService extends BaseController {
     }
 
     public List<CompanyCreationDTO> getCompanyDetailList(CurrentUser currentUser) {
-        if(currentUser.getUserRoleTypeId().equals(UserRoleType.Owner.getValue())){
+        if (currentUser.getUserRoleTypeId().equals(UserRoleType.Owner.getValue())) {
             return companyCreationDao.getCompanyDetailList();
-        }else {
+        } else {
             return companyCreationDao.getCompanyLoginCompany(currentUser.getCompanyId());
         }
 
@@ -88,7 +87,7 @@ public class CompanyCreationService extends BaseController {
         }
 
         Integer companyId = null;
-        BigInteger userId=null;
+        BigInteger userId = null;
         if (companyCreationDTO.getCompanyId() == null) {//During signup time
             companyCreation.setCompanyName(companyCreationDTO.getCompanyName());
             companyCreation.setMailingAddress(companyCreationDTO.getMailingAddress());
@@ -105,15 +104,16 @@ public class CompanyCreationService extends BaseController {
         } else {//during approval time
             CompanyCreationDTO companyDetailPrevious = companyCreationDao.populateCompanyDetail(companyCreationDTO.getCompanyId());
 
-            companyId=companyCreationDTO.getCompanyId();
+            companyId = companyCreationDTO.getCompanyId();
 
             //Auto add user details
-            if(currentUser.getUserRoleTypeId().equals(UserRoleType.Owner.getValue())&&companyCreationDTO.getStatus().equals(CommonStatus.Approve.getValue())){
+            if (currentUser.getUserRoleTypeId().equals(UserRoleType.Owner.getValue()) && companyCreationDTO.getStatus().equals(CommonStatus.Approve.getValue())) {
                 User user = new User();
                 BigInteger lastUserId = userDao.getLastUserId();
                 lastUserId = lastUserId == null ? BigInteger.ONE : lastUserId.add(BigInteger.ONE);
                 user.setUserId(lastUserId);
                 String companyAbbreviation = companyCreationDTO.getCompanyName().replaceAll("\\B.|\\P{L}", "").toUpperCase();
+                companyAbbreviation = companyAbbreviation.concat(lastUserId.toString());
                 user.setUsername(companyAbbreviation);
                 user.setUserFullName("Administrator");
                 String saltValue = generateSaltValue(6);
@@ -131,7 +131,6 @@ public class CompanyCreationService extends BaseController {
                 user.setCreatedDate(new Date());
                 userId = userDao.addUser(user);
             }
-
 
 
             if (companyDetailPrevious.getStatus().equals(CommonStatus.Pending.getValue()) && companyCreationDTO.getStatus().equals(CommonStatus.Approve.getValue())) {
@@ -156,7 +155,7 @@ public class CompanyCreationService extends BaseController {
                 userService.saveUserWiseCompanyMapping(userDTO, userId);
             }
             companyCreation.setStatus(companyCreationDTO.getStatus());
-            if(companyCreationDTO.getStatus().equals(CommonStatus.Approve.getValue())){
+            if (companyCreationDTO.getStatus().equals(CommonStatus.Approve.getValue())) {
                 companyCreation.setTrialExpiryDate(DateUtils.addMonths(new Date(), 1));
             }
             companyCreation.setId(companyCreationDTO.getCompanyId());
@@ -166,17 +165,16 @@ public class CompanyCreationService extends BaseController {
             companyCreation.setEmail(companyCreationDTO.getEmail());
             companyCreation.setWebsite(companyCreationDTO.getWebsite());
             companyCreation.setFnYrStart(companyCreationDTO.getFnYrStart());
-            if(currentUser.getUserRoleTypeId().equals(UserRoleType.Owner)){
+            if (currentUser.getUserRoleTypeId().equals(UserRoleType.Owner)) {
                 companyCreation.setBusinessType(companyCreationDTO.getBusinessType());
                 companyCreation.setCompanyName(companyCreationDTO.getCompanyName());
-            }else {
+            } else {
                 companyCreation.setBusinessType(companyDetailPrevious.getBusinessType());
                 companyCreation.setCompanyName(companyDetailPrevious.getCompanyName());
             }
             companyCreation.setPfPercentage(companyCreationDTO.getPfPercentage());
             companyCreation.setRemarks(companyCreationDTO.getRemarks());
             companyCreationDao.updateCompanyDetails(companyCreation);
-
 
 
         }
