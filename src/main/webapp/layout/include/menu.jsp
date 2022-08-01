@@ -17,7 +17,7 @@
         <!-- Header -->
         <div class="sidebar-section sidebar-header bg-indigo" style="background-color: #4085a8 !important;">
             <div class="sidebar-section-body d-flex align-items-center justify-content-center pb-0">
-                <a href="/redirectHome" class="sidebar-resize-hide flex-1 mb-0 text-white "><strong><i class="icon-home8"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HOME</strong></a>
+                <a href="<c:url value='/redirectHome'/>" class="sidebar-resize-hide flex-1 mb-0 text-white "><strong><i class="icon-home8"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HOME</strong></a>
                 <div>
                     <button type="button"
                             class="btn btn-outline-light text-body border-transparent btn-icon rounded-pill btn-sm sidebar-control sidebar-main-resize d-none d-lg-inline-flex">

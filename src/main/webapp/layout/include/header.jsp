@@ -30,7 +30,7 @@
     </div>
 
     <div class="navbar-brand text-left">
-        <a href="/redirectHome" class="d-inline-block">
+        <a href="<c:url value='/redirectHome'/>" class="d-inline-block">
             <img src="<c:url value='/resources/limitless/global_assets/images/logo_trans.png'/>"
                  style="width: 90px; height: 26px; margin-top: -10px"
                  class="d-none d-sm-block"
