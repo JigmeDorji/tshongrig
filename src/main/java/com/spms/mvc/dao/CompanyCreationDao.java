@@ -35,7 +35,7 @@ public class CompanyCreationDao {
     @Transactional(readOnly = true)
     public List<CompanyCreationDTO> getCompanyDetailList() {
         String query = "SELECT distinct c.id AS companyId,\n" +
-                "                CONCAT(c.companyName,\"(\",u.username,\")\") AS companyName,\n" +
+                "                CONCAT(c.companyName,\"(\",ifnull(u.username,\"---\"),\")\") AS companyName,\n" +
                 "                c.mailingAddress AS mailingAddress,\n" +
                 "                c.mobileNo AS mobileNo,\n" +
                 "                c.email AS email,\n" +

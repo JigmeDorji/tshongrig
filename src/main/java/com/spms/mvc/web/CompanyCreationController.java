@@ -52,8 +52,14 @@ public class CompanyCreationController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/selectCompany", method = RequestMethod.GET)
     public ResponseMessage selectCompany(HttpServletRequest request,Integer companyId) {
+        ResponseMessage responseMessage= new ResponseMessage();
         CurrentUser currentUser=getCurrentUser(request);
         CompanyCreationDTO companyCreationDTO = companyCreationService.getSelectedCompanyDetails(companyId);
+       if(companyCreationDTO.getStatus()==null){
+           responseMessage.setStatus(SystemDataInt.MESSAGE_STATUS_UNSUCCESSFUL.value());
+           responseMessage.setText("Company is in pending state.");
+           return responseMessage;
+       }
         FinancialYearDTO financialYearDTO = companyCreationService.getCurrentFinancialYearIdByCompany(companyId);
 
         currentUser.setCompanyName(companyCreationDTO.getCompanyName());
@@ -79,7 +85,7 @@ public class CompanyCreationController extends BaseController {
         currentUser.setUserId(currentUser.getUserId());
         request.getSession().setAttribute("currentUser", currentUser);
 
-        ResponseMessage responseMessage= new ResponseMessage();
+
         responseMessage.setText("Successfully Selected");
         responseMessage.setStatus(SystemDataInt.MESSAGE_STATUS_SUCCESSFUL.value());
         return responseMessage;
