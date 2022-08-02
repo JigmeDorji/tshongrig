@@ -50,14 +50,15 @@ assetBuying = (function () {
         }
 
         function getItemSuggestionList() {
-            if ($('#voucherNo').val() === '') {
-                $.ajax({
-                    url: 'assetOpening/getItemSuggestionList',
-                    type: 'GET',
-                    success: function (res) {
-                        valueList = $.map(res, function (value) {
-                            return {value: value.particular, id: value.assetDetailId};
-                        });
+            $.ajax({
+                url: 'assetOpening/getItemSuggestionList',
+                type: 'GET',
+                success: function (res) {
+                    valueList = $.map(res, function (value) {
+                        return {value: value.particular, id: value.assetDetailId};
+                    });
+                    if ($('#voucherNo').val() === '') {
+
                         fixedAssetBuyingGrid.find('tbody').append(returnRow());
 
                         fixedAssetBuyingGrid.find('tbody tr')
@@ -92,8 +93,9 @@ assetBuying = (function () {
                         spms.loadGridDropDown(fixedAssetBuyingGridTBody.find('tr').find('.fixedAssetGroupId'), res);
                         indexRowNo(fixedAssetBuyingGrid);
                     }
-                });
-            }
+
+                }
+            });
         }
 
         function addMoreRow() {
@@ -102,7 +104,6 @@ assetBuying = (function () {
                 fixedAssetBuyingGrid.find('tbody').append(returnRow());
                 selectedRow.find('.addBtn').addClass('hidden');
                 selectedRow.find('.removeBtn').removeClass('hidden');
-
                 items = new Bloodhound({
                     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
                     queryTokenizer: Bloodhound.tokenizers.whitespace,

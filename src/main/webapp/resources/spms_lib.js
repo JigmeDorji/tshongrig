@@ -683,6 +683,42 @@ $(document).ready(function () {
         }
     });
 
+    body.on('blur', '.fxFormatDate', function (e) {
+
+        if ($(this).val() !== '') {
+            // if (e.keyCode == 13) {
+            if (isEnteredDateValid($(this))) {
+
+                let dateSplit = $(this).val().split('.');
+
+                let day = dateSplit[0];
+                let month = dateSplit[1];
+                let year = dateSplit[2];
+
+                //check whether selected date is within a active financial year
+                let date = spms.formattedDate(day, month, year);
+
+                const financialYearFrom = new Date($('#financialYearFrom').val());
+                const financialYearTo = new Date($('#financialYearTo').val());
+
+                const enteredDate = new Date(date);
+                let currentDate = new Date();
+                let curMonth = currentDate.getUTCMonth() + 1; //months from 1-12
+                let curDay = currentDate.getUTCDate();
+                let curYear = currentDate.getUTCFullYear();
+                let curDate = new Date(spms.formattedDate(curDay, curMonth, curYear));
+
+                if (curDate < enteredDate) {
+                    errorMsg("Future date not allowed.");
+                    $(this).val('');
+                    return false;
+                }
+
+                $(this).val(date);
+            }
+        }
+    });
+
     let dateFormat2 = $('.dateFormat2');
 
     dateFormat2.on('paste', function (e) {
