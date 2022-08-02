@@ -243,4 +243,10 @@ public class AssetOpeningDao extends BaseDao {
                 .setResultTransformer(Transformers.aliasToBean(OpeningAndBuyingDTO.class)).list();
     }
 
+    public boolean checkIsOpening(BigInteger faPurchaseId) {
+        String sqlQuery = "";
+
+        return sessionFactory.getCurrentSession().createSQLQuery(sqlQuery)
+                .setParameter("faPurchaseId", faPurchaseId).uniqueResult().equals(BigInteger.ZERO);
+    }
 }

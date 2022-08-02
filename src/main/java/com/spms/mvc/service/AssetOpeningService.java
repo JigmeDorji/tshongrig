@@ -348,8 +348,12 @@ public class AssetOpeningService {
     public ResponseMessage deleteItem(BigInteger faPurchaseId) {
         ResponseMessage responseMessage = new ResponseMessage();
 
+        if (assetOpeningDao.checkIsOpening(faPurchaseId)) {
+
+        }
         assetOpeningDao.deleteItemFromDetail(faPurchaseId);
         assetOpeningDao.deleteItem(faPurchaseId);
+
         responseMessage.setStatus(1);
         responseMessage.setText("You have delete successfully");
         return responseMessage;
