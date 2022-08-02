@@ -30,7 +30,7 @@ public class ViewItemDetailController {
     @Autowired
     private ViewItemDetailService viewItemDetailService;
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    @RequestMapping(value = "", method =     RequestMethod.GET)
     public String list(Model model, HttpServletRequest request) {
         return "viewItemDetail";
     }

@@ -159,6 +159,8 @@ companyCreation = (function () {
                             window.location.reload();
                         });
 
+                    }else {
+                        errorMsg(res.text);
                     }
 
                 }
