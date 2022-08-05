@@ -708,12 +708,6 @@ $(document).ready(function () {
                 let curYear = currentDate.getUTCFullYear();
                 let curDate = new Date(spms.formattedDate(curDay, curMonth, curYear));
 
-                if (curDate < enteredDate) {
-                    errorMsg("Future date not allowed.");
-                    $(this).val('');
-                    return false;
-                }
-
                 $(this).val(date);
             }
         }
