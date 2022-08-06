@@ -52,20 +52,21 @@
                                                placeholder="Enter your password">
                                     </div><!-- form-group -->
                                     <button type="submit" class="btn btn-primary btn-block btn-signin">Sign In</button>
+                                    <a type="submit" class="btn btn-primary btn-block "  href="<c:url value='/registration'/>">Sign Up</a>
                                     <%--                        <p class="mg-b-0">Don't have an account? <a href="page-signup2.html">Sign Up</a></p>--%>
 
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <%--                                           <a class="xl-linklist--link xui-text-decoration-none" data-automationid="ForgottenPassword--link" href="/identity/user/forgot-password">Forgot password?</a>--%>
-                                            <a class="xl-linklist--link xui-text-decoration-none"
-                                               data-automationid="CannotLogin--link"
-                                               href="<c:url value='/registration'/>">Sign up if you are not yet?</a>
+<%--                                    <div class="row">--%>
+<%--                                        <div class="col-md-4">--%>
+<%--                                        </div>--%>
+<%--                                        <div class="col-md-6">--%>
+<%--                                            &lt;%&ndash;                                           <a class="xl-linklist--link xui-text-decoration-none" data-automationid="ForgottenPassword--link" href="/identity/user/forgot-password">Forgot password?</a>&ndash;%&gt;--%>
+<%--                                            <a class="xl-linklist--link xui-text-decoration-none"--%>
+<%--                                               data-automationid="CannotLogin--link"--%>
+<%--                                               href="<c:url value='/registration'/>">Sign up if you are not yet?</a>--%>
 
-                                        </div>
+<%--                                        </div>--%>
 
-                                    </div>
+<%--                                    </div>--%>
                                     <c:if test="${not empty error}">
                                         <div class="form-group">
                                             <div class="alert alert-danger border-0 alert-dismissible">
