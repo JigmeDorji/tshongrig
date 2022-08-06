@@ -17,6 +17,7 @@ $(document).ajaxSend(function (e, xhr, options) {
     NProgress.done();
 });
 
+
 $(document).ajaxError(function (event, jqxhr, settings, thrownError) {
     switch (jqxhr.status) {
         case 500:
@@ -985,6 +986,8 @@ $.fn.disableElements = function (status) {
 };
 
 
-
+//Disabling Right Click
+/*document.addEventListener('contextmenu',
+    event => event.preventDefault());*/
 
 

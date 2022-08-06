@@ -3,15 +3,18 @@
  */
 
 let body = $('body');
-let shiftKey = 16;
+
+let shiftKey = 32;
 
 function baseURL() {
     return spms.getUrl();
 }
 
+
 body.dbKeypress(shiftKey, function (e) {
     spms.ajax(baseURL() + 'getScreenList', 'GET', {}
         , function (res) {
+
             $('#screenListModal').modal('show');
             $('#autoCompleteScreenList').devbridgeAutocomplete({
                 lookup: $.map(res, function (value) {

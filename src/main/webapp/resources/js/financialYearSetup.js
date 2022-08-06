@@ -168,4 +168,5 @@ $(document).ready(function () {
     financialYearSetup.onClickEdit();
     financialYearSetup.loadFinancialYear();
     financialYearSetup.deleteFinancialYearDetail();
+
 });
