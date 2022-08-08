@@ -79,7 +79,7 @@ public class AssetBuyingController extends BaseController {
 
     @ResponseBody
     @RequestMapping(value = "/loadAssetBuyingList", method = RequestMethod.GET)
-    public List<OpeningAndBuyingDTO> loadAssetBuyingList(BigInteger purchaseMasterId) {
-        return assetOpeningService.loadAssetBuyingList(purchaseMasterId);
+    public List<OpeningAndBuyingDTO> loadAssetBuyingList(Integer voucherNo, BigInteger purchaseMasterId) {
+        return assetOpeningService.loadAssetBuyingList(voucherNo, purchaseMasterId);
     }
 }

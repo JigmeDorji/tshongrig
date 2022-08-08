@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -203,7 +204,7 @@ public class AssetOpeningDao extends BaseDao {
         String sqlQuery = "SELECT COUNT(*) FROM tbl_fa_purchase where purchaseMasterId=:purchaseMasterId";
         return sessionFactory.getCurrentSession().createSQLQuery(sqlQuery)
                 .setParameter("purchaseMasterId", purchaseMasterId)
-                .uniqueResult().equals(BigInteger.ONE);
+                .uniqueResult().equals(BigInteger.ZERO);
     }
 
     @Transactional
@@ -215,24 +216,37 @@ public class AssetOpeningDao extends BaseDao {
     }
 
     @Transactional(readOnly = true)
-    public List<OpeningAndBuyingDTO> loadAssetBuyingList(BigInteger purchaseMasterId) {
-        String sqlQuery = "SELECT b.assetId,\n" +
-                "  b.assetDetailId,  \n" +
+    public List<OpeningAndBuyingDTO> loadAssetBuyingList(Integer voucherNo, BigInteger purchaseMasterId) {
+        String sqlQuery = "SELECT b.assetId,d.purchaseMasterId, \n" +
+                "  b.assetDetailId,\n" +
                 "  a.faPurchaseId, \n" +
                 "  b.particular,\n" +
                 "  a.purchaseDate,\n" +
                 "  a.rate,\n" +
                 "  a.qty,\n" +
-                "  e.accTypeId \n" +
+                "  d.purchaseInvoiceNo,\n" +
+                "  d.paidInType,\n" +
+                "  e.accTypeId,\n" +
+                "  d.amtReceived,\n" +
+                "  f.partyName\n" +
                 " FROM tbl_fa_purchase a\n" +
                 "INNER JOIN tbl_fa_item_setup_detail b ON a.assetDetailId=b.assetDetailId\n" +
                 "INNER JOIN tbl_fa_item_setup c ON c.assetId=b.assetId\n" +
                 "INNER JOIN tbl_fa_purchase_mater d ON d.purchaseMasterId=a.purchaseMasterId\n" +
                 "INNER JOIN tbl_fa_group e ON c.assetClassId=e.assetClassId\n" +
-                "WHERE d.purchaseMasterId=:purchaseMasterId";
+                "LEFT JOIN tbl_acc_party_detail f ON d.partyId=f.partyId\n" +
+                "WHERE d.purchaseMasterId=:purchaseMasterId and d.voucherNo=:voucherNo";
 
         return sessionFactory.getCurrentSession().createSQLQuery(sqlQuery)
+                .setParameter("voucherNo", voucherNo)
                 .setParameter("purchaseMasterId", purchaseMasterId)
                 .setResultTransformer(Transformers.aliasToBean(OpeningAndBuyingDTO.class)).list();
+    }
+
+    public boolean checkIsOpening(BigInteger faPurchaseId) {
+        String sqlQuery = "";
+
+        return sessionFactory.getCurrentSession().createSQLQuery(sqlQuery)
+                .setParameter("faPurchaseId", faPurchaseId).uniqueResult().equals(BigInteger.ZERO);
     }
 }

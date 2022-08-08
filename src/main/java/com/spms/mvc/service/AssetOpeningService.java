@@ -73,6 +73,15 @@ public class AssetOpeningService {
         BigInteger faPurchaseDetailId;
 
         ResponseMessage responseMessage = new ResponseMessage();
+        //valid Business
+
+        if (Objects.equals(openingAndBuyingDTO.getIsCash(), PaymentModeTypeEnum.CASH.getValue())) {
+            if (ledgerService.getCashLedgerByCashAccountHead(currentUser) == null) {
+                responseMessage.setStatus(0);
+                responseMessage.setText("There is no cash ledger. Please check.");
+                return responseMessage;
+            }
+        }
 
         //Delete the existing data
         if (openingAndBuyingDTO.getFaPurchaseId() != null && openingAndBuyingDTO.getPurchaseMasterId() != null) {
@@ -98,6 +107,11 @@ public class AssetOpeningService {
                 }
             } else {
                 voucherNo = openingAndBuyingDTO.getVoucherNo();
+                if (Objects.equals(openingAndBuyingDTO.getIsCash(), PaymentModeTypeEnum.CASH.getValue()) || Objects.equals(openingAndBuyingDTO.getIsCash(), PaymentModeTypeEnum.BANK.getValue())) {
+                    voucherTypeId = VoucherTypeEnum.PAYMENT.getValue();
+                } else {
+                    voucherTypeId = VoucherTypeEnum.JOURNAL.getValue();
+                }
             }
         }
         //check party name already exists
@@ -138,10 +152,11 @@ public class AssetOpeningService {
         faPurchaseMaster.setPurchaseMasterId(purchaseMasterId);
         faPurchaseMaster.setAsOnDate(openingAndBuyingDTO.getPurchaseDate());
         faPurchaseMaster.setPurchaseInvoiceNo(openingAndBuyingDTO.getPurchaseInvoiceNo());
-        faPurchaseMaster.setPaidInType(openingAndBuyingDTO.getPaidInType());
+        faPurchaseMaster.setPaidInType(openingAndBuyingDTO.getIsCash());
         faPurchaseMaster.setVoucherNo(openingAndBuyingDTO.getVoucherNo());
         faPurchaseMaster.setCompanyId(currentUser.getCompanyId());
         faPurchaseMaster.setVoucherNo(voucherNo);
+        faPurchaseMaster.setAmtReceived(openingAndBuyingDTO.getAmtReceived());
         faPurchaseMaster.setCreatedBy(currentUser.getLoginId());
         faPurchaseMaster.setCreatedDate(currentUser.getCreatedDate());
         assetOpeningDao.saveToMasterTable(faPurchaseMaster);
@@ -209,7 +224,7 @@ public class AssetOpeningService {
                 }
 
                 ledgerService.updateOpeningBalance(ledgerService.getLedgerIdByLedgerName(ledgerName,
-                        currentUser, openingAndBuyingDTOI.getAccTypeId()), currentUser.getCompanyId(),
+                                currentUser, openingAndBuyingDTOI.getAccTypeId()), currentUser.getCompanyId(),
                         openingAndBuyingDTOI.getAmount());
             }
         }
@@ -333,14 +348,18 @@ public class AssetOpeningService {
     public ResponseMessage deleteItem(BigInteger faPurchaseId) {
         ResponseMessage responseMessage = new ResponseMessage();
 
+        if (assetOpeningDao.checkIsOpening(faPurchaseId)) {
+
+        }
         assetOpeningDao.deleteItemFromDetail(faPurchaseId);
         assetOpeningDao.deleteItem(faPurchaseId);
+
         responseMessage.setStatus(1);
         responseMessage.setText("You have delete successfully");
         return responseMessage;
     }
 
-    public List<OpeningAndBuyingDTO> loadAssetBuyingList(BigInteger purchaseMasterId) {
-        return assetOpeningDao.loadAssetBuyingList(purchaseMasterId);
+    public List<OpeningAndBuyingDTO> loadAssetBuyingList(Integer voucherNo, BigInteger purchaseMasterId) {
+        return assetOpeningDao.loadAssetBuyingList(voucherNo, purchaseMasterId);
     }
 }

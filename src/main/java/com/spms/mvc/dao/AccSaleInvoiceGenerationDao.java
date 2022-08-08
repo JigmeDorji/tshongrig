@@ -143,7 +143,7 @@ public class AccSaleInvoiceGenerationDao {
 
     @Transactional(readOnly = true)
     public AccSaleInvoiceGenerationDTO getPartyDetail(Integer companyId, String partyName) {
-        String sql = "SELECT partyAddress, partyContactNo, partyEmail FROM tbl_acc_party_detail" +
+        String sql = "SELECT partyName,partyAddress, partyContactNo, partyEmail FROM tbl_acc_party_detail" +
                 " where companyId=:companyId AND partyName=:partyName";
         return (AccSaleInvoiceGenerationDTO) sessionFactory.getCurrentSession().createSQLQuery(sql)
                 .setParameter("companyId", companyId)
