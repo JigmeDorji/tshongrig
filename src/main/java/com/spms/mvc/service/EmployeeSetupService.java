@@ -8,6 +8,7 @@ import com.spms.mvc.entity.EmployeeSetup;
 import com.spms.mvc.library.helper.CurrentUser;
 import com.spms.mvc.library.helper.DropdownDTO;
 import com.spms.mvc.library.helper.ResponseMessage;
+import org.apache.poi.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,7 @@ public class EmployeeSetupService {
         }
 
         EmployeeSetup employeeSetup = new EmployeeSetup();
+        String companyAbbreviation=currentUser.getCompanyName().replaceAll("\\B.|\\P{L}", "").toUpperCase();
 
 
         if (!employeeSetupDTO.getEmpId().equals("")) {
@@ -69,7 +71,7 @@ public class EmployeeSetupService {
             responseMessage.setText("Successfully Updated.");
             return responseMessage;
         } else {
-            employeeSetup.setEmpId(employeeSetupDTO.getEmpName().substring(0, 1).concat(employeeSetupDTO.getCidNo()));
+            employeeSetup.setEmpId(companyAbbreviation.concat(employeeSetupDTO.getEmpName().substring(0, 1)).concat(employeeSetupDTO.getCidNo()));
             employeeSetup.setEmpName(employeeSetupDTO.getEmpName());
             employeeSetup.setDateOfBirth(employeeSetupDTO.getDateOfBirth());
             employeeSetup.setCidNo(employeeSetupDTO.getCidNo());
