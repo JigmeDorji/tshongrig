@@ -351,6 +351,7 @@ public class AssetOpeningService {
         if (assetOpeningDao.checkIsOpening(faPurchaseId)) {
 
         }
+
         assetOpeningDao.deleteItemFromDetail(faPurchaseId);
         assetOpeningDao.deleteItem(faPurchaseId);
 
