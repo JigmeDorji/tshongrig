@@ -76,7 +76,7 @@ public class FixedAssetSaleDao {
         String query = "SELECT receiptSerialCounter FROM tbl_fa_receipt_counter where companyId=:companyId limit 1";
         Session session = sessionFactory.getCurrentSession();
         org.hibernate.Query result = session.createSQLQuery(query).setParameter("companyId", companyId);
-        return result.uniqueResult() == null ? 0 : (Integer) result.uniqueResult();
+        return (Integer) result.uniqueResult();
     }
 
     @Transactional
