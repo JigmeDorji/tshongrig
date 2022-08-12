@@ -120,8 +120,7 @@
                         <div class="form-group row">
                             <div class="col-md-7">
                             </div>
-                            <label class="col-md-2 right-label col-lg-offset-7" id="amountReceivedText">Amount
-                                Received</label>
+                            <label class="col-md-2 right-label col-lg-offset-7" id="amountReceivedText">Net Payment</label>
 
                             <div class="col-md-3">
                                 <input type="text"
