@@ -17,6 +17,7 @@ $(document).ajaxSend(function (e, xhr, options) {
     NProgress.done();
 });
 
+
 $(document).ajaxError(function (event, jqxhr, settings, thrownError) {
     switch (jqxhr.status) {
         case 500:
@@ -130,14 +131,14 @@ spms = (function () {
     }
 
     function getUrl() {
-        // return window.location.protocol + '//' + window.location.host + '/tshong-rig/';
-        return window.location.protocol + '//' + window.location.host + '/';
+        return window.location.protocol + '//' + window.location.host + '/tshong-rig/';
+        // return window.location.protocol + '//' + window.location.host + '/';
         // return 'http://www.autga.bt/bcs/';
     }
 
     function baseReportLocation() {
-        // return window.location.protocol + '//' + window.location.host + '/tshong-rig/resources/reports/';
-        return window.location.protocol + '//' + window.location.host + '/resources/reports/';
+        return window.location.protocol + '//' + window.location.host + '/tshong-rig/resources/reports/';
+        // return window.location.protocol + '//' + window.location.host + '/resources/reports/';
     }
 
     //index the table gridaccProfitAndLossReport
@@ -985,6 +986,8 @@ $.fn.disableElements = function (status) {
 };
 
 
-
+//Disabling Right Click
+/*document.addEventListener('contextmenu',
+    event => event.preventDefault());*/
 
 

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.interceptor.TransactionInterceptor;
 
 import java.math.BigInteger;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -64,7 +65,7 @@ public class FixedAssetSaleService {
         try {
 
             Integer voucherNo;
-            Integer currentReceiptSerialNo;
+            Integer currentReceiptSerialNo = 0;
 
             /*   Auto create Cash ledger*/
             ledgerService.getLedgerIdByLedgerName("Cash in Hand", currentUser,
@@ -79,9 +80,10 @@ public class FixedAssetSaleService {
                         currentUser), VoucherTypeEnum.SALES.getValue(), currentUser);
             } else {
                 currentReceiptSerialNo = fixedAssetSaleDao.getReceiptSerial(currentUser.getCompanyId());
-                if (currentReceiptSerialNo == 0) {
+                if (currentReceiptSerialNo == null) {
                     fixedAssetSaleDao.insertToReceiptSerialCounter(currentUser.getCompanyId());
                 }
+                currentReceiptSerialNo = currentReceiptSerialNo == null ? 0 : currentReceiptSerialNo;
                 currentReceiptSerialNo = currentReceiptSerialNo + 1;
                 receiptMemoNo = String.format("%06d", currentReceiptSerialNo);
 
@@ -172,7 +174,7 @@ public class FixedAssetSaleService {
 
                 //When the asset is sold at a higher price than the net value after depreciation.
                 if (assetSalesProfit > 0.0) {
-                    ledgerId = ledgerService.getLedgerIdByLedgerName("Particular asset sold", currentUser,
+                    ledgerId = ledgerService.getLedgerIdByLedgerName("Asset Sale Income", currentUser,
                             AccountTypeEnum.OTHER_INCOME.getValue());
 
                     VoucherDetailDTO voucherSaleHigherDTO = new VoucherDetailDTO();
@@ -364,7 +366,11 @@ public class FixedAssetSaleService {
             netValue = purchaseValue - currentYearDepAsDate;
 
         } else {
-            totalNoOfDaysDif = DateUtil.dayDifference(openingAndBuyingListDTO.getPurchaseDate(), asOnDate);
+
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+            Date date = format.parse(openingAndBuyingListDTO.getPurchaseDate().toString());
+
+            totalNoOfDaysDif = DateUtil.dayDifference(date, asOnDate);
             Double currentYearDepreciation = ((purchaseValue * depreciationRate) / numOfDays) * totalNoOfDaysDif;
             netValue = purchaseValue - currentYearDepreciation;
         }

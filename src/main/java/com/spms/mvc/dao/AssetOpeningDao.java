@@ -47,14 +47,10 @@ public class AssetOpeningDao extends BaseDao {
     }
 
     @Transactional(readOnly = true)
-    public BigInteger getMaxFaPurchaseId(Integer companyId) {
-        String query = "SELECT MAX(faPurchaseId) FROM tbl_fa_purchase a\n" +
-                "INNER JOIN tbl_fa_purchase_mater b ON a.purchaseMasterId=b.purchaseMasterId\n" +
-                " WHERE b.companyId=:companyId";
+    public BigInteger getMaxFaPurchaseId() {
+        String query = "SELECT MAX(faPurchaseId) FROM tbl_fa_purchase";
         Session session = sessionFactory.getCurrentSession();
-        return (BigInteger) session.createSQLQuery(query)
-                .setParameter("companyId", companyId)
-                .uniqueResult();
+        return (BigInteger) session.createSQLQuery(query).uniqueResult();
     }
 
     @Transactional
@@ -75,11 +71,10 @@ public class AssetOpeningDao extends BaseDao {
     }
 
     @Transactional(readOnly = true)
-    public BigInteger getMaxMasterFaPurchaseId(Integer companyId) {
-        String query = "SELECT MAX(purchaseMasterId) FROM tbl_fa_purchase_mater WHERE companyId=:companyId";
+    public BigInteger getMaxMasterFaPurchaseId() {
+        String query = "SELECT MAX(purchaseMasterId) FROM tbl_fa_purchase_mater";
         Session session = sessionFactory.getCurrentSession();
         return (BigInteger) session.createSQLQuery(query)
-                .setParameter("companyId", companyId)
                 .uniqueResult();
     }
 
@@ -90,14 +85,10 @@ public class AssetOpeningDao extends BaseDao {
     }
 
     @Transactional(readOnly = true)
-    public BigInteger getMaxFaPurchaseDetailId(Integer companyId) {
-        String query = "SELECT MAX(a.faPurchaseDetailId) FROM tbl_fa_purchase_detail a\n" +
-                "INNER JOIN tbl_fa_purchase b ON a.faPurchaseId=b.faPurchaseId\n" +
-                "INNER JOIN tbl_fa_purchase_mater c ON b.purchaseMasterId=c.purchaseMasterId\n" +
-                " WHERE c.companyId=:companyId";
+    public BigInteger getMaxFaPurchaseDetailId() {
+        String query = "SELECT MAX(a.faPurchaseDetailId) FROM tbl_fa_purchase_detail a";
         Session session = sessionFactory.getCurrentSession();
         return (BigInteger) session.createSQLQuery(query)
-                .setParameter("companyId", companyId)
                 .uniqueResult();
     }
 
@@ -139,21 +130,23 @@ public class AssetOpeningDao extends BaseDao {
     public List<OpeningAndBuyingDTO> getOpeningInvoiceDetailList(Integer companyId) {
 
         Session session = sessionFactory.getCurrentSession();
+/*
 
         String query = "SELECT max(purchaseMasterId) FROM tbl_fa_purchase_mater WHERE companyId=:companyId";
         BigInteger purchaseMasterId = (BigInteger) session.createSQLQuery(query)
                 .setParameter("companyId", companyId)
                 .uniqueResult();
+*/
 
         String sqlQuery = "SELECT a.openingBalance as amount, e.accTypeId  FROM tbl_fa_purchase a\n" +
                 "INNER JOIN tbl_fa_item_setup_detail b ON a.assetDetailId=b.assetDetailId\n" +
                 "INNER JOIN tbl_fa_item_setup c ON c.assetId=b.assetId\n" +
                 "INNER JOIN tbl_fa_purchase_mater d ON d.purchaseMasterId=a.purchaseMasterId\n" +
                 "INNER JOIN tbl_fa_group e ON c.assetClassId=e.assetClassId\n" +
-                "WHERE d.purchaseMasterId=:purchaseMasterId";
+                "WHERE d.companyId=:companyId and a.openingBalance is not null";
 
         return session.createSQLQuery(sqlQuery)
-                .setParameter("purchaseMasterId", purchaseMasterId)
+                .setParameter("companyId", companyId)
                 .setResultTransformer(Transformers.aliasToBean(OpeningAndBuyingDTO.class)).list();
     }
 

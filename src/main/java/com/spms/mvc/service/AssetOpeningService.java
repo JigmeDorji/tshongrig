@@ -142,7 +142,7 @@ public class AssetOpeningService {
         FaPurchaseMaster faPurchaseMaster = new FaPurchaseMaster();
 
         if (openingAndBuyingDTO.getPurchaseMasterId() == null) {
-            purchaseMasterId = assetOpeningDao.getMaxMasterFaPurchaseId(currentUser.getCompanyId());
+            purchaseMasterId = assetOpeningDao.getMaxMasterFaPurchaseId();
             purchaseMasterId = purchaseMasterId == null ? BigInteger.ONE : purchaseMasterId.add(BigInteger.ONE);
         } else {
             purchaseMasterId = openingAndBuyingDTO.getPurchaseMasterId();
@@ -166,7 +166,7 @@ public class AssetOpeningService {
             //save to main table
             FaPurchase fa_purchase = new FaPurchase();
             if (openingAndBuyingListDTO.getFaPurchaseId() == null) {
-                purchaseId = assetOpeningDao.getMaxFaPurchaseId(currentUser.getCompanyId());
+                purchaseId = assetOpeningDao.getMaxFaPurchaseId();
                 purchaseId = purchaseId == null ? BigInteger.ONE : purchaseId.add(BigInteger.ONE);
             } else {
                 purchaseId = openingAndBuyingListDTO.getFaPurchaseId();
@@ -191,7 +191,7 @@ public class AssetOpeningService {
                 FaPurchaseDetail faPurchaseDetail = new FaPurchaseDetail();
 
                 if (openingAndBuyingListDTO.getFaPurchaseDetailId() == null) {
-                    faPurchaseDetailId = assetOpeningDao.getMaxFaPurchaseDetailId(currentUser.getCompanyId());
+                    faPurchaseDetailId = assetOpeningDao.getMaxFaPurchaseDetailId();
                     faPurchaseDetailId = faPurchaseDetailId == null ? BigInteger.ONE : faPurchaseDetailId.add(BigInteger.ONE);
                 } else {
                     faPurchaseDetailId = openingAndBuyingListDTO.getFaPurchaseDetailId();
@@ -351,6 +351,7 @@ public class AssetOpeningService {
         if (assetOpeningDao.checkIsOpening(faPurchaseId)) {
 
         }
+
         assetOpeningDao.deleteItemFromDetail(faPurchaseId);
         assetOpeningDao.deleteItem(faPurchaseId);
 
