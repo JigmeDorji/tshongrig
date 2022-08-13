@@ -68,8 +68,8 @@
                         <label class="col-md-2 right-align required" id="descriptionText">Description</label>
                         <div class="col-md-3">
                             <input type="text" tabindex="2" class="form-control form-control-sm autocomplete"
-                                   name="description"
-                                   id="description" required="true"/>
+                                   name="description" required
+                                   id="description"/>
 
                             <input type="hidden" tabindex="2" class="form-control form-control-sm" name="ledgerId"
                                    id="ledgerId"/>
@@ -80,8 +80,8 @@
 
                         <div class="col-md-3">
                             <input type="text" tabindex="3" class="form-control form-control-sm text-right"
-                                   name="amount"
-                                   id="amount" required="true"/>
+                                   name="amount" required
+                                   id="amount"/>
                         </div>
                     </div>
 
@@ -94,11 +94,11 @@
                                 <input type="text" tabindex="2"
                                        class="form-control costDescription form-control-sm autocomplete"
                                        name="multiVoucherDTO[0].costDescription"
-                                       id="costDescription" required="true"/>
+                                       id="costDescription" required/>
 
                                 <input type="hidden" tabindex="2" class="form-control form-control-sm costLedgerId"
                                        name="multiVoucherDTO[0].costLedgerId"
-                                       id="costLedgerId" required="true"/>
+                                       id="costLedgerId"/>
                             </div>
 
 
