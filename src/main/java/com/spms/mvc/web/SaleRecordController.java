@@ -47,7 +47,7 @@ public class SaleRecordController {
     public ModelAndView generateBarcode(HttpServletRequest request, ModelAndView modelAndView,
                                         Date fromDate, Date toDate) {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
-        List<SaleItemDTO> saleItemDTOs = saleRecordService.getSaleRecordListSummary(fromDate, toDate);
+        List<SaleItemDTO> saleItemDTOs = saleRecordService.getSaleRecordListSummary(fromDate, toDate, currentUser.getCompanyId());
         Map<String, Object> params = new HashMap<String, Object>();
         JRDataSource jrDataSource = new JRBeanCollectionDataSource(saleItemDTOs, false);
         params.put("datasource", jrDataSource);

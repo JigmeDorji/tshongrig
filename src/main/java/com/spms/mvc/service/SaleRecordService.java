@@ -35,8 +35,8 @@ public class SaleRecordService {
 
     }
 
-    public List<SaleItemDTO> getSaleRecordListSummary(Date fromDate, Date toDate) {
-        List<SaleItemDTO> saleItemDTOs = saleRecordDao.getSaleRecordListSummaryAll(fromDate, toDate);
+    public List<SaleItemDTO> getSaleRecordListSummary(Date fromDate, Date toDate, Integer companyId) {
+        List<SaleItemDTO> saleItemDTOs = saleRecordDao.getSaleRecordListSummaryAll(fromDate, toDate,companyId);
         List<SaleItemDTO> saleItemDTOs1 = saleItemDTOs.stream().filter(saleDto -> saleDto.getSumQty().compareTo(BigDecimal.ZERO) != 0)
                 .collect(Collectors.toList());
         return saleItemDTOs1;

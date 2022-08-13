@@ -121,7 +121,7 @@
                             <div class="col-md-7">
                             </div>
                             <label class="col-md-2 right-label col-lg-offset-7" id="amountReceivedText">Amount
-                                Received</label>
+                                Paid</label>
 
                             <div class="col-md-3">
                                 <input type="text"
