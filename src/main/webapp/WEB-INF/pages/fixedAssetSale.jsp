@@ -135,7 +135,7 @@
 
                             <div class="form-group row">
                                 <div class="col-md-7"></div>
-                                <label class="col-md-2 right-label col-lg-offset-7">Paid In</label>
+                                <label class="col-md-2 right-label col-lg-offset-7">Received In</label>
 
                                 <div class="col-md-3">
                                     <select class="form-control form-control-sm" id="isCash" required="required"

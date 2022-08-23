@@ -142,7 +142,7 @@ public class SaleRecordDao {
     }
 
     @Transactional(readOnly = true)
-    public List<SaleItemDTO> getSaleRecordListSummaryAll(Date fromDate, Date toDate) {
+    public List<SaleItemDTO> getSaleRecordListSummaryAll(Date fromDate, Date toDate, Integer companyId) {
         String query = "SELECT C.itemCode AS itemCode,\n" +
                 "B.itemName AS itemName,\n" +
                 "SUM(C.qty) AS sumQty,\n" +
@@ -152,12 +152,13 @@ public class SaleRecordDao {
                 "FROM tbl_inv_sale_record A\n" +
                 "INNER JOIN tbl_inv_sale_record_detail C ON A.saleRecordId=C.saleRecordId \n" +
                 "INNER JOIN tbl_inv_purchase B ON C.itemCode=B.itemCode\n" +
-                "WHERE A.saleDate>=:fromDate AND A.saleDate<=:toDate \n" +
+                "WHERE A.saleDate>=:fromDate AND A.saleDate<=:toDate and A.companyId=:companyId \n" +
                 "GROUP BY C.itemCode";
         Session session = sessionFactory.getCurrentSession();
         return session.createSQLQuery(query)
                 .setParameter("fromDate", fromDate)
                 .setParameter("toDate", toDate)
+                .setParameter("companyId", companyId)
                 .setResultTransformer(Transformers.aliasToBean(SaleItemDTO.class)).list();
     }
 
