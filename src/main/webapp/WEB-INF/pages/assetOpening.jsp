@@ -45,7 +45,7 @@
 
                         <div class="col-md-3">
                             <input type="text" tabindex="2" class="form-control form-control-sm  formatDate right-align"
-                                   readonly value="${currentUser.financialYearFrom}" id="asOnDate" name="purchaseDate"
+                                   readonly value="${currentUser.financialYearFrom}" id="asOnDate"
                                    required="required"/>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
                             <sec:authorize access="hasAuthority('14-ADD')">
                                 <div class="col-md-2">
                                     <input type="submit" class="btn btn-primary btn-group-sm" value="Save" id="btnSave">
-<%--                                    <input type="reset" class="btn btn-danger btn-group-sm" value="Reset" id="resetBtn">--%>
+                                        <%--                                    <input type="reset" class="btn btn-danger btn-group-sm" value="Reset" id="resetBtn">--%>
                                 </div>
                             </sec:authorize>
                         </div>

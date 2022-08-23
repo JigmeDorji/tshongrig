@@ -45,7 +45,7 @@
                         <label class="col-md-2 right-align">Purchase Date:</label>
                         <div class="col-md-3">
                             <input type="text" tabindex="2"
-                                   class="form-control form-control-sm  right-align common datepicker"
+                                   class="form-control form-control-sm  right-align common formatDate"
                                    name="purchaseDate"
                                    placeholder="DD.MM.YYYY"
                                    id="purchaseDate"/>
@@ -120,7 +120,8 @@
                         <div class="form-group row">
                             <div class="col-md-7">
                             </div>
-                            <label class="col-md-2 right-label col-lg-offset-7" id="amountReceivedText">Net Payment</label>
+                            <label class="col-md-2 right-label col-lg-offset-7" id="amountReceivedText">Net
+                                Payment</label>
 
                             <div class="col-md-3">
                                 <input type="text"

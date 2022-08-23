@@ -152,7 +152,7 @@ fixedAssetSchedule = (function () {
                         calculateGrandTotal();
                         totalHTMLContent();
                         htmlTableContent = htmlTableContent + '<tr class="text-center">\n' +
-                            '                        <td><b>Total(' + getFinalCharacter(characterCounter) + ')</b></td>\n' +
+                            '                        <td><b>Grand Total(' + getFinalCharacter(characterCounter) + ')</b></td>\n' +
                             '                        <td></td>\n' +
                             '                        <td><b>' + spms.numberWithCommas(grandTotalRate.toFixed(2)) + '</b></td>\n' +
                             '                        <td></td>\n' +

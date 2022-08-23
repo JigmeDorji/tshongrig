@@ -61,7 +61,7 @@ public class AssetOpeningController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/deleteItem", method = RequestMethod.POST)
     public ResponseMessage deleteItem(HttpServletRequest request, BigInteger faPurchaseId) {
-        return assetOpeningService.deleteItem(faPurchaseId);
+        return assetOpeningService.deleteItem(faPurchaseId,getCurrentUser(request));
     }
 
     @ResponseBody
