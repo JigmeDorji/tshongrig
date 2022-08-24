@@ -192,12 +192,33 @@ public class LedgerDao {
 
     @Transactional
     public void updateOpeningBalance(String ledgerId, Integer companyId, Double amount) {
-        String sqlQry = "Update tbl_acc_ledger set openingBal=+:amount where companyId=:companyId and ledgerId=:ledgerId";
+
+        String sqlQry = "Update tbl_acc_ledger set openingBal=(openingBal+:amount) where companyId=:companyId and ledgerId=:ledgerId";
         sessionFactory.getCurrentSession()
                 .createSQLQuery(sqlQry)
                 .setParameter("ledgerId", ledgerId)
                 .setParameter("companyId", companyId)
                 .setParameter("amount", amount)
                 .executeUpdate();
+    }
+
+    @Transactional
+    public void subtractLedgerAmount(String ledgerId, Integer companyId, Double amount) {
+        String sqlQry = "Update tbl_acc_ledger set openingBal=-:amount where companyId=:companyId and ledgerId=:ledgerId";
+        sessionFactory.getCurrentSession()
+                .createSQLQuery(sqlQry)
+                .setParameter("ledgerId", ledgerId)
+                .setParameter("companyId", companyId)
+                .setParameter("amount", amount)
+                .executeUpdate();
+    }
+
+    @Transactional(readOnly = true)
+    public String getAccountTypeNameByAccType(Integer accTypeId) {
+        String sqlQry = "SELECT accTypeName FROM tbl_acc_acctype where accTypeId=:accTypeId";
+        return sessionFactory.getCurrentSession()
+                .createSQLQuery(sqlQry)
+                .setParameter("accTypeId", accTypeId)
+                .uniqueResult().toString();
     }
 }

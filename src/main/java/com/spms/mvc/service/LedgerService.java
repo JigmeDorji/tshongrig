@@ -233,4 +233,12 @@ public class LedgerService {
     public void updateOpeningBalance(String ledgerId, Integer companyId, Double amount) {
         ledgerDao.updateOpeningBalance(ledgerId, companyId, amount);
     }
+
+    public void subtractLedgerAmount(String ledgerId, Integer companyId, Double amount) {
+        ledgerDao.subtractLedgerAmount(ledgerId, companyId, amount);
+    }
+
+    public String getAccountTypeNameByAccType(Integer accTypeId) {
+        return ledgerDao.getAccountTypeNameByAccType(accTypeId);
+    }
 }

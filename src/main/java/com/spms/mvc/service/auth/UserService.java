@@ -95,11 +95,11 @@ public class UserService {
      * @return
      */
     public List<UserDTO> getUserList(Integer companyId, CurrentUser currentUser) {
-        if(currentUser.getUserRoleTypeId().equals(UserRoleType.Owner.getValue())){
-            return  userDao.getOwnerUserList(companyId);
-        }else {
+//        if(currentUser.getUserRoleTypeId().equals(UserRoleType.Owner.getValue())){
+//            return  userDao.getOwnerUserList(companyId);
+//        }else {
             return userDao.getUserList(companyId);
-        }
+//        }
 
     }
 
