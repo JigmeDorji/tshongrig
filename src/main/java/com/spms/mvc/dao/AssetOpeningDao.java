@@ -178,4 +178,13 @@ public class AssetOpeningDao extends BaseDao {
         String sqlQuery = "SELECT a.accTypeId FROM tbl_fa_group a\n" + "INNER JOIN tbl_fa_item_setup b ON a.assetClassId=b.assetClassId\n" + "INNER JOIN tbl_fa_item_setup_detail c ON c.assetId=b.assetId\n" + "INNER JOIN tbl_fa_purchase d ON d.assetDetailId=c.assetDetailId\n" + "WHERE d.assetDetailId=:assetDetailId GROUP BY accTypeId";
         return (Integer) sessionFactory.getCurrentSession().createSQLQuery(sqlQuery).setParameter("assetDetailId", assetDetailId).uniqueResult();
     }
+
+    @Transactional
+    public void updateVoucherNoByInvoiceNo(String purchaseInvoiceNo, Integer voucherNo) {
+        String sqlQuery = "UPDATE tbl_fa_purchase_mater SET voucherNo=:voucherNo where purchaseInvoiceNo=:purchaseInvoiceNo";
+        sessionFactory.getCurrentSession().createSQLQuery(sqlQuery)
+                .setParameter("voucherNo", voucherNo)
+                .setParameter("purchaseInvoiceNo", purchaseInvoiceNo)
+                .executeUpdate();
+    }
 }

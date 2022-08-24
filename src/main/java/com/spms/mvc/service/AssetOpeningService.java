@@ -98,26 +98,9 @@ public class AssetOpeningService {
         }
 
         //check party name already exists
-        Integer partyId = null;
-
-        if (Objects.equals(openingAndBuyingDTO.getIsCash(), PaymentModeTypeEnum.CREDIT.getValue()) || (openingAndBuyingDTO.getPartyName() != null && !openingAndBuyingDTO.getPartyName().equals(""))) { //applies to only party
-
-            partyId = accSaleInvoiceGenerationDao.getPartyIdIFExists(currentUser.getCompanyId(), openingAndBuyingDTO.getPartyName());
-
-            if (partyId == null) {
-                PartyDetail partyDetail = new PartyDetail();
-                partyId = accSaleInvoiceGenerationDao.getMaxPartyId() + 1;
-                partyDetail.setPartyId(partyId);
-                partyDetail.setPartyName(openingAndBuyingDTO.getPartyName());
-                partyDetail.setPartyAddress(openingAndBuyingDTO.getPartyAddress());
-                partyDetail.setPartyContactNo(openingAndBuyingDTO.getPartyContactNo());
-                partyDetail.setPartyEmail(openingAndBuyingDTO.getPartyEmail());
-                partyDetail.setCompanyId(currentUser.getCompanyId());
-                partyDetail.setSetDate(currentUser.getCreatedDate());
-                partyDetail.setCreatedBy(currentUser.getLoginId());
-                accSaleInvoiceGenerationDao.savePartyDetail(partyDetail);
-            }
-        }
+        Integer partyId = partyDetail(currentUser, openingAndBuyingDTO.getIsCash(), openingAndBuyingDTO.getPartyName(),
+                accSaleInvoiceGenerationDao, openingAndBuyingDTO.getPartyAddress(),
+                openingAndBuyingDTO.getPartyContactNo(), openingAndBuyingDTO.getPartyEmail());
 
         //insert into master
         FaPurchaseMaster faPurchaseMaster = new FaPurchaseMaster();
@@ -170,12 +153,17 @@ public class AssetOpeningService {
             int monthStart = 0;
             int selectedMonth = currentUser.getCreatedDate().getMonth();
             int purchaseMonth = openingAndBuyingDTO.getPurchaseInvoiceNo() == null ? 0 : openingAndBuyingDTO.getPurchaseDate().getMonth();
-            monthStart = openingAndBuyingDTO.getPurchaseInvoiceNo() == null ? monthStart : purchaseMonth;
+
+            if (openingAndBuyingDTO.getPurchaseInvoiceNo() == null) {
+                //update opening balance
+                ledgerService.updateOpeningBalance(ledgerService.getLedgerIdByLedgerName(ledgerService.getAccountTypeNameByAccType(accTypeId), currentUser, accTypeId), currentUser.getCompanyId(), openingAndBuyingListDTO.getOpeningBalance());
+            } else {
+                monthStart = purchaseMonth;
+            }
 
             for (int month = monthStart; month <= selectedMonth; month++) {
 
                 List<VoucherDetailDTO> voucherDetailDTOList = new ArrayList<>();
-
                 VoucherDTO voucherDTO = new VoucherDTO();
 
                 if (openingAndBuyingDTO.getPurchaseInvoiceNo() == null) {
@@ -191,10 +179,8 @@ public class AssetOpeningService {
 
                     if (openingAndBuyingDTO.getVoucherNo() == null) {
                         if (Objects.equals(openingAndBuyingDTO.getIsCash(), PaymentModeTypeEnum.CASH.getValue()) || Objects.equals(openingAndBuyingDTO.getIsCash(), PaymentModeTypeEnum.BANK.getValue())) {
-
                             voucherNo = voucherCreationService.getCurrentVoucherNo(VoucherTypeEnum.PAYMENT.getValue(), currentUser.getCompanyId(), currentUser.getFinancialYearId());
                             voucherTypeId = VoucherTypeEnum.PAYMENT.getValue();
-
                         } else {
                             voucherNo = voucherCreationService.getCurrentVoucherNo(VoucherTypeEnum.JOURNAL.getValue(), currentUser.getCompanyId(), currentUser.getFinancialYearId());
                             voucherTypeId = VoucherTypeEnum.JOURNAL.getValue();
@@ -204,8 +190,7 @@ public class AssetOpeningService {
                     }
                 }
 
-                Double depreciatedAmount = calculateDepreciationAmount(currentUser, accTypeId,
-                        openingAndBuyingListDTO.getRate(), month);
+                Double depreciatedAmount = calculateDepreciationAmount(currentUser, accTypeId, openingAndBuyingListDTO.getRate(), month);
 
                 voucherDTO.setVoucherTypeId(voucherTypeId);
                 voucherDTO.setNarration(voucherNarration);
@@ -214,8 +199,7 @@ public class AssetOpeningService {
                 //Prepare voucher Entry
                 VoucherDetailDTO voucherDrDTo = new VoucherDetailDTO();
                 voucherDrDTo.setDrcrAmount(AccountingUtil.drAmount(depreciatedAmount));
-                voucherDrDTo.setLedgerId(autoVoucherService.getLedgerId("Depreciation",
-                        currentUser, AccountTypeEnum.INDIRECT_COST.getValue()));
+                voucherDrDTo.setLedgerId(autoVoucherService.getLedgerId("Depreciation", currentUser, AccountTypeEnum.INDIRECT_COST.getValue()));
                 voucherDetailDTOList.add(voucherDrDTo);
 
                 VoucherDetailDTO voucherCr = new VoucherDetailDTO();
@@ -233,9 +217,6 @@ public class AssetOpeningService {
 
                 voucherCreationService.performPurchaseAndSaleVoucherEntry(voucherDTO, currentUser);
             }
-
-            //update opening balance
-            ledgerService.updateOpeningBalance(ledgerService.getLedgerIdByLedgerName(ledgerService.getAccountTypeNameByAccType(accTypeId), currentUser, accTypeId), currentUser.getCompanyId(), openingAndBuyingListDTO.getOpeningBalance());
 
             //save to detail table
             BigDecimal initialQty = openingAndBuyingListDTO.getQty();
@@ -271,6 +252,30 @@ public class AssetOpeningService {
         responseMessage.setText("Successfully saved.");
         return responseMessage;
 
+    }
+
+    public static Integer partyDetail(CurrentUser currentUser, Integer isCash, String partyName, AccSaleInvoiceGenerationDao accSaleInvoiceGenerationDao, String partyAddress, String partyContactNo, String partyEmail) {
+        Integer partyId = null;
+
+        if (Objects.equals(isCash, PaymentModeTypeEnum.CREDIT.getValue()) || (partyName != null && !partyName.equals(""))) { //applies to only party
+
+            partyId = accSaleInvoiceGenerationDao.getPartyIdIFExists(currentUser.getCompanyId(), partyName);
+
+            if (partyId == null) {
+                PartyDetail partyDetail = new PartyDetail();
+                partyId = accSaleInvoiceGenerationDao.getMaxPartyId() + 1;
+                partyDetail.setPartyId(partyId);
+                partyDetail.setPartyName(partyName);
+                partyDetail.setPartyAddress(partyAddress);
+                partyDetail.setPartyContactNo(partyContactNo);
+                partyDetail.setPartyEmail(partyEmail);
+                partyDetail.setCompanyId(currentUser.getCompanyId());
+                partyDetail.setSetDate(currentUser.getCreatedDate());
+                partyDetail.setCreatedBy(currentUser.getLoginId());
+                accSaleInvoiceGenerationDao.savePartyDetail(partyDetail);
+            }
+        }
+        return partyId;
     }
 
     public Double calculateDepreciationAmount(CurrentUser currentUser, Integer accTypeId, Double rate, int month) throws ParseException {
@@ -335,12 +340,16 @@ public class AssetOpeningService {
         voucherDTO.setVoucherEntryDate(openingAndBuyingDTO.getPurchaseDate());
         voucherDTO.setVoucherNo(voucherNo);
 
-        List<OpeningAndBuyingDTO> openingAndBuyingDTOList = assetOpeningDao.getInvoiceDetailList(openingAndBuyingDTO.getPurchaseInvoiceNo(), currentUser.getCompanyId());
+        List<OpeningAndBuyingDTO> openingAndBuyingDTOList = assetOpeningDao.getInvoiceDetailList(openingAndBuyingDTO.getPurchaseInvoiceNo(),
+                currentUser.getCompanyId());
+
+        assetOpeningDao.updateVoucherNoByInvoiceNo(openingAndBuyingDTO.getPurchaseInvoiceNo(), voucherNo);
 
         for (OpeningAndBuyingDTO openingAndBuyingDTOI : openingAndBuyingDTOList) {
 
             String ledgerId = ledgerService.getLedgerIdByLedgerName(ledgerService.getAccountTypeNameByAccType(openingAndBuyingDTOI.getAccTypeId()),
                     currentUser, openingAndBuyingDTOI.getAccTypeId());
+
             VoucherDetailDTO voucherDetailDTODTO = new VoucherDetailDTO();
             voucherDetailDTODTO.setDrcrAmount(AccountingUtil.drAmount(openingAndBuyingDTOI.getAmount()));
             voucherDetailDTODTO.setIsCash(openingAndBuyingDTO.getIsCash());
@@ -404,7 +413,7 @@ public class AssetOpeningService {
         voucherCreationService.performPurchaseAndSaleVoucherEntry(voucherDTO, currentUser);
     }
 
-    public List<OpeningAndBuyingDTO> loadAssetOpeningList(CurrentUser currentUser, BigInteger faPurchaseId) {
+    public List<OpeningAndBuyingDTO> loadAssetOpeningList(BigInteger faPurchaseId) {
         return assetOpeningDao.loadAssetOpeningList(faPurchaseId);
     }
 
@@ -414,7 +423,6 @@ public class AssetOpeningService {
         OpeningAndBuyingDTO openingAndBuyingDTO = assetOpeningDao.checkIsOpening(faPurchaseId);
 
         if (openingAndBuyingDTO != null) {
-
             ledgerService.subtractLedgerAmount(ledgerService.getLedgerIdByLedgerName(ledgerService.getAccountTypeNameByAccType(openingAndBuyingDTO.getAccTypeId()), currentUser, openingAndBuyingDTO.getAccTypeId()), currentUser.getCompanyId(), openingAndBuyingDTO.getAmount());
         }
 
