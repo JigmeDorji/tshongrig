@@ -248,3 +248,10 @@ label.required:after {
     margin-right: auto;
     width: 8em
 }
+@media print{
+
+    body{
+        color:black;
+    }
+
+}
