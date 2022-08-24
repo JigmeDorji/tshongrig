@@ -286,10 +286,10 @@ saleItem = (function () {
             var total = 0;
             for (var i in res) {
                 row += '<tr class="service">' +
-                    '<td  class="tableitem" style="font-size:12px;word-wrap:break-word;text-align:left">' + res[i].itemName + '</td>' +
-                    '<td  class="tableitem" style="font-size:12px;word-wrap:break-word;text-align:center">' + res[i].qty + '</td>' +
-                    '<td  class="tableitem" style="font-size:12px;word-wrap:break-word;text-align:right">' + res[i].sellingPrice.toFixed(2) + '</td>' +
-                    '<td  class="tableitem" style="font-size:12px;word-wrap:break-word;text-align:right">' + res[i].totalAmount.toFixed(2) + '</td>' +
+                    '<td  class="tableitem" style="font-size:36px;word-wrap:break-word;text-align:left">' + res[i].itemName + '</td>' +
+                    '<td  class="tableitem" style="font-size:36px;word-wrap:break-word;text-align:center">' + res[i].qty + '</td>' +
+                    '<td  class="tableitem" style="font-size:36px;word-wrap:break-word;text-align:right">' + res[i].sellingPrice.toFixed(2) + '</td>' +
+                    '<td  class="tableitem" style="font-size:36px;word-wrap:break-word;text-align:right">' + res[i].totalAmount.toFixed(2) + '</td>' +
                     '</tr>';
                 total = total + res[i].totalAmount;
             }
@@ -300,32 +300,32 @@ saleItem = (function () {
             let saleDate = $('#saleDate').val();
             let htmlRawData =
                 '<div id="invoice-POS">' +
-                '<div style="font-size:12px;word-wrap:break-word;text-align:right">' + saleDate + '</div>' +
-                '<div style="font-size:12px;word-wrap:break-word;text-align:right">' + "Sales Receipt #" + receiptNo + '</div>' +
+                '<div style="font-size:36px;word-wrap:break-word;text-align:right">' + saleDate + '</div>' +
+                '<div style="font-size:36px;word-wrap:break-word;text-align:right">' + "Sales Receipt #" + receiptNo + '</div>' +
                 '<center id="top">' +
-                '<div class="info">' +
+                '<div class="info" style="font-size:30px">' +
                 '<strong>' + companyName + '</strong>' +
                 '<p>' + "Address : " + companyAdd + '</br>' +
                 "Contact : " + contact + '</br>' +
                 "Email : " + email + '</p>' +
                 '</div>' +
                 '</center>' +
-                '<table style="table-layout:fixed;width:280px">' +
+                '<table style="table-layout:fixed;">' +
                 '<tr class="tabletitle">' +
-                '<th width="120px" style="font-size:12px;word-wrap:break-word;text-align:left">Particular</th>' +
-                '<th width="40px"style="font-size:12px;word-wrap:break-word;text-align:center">Qty</th>' +
-                '<th width="40px" style="font-size:12px;word-wrap:break-word;text-align:right">Rate</th>' +
-                '<th width="80px" style="font-size:12px;word-wrap:break-word;text-align:right">Amount</th>' +
+                '<th width="220px" style="font-size:40px;color:black;word-wrap:break-word;text-align:left">Particular</th>' +
+                '<th width="150px"style="font-size:40px;color:black;word-wrap:break-word;text-align:center">Qty</th>' +
+                '<th width="200px" style="font-size:40px;color:black;word-wrap:break-word;text-align:right">Rate</th>' +
+                '<th width="200px" style="font-size:40px;color:black;word-wrap:break-word;text-align:right">Amount</th>' +
                 '</tr><hr>' + row +
                 '<tr class="tabletitle">' +
                 '<td></td>' +
                 '<td></td>' +
-                '<td style="font-size:12px;word-wrap:break-word;text-align:right"><b>Total:</b></td>' +
-                '<td style="font-size:12px;word-wrap:break-word;text-align:right"><b>' + "Nu." + total.toFixed(2) + '</b></td>' +
+                '<td style="font-size:36px;word-wrap:break-word;text-align:right"><b>Total:</b></td>' +
+                '<td style="font-size:36px;word-wrap:break-word;text-align:right"><b>' + "Nu." + total.toFixed(2) + '</b></td>' +
                 '</tr>' +
                 '</table>' +
                 '<hr></div></br>' +
-                '<div id="legalcopy"><center><h5>***Please visit us again***</h5></center></div>';
+                '<div  id="legalcopy"><center><h5 style="font-size:36px;">***Please visit us again***</h5></center></div>';
 
             //Get the HTML of div
             //var divElements = document.getElementById(divID).innerHTML;

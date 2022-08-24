@@ -794,7 +794,7 @@ receivedItem = (function () {
                         totalPurchaseQty = (totalPurchaseQty) - parseFloat(initialQty);
                         if ((totalPurchaseQty - totalSaleQty) < 0) {
                             errorMsg("Negative Balance.");
-                             return false;
+                            return false;
                         }
                     }
 
