@@ -105,18 +105,19 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <div class="col-md-7">
-                            </div>
-                            <label class="col-md-2 right-label col-lg-offset-7">Discount</label>
+<%--                        <div class="form-group row">--%>
+<%--                            <div class="col-md-7">--%>
+<%--                            </div>--%>
+<%--                            <label class="col-md-2 right-label col-lg-offset-7">Discount</label>--%>
 
-                            <div class="col-md-3">
-                                <input type="text"
-                                       class="form-control form-control-sm right-align amount resetField"
-                                       value="0" readonly
-                                       id="discountRate" name="discountRate">
-                            </div>
-                        </div>
+<%--                            <div class="col-md-3">--%>
+<%--                                <input type="text"--%>
+<%--                                       class="form-control form-control-sm right-align amount resetField"--%>
+<%--                                       value="0" readonly--%>
+<%--                                       id="discountRate" name="discountRate">--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+
                         <div class="form-group row">
                             <div class="col-md-7">
                             </div>
@@ -163,11 +164,11 @@
                             </div>
 <%--                            <label class="col-md-2 right-label col-lg-offset-7">Returnable Amount</label>--%>
 
-                            <div class="col-md-3">
-                                <input type="text" class="form-control form-control-sm   right-align" value="0"
-                                       name="amtReturn"
-                                       id="amtReturn" readonly>
-                            </div>
+<%--                            <div class="col-md-3">--%>
+<%--                                <input type="text" class="form-control form-control-sm   right-align" value="0"--%>
+<%--                                       name="amtReturn"--%>
+<%--                                       id="amtReturn" readonly>--%>
+<%--                            </div>--%>
                         </div>
 
                         <div class="creditDetails" hidden>
