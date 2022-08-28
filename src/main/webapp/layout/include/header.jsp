@@ -32,7 +32,7 @@
     <div class="navbar-brand text-left">
         <a href="<c:url value='/redirectHome'/>" class="d-inline-block">
             <img src="<c:url value='/resources/limitless/global_assets/images/logo_trans.png'/>"
-                 style="width: 150px; height: 50px; margin-top: -10px"
+                 style="padding-left:40px;width: 180px; height: 50px; margin-top: -10px"
                  class="d-none d-sm-block"
                  alt="logo">
 <%--            <img src="<c:url value='/resources/limitless/global_assets/images/logo_trans.png'/>" class="d-sm-none"--%>
@@ -43,7 +43,7 @@
     <div class="collapse navbar-collapse order-2 order-lg-1" id="navbar-mobile">
         <div class="">
             <ul class="navbar-nav">
-                <span class="badge  badge-light badge-pill my-1">${currentUser.companyName}</span>
+                <span class="badge  badge-light badge-pill my-1 " style="font-size:120%">${currentUser.companyName}</span>
             </ul>
         </div>
 

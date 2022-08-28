@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <meta name="decorator" content="/layout/login-layout.jsp"/>
     <%--    <link rel="icon" href="favicon.ico">--%>
-    <title>BCS-LOGIN</title>
+    <title>TSHONG RIG -LOGIN</title>
 </head>
 <body class="light">
 
