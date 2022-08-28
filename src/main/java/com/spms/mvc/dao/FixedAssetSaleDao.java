@@ -184,4 +184,15 @@ public class FixedAssetSaleDao {
         return sessionFactory.getCurrentSession().createSQLQuery(query2)
                 .setResultTransformer(Transformers.aliasToBean(FixedAssetScheduleDTO.class)).list();
     }
+
+    @Transactional(readOnly = true)
+    public BigInteger getAssetDetailId(String particular,Integer companyId) {
+        String query = "SELECT * FROM tbl_fa_item_setup_detail a \n" +
+                "inner Join tbl_fa_item_setup b on a.assetId=b.assetId\n" +
+                "where b.companyId=:companyId and particular=:particular";
+        return (BigInteger) sessionFactory.getCurrentSession().createSQLQuery(query)
+                .setParameter("particular", particular)
+                .setParameter("companyId", companyId)
+                .uniqueResult();
+    }
 }

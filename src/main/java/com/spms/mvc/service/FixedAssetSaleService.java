@@ -4,11 +4,11 @@ import com.spms.mvc.Enumeration.AccountTypeEnum;
 import com.spms.mvc.Enumeration.PaymentModeTypeEnum;
 import com.spms.mvc.Enumeration.VoucherTypeEnum;
 import com.spms.mvc.dao.AccSaleInvoiceGenerationDao;
+import com.spms.mvc.dao.AssetOpeningDao;
 import com.spms.mvc.dao.FixedAssetSaleDao;
 import com.spms.mvc.dto.*;
 import com.spms.mvc.entity.FaSaleRecord;
 import com.spms.mvc.entity.FaSaleRecordDetail;
-import com.spms.mvc.entity.PartyDetail;
 import com.spms.mvc.library.helper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +28,9 @@ public class FixedAssetSaleService {
 
     @Autowired
     FixedAssetSaleDao fixedAssetSaleDao;
+
+    @Autowired
+    AssetOpeningDao assetOpeningDao;
 
     @Autowired
     private LedgerService ledgerService;
@@ -361,5 +364,43 @@ public class FixedAssetSaleService {
 
     public List<FixedAssetScheduleDTO> getFixedAssetSchedule(Date asOnDate, Integer companyId) {
         return fixedAssetSaleDao.getFixedAssetSchedule(asOnDate, companyId);
+    }
+
+    @Autowired
+    AutoVoucherService autoVoucherService;
+
+    public ResponseMessage deleteFixedAsset(CurrentUser currentUser, String particular, Double depCurrentYear) throws ParseException {
+        BigInteger assetDetailId = fixedAssetSaleDao.getAssetDetailId(particular,currentUser.getCompanyId());
+
+        Integer accTypeId = assetOpeningDao.getAccTypeByAssetItem(assetDetailId);
+        //Accounting Entry
+
+        List<VoucherDetailDTO> voucherDetailDTOList = new ArrayList<>();
+        VoucherDTO voucherDTO = new VoucherDTO();
+
+        Integer voucherNo = voucherCreationService.getCurrentVoucherNo(VoucherTypeEnum.JOURNAL.getValue(), currentUser.getCompanyId(), currentUser.getFinancialYearId());
+        voucherDTO.setVoucherTypeId(VoucherTypeEnum.JOURNAL.getValue());
+        voucherDTO.setNarration("Asset Delete");
+        voucherDTO.setVoucherEntryDate(currentUser.getCreatedDate());
+
+        //Prepare voucher Entry
+        VoucherDetailDTO voucherDrDTo = new VoucherDetailDTO();
+        voucherDrDTo.setDrcrAmount(AccountingUtil.crAmount(depCurrentYear));
+        voucherDrDTo.setLedgerId(autoVoucherService.getLedgerId("Depreciation", currentUser, AccountTypeEnum.INDIRECT_COST.getValue()));
+        voucherDetailDTOList.add(voucherDrDTo);
+
+        VoucherDetailDTO voucherCr = new VoucherDetailDTO();
+        voucherCr.setDrcrAmount(AccountingUtil.drAmount(depCurrentYear));
+        voucherCr.setLedgerId(autoVoucherService.getLedgerId(ledgerService.getAccountTypeNameByAccType(accTypeId), currentUser, accTypeId));
+        voucherDetailDTOList.add(voucherCr);
+        voucherDTO.setVoucherDetailDTOList(voucherDetailDTOList);
+        voucherDTO.setVoucherEntryDate(currentUser.getCreatedDate());
+
+        voucherDTO.setVoucherNo(voucherNo);
+
+        voucherCreationService.performPurchaseAndSaleVoucherEntry(voucherDTO, currentUser);
+
+
+        return null;
     }
 }

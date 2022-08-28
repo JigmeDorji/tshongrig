@@ -3,6 +3,7 @@ package com.spms.mvc.web;
 import com.spms.mvc.dto.FixedAssetScheduleDTO;
 import com.spms.mvc.library.helper.CurrentUser;
 import com.spms.mvc.library.helper.DateUtil;
+import com.spms.mvc.library.helper.ResponseMessage;
 import com.spms.mvc.service.FixedAssetSaleService;
 import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -54,5 +56,12 @@ public class FixedAssetScheduleController extends BaseController {
     public List<FixedAssetScheduleDTO> getFixedAssetSchedule(HttpServletRequest request, Date asOnDate) throws JRException, IOException {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
         return fixedAssetSaleService.getFixedAssetSchedule(asOnDate, currentUser.getCompanyId());
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/deleteFixedAsset", method = RequestMethod.GET)
+    public ResponseMessage deleteFixedAsset(HttpServletRequest request,String particular,Double depCurrentYear) throws ParseException {
+        CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
+        return fixedAssetSaleService.deleteFixedAsset(currentUser,particular,depCurrentYear);
     }
 }

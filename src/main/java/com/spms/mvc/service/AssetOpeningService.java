@@ -64,7 +64,7 @@ public class AssetOpeningService {
         return assetOpeningDao.getFixedAssetGroupList();
     }
 
-    //    @Transactional(rollbackFor = Exception.class)
+//        @Transactional(rollbackFor = Exception.class)
     public ResponseMessage save(CurrentUser currentUser, OpeningAndBuyingDTO openingAndBuyingDTO) throws ParseException {
 
         Integer voucherNo = null;
@@ -363,11 +363,11 @@ public class AssetOpeningService {
         VoucherDetailDTO voucherDetailDTO = new VoucherDetailDTO();
         if (Objects.equals(openingAndBuyingDTO.getIsCash(), PaymentModeTypeEnum.CASH.getValue())) {
 
-            if (openingAndBuyingDTO.getAmtReturn() < 0) {
-                amount = openingAndBuyingDTO.getAmtReceived();
-            } else {
-                amount = openingAndBuyingDTO.getAmount() - openingAndBuyingDTO.getDiscountRate();
-            }
+//            if (openingAndBuyingDTO.getAmtReturn() < 0) {
+//                amount = openingAndBuyingDTO.getAmtReceived();
+//            } else {
+                amount = openingAndBuyingDTO.getAmount();
+//            }
             voucherDetailDTO.setDrcrAmount(AccountingUtil.crAmount(amount));
             voucherDetailDTO.setIsCash(PaymentModeTypeEnum.CASH.getValue());
             voucherDetailDTOs.add(voucherDetailDTO);
@@ -375,11 +375,7 @@ public class AssetOpeningService {
 
         //Sale in Bank
         if (Objects.equals(openingAndBuyingDTO.getIsCash(), PaymentModeTypeEnum.BANK.getValue())) {
-            if (openingAndBuyingDTO.getAmtReturn() < 0) {
-                amount = openingAndBuyingDTO.getAmtReceived();
-            } else {
-                amount = openingAndBuyingDTO.getAmount() - openingAndBuyingDTO.getDiscountRate();
-            }
+            amount = openingAndBuyingDTO.getAmount();
             voucherDetailDTO = new VoucherDetailDTO();
             voucherDetailDTO.setBankLedgerId(openingAndBuyingDTO.getBankLedgerId());
             voucherDetailDTO.setDrcrAmount(AccountingUtil.crAmount(amount));
@@ -391,18 +387,14 @@ public class AssetOpeningService {
             /* Whether the sale is made either from cash or bank, if there is remaining amount left,
              system will take remaining amount as credit for particular party*/
 
-        if ((openingAndBuyingDTO.getPartyName() != null && !openingAndBuyingDTO.getPartyName().equals("")) || Objects.equals(openingAndBuyingDTO.getIsCash(), PaymentModeTypeEnum.CREDIT.getValue()) || openingAndBuyingDTO.getAmtReturn() < 0) { // for credit party ledger
+        if ((openingAndBuyingDTO.getPartyName() != null && !openingAndBuyingDTO.getPartyName().equals("")) || Objects.equals(openingAndBuyingDTO.getIsCash(), PaymentModeTypeEnum.CREDIT.getValue())) { // for credit party ledger
             //create ledger for party
             double creditAmount;
             voucherDetailDTO = new VoucherDetailDTO();
 
             voucherDetailDTO.setLedgerId(ledgerService.getLedgerIdByLedgerName(openingAndBuyingDTO.getPartyName(), currentUser, AccountTypeEnum.PAYABLE.getValue()));
 
-            if (openingAndBuyingDTO.getAmtReturn() < 0) {
-                creditAmount = Math.abs(openingAndBuyingDTO.getAmtReturn());
-            } else {
-                creditAmount = (openingAndBuyingDTO.getAmount() - openingAndBuyingDTO.getDiscountRate());
-            }
+            creditAmount = openingAndBuyingDTO.getAmount();
             voucherDetailDTO.setDrcrAmount(AccountingUtil.crAmount(creditAmount));
             voucherDetailDTO.setIsCash(openingAndBuyingDTO.getIsCash());
             voucherDetailDTOs.add(voucherDetailDTO);
