@@ -156,7 +156,9 @@ public class AssetOpeningService {
 
             if (openingAndBuyingDTO.getPurchaseInvoiceNo() == null) {
                 //update opening balance
-                ledgerService.updateOpeningBalance(ledgerService.getLedgerIdByLedgerName(ledgerService.getAccountTypeNameByAccType(accTypeId), currentUser, accTypeId), currentUser.getCompanyId(), openingAndBuyingListDTO.getOpeningBalance());
+                ledgerService.updateOpeningBalance(ledgerService.getLedgerIdByLedgerName(
+                        ledgerService.getAccountTypeNameByAccType(accTypeId), currentUser, accTypeId), currentUser.getCompanyId(),
+                        openingAndBuyingListDTO.getOpeningBalance());
             } else {
                 monthStart = purchaseMonth;
             }

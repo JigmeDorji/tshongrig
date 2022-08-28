@@ -108,7 +108,7 @@ fixedAssetSchedule = (function () {
                             '                        <td>' + purchaseDate + '</td>\n' +
                             '                        <td>' + spms.numberWithCommas(rate.toFixed(2)) + '</td>\n' +
                             '                        <td>' + (item.rateOfDep) * 100 + "%" + '</td>\n' +
-                            '                        <td>' + spms.numberWithCommas(asOnStartFinancialYear.toFixed(2)) + '</td>\n' +
+                            '                        <td class="asOnStartFinancialYear">' + spms.numberWithCommas(asOnStartFinancialYear.toFixed(2)) + '</td>\n' +
                             '                        <td class="addition">' + spms.numberWithCommas(addition.toFixed(2)) + '</td>\n' +
                             '                        <td>' + spms.numberWithCommas(disposal.toFixed(2)) + '</td>\n' +
                             '                        <td>' + spms.numberWithCommas(asOnEndFinancialYear.toFixed(2)) + '</td>\n' +
@@ -116,7 +116,7 @@ fixedAssetSchedule = (function () {
                             '                        <td class="depCurrentYear">' + spms.numberWithCommas(depCurrentYear.toFixed(2)) + '</td>\n' +
                             '                        <td>' + spms.numberWithCommas(depAsOnEndFinancialYear.toFixed(2)) + '</td>\n' +
                             '                        <td>' + spms.numberWithCommas(netValue.toFixed(2)) + '</td>\n' +
-                            '                    <td>'+deleteBtn+'</td></tr>';
+                            '                    <td>' + deleteBtn + '</td></tr>';
                     }
 
                     function totalHTMLContent() {
@@ -192,16 +192,20 @@ fixedAssetSchedule = (function () {
     function onCLickBtnDelete() {
         $('#tableAssetSchedule tbody').on('click', 'tr .btnDelete', function () {
             let selectedRow = $(this).closest('tr');
+            alert(selectedRow.find('.asOnStartFinancialYear').text())
             $.ajax({
                 url: 'fixedAssetSchedule/deleteFixedAsset',
                 type: 'GET',
                 data: {
                     particular: selectedRow.find('.particular').text(),
-                    depCurrentYear: selectedRow.find('.depCurrentYear').text()
+                    depCurrentYear: selectedRow.find('.depCurrentYear').text(),
+                    openingBalance: spms.removeCommaSeparation(selectedRow.find('.asOnStartFinancialYear').text()),
+                    entryDate: $('#asOnDate').val()
                 },
                 success: function (res) {
                     if (res.status === 1) {
                         successMsg(res.text);
+                        loadInitialTable();
                     } else {
                         errorMsg(res.text);
                     }

@@ -187,4 +187,16 @@ public class AssetOpeningDao extends BaseDao {
                 .setParameter("purchaseInvoiceNo", purchaseInvoiceNo)
                 .executeUpdate();
     }
+
+    @Transactional
+    public void deleteItemFromDetailByAssetDetailId(BigInteger assetDetailId) {
+        String sqlQuery = "DELETE FROM tbl_fa_purchase_detail where faPurchaseId in (select faPurchaseId from tbl_fa_purchase where assetDetailId=:assetDetailId)";
+        sessionFactory.getCurrentSession().createSQLQuery(sqlQuery).setParameter("assetDetailId", assetDetailId).executeUpdate();
+    }
+
+    @Transactional
+    public void deleteItemByAssetDetailId(BigInteger assetDetailId) {
+        String sqlQuery = "DELETE FROM tbl_fa_purchase where assetDetailId=:assetDetailId";
+        sessionFactory.getCurrentSession().createSQLQuery(sqlQuery).setParameter("assetDetailId", assetDetailId).executeUpdate();
+    }
 }

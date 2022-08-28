@@ -60,8 +60,8 @@ public class FixedAssetScheduleController extends BaseController {
 
     @ResponseBody
     @RequestMapping(value = "/deleteFixedAsset", method = RequestMethod.GET)
-    public ResponseMessage deleteFixedAsset(HttpServletRequest request,String particular,Double depCurrentYear) throws ParseException {
+    public ResponseMessage deleteFixedAsset(HttpServletRequest request, String particular, Double depCurrentYear, Double openingBalance,Date entryDate) throws ParseException {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
-        return fixedAssetSaleService.deleteFixedAsset(currentUser,particular,depCurrentYear);
+        return fixedAssetSaleService.deleteFixedAsset(currentUser, particular, depCurrentYear,openingBalance,entryDate);
     }
 }
