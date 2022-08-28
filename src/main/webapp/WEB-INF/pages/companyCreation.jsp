@@ -218,7 +218,7 @@
                                         <div class="form-group form-group-float col-md-6">
                                             <label class="required">Concat Person </label>
                                             <input type="text" tabindex="3"
-                                                   class="form-control form-control-sm field numeric"
+                                                   class="form-control form-control-sm field"
                                                    name="contactPerson"
                                                    id="contactPerson" required="true"/>
                                         </div>

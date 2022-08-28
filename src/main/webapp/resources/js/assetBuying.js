@@ -246,13 +246,13 @@ assetBuying = (function () {
 
                     if (parseInt(isCash.val()) !== 4) {
                         if (amtReturn.val() < 0) {
-                            $('#amountReceivedText').text("Amount Received");
+                            $('#amountReceivedText').text("Amount Paid");
                             $('#bankDetails').attr('hidden', true);
                             $('#bankAmountId').attr('hidden', true);
                             $('.creditDetails').attr('hidden', false);
 
                         } else {
-                            $('#amountReceivedText').text("Amount Received");
+                            $('#amountReceivedText').text("Amount Paid");
                             $('.creditDetails').attr('hidden', true);
                             resetPartRelated();
                         }
@@ -318,13 +318,13 @@ assetBuying = (function () {
                     if (parseInt(isCash.val()) !== 4) {
 
                         if (amtReturn.val() < 0) {
-                            $('#amountReceivedText').text("Amount Received");
+                            $('#amountReceivedText').text("Amount Paid");
                             $('#bankDetails').attr('hidden', true);
                             $('#bankAmountId').attr('hidden', true);
                             $('.creditDetails').attr('hidden', false);
 
                         } else {
-                            $('#amountReceivedText').text("Amount Received");
+                            $('#amountReceivedText').text("Amount Paid");
                             $('.creditDetails').attr('hidden', true);
                             resetPartRelated();
                         }
@@ -343,7 +343,7 @@ assetBuying = (function () {
             $('#isCash').on('change', function () {
 
                 let amountReceivedText = $('#amountReceivedText')
-                amountReceivedText.text("Amount Received");
+                amountReceivedText.text("Amount  Paid");
 
                 $('#discountRate').val(0);
                 $('#amtReceived').val(0);

@@ -145,27 +145,9 @@ public class SaleItemService extends BaseService {
                 //endregion
 
                 //check party name already exists
-                Integer partyId = null;
-
-                if (Objects.equals(saleItemDTO.getIsCash(), PaymentModeTypeEnum.CREDIT.getValue()) || (saleItemDTO.getPartyName() != null && !saleItemDTO.getPartyName().equals(""))) { //applies to only party
-
-                    partyId = accSaleInvoiceGenerationDao.getPartyIdIFExists(currentUser.getCompanyId(),
-                            saleItemDTO.getPartyName());
-
-                    if (partyId == null) {
-                        PartyDetail partyDetail = new PartyDetail();
-                        partyId = accSaleInvoiceGenerationDao.getMaxPartyId() + 1;
-                        partyDetail.setPartyId(partyId);
-                        partyDetail.setPartyName(saleItemDTO.getPartyName());
-                        partyDetail.setPartyAddress(saleItemDTO.getPartyAddress());
-                        partyDetail.setPartyContactNo(saleItemDTO.getPartyContactNo());
-                        partyDetail.setPartyEmail(saleItemDTO.getPartyEmail());
-                        partyDetail.setCompanyId(currentUser.getCompanyId());
-                        partyDetail.setSetDate(currentUser.getCreatedDate());
-                        partyDetail.setCreatedBy(currentUser.getLoginId());
-                        accSaleInvoiceGenerationDao.savePartyDetail(partyDetail);
-                    }
-                }
+                Integer partyId = AssetOpeningService.partyDetail(currentUser, saleItemDTO.getIsCash(), saleItemDTO.getPartyName(),
+                        accSaleInvoiceGenerationDao, saleItemDTO.getPartyAddress(),
+                        saleItemDTO.getPartyContactNo(), saleItemDTO.getPartyEmail());
 
                 //save sale record
                 SaleRecord saleRecord = new SaleRecord();

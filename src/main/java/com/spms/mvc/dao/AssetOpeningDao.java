@@ -158,15 +158,33 @@ public class AssetOpeningDao extends BaseDao {
         return sessionFactory.getCurrentSession().createSQLQuery(sqlQuery).setParameter("voucherNo", voucherNo).setParameter("purchaseMasterId", purchaseMasterId).setResultTransformer(Transformers.aliasToBean(OpeningAndBuyingDTO.class)).list();
     }
 
-    public boolean checkIsOpening(BigInteger faPurchaseId) {
-        String sqlQuery = "";
 
-        return sessionFactory.getCurrentSession().createSQLQuery(sqlQuery).setParameter("faPurchaseId", faPurchaseId).uniqueResult().equals(BigInteger.ZERO);
+    @Transactional(readOnly = true)
+    public OpeningAndBuyingDTO checkIsOpening(BigInteger faPurchaseId) {
+        String sqlQuery = "SELECT a.openingBalance as amount, e.accTypeId  FROM tbl_fa_purchase a\n" +
+                " INNER JOIN tbl_fa_item_setup_detail b ON a.assetDetailId=b.assetDetailId \n" +
+                " INNER JOIN tbl_fa_item_setup c ON c.assetId=b.assetId\n" +
+                " INNER JOIN tbl_fa_purchase_mater d ON d.purchaseMasterId=a.purchaseMasterId\n" +
+                " INNER JOIN tbl_fa_group e ON c.assetClassId=e.assetClassId\n" +
+                "WHERE a.faPurchaseId=:faPurchaseId and a.openingBalance is not null";
+        return (OpeningAndBuyingDTO) sessionFactory.getCurrentSession().createSQLQuery(sqlQuery)
+                .setResultTransformer(Transformers.aliasToBean(OpeningAndBuyingDTO.class))
+                .setParameter("faPurchaseId", faPurchaseId)
+                .uniqueResult();
     }
 
     @Transactional(readOnly = true)
     public Integer getAccTypeByAssetItem(BigInteger assetDetailId) {
         String sqlQuery = "SELECT a.accTypeId FROM tbl_fa_group a\n" + "INNER JOIN tbl_fa_item_setup b ON a.assetClassId=b.assetClassId\n" + "INNER JOIN tbl_fa_item_setup_detail c ON c.assetId=b.assetId\n" + "INNER JOIN tbl_fa_purchase d ON d.assetDetailId=c.assetDetailId\n" + "WHERE d.assetDetailId=:assetDetailId GROUP BY accTypeId";
         return (Integer) sessionFactory.getCurrentSession().createSQLQuery(sqlQuery).setParameter("assetDetailId", assetDetailId).uniqueResult();
+    }
+
+    @Transactional
+    public void updateVoucherNoByInvoiceNo(String purchaseInvoiceNo, Integer voucherNo) {
+        String sqlQuery = "UPDATE tbl_fa_purchase_mater SET voucherNo=:voucherNo where purchaseInvoiceNo=:purchaseInvoiceNo";
+        sessionFactory.getCurrentSession().createSQLQuery(sqlQuery)
+                .setParameter("voucherNo", voucherNo)
+                .setParameter("purchaseInvoiceNo", purchaseInvoiceNo)
+                .executeUpdate();
     }
 }

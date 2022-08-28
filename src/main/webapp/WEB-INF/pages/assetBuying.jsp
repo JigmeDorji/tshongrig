@@ -45,7 +45,7 @@
                         <label class="col-md-2 right-align">Purchase Date:</label>
                         <div class="col-md-3">
                             <input type="text" tabindex="2"
-                                   class="form-control form-control-sm  right-align common datepicker"
+                                   class="form-control form-control-sm  right-align common formatDate"
                                    name="purchaseDate"
                                    placeholder="DD.MM.YYYY"
                                    id="purchaseDate"/>
@@ -105,25 +105,25 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <div class="col-md-7">
-                            </div>
-                            <label class="col-md-2 right-label col-lg-offset-7">Discount</label>
+<%--                        <div class="form-group row">--%>
+<%--                            <div class="col-md-7">--%>
+<%--                            </div>--%>
+<%--                            <label class="col-md-2 right-label col-lg-offset-7">Discount</label>--%>
 
-                            <div class="col-md-3">
-                                <input type="text"
-                                       class="form-control form-control-sm right-align amount resetField"
-                                       value="0" readonly
-                                       id="discountRate" name="discountRate">
-                            </div>
-                        </div>
+<%--                            <div class="col-md-3">--%>
+<%--                                <input type="text"--%>
+<%--                                       class="form-control form-control-sm right-align amount resetField"--%>
+<%--                                       value="0" readonly--%>
+<%--                                       id="discountRate" name="discountRate">--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+
                         <div class="form-group row">
                             <div class="col-md-7">
                             </div>
+
                             <label class="col-md-2 right-label col-lg-offset-7" id="amountReceivedText">Amount
                                 Paid</label>
-
-
                             <div class="col-md-3">
                                 <input type="text"
                                        class="form-control form-control-sm right-align amount" name="amtReceived"
@@ -162,13 +162,13 @@
                         <div class="form-group row">
                             <div class="col-md-7">
                             </div>
-                            <label class="col-md-2 right-label col-lg-offset-7">Returnable Amount</label>
+<%--                            <label class="col-md-2 right-label col-lg-offset-7">Returnable Amount</label>--%>
 
-                            <div class="col-md-3">
-                                <input type="text" class="form-control form-control-sm   right-align" value="0"
-                                       name="amtReturn"
-                                       id="amtReturn" readonly>
-                            </div>
+<%--                            <div class="col-md-3">--%>
+<%--                                <input type="text" class="form-control form-control-sm   right-align" value="0"--%>
+<%--                                       name="amtReturn"--%>
+<%--                                       id="amtReturn" readonly>--%>
+<%--                            </div>--%>
                         </div>
 
                         <div class="creditDetails" hidden>
