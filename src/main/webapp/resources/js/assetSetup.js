@@ -174,7 +174,7 @@ assetSetup = (function () {
                             let editBtn = '', hasEditRole = $('#hasEditRole').val();
                             // if (hasEditRole.toString() === 'true') {
                             let url = row.description === "Opening" ? 'navigateToOpening' : 'navigateToPurchase';
-                            editBtn = '<a href="assetSetup/' + url + '?faPurchaseId=' + encodeURIComponent(row.faPurchaseId) + '&&purchaseMasterId=' + encodeURIComponent(row.purchaseMasterId) + '&&voucherNo=' + encodeURIComponent(row.voucherNo) + '"><button type=button"  class="btn btn-primary btn-sm">Edit</button></a>';
+                            // editBtn = '<a href="assetSetup/' + url + '?faPurchaseId=' + encodeURIComponent(row.faPurchaseId) + '&&purchaseMasterId=' + encodeURIComponent(row.purchaseMasterId) + '&&voucherNo=' + encodeURIComponent(row.voucherNo) + '"><button type=button"  class="btn btn-primary btn-sm">Edit</button></a>';
                             // }
                             return editBtn + '<a href="#"><button  type="button" class="btn btn-info btn-sm" id="btnDetailView"><i class="fa fa-info-circle"></i> Detail</button></a>';
                         }
@@ -249,7 +249,7 @@ assetSetup = (function () {
         saveAssetClass: saveAssetClass,
         getFixedAssetDetail: getFixedAssetDetail,
         saveAssetSubClassCategories: saveAssetSubClassCategories,
-        onClickEdit: onClickEdit,
+        // onClickEdit: onClickEdit,
         getItemDetailView: getItemDetailView
     }
 })();
@@ -261,7 +261,7 @@ $(document).ready(function () {
     assetSetup.saveAssetClass();
     assetSetup.saveAssetSubClassCategories();
     assetSetup.getFixedAssetDetail();
-    assetSetup.onClickEdit();
+    // assetSetup.onClickEdit();
     assetSetup.getItemDetailView();
 
 });

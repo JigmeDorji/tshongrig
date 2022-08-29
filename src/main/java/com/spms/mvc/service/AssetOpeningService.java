@@ -154,9 +154,9 @@ public class AssetOpeningService {
             int selectedMonth = currentUser.getCreatedDate().getMonth();
             int purchaseMonth = openingAndBuyingDTO.getPurchaseInvoiceNo() == null ? 0 : openingAndBuyingDTO.getPurchaseDate().getMonth();
 
-            if (openingAndBuyingDTO.getPurchaseInvoiceNo() == null) {
-                //update opening balance
-                ledgerService.updateOpeningBalance(ledgerService.getLedgerIdByLedgerName(ledgerService.getAccountTypeNameByAccType(accTypeId), currentUser, accTypeId), currentUser.getCompanyId(), openingAndBuyingListDTO.getOpeningBalance());
+            if (openingAndBuyingDTO.getPurchaseInvoiceNo() == null) { //update opening balance
+                ledgerService.updateOpeningBalance(ledgerService.getLedgerIdByLedgerName(ledgerService.getAccountTypeNameByAccType(accTypeId), currentUser, accTypeId),
+                        currentUser.getCompanyId(), openingAndBuyingListDTO.getOpeningBalance());
             } else {
                 monthStart = purchaseMonth;
             }

@@ -96,35 +96,7 @@ assetOpening = (function () {
 
     function returnRow() {
         iterator = iterator + 1;
-        return "<tr>" + "<td><input type='text' readonly class='form-control rowNumber'>" + "<input type='hidden' id='assetDetailId" + iterator + "' name='openingAndBuyingListDTO[0].assetDetailId'  class='form-control'>" + "<input type='hidden' id='fixedAssetGroupId' name='openingAndBuyingListDTO[0].fixedAssetGroupId'  class='form-control'>" + "<input type='hidden' id='faPurchaseId' name='openingAndBuyingListDTO[0].faPurchaseId'  class='form-control' ></td>" + "<td><input type='text' id='autoCompleteId" + iterator + "' name='openingAndBuyingListDTO[0].particular' class='form-control particular'></td>" + "<td><input type='text'  name='openingAndBuyingListDTO[0].purchaseDate' class='form-control fxFormatDate'></td>" + "<td><input type='text'  name='openingAndBuyingListDTO[0].openingBalance' class='form-control openingBalance right-align'></td>" + "<td><input type='text'  name='openingAndBuyingListDTO[0].depreciatedValue' class='form-control depreciatedValue right-align'></td>" + "<td><input type='text'  name='openingAndBuyingListDTO[0].rate' class='form-control rate right-align'></td>" + "<td><input type='text'  name='openingAndBuyingListDTO[0].qty' class='form-control qty  right-align'></td>" + "<td><input type='text'  name='openingAndBuyingListDTO[0].total' readonly class='form-control total right-align'></td>" + "<td class='text-center'><button class='btn btn-danger btn-xm  d-sm-inline-block removeBtn' type='button' id='removeBtn'><i class='fa fa-trash'></i> Delete</button>" + "<button class='btn btn-xm btn-success d-sm-inline-block addBtn' type='button' id='addBtn'><i class='fa fa-plus'></i> Add More</button></td>" + "</tr>";
-    }
-
-    function deleteItem() {
-        fixedAssetOpeningGridTBody.on('click', 'tr #removeBtn', function () {
-            let selectedRow = $(this).closest('tr');
-            let faPurchaseId = selectedRow.find('.faPurchaseId').val();
-
-            if (faPurchaseId !== '' && typeof faPurchaseId !== 'undefined') {
-                confirmMessage("Are you sure you want to delete ?", function () {
-                    spms.ajax(baseURL() + 'deleteItem', 'POST', {faPurchaseId: faPurchaseId}, function (res) {
-                        if (res.status === 1) {
-                            successMsg(res.text);
-                            _disPlayData();
-                        } else {
-                            errorMsg(res.text);
-                        }
-                    })
-                });
-            } else {
-                selectedRow.remove();
-
-                if (parseInt($('#fixedAssetOpeningGrid tbody tr').length) === 1) {
-                    $('#fixedAssetOpeningGrid tr').last().find('.removeBtn').addClass('hidden');
-                }
-                $('#fixedAssetOpeningGrid tr').last().find('.addBtn').removeClass('hidden');
-            }
-            indexRowNo(fixedAssetOpeningGrid);
-        });
+        return "<tr>" + "<td><input type='text' readonly class='form-control rowNumber'>" + "<input type='hidden' id='assetDetailId" + iterator + "' name='openingAndBuyingListDTO[0].assetDetailId'  class='form-control'>" + "<input type='hidden' id='fixedAssetGroupId' name='openingAndBuyingListDTO[0].fixedAssetGroupId'  class='form-control'>" + "<input type='hidden' id='faPurchaseId' name='openingAndBuyingListDTO[0].faPurchaseId'  class='form-control' ></td>" + "<td><input type='text' id='autoCompleteId" + iterator + "' name='openingAndBuyingListDTO[0].particular' class='form-control particular'></td>" + "<td><input type='text'  name='openingAndBuyingListDTO[0].purchaseDate' class='form-control fxFormatDate'></td>" + "<td><input type='text'  name='openingAndBuyingListDTO[0].openingBalance' class='form-control openingBalance right-align'></td>" + "<td><input type='text'  name='openingAndBuyingListDTO[0].depreciatedValue' class='form-control depreciatedValue right-align'></td>" + "<td><input type='text'  name='openingAndBuyingListDTO[0].rate' class='form-control rate right-align'></td>" + "<td><input type='text'  name='openingAndBuyingListDTO[0].qty' class='form-control qty  right-align'></td>" + "<td><input type='text'  name='openingAndBuyingListDTO[0].total' readonly class='form-control total right-align'></td>" + "<td class='text-center'><button class='btn btn-xm btn-success d-sm-inline-block addBtn' type='button' id='addBtn'><i class='fa fa-plus'></i> Add More</button></td>" + "</tr>";
     }
 
     function calculateTotal() {
@@ -221,7 +193,6 @@ assetOpening = (function () {
     return {
         loadInitialGrid: loadInitialGrid,
         addMoreRow: addMoreRow,
-        deleteItem: deleteItem,
         saveItem: saveItem,
         populateData: populateData,
         onQtyChange: onQtyChange,
@@ -232,7 +203,6 @@ assetOpening = (function () {
 $(document).ready(function () {
     assetOpening.loadInitialGrid();
     assetOpening.addMoreRow();
-    assetOpening.deleteItem();
     assetOpening.saveItem();
     assetOpening.onQtyChange();
     assetOpening._disPlayData();
