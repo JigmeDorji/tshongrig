@@ -158,7 +158,7 @@ public class FixedAssetSaleService {
                 }
 
                 //When particular asset is sold at its net value after depreciation.
-                if (assetSalesEqual > 0.0) {
+/*                if (assetSalesEqual > 0.0) {
 
                     ledgerId = ledgerService.getLedgerIdByLedgerName(AccountTypeEnum.SALES.getText(), currentUser,
                             AccountTypeEnum.SALES.getValue());
@@ -167,7 +167,7 @@ public class FixedAssetSaleService {
                     voucherSaleEqualDTO.setDrcrAmount(assetSalesEqual);
                     voucherSaleEqualDTO.setLedgerId(ledgerId);
                     voucherDetailDTOs.add(voucherSaleEqualDTO);
-                }
+                }*/
 
                 //When the asset is sold at a higher price than the net value after depreciation.
                 if (assetSalesProfit > 0.0) {
