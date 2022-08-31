@@ -102,21 +102,21 @@ fixedAssetSchedule = (function () {
                         totalDepCurrentYear = totalDepCurrentYear + depCurrentYear;
                         totalDepAsOnEndFinancialYear = totalDepAsOnEndFinancialYear + depAsOnEndFinancialYear;
                         totalNetValue = totalNetValue + netValue;
-
+                        let deleteBtn = addition === 0.00 ? '<i class="icon-trash text-warning btnDelete"></i>' : '';
                         htmlTableContent = htmlTableContent + '<tr  class="text-center">\n' +
-                            '                        <td>' + item.particular + '</td>\n' +
+                            '                        <td class="particular">' + item.particular + '</td>\n' +
                             '                        <td>' + purchaseDate + '</td>\n' +
                             '                        <td>' + spms.numberWithCommas(rate.toFixed(2)) + '</td>\n' +
                             '                        <td>' + (item.rateOfDep) * 100 + "%" + '</td>\n' +
-                            '                        <td>' + spms.numberWithCommas(asOnStartFinancialYear.toFixed(2)) + '</td>\n' +
-                            '                        <td>' + spms.numberWithCommas(addition.toFixed(2)) + '</td>\n' +
+                            '                        <td class="asOnStartFinancialYear">' + spms.numberWithCommas(asOnStartFinancialYear.toFixed(2)) + '</td>\n' +
+                            '                        <td class="addition">' + spms.numberWithCommas(addition.toFixed(2)) + '</td>\n' +
                             '                        <td>' + spms.numberWithCommas(disposal.toFixed(2)) + '</td>\n' +
                             '                        <td>' + spms.numberWithCommas(asOnEndFinancialYear.toFixed(2)) + '</td>\n' +
                             '                        <td>' + spms.numberWithCommas(depAsOnStartFinancialYear.toFixed(2)) + '</td>\n' +
-                            '                        <td>' + spms.numberWithCommas(depCurrentYear.toFixed(2)) + '</td>\n' +
+                            '                        <td class="depCurrentYear">' + spms.numberWithCommas(depCurrentYear.toFixed(2)) + '</td>\n' +
                             '                        <td>' + spms.numberWithCommas(depAsOnEndFinancialYear.toFixed(2)) + '</td>\n' +
                             '                        <td>' + spms.numberWithCommas(netValue.toFixed(2)) + '</td>\n' +
-                            '                    </tr>';
+                            '                    <td>' + deleteBtn + '</td></tr>';
                     }
 
                     function totalHTMLContent() {
@@ -133,7 +133,7 @@ fixedAssetSchedule = (function () {
                             '                        <td><b>' + spms.numberWithCommas(totalDepCurrentYear.toFixed(2)) + '</b></td>\n' +
                             '                        <td><b>' + spms.numberWithCommas(totalDepAsOnEndFinancialYear.toFixed(2)) + '</b></td>\n' +
                             '                        <td><b>' + spms.numberWithCommas(totalNetValue.toFixed(2)) + '</b></td>\n' +
-                            '                    </tr>';
+                            '                    <td></td></tr>';
                     }
 
                     function calculateGrandTotal() {
@@ -189,13 +189,41 @@ fixedAssetSchedule = (function () {
         return finalCharter;
     }
 
+    function onCLickBtnDelete() {
+        $('#tableAssetSchedule tbody').on('click', 'tr .btnDelete', function () {
+            let selectedRow = $(this).closest('tr');
+            alert(selectedRow.find('.asOnStartFinancialYear').text())
+            $.ajax({
+                url: 'fixedAssetSchedule/deleteFixedAsset',
+                type: 'GET',
+                data: {
+                    particular: selectedRow.find('.particular').text(),
+                    depCurrentYear: selectedRow.find('.depCurrentYear').text(),
+                    openingBalance: spms.removeCommaSeparation(selectedRow.find('.asOnStartFinancialYear').text()),
+                    entryDate: $('#asOnDate').val()
+                },
+                success: function (res) {
+                    if (res.status === 1) {
+                        successMsg(res.text);
+                        loadInitialTable();
+                    } else {
+                        errorMsg(res.text);
+                    }
+                }
+            })
+
+        })
+    }
+
     return {
         loadInitialTable: loadInitialTable,
-        onChangeAsOnDate: onChangeAsOnDate
+        onChangeAsOnDate: onChangeAsOnDate,
+        onCLickBtnDelete: onCLickBtnDelete
     }
 })();
 $(document).ready(function () {
     fixedAssetSchedule.loadInitialTable();
     fixedAssetSchedule.onChangeAsOnDate();
+    fixedAssetSchedule.onCLickBtnDelete();
 });
 

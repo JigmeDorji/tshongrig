@@ -171,8 +171,7 @@
                         </ul>
                     </li>
                 </c:if>
-
-                <c:if test="${currentUser.businessType ==4 || currentUser.businessType ==3}">
+                <c:if test="${currentUser.businessType ==4}">
                     <%--Material--%>
                     <li class="nav-item nav-item-submenu">
                         <a href="#" class="nav-link"><i class="icon icon-hammer-wrench"></i> <span>
@@ -233,6 +232,55 @@
                                 Bills</a></li>
                         </ul>
                     </li>
+                </c:if>
+
+
+                <c:if test="${currentUser.businessType ==3}">
+                    <%--Material--%>
+                    <li class="nav-item nav-item-submenu">
+                        <a href="#" class="nav-link"><i class="icon icon-hammer-wrench"></i> <span>
+                            <c:if test="${currentUser.businessType ==4}">
+                                Material
+                            </c:if>
+                            <c:if test="${currentUser.businessType ==3}">
+                                Raw Material
+                            </c:if>
+                            </span></a>
+                        <ul class="nav nav-group-sub" data-submenu-title="Starter kit">
+                            <li class="nav-item">
+                                <sec:authorize access="hasAuthority('12-VIEW')">
+                                    <a href="<c:url value='/locationSetUp' />" class="nav-link"> Location Setup</a>
+                                </sec:authorize>
+                            </li>
+                            <li class="nav-item">
+                                <sec:authorize access="hasAuthority('14-VIEW')">
+                                    <a class="nav-link" href="<c:url value='/openingRawMaterialPurchase' />">
+                                        Opening</a>
+                                </sec:authorize>
+                            </li>
+                            <li class="nav-item">
+                                <sec:authorize access="hasAuthority('14-VIEW')">
+                                    <a class="nav-link" href="<c:url value='/rawMaterialPurchase' />"> Purchase</a>
+                                </sec:authorize>
+                            </li>
+                            <li class="nav-item">
+                                <sec:authorize access="hasAuthority('15-VIEW')">
+                                    <a class="nav-link" href="<c:url value='/viewItem' />"> View Item</a>
+                                </sec:authorize>
+                            </li>
+                            <li class="nav-item">
+                                <sec:authorize access="hasAuthority('17-VIEW')">
+                                    <a class="nav-link" href="<c:url value='/stockIssue' />"> Issue</a>
+                                </sec:authorize>
+                            </li>
+                            <li class="nav-item">
+                                <sec:authorize access="hasAuthority('16-VIEW')">
+                                    <a class="nav-link" href="<c:url value='/issueDetail' />"> Issue Detail</a>
+                                </sec:authorize>
+                            </li>
+                        </ul>
+                    </li>
+
                 </c:if>
 
                 <%--Financial Statement--%>

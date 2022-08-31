@@ -131,7 +131,7 @@ public class FixedAssetSaleDao {
 
     @Transactional(readOnly = true)
     public List<OpeningAndBuyingListDTO> getAssetSaleRecordByReceiptMemoNo(String receiptMemoNo, Integer companyId) {
-        String query = "SELECT SUM(b.netAmount) as totalAmount, g.accTypeId FROM bcs_db.tbl_fa_sale_record a\n" +
+        String query = "SELECT SUM(b.netAmount) as totalAmount, g.accTypeId FROM tbl_fa_sale_record a\n" +
                 "INNER JOIN tbl_fa_sale_record_detail b ON a.saleRecordId=b.saleRecordId\n" +
                 "INNER JOIN tbl_fa_purchase_detail c ON c.assetCode=b.assetCode\n" +
                 "INNER JOIN tbl_fa_purchase d ON d.faPurchaseId=c.faPurchaseId\n" +
@@ -147,17 +147,18 @@ public class FixedAssetSaleDao {
     }
 
     @Transactional(readOnly = true)
-    public OpeningAndBuyingListDTO getAssetDetailByAssetCode(String assetCode) {
+    public OpeningAndBuyingListDTO getAssetDetailByAssetCode(String assetCode, Integer companyId) {
         String query = "SELECT b.purchaseDate, b.openingBalance, b.depreciatedValue,b.rate, b.qty, e.accTypeId\n" +
                 " FROM tbl_fa_purchase_detail a\n" +
                 "INNER JOIN tbl_fa_purchase b ON a.faPurchaseId=b.faPurchaseId\n" +
                 "INNER JOIN tbl_fa_item_setup_detail c ON c.assetDetailId=b.assetDetailId\n" +
                 "INNER JOIN tbl_fa_item_setup d ON d.assetId=c.assetId\n" +
                 "INNER JOIN tbl_fa_group e ON e.assetClassId=d.assetClassId\n" +
-                "WHERE a.assetCode=:assetCode";
+                "WHERE a.assetCode=:assetCode and d.companyId=:companyId";
         Session session = sessionFactory.getCurrentSession();
         return (OpeningAndBuyingListDTO) session.createSQLQuery(query)
                 .setParameter("assetCode", assetCode)
+                .setParameter("companyId", companyId)
                 .setResultTransformer(Transformers.aliasToBean(OpeningAndBuyingListDTO.class)).uniqueResult();
     }
 
@@ -183,5 +184,16 @@ public class FixedAssetSaleDao {
         String query2 = "SELECT * FROM temp_final_fixed_asset_schedule";
         return sessionFactory.getCurrentSession().createSQLQuery(query2)
                 .setResultTransformer(Transformers.aliasToBean(FixedAssetScheduleDTO.class)).list();
+    }
+
+    @Transactional(readOnly = true)
+    public BigInteger getAssetDetailId(String particular,Integer companyId) {
+        String query = "SELECT a.assetDetailId FROM tbl_fa_item_setup_detail a \n" +
+                "inner Join tbl_fa_item_setup b on a.assetId=b.assetId\n" +
+                "where b.companyId=:companyId and particular=:particular";
+        return (BigInteger) sessionFactory.getCurrentSession().createSQLQuery(query)
+                .setParameter("particular", particular)
+                .setParameter("companyId", companyId)
+                .uniqueResult();
     }
 }

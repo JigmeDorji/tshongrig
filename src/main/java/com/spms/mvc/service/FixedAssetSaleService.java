@@ -2,13 +2,14 @@ package com.spms.mvc.service;
 
 import com.spms.mvc.Enumeration.AccountTypeEnum;
 import com.spms.mvc.Enumeration.PaymentModeTypeEnum;
+import com.spms.mvc.Enumeration.SystemDataInt;
 import com.spms.mvc.Enumeration.VoucherTypeEnum;
 import com.spms.mvc.dao.AccSaleInvoiceGenerationDao;
+import com.spms.mvc.dao.AssetOpeningDao;
 import com.spms.mvc.dao.FixedAssetSaleDao;
 import com.spms.mvc.dto.*;
 import com.spms.mvc.entity.FaSaleRecord;
 import com.spms.mvc.entity.FaSaleRecordDetail;
-import com.spms.mvc.entity.PartyDetail;
 import com.spms.mvc.library.helper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,9 @@ public class FixedAssetSaleService {
 
     @Autowired
     FixedAssetSaleDao fixedAssetSaleDao;
+
+    @Autowired
+    AssetOpeningDao assetOpeningDao;
 
     @Autowired
     private LedgerService ledgerService;
@@ -143,15 +147,8 @@ public class FixedAssetSaleService {
                         currentUser.getCompanyId());
 
                 for (OpeningAndBuyingListDTO openingAndBuyingList : openingAndBuyingListDTO) {
-                    String ledgerName;
 
-                    if (openingAndBuyingList.getAccTypeId().equals(AccountTypeEnum.FURNITURE_FIXTURE.getValue())) {
-                        ledgerName = AccountTypeEnum.FURNITURE_FIXTURE.getText();
-                    } else {
-                        ledgerName = AccountTypeEnum.find(openingAndBuyingList.getAccTypeId());
-                    }
-
-                    ledgerId = ledgerService.getLedgerIdByLedgerName(ledgerName,
+                    ledgerId = ledgerService.getLedgerIdByLedgerName(ledgerService.getAccountTypeNameByAccType(openingAndBuyingList.getAccTypeId()),
                             currentUser, openingAndBuyingList.getAccTypeId());
 
                     VoucherDetailDTO voucherDetailDTODTO = new VoucherDetailDTO();
@@ -167,7 +164,7 @@ public class FixedAssetSaleService {
                             AccountTypeEnum.SALES.getValue());
 
                     VoucherDetailDTO voucherSaleEqualDTO = new VoucherDetailDTO();
-                    voucherSaleEqualDTO.setDrcrAmount(assetSalesProfit);
+                    voucherSaleEqualDTO.setDrcrAmount(assetSalesEqual);
                     voucherSaleEqualDTO.setLedgerId(ledgerId);
                     voucherDetailDTOs.add(voucherSaleEqualDTO);
                 }
@@ -206,12 +203,7 @@ public class FixedAssetSaleService {
                 //Sale in Cash
                 VoucherDetailDTO voucherDetailDTO = new VoucherDetailDTO();
                 if (Objects.equals(saleItemDTO.getIsCash(), PaymentModeTypeEnum.CASH.getValue())) {
-
-                    if (saleItemDTO.getAmtReturn() < 0) {
-                        amount = saleItemDTO.getAmtReceived();
-                    } else {
-                        amount = saleItemDTO.getAmount() - saleItemDTO.getDiscountRate();
-                    }
+                    amount = saleItemDTO.getAmount();
                     voucherDetailDTO.setDrcrAmount(AccountingUtil.drAmount(amount));
                     voucherDetailDTO.setIsCash(PaymentModeTypeEnum.CASH.getValue());
                     voucherDetailDTOs.add(voucherDetailDTO);
@@ -219,11 +211,7 @@ public class FixedAssetSaleService {
 
                 //Sale in Bank
                 if (Objects.equals(saleItemDTO.getIsCash(), PaymentModeTypeEnum.BANK.getValue())) {
-                    if (saleItemDTO.getAmtReturn() < 0) {
-                        amount = saleItemDTO.getAmtReceived();
-                    } else {
-                        amount = saleItemDTO.getAmount() - saleItemDTO.getDiscountRate();
-                    }
+                    amount = saleItemDTO.getAmount();
                     voucherDetailDTO = new VoucherDetailDTO();
                     voucherDetailDTO.setBankLedgerId(saleItemDTO.getBankLedgerId());
                     voucherDetailDTO.setDrcrAmount(AccountingUtil.drAmount(amount));
@@ -234,7 +222,6 @@ public class FixedAssetSaleService {
                 //Sale in credit
             /* Whether the sale is made either from cash or bank, if there is remaining amount left,
              system will take remaining amount as credit for particular party*/
-
                 if ((saleItemDTO.getPartyName() != null && !saleItemDTO.getPartyName().equals("")) || Objects.equals(saleItemDTO.getIsCash(), PaymentModeTypeEnum.CREDIT.getValue())
                         || saleItemDTO.getAmtReturn() < 0) { // for credit party ledger
                     //create ledger for party
@@ -244,11 +231,7 @@ public class FixedAssetSaleService {
                     voucherDetailDTO.setLedgerId(ledgerService.getLedgerIdByLedgerName(
                             saleItemDTO.getPartyName(), currentUser, AccountTypeEnum.RECEIVABLE.getValue()));
 
-                    if (saleItemDTO.getAmtReturn() < 0) {
-                        creditAmount = Math.abs(saleItemDTO.getAmtReturn());
-                    } else {
-                        creditAmount = (saleItemDTO.getAmount() - saleItemDTO.getDiscountRate());
-                    }
+                    creditAmount = (saleItemDTO.getAmount());
                     voucherDetailDTO.setDrcrAmount(AccountingUtil.drAmount(creditAmount));
                     voucherDetailDTO.setIsCash(saleItemDTO.getIsCash());
                     voucherDetailDTOs.add(voucherDetailDTO);
@@ -322,7 +305,7 @@ public class FixedAssetSaleService {
 
     public Double calculateNetValueOfAsset(String assetCode, CurrentUser currentUser, Date asOnDate) throws ParseException {
 
-        OpeningAndBuyingListDTO openingAndBuyingListDTO = fixedAssetSaleDao.getAssetDetailByAssetCode(assetCode);
+        OpeningAndBuyingListDTO openingAndBuyingListDTO = fixedAssetSaleDao.getAssetDetailByAssetCode(assetCode, currentUser.getCompanyId());
 
         double netValue = 0.00;
         Double depreciationRate = openingAndBuyingListDTO.getAccTypeId().equals(AccountTypeEnum.BUILDING_AND_AMENITIES.getValue()) ? 0.03 : 0.15;
@@ -341,7 +324,7 @@ public class FixedAssetSaleService {
 
             Double depreciationValue = openingAndBuyingListDTO.getDepreciatedValue();
 
-            Double currentYearDepreciation = ((purchaseValue * depreciationRate) / numOfDays) * totalNoOfDaysDif;
+            double currentYearDepreciation = ((purchaseValue * depreciationRate) / numOfDays) * totalNoOfDaysDif;
             Double currentYearDepAsDate = currentYearDepreciation + (depreciationValue / openingAndBuyingListDTO.getQty()
                     .doubleValue());
             netValue = purchaseValue - currentYearDepAsDate;
@@ -361,5 +344,53 @@ public class FixedAssetSaleService {
 
     public List<FixedAssetScheduleDTO> getFixedAssetSchedule(Date asOnDate, Integer companyId) {
         return fixedAssetSaleDao.getFixedAssetSchedule(asOnDate, companyId);
+    }
+
+    @Autowired
+    AutoVoucherService autoVoucherService;
+
+    public ResponseMessage deleteFixedAsset(CurrentUser currentUser, String particular, Double depCurrentYear, Double openingBalance, Date entryDate) throws ParseException {
+        BigInteger assetDetailId = fixedAssetSaleDao.getAssetDetailId(particular, currentUser.getCompanyId());
+
+        Integer accTypeId = assetOpeningDao.getAccTypeByAssetItem(assetDetailId);
+        //Accounting Entry
+
+        List<VoucherDetailDTO> voucherDetailDTOList = new ArrayList<>();
+        VoucherDTO voucherDTO = new VoucherDTO();
+
+        Integer voucherNo = voucherCreationService.getCurrentVoucherNo(VoucherTypeEnum.JOURNAL.getValue(), currentUser.getCompanyId(), currentUser.getFinancialYearId());
+        voucherDTO.setVoucherTypeId(VoucherTypeEnum.JOURNAL.getValue());
+        voucherDTO.setNarration("Asset Delete");
+        voucherDTO.setVoucherEntryDate(entryDate);
+
+        //Prepare voucher Entry
+        VoucherDetailDTO voucherDrDTo = new VoucherDetailDTO();
+        voucherDrDTo.setDrcrAmount(AccountingUtil.crAmount(depCurrentYear));
+        voucherDrDTo.setLedgerId(autoVoucherService.getLedgerId("Depreciation", currentUser, AccountTypeEnum.INDIRECT_COST.getValue()));
+        voucherDetailDTOList.add(voucherDrDTo);
+
+        VoucherDetailDTO voucherCr = new VoucherDetailDTO();
+        voucherCr.setDrcrAmount(AccountingUtil.drAmount(depCurrentYear));
+        voucherCr.setLedgerId(autoVoucherService.getLedgerId(ledgerService.getAccountTypeNameByAccType(accTypeId), currentUser, accTypeId));
+        voucherDetailDTOList.add(voucherCr);
+        voucherDTO.setVoucherDetailDTOList(voucherDetailDTOList);
+        voucherDTO.setVoucherEntryDate(entryDate);
+
+        voucherDTO.setVoucherNo(voucherNo);
+        voucherCreationService.performPurchaseAndSaleVoucherEntry(voucherDTO, currentUser);
+
+        ledgerService.updateOpeningBalance(ledgerService.getLedgerIdByLedgerName(
+                        ledgerService.getAccountTypeNameByAccType(accTypeId), currentUser, accTypeId), currentUser.getCompanyId(),
+                (-1 * openingBalance));
+
+        assetOpeningDao.deleteItemFromDetailByAssetDetailId(assetDetailId);
+        assetOpeningDao.deleteItemByAssetDetailId(assetDetailId);
+
+        ResponseMessage responseMessage = new ResponseMessage();
+        responseMessage.setText("Deleted Successfully");
+        responseMessage.setStatus(SystemDataInt.MESSAGE_STATUS_SUCCESSFUL.value());
+
+
+        return responseMessage;
     }
 }

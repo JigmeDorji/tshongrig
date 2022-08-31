@@ -49,13 +49,14 @@
                     <fieldset>
                         <div class="asset-of-schedule">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-striped table-hover">
+                                <table class="table table-bordered table-striped table-hover" id="tableAssetSchedule">
                                     <thead>
                                     <tr class="bg-primary text-white">
                                         <th rowspan="2" width="20%">Particular</th>
                                         <th colspan="7">Gross Block</th>
                                         <th colspan="3">Depreciation</th>
                                         <th rowspan="2">Net Value</th>
+                                        <th rowspan="2"></th>
                                     </tr>
 
                                     <tr class="bg-primary text-white">
