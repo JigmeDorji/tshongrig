@@ -144,7 +144,7 @@ public class VoucherGroupListDao {
                 "inner join tbl_acc_ledger c ON c.ledgerId=a.ledgerId\n" +
                 "inner join tbl_acc_acctype d on d.accTypeId=c.accTypeId\n" +
                 "inner join tbl_acc_group e on e.groupId=d.groupId\n" +
-                "where a.ledgerId=:ledgerId and b.companyId=:companyId and b.voucherEntryDate <= :currentPeriodFrom\n" +
+                "where a.ledgerId=:ledgerId and b.companyId=:companyId and b.voucherEntryDate < :currentPeriodFrom\n" +
                 "and e.groupId NOT IN(6,7,8,9)";
 
         Session session = sessionFactory.getCurrentSession();

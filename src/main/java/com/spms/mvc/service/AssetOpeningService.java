@@ -20,10 +20,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
-import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.text.*;
 import java.util.*;
 
 /**
@@ -157,8 +154,8 @@ public class AssetOpeningService {
             if (openingAndBuyingDTO.getPurchaseInvoiceNo() == null) {
                 //update opening balance
                 ledgerService.updateOpeningBalance(ledgerService.getLedgerIdByLedgerName(
-                                ledgerService.getAccountTypeNameByAccType(accTypeId), currentUser, accTypeId), currentUser.getCompanyId(),
-                        openingAndBuyingListDTO.getOpeningBalance());
+                                ledgerService.getAccountTypeNameByAccType(accTypeId), currentUser, accTypeId),
+                        currentUser.getCompanyId(), openingAndBuyingListDTO.getOpeningBalance());
             } else {
                 monthStart = purchaseMonth;
             }
@@ -192,7 +189,8 @@ public class AssetOpeningService {
                     }
                 }
 
-                Double depreciatedAmount = calculateDepreciationAmount(currentUser, accTypeId, openingAndBuyingListDTO.getRate(), month);
+                Double depreciatedAmount = calculateDepreciationAmount(currentUser, accTypeId,
+                        openingAndBuyingListDTO.getRate(), month);
 
                 voucherDTO.setVoucherTypeId(voucherTypeId);
                 voucherDTO.setNarration(voucherNarration);
@@ -211,7 +209,7 @@ public class AssetOpeningService {
 
                 voucherDTO.setVoucherDetailDTOList(voucherDetailDTOList);
                 Calendar calendar = Calendar.getInstance();
-                calendar.set(Calendar.MONTH, month);
+                calendar.set((currentUser.getCreatedDate().getYear() + 1900), month, 1);
                 calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DATE));
 
                 voucherDTO.setVoucherEntryDate(calendar.getTime());
@@ -282,15 +280,17 @@ public class AssetOpeningService {
 
     public Double calculateDepreciationAmount(CurrentUser currentUser, Integer accTypeId, Double rate, int month) throws ParseException {
 
-        Double depreciationRate = accTypeId.equals(AccountTypeEnum.BUILDING_AND_AMENITIES.getValue()) ? 0.03 : 0.15;
+        NumberFormat numberFormat = NumberFormat.getInstance(Locale.getDefault());
+        numberFormat.setMaximumFractionDigits(2);
 
+        Double depreciationRate = accTypeId.equals(AccountTypeEnum.BUILDING_AND_AMENITIES.getValue()) ? 0.03 : 0.15;
         Calendar cal = Calendar.getInstance();
 
         cal.setTime(DateUtil.toDate(currentUser.getFinancialYearFrom()));
         int numOfDays = cal.getActualMaximum(Calendar.DAY_OF_YEAR);
         int totalNoOfDaysDif = numberOfDaysInMonth(month, currentUser.getCreatedDate().getYear());
 
-        return Math.round(((rate * depreciationRate) / numOfDays) * totalNoOfDaysDif * 100.00) / 100.00;
+        return Double.parseDouble(numberFormat.format(((rate * depreciationRate) / numOfDays) * totalNoOfDaysDif));
     }
 
     public static int numberOfDaysInMonth(int month, int year) {

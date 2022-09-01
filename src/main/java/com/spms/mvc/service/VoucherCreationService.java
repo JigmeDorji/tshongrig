@@ -47,7 +47,6 @@ public class VoucherCreationService {
     public ResponseMessage save(VoucherDTO voucherDTO, CurrentUser currentUser) throws ParseException {
 
         NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
-        ;
         format.setMaximumFractionDigits(2);
 
         Integer voucherId;

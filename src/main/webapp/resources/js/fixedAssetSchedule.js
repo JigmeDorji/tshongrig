@@ -192,27 +192,30 @@ fixedAssetSchedule = (function () {
     function onCLickBtnDelete() {
         $('#tableAssetSchedule tbody').on('click', 'tr .btnDelete', function () {
             let selectedRow = $(this).closest('tr');
-            alert(selectedRow.find('.asOnStartFinancialYear').text())
-            $.ajax({
-                url: 'fixedAssetSchedule/deleteFixedAsset',
-                type: 'GET',
-                data: {
-                    particular: selectedRow.find('.particular').text(),
-                    depCurrentYear: selectedRow.find('.depCurrentYear').text(),
-                    openingBalance: spms.removeCommaSeparation(selectedRow.find('.asOnStartFinancialYear').text()),
-                    entryDate: $('#asOnDate').val()
-                },
-                success: function (res) {
-                    if (res.status === 1) {
-                        successMsg(res.text);
-                        loadInitialTable();
-                    } else {
-                        errorMsg(res.text);
-                    }
+            confirmMessage("Please confirm", function (e) {
+
+                if (e) {
+                    $.ajax({
+                        url: 'fixedAssetSchedule/deleteFixedAsset',
+                        type: 'GET',
+                        data: {
+                            particular: selectedRow.find('.particular').text(),
+                            depCurrentYear: selectedRow.find('.depCurrentYear').text(),
+                            openingBalance: spms.removeCommaSeparation(selectedRow.find('.asOnStartFinancialYear').text()),
+                            entryDate: $('#asOnDate').val()
+                        },
+                        success: function (res) {
+                            if (res.status === 1) {
+                                successMsg(res.text);
+                                loadInitialTable();
+                            } else {
+                                errorMsg(res.text);
+                            }
+                        }
+                    })
                 }
             })
-
-        })
+        });
     }
 
     return {
