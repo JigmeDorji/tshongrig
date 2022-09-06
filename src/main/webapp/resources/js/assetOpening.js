@@ -18,6 +18,8 @@ assetOpening = (function () {
         $('#btnSave').on('click', function () {
             $('.globalForm').validate({
                 submitHandler: function (form) {
+                    $('#btnSave').attr('disabled', true);
+
                     $.ajax({
                         url: 'assetOpening/save',
                         type: 'POST',
