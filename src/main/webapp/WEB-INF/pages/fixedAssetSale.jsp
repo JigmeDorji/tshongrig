@@ -94,7 +94,7 @@
 
                         <div class="col-md-4">
                             <input type="text" id="sellingPrice"
-                                   class="form-control form-control-sm decimal resetField right-align"/>
+                                   class="form-control form-control-sm resetField right-align"/>
                         </div>
                     </div>
                 </fieldset>

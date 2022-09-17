@@ -153,8 +153,7 @@ public class AssetOpeningService {
 
             if (openingAndBuyingDTO.getPurchaseInvoiceNo() == null) {
                 //update opening balance
-                ledgerService.updateOpeningBalance(ledgerService.getLedgerIdByLedgerName(
-                                ledgerService.getAccountTypeNameByAccType(accTypeId), currentUser, accTypeId),
+                ledgerService.updateOpeningBalance(ledgerService.getLedgerIdByLedgerName(ledgerService.getAccountTypeNameByAccType(accTypeId), currentUser, accTypeId),
                         currentUser.getCompanyId(), openingAndBuyingListDTO.getOpeningBalance());
             } else {
                 monthStart = purchaseMonth;
@@ -169,7 +168,8 @@ public class AssetOpeningService {
                     voucherNarration = "Asset opening entry";
                     voucherTypeId = VoucherTypeEnum.JOURNAL.getValue();
                     if (openingAndBuyingDTO.getVoucherNo() == null) {
-                        voucherNo = voucherCreationService.getCurrentVoucherNo(VoucherTypeEnum.JOURNAL.getValue(), currentUser.getCompanyId(), currentUser.getFinancialYearId());
+                        voucherNo = voucherCreationService.getCurrentVoucherNo(VoucherTypeEnum.JOURNAL.getValue(),
+                                currentUser.getCompanyId(), currentUser.getFinancialYearId());
                     } else {
                         voucherNo = openingAndBuyingDTO.getVoucherNo();
                     }
@@ -199,7 +199,8 @@ public class AssetOpeningService {
                 //Prepare voucher Entry
                 VoucherDetailDTO voucherDrDTo = new VoucherDetailDTO();
                 voucherDrDTo.setDrcrAmount(AccountingUtil.drAmount(depreciatedAmount));
-                voucherDrDTo.setLedgerId(autoVoucherService.getLedgerId("Depreciation", currentUser, AccountTypeEnum.INDIRECT_COST.getValue()));
+                voucherDrDTo.setLedgerId(autoVoucherService.getLedgerId("Depreciation", currentUser,
+                        AccountTypeEnum.INDIRECT_COST.getValue()));
                 voucherDetailDTOList.add(voucherDrDTo);
 
                 VoucherDetailDTO voucherCr = new VoucherDetailDTO();
