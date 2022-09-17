@@ -165,6 +165,7 @@ saleItem = (function () {
         function generateReceipt() {
             $('#printBtn').on('click', function () {
                 if (validateRequiredField()) {
+                    $('#printBtn').attr('disabled', true);
                     $.ajax({
                         url: 'saleItem/saveItemDetails',
                         type: 'POST',
@@ -181,8 +182,10 @@ saleItem = (function () {
                                         printHTML(res, receiptNo);
                                     }
                                 });
-                                $('#printBtn').attr('disabled', true)
+
                             }
+                        },complete:function (){
+                            $('#printBtn').attr('disabled', false);
                         }
                     });
                 }

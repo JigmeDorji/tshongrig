@@ -60,7 +60,7 @@ public class AddItemService {
         return addItemDao.getItemNameList();
     }
 
-    @Transactional(rollbackOn = Exception.class)
+//    @Transactional(rollbackOn = Exception.class)
     public ResponseMessage save(PurchaseCallingDTO purchaseCallingDTO, CurrentUser currentUser) throws ParseException {
 
         ResponseMessage responseMessage = new ResponseMessage();

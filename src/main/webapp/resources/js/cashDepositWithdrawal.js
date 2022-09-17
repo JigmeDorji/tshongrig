@@ -9,7 +9,9 @@ cashDepositWithdrawal = (function () {
 
     function saveCashDepositWithVoucherDetails() {
         $('#cashDepositWithdrawalForm').validate({
+
             submitHandler: function (form) {
+                $('#btnCashDepositWit').attr('disabled', true);
                 $.ajax({
                     url: baseURL() + 'saveCashDepositWithVoucherDetails',
                     type: 'POST',
@@ -28,6 +30,8 @@ cashDepositWithdrawal = (function () {
                                 title: res.text,
                             });
                         }
+                    }, complete: function () {
+                        $('#btnCashDepositWit').attr('disabled', true);
                     }
                 })
             }
