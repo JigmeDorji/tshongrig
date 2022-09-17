@@ -518,19 +518,26 @@ public class AddItemDao {
     }
 
     @Transactional(readOnly = true)
-    public Double getTotalCashOutFlow(Integer accountType, Integer companyId, Integer financialYearId) {
-        String sqlQry = "SELECT\n" +
+    public Double getTotalCashOutFlow(String ledgerId, Integer companyId, Date curFromDate,Date curToDate) {
+      /*  String sqlQuery = "SELECT\n" +
                 "SUM(c.drcrAmount) as amount\n" +
                 "FROM tbl_acc_acctype a\n" +
                 "LEFT JOIN tbl_acc_ledger b ON a.accTypeId=b.accTypeId\n" +
                 "LEFT JOIN tbl_acc_voucher_entries_detail c ON b.ledgerId=c.ledgerId\n" +
                 "LEFT JOIN tbl_acc_voucher_entries d on d.voucherId=c.voucherId\n" +
                 "WHERE d.companyId=:companyId AND d.financialYearId=:financialYearId AND a.accTypeId=:accountType AND c.drcrAmount > 0\n" +
-                "GROUP BY a.accTypeId";
-        SQLQuery hibernate = sessionFactory.getCurrentSession().createSQLQuery(sqlQry);
-        return (Double) hibernate.setParameter("accountType", accountType)
+                "GROUP BY a.accTypeId";*/
+        String sqlQuery="SELECT\n" +
+                "SUM(IFNULL(A.drcrAmount,0)) AS drcrAmount\n" +
+                "FROM tbl_acc_voucher_entries_detail A\n" +
+                "INNER JOIN tbl_acc_voucher_entries B ON A.voucherId=B.voucherId\n" +
+                "INNER JOIN tbl_acc_vouchertype C ON C.voucherTypeId=B.voucherTypeId\n" +
+                "where A.ledgerId=:ledgerId and B.voucherEntryDate>=:curFromDate and B.voucherEntryDate<=:curToDate and B.companyId=:companyId and A.drcrAmount>0";
+        SQLQuery hibernate = sessionFactory.getCurrentSession().createSQLQuery(sqlQuery);
+        return (Double) hibernate.setParameter("ledgerId", ledgerId)
                 .setParameter("companyId", companyId)
-                .setParameter("financialYearId", financialYearId)
+                .setParameter("curFromDate", curFromDate)
+                .setParameter("curToDate", curToDate)
                 .uniqueResult();
     }
 
