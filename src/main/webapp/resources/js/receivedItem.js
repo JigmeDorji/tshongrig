@@ -17,6 +17,7 @@ receivedItem = (function () {
             $('.globalForm').validate({
                 submitHandler: function (form) {
                     var data = $(form).serializeArray();
+                    $('#btnSave').attr('disabled', true);
                     $.ajax({
                         url: 'receivedItem/save',
                         type: 'POST',
@@ -34,6 +35,8 @@ receivedItem = (function () {
                             } else {
                                 errorMsg(res.text)
                             }
+
+                        },complete:function (){
                             $('#btnSave').attr('disabled', false);
                         }
                     });

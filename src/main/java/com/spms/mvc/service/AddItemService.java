@@ -60,7 +60,7 @@ public class AddItemService {
         return addItemDao.getItemNameList();
     }
 
-    @Transactional(rollbackOn = Exception.class)
+//    @Transactional(rollbackOn = Exception.class)
     public ResponseMessage save(PurchaseCallingDTO purchaseCallingDTO, CurrentUser currentUser) throws ParseException {
 
         ResponseMessage responseMessage = new ResponseMessage();
@@ -294,20 +294,20 @@ public class AddItemService {
 
         if (cash.equals(PaymentModeTypeEnum.CASH.getValue())) {
 
-            Optional<String> ledgerId = Optional.ofNullable(ledgerService.getLedgerIdByAccountTypeId(AccountTypeEnum.CASH.getValue(),
-                    currentUser.getCompanyId()));
+           String ledgerId = ledgerService.getLedgerIdByAccountTypeId(AccountTypeEnum.CASH.getValue(),
+                    currentUser.getCompanyId());
 
-            if (ledgerId.isPresent()) {
-                openingBalance = voucherGroupListService.getOpeningBalance(ledgerId.get(),
+            if (ledgerId!=null) {
+                openingBalance = voucherGroupListService.getOpeningBalance(ledgerId,
                         currentPeriodFrom, currentPeriodTo, currentUser).getOpeningBal();
             }
             totalCashAmount = addItemDao.getTotalCash(AccountTypeEnum.CASH.getValue(),
                     currentUser.getCompanyId(),
                     currentUser.getFinancialYearId());
 
-            totalCashOutFlow = addItemDao.getTotalCashOutFlow(AccountTypeEnum.CASH.getValue(),
+            totalCashOutFlow = addItemDao.getTotalCashOutFlow(ledgerId,
                     currentUser.getCompanyId(),
-                    currentUser.getFinancialYearId());
+                    currentPeriodFrom,currentPeriodTo);
 
             totalCashAmount = totalCashAmount == null ? 0.0 : totalCashAmount;
             totalCashOutFlow = totalCashOutFlow == null ? 0.0 : totalCashOutFlow;

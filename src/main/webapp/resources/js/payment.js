@@ -109,6 +109,7 @@ let payment = (function () {
         $('#btnSave').on('click', function (event) {
             // test if form is valid
 
+
             if (parseInt($('#paidForId').val()) === 1) {
                 $('#description').attr('required', false);
                 $('#amount').attr('required', false);
@@ -124,6 +125,7 @@ let payment = (function () {
             }
 
             if ($('form.globalForm').validate().form()) {
+                $('#btnSave').attr('disabled', true);
                 $.ajax({
                     url: baseURL() + 'save',
                     type: 'POST',
@@ -142,6 +144,8 @@ let payment = (function () {
                                 title: res.text,
                             });
                         }
+                    }, complete: function () {
+                        $('#btnSave').attr('disabled', false);
                     }
                 })
             } else {
@@ -171,7 +175,7 @@ let payment = (function () {
 
     function calculateTDSAmount() {
         $('#tdsType').on('change', function () {
-            if($(this).val()!==''&& $(this).val()!==null){
+            if ($(this).val() !== '' && $(this).val() !== null) {
                 let value = parseInt($(this).val());
                 let tdsAmount = $('#tdsAmount');
 

@@ -7,7 +7,6 @@ import com.spms.mvc.Enumeration.VoucherTypeEnum;
 import com.spms.mvc.dao.AddItemDao;
 import com.spms.mvc.dao.EmployeeAdvanceDao;
 import com.spms.mvc.dto.EmployeeAdvanceDTO;
-import com.spms.mvc.dto.LedgerDTO;
 import com.spms.mvc.dto.VoucherDTO;
 import com.spms.mvc.dto.VoucherDetailDTO;
 import com.spms.mvc.entity.EmployeeAdvance;
@@ -60,19 +59,6 @@ public class EmployeeAdvanceService {
 
 
             //check for cash availability
-            Double txnAmount = employeeAdvanceDTO.getAmount();
-            Double totalCashAmount = 0.0;
-            Double totalCashOutFlow = 0.0;
-            Date currentPeriodFrom = new SimpleDateFormat("dd-MMM-yyyy").parse(currentUser.getFinancialYearFrom());
-            Date currentPeriodTo = new SimpleDateFormat("dd-MMM-yyyy").parse(currentUser.getFinancialYearTo());
-
-            LedgerDTO ledgerDTO = voucherGroupListService.getOpeningBalance(ledgerService.getLedgerIdByAccountTypeId(AccountTypeEnum.CASH.getValue(), currentUser.getCompanyId()), currentPeriodFrom, currentPeriodTo, currentUser);
-
-            totalCashAmount = addItemDao.getTotalCash(AccountTypeEnum.CASH.getValue(), currentUser.getCompanyId(), currentUser.getFinancialYearId());
-            totalCashOutFlow = addItemDao.getTotalCashOutFlow(AccountTypeEnum.CASH.getValue(), currentUser.getCompanyId(), currentUser.getFinancialYearId());
-            totalCashOutFlow = totalCashOutFlow == null ? 0.0 : totalCashOutFlow;
-            totalCashAmount = totalCashAmount == null ? 0.0 + Math.abs(ledgerDTO.getOpeningBal()) : (Math.abs(totalCashAmount) + Math.abs(ledgerDTO.getOpeningBal())) - totalCashOutFlow;
-
             if (employeeAdvanceDTO.getIsCash().equals(PaymentModeTypeEnum.CASH.getValue())) {
                 if (checkCashBalance(employeeAdvanceDTO.getIsCash(), employeeAdvanceDTO.getAmount(), currentUser).getStatus() == 0) {
                     responseMessage.setStatus(0);
@@ -157,19 +143,18 @@ public class EmployeeAdvanceService {
         Date currentPeriodTo = new SimpleDateFormat("dd-MMM-yyyy").parse(currentUser.getFinancialYearTo());
 
         if (cash.equals(PaymentModeTypeEnum.CASH.getValue())) {
-
-            openingBalance = voucherGroupListService.getOpeningBalance(
-                    ledgerService.getLedgerIdByAccountTypeId(AccountTypeEnum.CASH.getValue(),
-                            currentUser.getCompanyId()),
+            String ledgerId = ledgerService.getLedgerIdByAccountTypeId(AccountTypeEnum.CASH.getValue(),
+                    currentUser.getCompanyId());
+            openingBalance = voucherGroupListService.getOpeningBalance(ledgerId,
                     currentPeriodFrom, currentPeriodTo, currentUser).getOpeningBal();
 
             totalCashAmount = addItemDao.getTotalCash(AccountTypeEnum.CASH.getValue(),
                     currentUser.getCompanyId(),
                     currentUser.getFinancialYearId());
 
-            totalCashOutFlow = addItemDao.getTotalCashOutFlow(AccountTypeEnum.CASH.getValue(),
+            totalCashOutFlow = addItemDao.getTotalCashOutFlow(ledgerId,
                     currentUser.getCompanyId(),
-                    currentUser.getFinancialYearId());
+                    currentPeriodFrom, currentPeriodTo);
 
             totalCashAmount = totalCashAmount == null ? 0.0 : totalCashAmount;
             totalCashOutFlow = totalCashOutFlow == null ? 0.0 : totalCashOutFlow;
