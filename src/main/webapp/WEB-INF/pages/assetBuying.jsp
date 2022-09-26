@@ -169,7 +169,7 @@
 <%--                                       name="amtReturn"--%>
 <%--                                       id="amtReturn" readonly>--%>
 <%--                            </div>--%>
-                        </div>ex
+                        </div>
 
                         <div class="creditDetails" hidden>
                             <div class="col-md-7">
@@ -217,7 +217,7 @@
 
                                 <div class="col-md-3">
                                     <input type="text" tabindex="6" class="form-control form-control-sm resetfield"
-                                           name="partyEmail" required
+                                           name="partyEmail"
                                            id="partyEmail"/>
                                 </div>
                             </div>

@@ -8,6 +8,8 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 /**
@@ -30,7 +32,14 @@ public class Test {
         NumberFormat numberFormat = NumberFormat.getInstance(Locale.getDefault());
         numberFormat.setMaximumFractionDigits(2);
 
-        System.out.println(Math.round(((200 * 0.15) / 365) * 120 * 100.00) / 100.00);
+        Double depreciationRate =  0.15;
+        Calendar cal = Calendar.getInstance();
+
+        cal.setTime(DateUtil.toDate("01-Jan-2022"));
+        int numOfDays = cal.getActualMaximum(Calendar.DAY_OF_YEAR);
+        int totalNoOfDaysDif = numberOfDaysInMonth(2,2022);
+
+         System.out.println(numberFormat.format(((0.15 * depreciationRate) / numOfDays) * totalNoOfDaysDif));
     }
 
     public static int numberOfDaysInMonth(int month, int year) {

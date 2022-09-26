@@ -114,7 +114,8 @@ public class FixedAssetSaleService {
                 for (SaleItemListDTO saleItemListDTO : saleItemDTO.getSaleItemListDTO()) {
 
                     //net amount is amount after depreciation
-                    Double netAmount = calculateNetValueOfAsset(saleItemListDTO.getAssetCode(), currentUser, saleItemDTO.getSaleDate());
+                    Double netAmount = calculateNetValueOfAsset(saleItemListDTO.getAssetCode(), currentUser,
+                            saleItemDTO.getSaleDate());
 
                     if (saleItemListDTO.getSellingPrice() > netAmount) {
                         assetSalesProfit = assetSalesProfit + (saleItemListDTO.getSellingPrice() - netAmount);
@@ -143,8 +144,9 @@ public class FixedAssetSaleService {
                 List<VoucherDetailDTO> voucherDetailDTOs = new ArrayList<>();
 
                 //get detail of asset sale by receipt memo number.
-                List<OpeningAndBuyingListDTO> openingAndBuyingListDTO = fixedAssetSaleDao.getAssetSaleRecordByReceiptMemoNo(receiptMemoNo,
-                        currentUser.getCompanyId());
+                List<OpeningAndBuyingListDTO> openingAndBuyingListDTO =
+                        fixedAssetSaleDao.getAssetSaleRecordByReceiptMemoNo(receiptMemoNo,
+                                currentUser.getCompanyId());
 
                 for (OpeningAndBuyingListDTO openingAndBuyingList : openingAndBuyingListDTO) {
 
@@ -157,22 +159,11 @@ public class FixedAssetSaleService {
                     voucherDetailDTOs.add(voucherDetailDTODTO);
                 }
 
-                //When particular asset is sold at its net value after depreciation.
-/*                if (assetSalesEqual > 0.0) {
-
-                    ledgerId = ledgerService.getLedgerIdByLedgerName(AccountTypeEnum.SALES.getText(), currentUser,
-                            AccountTypeEnum.SALES.getValue());
-
-                    VoucherDetailDTO voucherSaleEqualDTO = new VoucherDetailDTO();
-                    voucherSaleEqualDTO.setDrcrAmount(assetSalesEqual);
-                    voucherSaleEqualDTO.setLedgerId(ledgerId);
-                    voucherDetailDTOs.add(voucherSaleEqualDTO);
-                }*/
 
                 //When the asset is sold at a higher price than the net value after depreciation.
                 if (assetSalesProfit > 0.0) {
-                    ledgerId = ledgerService.getLedgerIdByLedgerName("Asset Sale Income", currentUser,
-                            AccountTypeEnum.OTHER_INCOME.getValue());
+                    ledgerId = ledgerService.getLedgerIdByLedgerName("Asset Sale Income",
+                            currentUser, AccountTypeEnum.OTHER_INCOME.getValue());
 
                     VoucherDetailDTO voucherSaleHigherDTO = new VoucherDetailDTO();
                     voucherSaleHigherDTO.setDrcrAmount(assetSalesProfit);
@@ -198,23 +189,20 @@ public class FixedAssetSaleService {
 
                 //endregion
 
-                double amount;
                 //region Dr
                 //Sale in Cash
                 VoucherDetailDTO voucherDetailDTO = new VoucherDetailDTO();
                 if (Objects.equals(saleItemDTO.getIsCash(), PaymentModeTypeEnum.CASH.getValue())) {
-                    amount = saleItemDTO.getAmount();
-                    voucherDetailDTO.setDrcrAmount(AccountingUtil.drAmount(amount));
+                    voucherDetailDTO.setDrcrAmount(AccountingUtil.drAmount(saleItemDTO.getAmount()));
                     voucherDetailDTO.setIsCash(PaymentModeTypeEnum.CASH.getValue());
                     voucherDetailDTOs.add(voucherDetailDTO);
                 }
 
                 //Sale in Bank
                 if (Objects.equals(saleItemDTO.getIsCash(), PaymentModeTypeEnum.BANK.getValue())) {
-                    amount = saleItemDTO.getAmount();
                     voucherDetailDTO = new VoucherDetailDTO();
                     voucherDetailDTO.setBankLedgerId(saleItemDTO.getBankLedgerId());
-                    voucherDetailDTO.setDrcrAmount(AccountingUtil.drAmount(amount));
+                    voucherDetailDTO.setDrcrAmount(AccountingUtil.drAmount(saleItemDTO.getAmount()));
                     voucherDetailDTO.setIsCash(saleItemDTO.getIsCash());
                     voucherDetailDTOs.add(voucherDetailDTO);
                 }
@@ -254,23 +242,13 @@ public class FixedAssetSaleService {
                 }
                 //endregion
 
-                //region Dr for Discount Amount Voucher Entry
-                if (saleItemDTO.getDiscountRate() > 0) {
-                    VoucherDetailDTO voucherDiscountDetailDTO = new VoucherDetailDTO();
-                    voucherDiscountDetailDTO.setLedgerId(ledgerService.getLedgerIdByLedgerName(
-                            "Discount", currentUser,
-                            AccountTypeEnum.INDIRECT_COST.getValue()));
-                    voucherDiscountDetailDTO.setDrcrAmount(AccountingUtil.drAmount(saleItemDTO.getDiscountRate()));
-                    voucherDiscountDetailDTO.setIsCash(saleItemDTO.getIsCash());
-                    voucherDetailDTOs.add(voucherDiscountDetailDTO);
-                }
-
                 voucherDTO.setVoucherDetailDTOList(voucherDetailDTOs);
                 voucherCreationService.performPurchaseAndSaleVoucherEntry(voucherDTO, currentUser);
 
                 //update receipt counter
                 if (saleItemDTO.getVoucherNo() == null) {
-                    fixedAssetSaleDao.updateReceiptSerial(currentReceiptSerialNo, currentUser.getCompanyId());
+                    fixedAssetSaleDao.updateReceiptSerial(currentReceiptSerialNo,
+                            currentUser.getCompanyId());
                 }
             }
         } catch (Exception ex) {
@@ -305,10 +283,12 @@ public class FixedAssetSaleService {
 
     public Double calculateNetValueOfAsset(String assetCode, CurrentUser currentUser, Date asOnDate) throws ParseException {
 
-        OpeningAndBuyingListDTO openingAndBuyingListDTO = fixedAssetSaleDao.getAssetDetailByAssetCode(assetCode, currentUser.getCompanyId());
+        OpeningAndBuyingListDTO openingAndBuyingListDTO = fixedAssetSaleDao
+                .getAssetDetailByAssetCode(assetCode, currentUser.getCompanyId());
 
         double netValue = 0.00;
-        Double depreciationRate = openingAndBuyingListDTO.getAccTypeId().equals(AccountTypeEnum.BUILDING_AND_AMENITIES.getValue()) ? 0.03 : 0.15;
+        Double depreciationRate = openingAndBuyingListDTO.getAccTypeId()
+                .equals(AccountTypeEnum.BUILDING_AND_AMENITIES.getValue()) ? 0.03 : 0.15;
 
         Date financialYearStartDate = new SimpleDateFormat("dd-MMM-yyyy")
                 .parse(currentUser.getFinancialYearFrom());
@@ -323,11 +303,9 @@ public class FixedAssetSaleService {
         if (openingAndBuyingListDTO.getOpeningBalance() != null) {
 
             Double depreciationValue = openingAndBuyingListDTO.getDepreciatedValue();
-
-            double currentYearDepreciation = ((purchaseValue * depreciationRate) / numOfDays) * totalNoOfDaysDif;
-            Double currentYearDepAsDate = currentYearDepreciation + (depreciationValue / openingAndBuyingListDTO.getQty()
-                    .doubleValue());
-            netValue = purchaseValue - currentYearDepAsDate;
+            double currentYearDepreciation = ((purchaseValue * depreciationRate) / numOfDays) * (totalNoOfDaysDif + 1); //one is added since when we find difference it gives one day less
+            netValue = purchaseValue - (currentYearDepreciation + (depreciationValue / openingAndBuyingListDTO.getQty()
+                    .doubleValue()));
 
         } else {
 
