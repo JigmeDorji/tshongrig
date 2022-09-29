@@ -19,8 +19,8 @@ financialPosition = (function () {
             toDate = $('#toDate').val()
         }
         if (fromDate !== '' && toDate !== '') {
-            let pNLAmount=0;
-            let openingBalDiff=0;
+            let pNLAmount = 0;
+            let openingBalDiff = 0;
 
             //Get PNL Amount
             $.ajax({
@@ -29,7 +29,7 @@ financialPosition = (function () {
                 data: {fromDate: fromDate, toDate: toDate},
                 async: false,
                 success: function (res) {
-                    pNLAmount=res;
+                    pNLAmount = res;
                 }
             })
 
@@ -52,15 +52,15 @@ financialPosition = (function () {
                                 let drAmount = row.drAmount;
                                 let crAmount = row.crAmount;
                                 let amount = 0;
-                                if (row.groupId === 1 || row.groupId === 2 ||row.groupId == null) {
+                                if (row.groupId === 1 || row.groupId === 2 || row.groupId == null) {
                                     if (drAmount !== null) {
                                         amount = amount + (drAmount);
                                     }
                                     if (crAmount !== null) {
-                                        amount = amount + (crAmount);
+                                        amount = amount + (-1*crAmount);
                                     }
 
-                                    if (row.groupLevel === 1 && row.particular!=="Total Assets") {
+                                    if (row.groupLevel === 1 && row.particular !== "Total Assets") {
                                         totalAssets = totalAssets + amount;
 
                                     }
@@ -76,25 +76,26 @@ financialPosition = (function () {
                                     if (crAmount !== null) {
                                         amount = amount + (crAmount);
                                     }
+
                                     if (row.groupLevel === 1) {
                                         totalLiability = totalLiability + amount;
                                     }
                                 }
+
                                 if (row.particular === "Income & Expenditure") {
                                     amount = pNLAmount;
                                 }
 
-
-                                if (row.particular === "Opening Balance Difference" && row.crAmount!==null) {
-                                    amount = amount + drAmount==null?0:drAmount+crAmount==null?0:crAmount;
-                                    openingBalDiff=crAmount;
+                                if (row.particular === "Opening Balance Difference" && row.crAmount !== null) {
+                                    amount = amount + drAmount == null ? 0 : drAmount + crAmount == null ? 0 : crAmount;
+                                    openingBalDiff = crAmount;
                                 }
+
                                 if (row.particular === "Total Liability") {
-                                    amount = totalLiability+pNLAmount+openingBalDiff;
+                                    amount = totalLiability + pNLAmount + openingBalDiff;
                                 }
 
-
-                                amount=amount==null?0:amount;
+                                amount = amount == null ? 0 : amount;
                                 return spms.formatAmount(amount.toFixed(2));
                             }
                         },
