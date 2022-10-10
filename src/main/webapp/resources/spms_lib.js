@@ -131,8 +131,8 @@ spms = (function () {
     }
 
     function getUrl() {
-        // return window.location.protocol + '//' + window.location.host + '/tshong-rig/';
-        return window.location.protocol + '//' + window.location.host + '/';
+        return window.location.protocol + '//' + window.location.host + '/tshong-rig/';
+        // return window.location.protocol + '//' + window.location.host + '/';
         // return 'http://www.autga.bt/bcs/';
     }
 
