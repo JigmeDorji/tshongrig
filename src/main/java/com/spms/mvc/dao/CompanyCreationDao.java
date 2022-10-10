@@ -48,7 +48,7 @@ public class CompanyCreationDao {
                 "                c.businessType AS businessType\n" +
                 "                FROM tbl_common_company c \n" +
                 "                left join tbl_user u on c.id=u.companyId \n" +
-                "                order by id desc";
+                "                group by companyId order by id desc";
         Session session = sessionFactory.getCurrentSession();
         return session.createSQLQuery(query)
                 .setResultTransformer(Transformers.aliasToBean(CompanyCreationDTO.class)).list();
