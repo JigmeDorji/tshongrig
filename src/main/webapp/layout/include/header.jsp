@@ -49,8 +49,9 @@
 
         <ul class="navbar-nav ml-lg-auto">
             <li class="nav-item dropdown row align-content-center">
-                <span class="badge badge-light badge-pill ml-2">From: ${currentUser.financialYearFrom}</span> &nbsp;
-                <span class="badge badge-light badge-pill">To: ${currentUser.financialYearTo}</span>
+                <span class="badge badge-light badge-pill ml-2">From: ${currentUser.financialYearFrom}</span>
+                To:&nbsp;
+                <span class="badge badge-light badge-pill"> ${currentUser.financialYearTo}</span>
             </li>
         </ul>
     </div>

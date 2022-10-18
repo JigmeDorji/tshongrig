@@ -1,20 +1,20 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Tomcat 9" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.65" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="1.8" show_console_on_std_err="true" show_console_on_std_out="true">
-    <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8086/tshong_rig_war/" />
-    <option name="BROWSER_ID" value="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" />
+    <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8088/" />
+    <option name="BROWSER_ID" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
     <option name="SHOW_DIALOG_ON_UPDATE" value="false" />
     <option name="UPDATING_POLICY" value="restart-server" />
     <deployment>
-      <artifact name="tshong-rig:war">
+      <artifact name="tshong-rig:war exploded">
         <settings>
-          <option name="CONTEXT_PATH" value="/tshong_rig_war" />
+          <option name="CONTEXT_PATH" value="/" />
         </settings>
       </artifact>
     </deployment>
     <server-settings>
       <option name="BASE_DIRECTORY_NAME" value="Unnamed_bcs_3" />
-      <option name="HTTP_PORT" value="8086" />
-      <option name="JNDI_PORT" value="1090" />
+      <option name="HTTP_PORT" value="8088" />
+      <option name="JNDI_PORT" value="1096" />
     </server-settings>
     <output_file is_save="true" />
     <log_file alias="Tomcat Host Manager Log" path="%IDEA_RUN:CATALINA_BASE%/logs/host-manager.*" />
@@ -87,7 +87,7 @@
     </ConfigurationWrapper>
     <method v="2">
       <option name="BuildArtifacts" enabled="true">
-        <artifact name="tshong-rig:war" />
+        <artifact name="tshong-rig:war exploded" />
       </option>
     </method>
   </configuration>

@@ -18,6 +18,7 @@ public class LedgerDTO {
     private String branch;
     private Double openingBal;
     private Double retainedEarning;
+    private Double currentEarning;
     private Double materialOpeningAmt;
     private Boolean isBankAccLedger;
 
@@ -126,6 +127,14 @@ public class LedgerDTO {
         this.retainedEarning = retainedEarning;
 
 
+    }
+
+    public Double getCurrentEarning() {
+        return currentEarning;
+    }
+
+    public void setCurrentEarning(Double currentEarning) {
+        this.currentEarning = currentEarning;
     }
 
     public Double getMaterialOpeningAmt() {

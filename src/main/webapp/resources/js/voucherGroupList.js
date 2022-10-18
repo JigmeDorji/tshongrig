@@ -125,16 +125,26 @@ voucherGroupList = (function () {
                             $('#retainedEarningCr').val((res.retainedEarning).toFixed(2));
                             totalCrAmount = totalCrAmount + res.retainedEarning;
                         } else {
-                            $('#retainedEarningDr').val((res.retainedEarning).toFixed(2));
+                            $('#retainedEarningDr').val(Math.abs(res.retainedEarning).toFixed(2));
                             totalDrAmount = totalDrAmount + res.retainedEarning;
                         }
+
+                        if (res.currentEarning > 0) {
+                            $('#totalCr').val((res.currentEarning).toFixed(2));
+                            totalCrAmount = totalCrAmount + res.currentEarning;
+                        } else {
+                            $('#totalDr').val(Math.abs(res.currentEarning).toFixed(2));
+                            totalDrAmount = totalDrAmount + res.currentEarning;
+                        }
+
+
                     } else {
                         $('#retainedEarningArea').attr('hidden', true);
                     }
 
                     $('#ledgerName').val(res.ledgerName);
-                    $('#totalDr').val(spms.formatAmount((totalDrAmount).toFixed(2)));
-                    $('#totalCr').val(spms.formatAmount((totalCrAmount).toFixed(2)));
+                    $('#totalDr').val(spms.formatAmount((res.currentEarning).toFixed(2)));
+                    $('#totalCr').val(spms.formatAmount((res.currentEarning).toFixed(2)));
 
                     // if (res.retainedEarning > 0) {
                     //     totalCrAmount=totalCrAmount+res.retainedEarning;
@@ -142,13 +152,14 @@ voucherGroupList = (function () {
                     //     totalDrAmount=totalDrAmount+res.retainedEarning;
                     // }
 
-                    let netDrAmount = (totalDrAmount) + (res.openingBal);
 
-                    if ((netDrAmount - (totalCrAmount)).toFixed(2) < 0) {
-                        $('#totalClosingBalanceCr').val(spms.formatAmount(Math.abs(netDrAmount - (totalCrAmount)).toFixed(2)));
+                    let netDrAmount = (totalDrAmount) ;
+                    let netCrAmount = (totalCrAmount) + (res.openingBal);
+                    if ((netDrAmount - (Math.abs(totalCrAmount))).toFixed(2) < 0) {
+                        $('#totalClosingBalanceCr').val(spms.formatAmount(Math.abs(Math.abs(netDrAmount) - (Math.abs(netCrAmount))).toFixed(2)));
                         bookBalanceAmount = $('#totalClosingBalanceCr').val();
                     } else {
-                        $('#totalClosingBalanceDr').val(spms.formatAmount(Math.abs(netDrAmount - (totalCrAmount)).toFixed(2)));
+                        $('#totalClosingBalanceDr').val(spms.formatAmount(Math.abs(netDrAmount - (Math.abs(netCrAmount))).toFixed(2)));
                         bookBalanceAmount = $('#totalClosingBalanceDr').val();
                     }
                     $('#bookBalance').val(spms.removeCommaSeparation(bookBalanceAmount));

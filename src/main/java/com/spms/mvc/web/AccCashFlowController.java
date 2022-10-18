@@ -29,13 +29,7 @@ public class AccCashFlowController {
     @Autowired
     private AccCashFlowService accCashFlowService;
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    public ModelAndView index(HttpServletRequest request,Model model, ModelAndView modelAndView) {
-        CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
-        DateUtil.fromTODateModel(currentUser,model);
-        modelAndView.setViewName("accCashFlow");
-        return modelAndView;
-    }
+
 
 
     @ResponseBody

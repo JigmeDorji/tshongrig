@@ -107,7 +107,7 @@ public class FinancialYearSetupDao extends BaseDao {
     }
 
     @Transactional(readOnly = true)
-    public FinancialYearDTO getPreviousFinancialYearDetail(Integer companyId) {
+    public FinancialYearDTO getPreviousFinancialYearDetail(Integer companyId, Integer financialYearId) {
         String query = "SELECT financialYearId,financialYearTo,financialYearFrom,status\n" +
                 "FROM tbl_financial_year_setup \n" +
                 "where companyId=:companyId and \n" +

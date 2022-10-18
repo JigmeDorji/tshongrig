@@ -96,7 +96,7 @@ public class AccBalanceSheetReportService {
 
             }
             //This will adjust previous year profit or loss amount to capital
-            FinancialYearDTO preFinancialYearDTO = financialYearSetupService.getPreviousFinancialYearDetail(currentUser.getCompanyId());
+            FinancialYearDTO preFinancialYearDTO = financialYearSetupService.getPreviousFinancialYearDetail(currentUser.getCompanyId(), currentUser.getFinancialYearId());
             if (preFinancialYearDTO != null && accBalanceSheetDTO.getGroupId().equals(AccountTypeEnum.CAPITAL.getValue())) {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(preFinancialYearDTO.getFinancialYearFrom());

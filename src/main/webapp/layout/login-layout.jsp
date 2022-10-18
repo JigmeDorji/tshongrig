@@ -21,6 +21,7 @@
 </head>
 <body>
 <sitemesh:write property="body"/>
+
 <jsp:include page="include/js.jsp"/>
 </body>
 

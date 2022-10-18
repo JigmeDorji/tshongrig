@@ -27,6 +27,9 @@ public class VoucherGroupListService {
     private VoucherGroupListDao voucherGroupListDao;
 
     @Autowired
+    private FinancialPositionService financialPositionService;
+
+    @Autowired
     private FinancialYearSetupService financialYearSetupService;
 
     @Autowired
@@ -77,7 +80,7 @@ public class VoucherGroupListService {
 
     public LedgerDTO getOpeningBalance(String ledgerId, Date fromDate, Date toDate, CurrentUser currentUser) throws ParseException {
 
-        FinancialYearDTO preFinancialYearDTO = financialYearSetupService.getPreviousFinancialYearDetail(currentUser.getCompanyId());
+        FinancialYearDTO preFinancialYearDTO = financialYearSetupService.getPreviousFinancialYearDetail(currentUser.getCompanyId(), currentUser.getFinancialYearId());
         Date currentPeriodFrom = new SimpleDateFormat("dd-MMM-yyyy").parse(currentUser.getFinancialYearFrom());
         Date currentPeriodTo = new SimpleDateFormat("dd-MMM-yyyy").parse(currentUser.getFinancialYearTo());
 
@@ -106,10 +109,14 @@ public class VoucherGroupListService {
                     preFinancialYearDTO.getFinancialYearFrom(), preFinancialYearDTO.getFinancialYearTo(),
                     currentUser.getBusinessType(), currentUser.getFinancialYearId());
 
-            previousYearProfitAndLossAmount = accProfitAndLossReportDTOs.get(accProfitAndLossReportDTOs.size() - 1).getAmount();
+//            previousYearProfitAndLossAmount = accProfitAndLossReportDTOs.get(accProfitAndLossReportDTOs.size() - 1).getAmount();
+            previousYearProfitAndLossAmount = financialPositionService.getPrePNLAmt(currentUser, preFinancialYearDTO.getFinancialYearFrom(), preFinancialYearDTO.getFinancialYearTo(), preFinancialYearDTO.getFinancialYearId());
+
         }
+        Double currentYearProfitAndLossAmount = financialPositionService.getPNLAmt(currentUser, currentPeriodFrom, currentPeriodTo);
 
         ledgerDTO.setRetainedEarning(previousYearProfitAndLossAmount);
+        ledgerDTO.setCurrentEarning(currentYearProfitAndLossAmount);
         if (ledgerDTO.getAccTypeId().equals(AccountTypeEnum.MATERIAL.getValue())) {
             ledgerDTO.setOpeningBal(voucherGroupListDao.getMaterialOpeningAmt(currentUser.getCompanyId(), currentPeriodFrom, currentPeriodTo));
         }
@@ -173,7 +180,7 @@ public class VoucherGroupListService {
         //delete from voucher
         Integer voucherId = voucherCreationDao.getVoucherIdFromVoucherTable(voucherNo, currentUser.getCompanyId(),
                 currentUser.getFinancialYearId(), voucherTypeId);
-        if(voucherId!=null){
+        if (voucherId != null) {
             voucherCreationDao.deleteVoucherItemsFromVoucherTable(voucherId);
         }
 

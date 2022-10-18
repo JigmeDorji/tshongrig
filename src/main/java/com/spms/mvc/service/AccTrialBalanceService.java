@@ -172,7 +172,7 @@ public class AccTrialBalanceService {
     }
 
     private Double fetchPreviousYearCapitalClosingBalance(CurrentUser currentUser) {
-        FinancialYearDTO preFinancialYearDTO = financialYearSetupService.getPreviousFinancialYearDetail(currentUser.getCompanyId());
+        FinancialYearDTO preFinancialYearDTO = financialYearSetupService.getPreviousFinancialYearDetail(currentUser.getCompanyId(), currentUser.getFinancialYearId());
         if (preFinancialYearDTO != null) {
             Calendar calendarTo = Calendar.getInstance();
             calendarTo.setTime(preFinancialYearDTO.getFinancialYearTo());
