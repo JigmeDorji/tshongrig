@@ -32,6 +32,8 @@ voucherGroupList = (function () {
                 toDate: toDate
             },
             success: function (res) {
+                $('#totalClosingBalanceCr').val('');
+                $('#totalClosingBalanceDr').val('');
                 voucherListGrid.dataTable().fnClearTable();
                 voucherListGrid.dataTable().fnDestroy();
                 if (res.length > 0) {
