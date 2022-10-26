@@ -196,4 +196,11 @@ public class FixedAssetSaleDao {
                 .setParameter("companyId", companyId)
                 .uniqueResult();
     }
+
+    @Transactional
+    public void monthlyDepreciationUpdate() {
+        sessionFactory.getCurrentSession().
+                createSQLQuery("CALL sp_fa_depreciation_event_schedule")
+                .executeUpdate();
+    }
 }

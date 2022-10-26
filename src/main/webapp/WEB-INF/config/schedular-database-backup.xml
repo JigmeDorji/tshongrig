@@ -8,7 +8,7 @@
         <property name="jobClass" value="com.spms.mvc.ScheduledJob.ScheduledJob"/>
         <property name="jobDataAsMap">
             <map>
-                <entry key="kuenga_workshop_db_backup" value-ref="kuenga_workshop_db_backup"/>
+                <entry key="MonthlyDepreciationSchedule" value-ref="MonthlyDepreciationSchedule"/>
             </map>
         </property>
         <property name="durability" value="true"/>
@@ -17,14 +17,12 @@
 
     <!-- Run the job every 5 seconds only on Weekends -->
     <!--
-      every 12 midnight->0 0 0 * * ?
-      ever 10:15 AM -> 0 15 10 ? * *
-      every second -> * * * ? * *
       ever 30 second -> 0/30 0/1 * 1/1 * ? *
+      ever month  -> 0 0 0 ? * * *
       -->
     <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
         <property name="jobDetail" ref="jobDetail"/>
-        <property name="cronExpression" value="0 15 10 ? * *"/>
+        <property name="cronExpression" value="0 0 0 ? * * *"/>
     </bean>
 
 
@@ -37,5 +35,6 @@
         </property>
     </bean>
 
-    <bean name="kuenga_workshop_db_backup" class="com.spms.mvc.library.helper.Kuenga_workshop_db_backup"/>
+<!--    <bean name="kuenga_workshop_db_backup" class="com.spms.mvc.library.helper.Kuenga_workshop_db_backup"/>-->
+    <bean name="MonthlyDepreciationSchedule" class="com.spms.mvc.library.helper.MonthlyDepreciationSchedule"/>
 </beans>

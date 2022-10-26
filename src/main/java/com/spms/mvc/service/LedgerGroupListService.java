@@ -40,7 +40,7 @@ public class LedgerGroupListService {
 
             accProfitAndLossReportDTOS.add(accProfitAndLossReportDTO);
             //Add Previous year Income & expenditure
-            FinancialYearDTO preFinancialYearDTO = financialYearSetupService.getPreviousFinancialYearDetail(currentUser.getCompanyId());
+            FinancialYearDTO preFinancialYearDTO = financialYearSetupService.getPreviousFinancialYearDetail(currentUser.getCompanyId(), currentUser.getFinancialYearId());
             if (preFinancialYearDTO != null && accProfitAndLossReportDTO.getParticular().equals(AccountTypeEnum.CAPITAL.getText())) {
                 AccProfitAndLossReportDTO accProfitAndLossReportDTOParticular = new AccProfitAndLossReportDTO();
                 accProfitAndLossReportDTOParticular.setParticular("Previous year Income & expenditure");

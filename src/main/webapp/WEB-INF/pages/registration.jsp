@@ -59,7 +59,7 @@
                                         </div>
                                         <div class="form-group form-group-float col-md-6">
 
-                                            <label class="form-group-float-label animate required">Contact No.</label>
+                                            <label class="form-group-float-label anim required">Contact No.</label>
                                             <input type="text" name="mobileNo" class="form-control field" placeholder="Contact No.">
 
                                         </div>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2020-11-05T09:25:13 -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BarcodeForItem" columnCount="2" printOrder="Horizontal" pageWidth="198" pageHeight="70" orientation="Landscape" columnWidth="93" columnSpacing="8" leftMargin="2" rightMargin="2" topMargin="2" bottomMargin="2" uuid="3bd04c08-e7cd-42a8-8694-d015a15162f6">
+<!-- 2022-10-26T16:41:23 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BarcodeForItem" columnCount="3" printOrder="Horizontal" pageWidth="340" pageHeight="70" orientation="Landscape" columnWidth="94" columnSpacing="28" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="3bd04c08-e7cd-42a8-8694-d015a15162f6">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.unit." value="mm"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
@@ -30,7 +30,7 @@
 	<detail>
 		<band height="65" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
-				<reportElement stretchType="RelativeToTallestObject" x="6" y="36" width="129" height="9" uuid="4d135d68-2c7f-4fbb-b0c1-4ed41c44a6fb"/>
+				<reportElement stretchType="RelativeToTallestObject" x="12" y="32" width="94" height="9" uuid="4d135d68-2c7f-4fbb-b0c1-4ed41c44a6fb"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<leftPen lineWidth="0.0"/>
@@ -43,14 +43,14 @@
 				<textFieldExpression><![CDATA[$F{itemCode}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement stretchType="RelativeToTallestObject" x="6" y="5" width="129" height="10" uuid="9f6d7171-ab35-4a96-b392-9eef444781be"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
+				<reportElement stretchType="RelativeToTallestObject" x="12" y="0" width="94" height="13" uuid="9f6d7171-ab35-4a96-b392-9eef444781be"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Arial" size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{companyName}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement stretchType="RelativeToTallestObject" x="6" y="45" width="129" height="10" uuid="b70d2693-e872-4118-a310-c5af1777ecab"/>
+				<reportElement stretchType="RelativeToTallestObject" x="10" y="42" width="94" height="10" uuid="b70d2693-e872-4118-a310-c5af1777ecab"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<leftPen lineWidth="0.0"/>
@@ -63,7 +63,7 @@
 				<textFieldExpression><![CDATA[$F{itemName}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement stretchType="RelativeToTallestObject" x="6" y="55" width="129" height="10" uuid="6ddcf41c-0d92-4ca4-9674-c3451f43a0c7"/>
+				<reportElement stretchType="RelativeToTallestObject" x="10" y="54" width="94" height="10" uuid="6ddcf41c-0d92-4ca4-9674-c3451f43a0c7"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<leftPen lineWidth="0.0"/>
@@ -76,7 +76,7 @@
 				<textFieldExpression><![CDATA["MRP Nu. : "+$F{sellingPrice}]]></textFieldExpression>
 			</textField>
 			<componentElement>
-				<reportElement x="-2" y="18" width="137" height="18" uuid="0792bac5-8d18-45d2-ae1e-00d7ec46488d"/>
+				<reportElement x="5" y="15" width="102" height="18" uuid="0792bac5-8d18-45d2-ae1e-00d7ec46488d"/>
 				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false">
 					<jr:codeExpression><![CDATA[$F{itemCode}]]></jr:codeExpression>
 				</jr:barbecue>
@@ -84,3 +84,17 @@
 		</band>
 	</detail>
 </jasperReport>
+<!--
+
+Barcode Printer Setting
+  Width:4.60 in
+  Height:0.79 in
+
+
+Edge Browser printing
+: Layout : Portail
+ at User size :
+
+
+
+-->

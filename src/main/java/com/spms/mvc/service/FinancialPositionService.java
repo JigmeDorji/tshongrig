@@ -38,9 +38,31 @@ public class FinancialPositionService {
     @Autowired
     private FinancialYearSetupService financialYearSetupService;
 
+
+
     public List<AccTrialBalanceDTO> getTrialBalance(CurrentUser currentUser, Date fromDate, Date toDate) {
-        return financialPositionDao.getTrialBalance(currentUser.getCompanyId(), currentUser.getFinancialYearId(),
+
+        List<AccTrialBalanceDTO> accTrialBalanceDTOS = financialPositionDao.getTrialBalance(currentUser.getCompanyId(), currentUser.getFinancialYearId(),
                 fromDate, toDate);
+
+        List<AccTrialBalanceDTO> accTrialBalanceDTOS1 = new ArrayList<>();
+
+        for (AccTrialBalanceDTO accTrialBalanceDTO : accTrialBalanceDTOS) {
+            AccTrialBalanceDTO accTrialBalanceDTO1 = new AccTrialBalanceDTO();
+            accTrialBalanceDTO1 = accTrialBalanceDTO;
+            if (accTrialBalanceDTO.getParticular().trim().equals("Capital")) {
+                FinancialYearDTO preFinancialYearDTO = financialYearSetupService.getPreviousFinancialYearDetail(currentUser.getCompanyId(), currentUser.getFinancialYearId());
+               if(preFinancialYearDTO!=null){
+                   Double previousYearProfitAndLossAmount = getPrePNLAmt(currentUser, preFinancialYearDTO.getFinancialYearFrom(), preFinancialYearDTO.getFinancialYearTo(), preFinancialYearDTO.getFinancialYearId());
+                   accTrialBalanceDTO1.setCrAmount(accTrialBalanceDTO.getCrAmount()+previousYearProfitAndLossAmount);
+               }
+
+            }
+            accTrialBalanceDTOS1.add(accTrialBalanceDTO1);
+
+        }
+
+        return accTrialBalanceDTOS1;
     }
 
     private List<AccTrialBalanceDTO> openingBalance(Integer companyId, Date fromDate, Date toDate) {
@@ -172,7 +194,7 @@ public class FinancialPositionService {
     }
 
     private Double fetchPreviousYearCapitalClosingBalance(CurrentUser currentUser) {
-        FinancialYearDTO preFinancialYearDTO = financialYearSetupService.getPreviousFinancialYearDetail(currentUser.getCompanyId());
+        FinancialYearDTO preFinancialYearDTO = financialYearSetupService.getPreviousFinancialYearDetail(currentUser.getCompanyId(), currentUser.getFinancialYearId());
         if (preFinancialYearDTO != null) {
             Calendar calendarTo = Calendar.getInstance();
             calendarTo.setTime(preFinancialYearDTO.getFinancialYearTo());
@@ -252,6 +274,12 @@ public class FinancialPositionService {
     public Double getPNLAmt(CurrentUser currentUser, Date fromDate, Date toDate) {
         //To get Net profit from PNL
         List<AccProfitAndLossReportDTO> accProfitAndLossReportDTOs = accProfitAndLossReportService.getProfitAndLossDetails(currentUser.getCompanyId(), null, toDate, currentUser.getBusinessType(), currentUser.getFinancialYearId());
+        return accProfitAndLossReportDTOs.get(accProfitAndLossReportDTOs.size() - 1).getReturnPNLAmount();
+    }
+
+    public Double getPrePNLAmt(CurrentUser currentUser, Date fromDate, Date toDate, Integer preFinancialYearId) {
+        //To get Net profit from PNL
+        List<AccProfitAndLossReportDTO> accProfitAndLossReportDTOs = accProfitAndLossReportService.getProfitAndLossDetails(currentUser.getCompanyId(), null, toDate, currentUser.getBusinessType(), preFinancialYearId);
         return accProfitAndLossReportDTOs.get(accProfitAndLossReportDTOs.size() - 1).getReturnPNLAmount();
     }
 }

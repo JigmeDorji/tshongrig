@@ -144,8 +144,8 @@ public class FinancialYearSetupService {
         return financialYearSetupDao.getCurFinYear();
     }
 
-    public FinancialYearDTO getPreviousFinancialYearDetail(Integer companyId) {
-        return financialYearSetupDao.getPreviousFinancialYearDetail(companyId);
+    public FinancialYearDTO getPreviousFinancialYearDetail(Integer companyId, Integer financialYearId) {
+        return financialYearSetupDao.getPreviousFinancialYearDetail(companyId,financialYearId);
     }
 
     public boolean checkIsFinancialYearAlreadyExist(Date newFromDate, Integer companyId) {
