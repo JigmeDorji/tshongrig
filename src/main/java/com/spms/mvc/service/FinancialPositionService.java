@@ -273,7 +273,9 @@ public class FinancialPositionService {
 
     public Double getPNLAmt(CurrentUser currentUser, Date fromDate, Date toDate) {
         //To get Net profit from PNL
-        List<AccProfitAndLossReportDTO> accProfitAndLossReportDTOs = accProfitAndLossReportService.getProfitAndLossDetails(currentUser.getCompanyId(), null, toDate, currentUser.getBusinessType(), currentUser.getFinancialYearId());
+        List<AccProfitAndLossReportDTO> accProfitAndLossReportDTOs = accProfitAndLossReportService
+                .getProfitAndLossDetails(currentUser.getCompanyId(), null, toDate,
+                        currentUser.getBusinessType(), currentUser.getFinancialYearId());
         return accProfitAndLossReportDTOs.get(accProfitAndLossReportDTOs.size() - 1).getReturnPNLAmount();
     }
 

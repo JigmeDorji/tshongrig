@@ -4,6 +4,7 @@ import com.spms.mvc.dto.AccCashFlowDTO;
 import com.spms.mvc.dto.AccProfitAndLossReportDTO;
 import com.spms.mvc.dto.LedgerDTO;
 import com.spms.mvc.entity.BankReconciliation;
+import com.spms.mvc.library.helper.CurrentUser;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.transform.Transformers;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by Bcass Sawa on 5/19/2019.
@@ -170,6 +172,29 @@ public class VoucherGroupListDao {
                 .setParameter("toDate", toDate)
                 .uniqueResult();
         return totalAmount == null ? 0 : totalAmount;
+    }
+
+    @Transactional(readOnly = true)
+    public Boolean checkIsCapital(String ledgerId, Integer value) {
+        String sqlQry = "SELECT b.accTypeId FROM tbl_acc_ledger a\n" +
+                "INNER JOIN tbl_acc_acctype b ON a.accTypeId=b.accTypeId\n" +
+                "where a.ledgerId=:ledgerId";
+        Integer accTypeId = (Integer) sessionFactory.getCurrentSession().createSQLQuery(sqlQry)
+                .setParameter("ledgerId", ledgerId)
+                .uniqueResult();
+
+        return Objects.equals(accTypeId, value) ? Boolean.TRUE : Boolean.FALSE;
+    }
+
+    @Transactional(readOnly = true)
+    public Date getPreviousYear(Integer companyId) {
+        String sqlQry = "SELECT financialYearTo \n" +
+                "FROM tbl_financial_year_setup\n" +
+                "WHERE companyId=:companyId and status='I' order by financialYearId desc\n" +
+                "LIMIT 1";
+        return (Date) sessionFactory.getCurrentSession().createSQLQuery(sqlQry)
+                .setParameter("companyId", companyId)
+                .uniqueResult();
     }
 
 

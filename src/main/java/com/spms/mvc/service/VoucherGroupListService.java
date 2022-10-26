@@ -52,8 +52,7 @@ public class VoucherGroupListService {
             currentPeriodFrom = fromDate;
             currentPeriodTo = toDate;
         }
-        for (AccProfitAndLossReportDTO accProfitAndLossReportDTO : voucherGroupListDao.getVoucherDetailsByAccTypeAndLedgerType(ledgerId, currentPeriodFrom, currentPeriodTo, fromDate, toDate, currentUser.getCompanyId(),
-                currentUser.getFinancialYearId())) {
+        for (AccProfitAndLossReportDTO accProfitAndLossReportDTO : voucherGroupListDao.getVoucherDetailsByAccTypeAndLedgerType(ledgerId, currentPeriodFrom, currentPeriodTo, fromDate, toDate, currentUser.getCompanyId(), currentUser.getFinancialYearId())) {
             AccProfitAndLossReportDTO profitAndLossReportDTO = new AccProfitAndLossReportDTO();
 
             if (accProfitAndLossReportDTO.getDrcrAmount() > 0) {
@@ -91,9 +90,8 @@ public class VoucherGroupListService {
 
         LedgerDTO ledgerDTO = voucherGroupListDao.getOpeningBalance(ledgerId);
         //This will voucher amount before fromDate
-        Double tnxAmtBeforeFromDate = voucherGroupListDao.getClosingBalOfPreviousYear(currentUser.getCompanyId(),
-                ledgerId, currentPeriodFrom);
-
+        Double tnxAmtBeforeFromDate = voucherGroupListDao
+                .getClosingBalOfPreviousYear(currentUser.getCompanyId(), ledgerId, currentPeriodFrom);
         tnxAmtBeforeFromDate = tnxAmtBeforeFromDate == null ? 0 : tnxAmtBeforeFromDate;
 
         ledgerDTO.setOpeningBal(ledgerDTO.getOpeningBal() + (tnxAmtBeforeFromDate));
@@ -105,18 +103,25 @@ public class VoucherGroupListService {
         Double previousYearProfitAndLossAmount = 0.00;
         if (preFinancialYearDTO != null) {
 
-            List<AccProfitAndLossReportDTO> accProfitAndLossReportDTOs = accProfitAndLossReportService.getProfitAndLossDetails(currentUser.getCompanyId(),
-                    preFinancialYearDTO.getFinancialYearFrom(), preFinancialYearDTO.getFinancialYearTo(),
-                    currentUser.getBusinessType(), currentUser.getFinancialYearId());
+//            List<AccProfitAndLossReportDTO> accProfitAndLossReportDTOs = accProfitAndLossReportService.getProfitAndLossDetails(currentUser.getCompanyId(), preFinancialYearDTO.getFinancialYearFrom(), preFinancialYearDTO.getFinancialYearTo(), currentUser.getBusinessType(), currentUser.getFinancialYearId());
 
 //            previousYearProfitAndLossAmount = accProfitAndLossReportDTOs.get(accProfitAndLossReportDTOs.size() - 1).getAmount();
-            previousYearProfitAndLossAmount = financialPositionService.getPrePNLAmt(currentUser, preFinancialYearDTO.getFinancialYearFrom(), preFinancialYearDTO.getFinancialYearTo(), preFinancialYearDTO.getFinancialYearId());
-
+            previousYearProfitAndLossAmount = financialPositionService.getPrePNLAmt(currentUser, preFinancialYearDTO.getFinancialYearFrom(),
+                    preFinancialYearDTO.getFinancialYearTo(), preFinancialYearDTO.getFinancialYearId());
         }
-        Double currentYearProfitAndLossAmount = financialPositionService.getPNLAmt(currentUser, currentPeriodFrom, currentPeriodTo);
+
+        //profit and loss for only capital Account 6= is capital
+        Double currentYearProfitAndLossAmount = 0.0;
+
+       /* if (voucherGroupListDao.checkIsCapital(ledgerId, 6)) {
+            Date previousYearDate = voucherGroupListDao.getPreviousYear(currentUser.getCompanyId());
+            currentYearProfitAndLossAmount = financialPositionService.getPNLAmt(currentUser,
+                    currentPeriodFrom, previousYearDate);
+        }*/
 
         ledgerDTO.setRetainedEarning(previousYearProfitAndLossAmount);
-        ledgerDTO.setCurrentEarning(currentYearProfitAndLossAmount);
+//        ledgerDTO.setCurrentEarning(currentYearProfitAndLossAmount);
+
         if (ledgerDTO.getAccTypeId().equals(AccountTypeEnum.MATERIAL.getValue())) {
             ledgerDTO.setOpeningBal(voucherGroupListDao.getMaterialOpeningAmt(currentUser.getCompanyId(), currentPeriodFrom, currentPeriodTo));
         }
@@ -175,26 +180,22 @@ public class VoucherGroupListService {
         ResponseMessage responseMessage = new ResponseMessage();
 
         //delete from voucher details
-        voucherCreationDao.getVoucherIdByVoucherNo(voucherNo, currentUser.getCompanyId(), currentUser.getFinancialYearId(),
-                voucherTypeId).forEach(voucherCreationDao::deleteVoucherDetailList);
+        voucherCreationDao.getVoucherIdByVoucherNo(voucherNo, currentUser.getCompanyId(), currentUser.getFinancialYearId(), voucherTypeId).forEach(voucherCreationDao::deleteVoucherDetailList);
         //delete from voucher
-        Integer voucherId = voucherCreationDao.getVoucherIdFromVoucherTable(voucherNo, currentUser.getCompanyId(),
-                currentUser.getFinancialYearId(), voucherTypeId);
+        Integer voucherId = voucherCreationDao.getVoucherIdFromVoucherTable(voucherNo, currentUser.getCompanyId(), currentUser.getFinancialYearId(), voucherTypeId);
         if (voucherId != null) {
             voucherCreationDao.deleteVoucherItemsFromVoucherTable(voucherId);
         }
 
         //region delete sale related data
-        Integer saleRecordId = voucherCreationDao.getSaleRecordIdByVoucherNo(voucherNo, currentUser.getCompanyId(),
-                currentUser.getFinancialYearId());
+        Integer saleRecordId = voucherCreationDao.getSaleRecordIdByVoucherNo(voucherNo, currentUser.getCompanyId(), currentUser.getFinancialYearId());
         if (saleRecordId != null) {
             voucherCreationDao.deleteFromSaleDetail(saleRecordId);
             voucherCreationDao.deleteFromSale(saleRecordId);
         }
         //endregion
         //region delete asset sale related data
-        Integer saleAssetRecordId = voucherCreationDao.getAssetSaleRecordIdByVoucherNo(voucherNo, currentUser.getCompanyId(),
-                currentUser.getFinancialYearId());
+        Integer saleAssetRecordId = voucherCreationDao.getAssetSaleRecordIdByVoucherNo(voucherNo, currentUser.getCompanyId(), currentUser.getFinancialYearId());
         if (saleAssetRecordId != null) {
             voucherCreationDao.deleteFromSaleAssetDetail(saleAssetRecordId);
             voucherCreationDao.deleteFromAssetSale(saleAssetRecordId);

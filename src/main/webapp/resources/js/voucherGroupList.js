@@ -108,6 +108,10 @@ voucherGroupList = (function () {
                     toDate: toDate
                 },
                 success: function (res) {
+
+                    $('#totalCr').val((0).toFixed(2));
+                    $('#totalDr').val((0).toFixed(2));
+
                     if (res.openingBal > 0) {
                         $('.openingBalance').val((res.openingBal).toFixed(2));
                         $('.openBalanceAmount').val(0.00.toFixed(2));
@@ -125,41 +129,32 @@ voucherGroupList = (function () {
                             $('#retainedEarningCr').val((res.retainedEarning).toFixed(2));
                             totalCrAmount = totalCrAmount + res.retainedEarning;
                         } else {
-                            $('#retainedEarningDr').val(Math.abs(res.retainedEarning).toFixed(2));
-                            totalDrAmount = totalDrAmount + res.retainedEarning;
+                            let retainedEarning = (-1 * res.retainedEarning);
+                            $('#retainedEarningDr').val((retainedEarning).toFixed(2));
+                            totalDrAmount = totalDrAmount + (retainedEarning);
                         }
-
-                        if (res.currentEarning > 0) {
-                            $('#totalCr').val((res.currentEarning).toFixed(2));
-                            totalCrAmount = totalCrAmount + res.currentEarning;
-                        } else {
-                            $('#totalDr').val(Math.abs(res.currentEarning).toFixed(2));
-                            totalDrAmount = totalDrAmount + res.currentEarning;
-                        }
-
-
                     } else {
                         $('#retainedEarningArea').attr('hidden', true);
                     }
 
+                    if (res.currentEarning > 0) {
+                        $('#totalCr').val((res.currentEarning).toFixed(2));
+                        totalCrAmount = totalCrAmount + res.currentEarning;
+                        // $('#totalCr').val(spms.formatAmount((totalCrAmount).toFixed(2)));
+                    } else {
+                        $('#totalDr').val(Math.abs(res.currentEarning).toFixed(2));
+                        totalDrAmount = totalDrAmount + res.currentEarning;
+                        // $('#totalDr').val(spms.formatAmount((totalDrAmount).toFixed(2)));
+                    }
+
                     $('#ledgerName').val(res.ledgerName);
-                    $('#totalDr').val(spms.formatAmount((res.currentEarning).toFixed(2)));
-                    $('#totalCr').val(spms.formatAmount((res.currentEarning).toFixed(2)));
+                    let netDrAmount = (totalDrAmount) + (res.openingBal);
 
-                    // if (res.retainedEarning > 0) {
-                    //     totalCrAmount=totalCrAmount+res.retainedEarning;
-                    // } else {
-                    //     totalDrAmount=totalDrAmount+res.retainedEarning;
-                    // }
-
-
-                    let netDrAmount = (totalDrAmount) ;
-                    let netCrAmount = (totalCrAmount) + (res.openingBal);
-                    if ((netDrAmount - (Math.abs(totalCrAmount))).toFixed(2) < 0) {
-                        $('#totalClosingBalanceCr').val(spms.formatAmount(Math.abs(Math.abs(netDrAmount) - (Math.abs(netCrAmount))).toFixed(2)));
+                    if ((netDrAmount - (totalCrAmount)).toFixed(2) < 0) {
+                        $('#totalClosingBalanceCr').val(spms.formatAmount(Math.abs(netDrAmount - (totalCrAmount)).toFixed(2)));
                         bookBalanceAmount = $('#totalClosingBalanceCr').val();
                     } else {
-                        $('#totalClosingBalanceDr').val(spms.formatAmount(Math.abs(netDrAmount - (Math.abs(netCrAmount))).toFixed(2)));
+                        $('#totalClosingBalanceDr').val(spms.formatAmount(Math.abs(netDrAmount - (totalCrAmount)).toFixed(2)));
                         bookBalanceAmount = $('#totalClosingBalanceDr').val();
                     }
                     $('#bookBalance').val(spms.removeCommaSeparation(bookBalanceAmount));

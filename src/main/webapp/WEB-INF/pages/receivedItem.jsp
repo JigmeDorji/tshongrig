@@ -49,14 +49,16 @@
                         <label class="  col-md-2 text-right required text-right">Purchase Date:</label>
 
                         <div class="col-md-3">
-                            <input type="text" tabindex="2" class="form-control form-control-sm   formatDate text-right" value="${date}"
-                                   placeholder="DD.MM.YYYY" id="purchaseDate" name="purchaseDate" />
+                            <input type="text" tabindex="2" class="form-control form-control-sm   formatDate text-right"
+                                   value="${date}"
+                                   placeholder="DD.MM.YYYY" id="purchaseDate" name="purchaseDate"/>
                         </div>
 
                         <label class=" col-md-2 text-right required text-right"> &nbsp;Purchase Inv. No:</label>
 
                         <div class="col-md-3">
-                            <input type="text" id="purchaseInvoiceNo" class="form-control form-control-sm " name="purchaseInvoiceNo"
+                            <input type="text" id="purchaseInvoiceNo" class="form-control form-control-sm "
+                                   name="purchaseInvoiceNo"
                                    required="required"/>
                         </div>
                     </div>
@@ -75,17 +77,19 @@
 
                         <label class=" col-md-2 text-right bankDetails" hidden>Select Bank Account</label>
                         <div class="col-md-3 bankDetails" hidden>
-                            <form:select class="form-control form-control-sm resetField" path="bankList" id="bankLedgerId"
+                            <form:select class="form-control form-control-sm resetField" path="bankList"
+                                         id="bankLedgerId"
                                          required="required"
                                          name="bankLedgerId">
                                 <form:option value="">---Please Select---</form:option>
                                 <form:options items="${bankList}" itemValue="id" itemLabel="text"/>
                             </form:select>
                         </div>
-                        <label class="col-md-2 text-right required creditDetails" hidden >Supplier Name:</label>
+                        <label class="col-md-2 text-right required creditDetails" hidden>Supplier Name:</label>
 
                         <div class="col-md-3 creditDetails" hidden>
-                            <select id="supplierId" required class="form-control form-control-sm " name="supplierId"></select>
+                            <select id="supplierId" required class="form-control form-control-sm "
+                                    name="supplierId"></select>
                         </div>
                         <div class="col-md-1 creditDetails" hidden>
                             <input type="button" data-toggle="modal" class="btn btn-sm btn-primary"
@@ -149,7 +153,8 @@
                             />
                         </div>
                         <div class="col-md-3">
-                            <input type="text" id="itemName" class="form-control form-control-sm common" name="itemName"/>
+                            <input type="text" id="itemName" class="form-control form-control-sm common"
+                                   name="itemName"/>
                         </div>
                     </div>
 
@@ -157,12 +162,13 @@
                         <label class=" col-md-2 text-right ">qty</label>
 
                         <div class="col-md-1">
-                            <input type="text" id="qty" class="form-control form-control-sm decimal common" name="qty"/>
+                            <input type="text" id="qty" class="form-control form-control-sm decimal common" name="qty"
+                                   required/>
                         </div>
 
                         <label class=" col-md-1 text-right">Unit</label>
                         <div class="col-md-1">
-                            <form:select class="form-control form-control-sm resetField" path="unitList" id="unitId"
+                            <form:select  class="form-control form-control-sm resetField" path="unitList" id="unitId"
                                          name="unitId">
                                 <form:option value="">----</form:option>
                                 <form:options items="${unitList}" itemValue="value" itemLabel="text"/>
@@ -173,7 +179,8 @@
                         <label class=" col-md-2 text-right">Cost Price</label>
 
                         <div class="col-md-3">
-                            <input type="text" id="costPrice" class="form-control form-control-sm amount common " name="costPrice"
+                            <input type="text" id="costPrice" class="form-control form-control-sm amount common "
+                                   name="costPrice" required
                             />
                         </div>
                     </div>
@@ -294,13 +301,15 @@
                                         <label class="col-md-3  required">Supplier Name:</label>
 
                                         <div class="col-md-3">
-                                            <input type="text" tabindex="2" class="form-control form-control-sm" id="suppName"
+                                            <input type="text" tabindex="2" class="form-control form-control-sm"
+                                                   id="suppName"
                                                    name="supplierName" required="required"/>
                                         </div>
                                         <label class="col-md-2 text-righ required ">Address</label>
 
                                         <div class="col-md-4">
-                                            <input type="text" tabindex="3" class="form-control form-control-sm" id="address"
+                                            <input type="text" tabindex="3" class="form-control form-control-sm"
+                                                   id="address"
                                                    name="address" required="required"/>
                                         </div>
                                     </div>
@@ -309,14 +318,16 @@
                                         <label class="col-md-3  required">Contact No</label>
 
                                         <div class="col-md-3">
-                                            <input type="text" required="required" tabindex="5" class="form-control form-control-sm numeric"
+                                            <input type="text" required="required" tabindex="5"
+                                                   class="form-control form-control-sm numeric"
                                                    id="contactNo"
                                                    name="contactNo"/>
                                         </div>
                                         <label class="col-md-2  ">Email</label>
 
                                         <div class="col-md-4">
-                                            <input type="text" tabindex="4" class="form-control form-control-sm" id="email"
+                                            <input type="text" tabindex="4" class="form-control form-control-sm"
+                                                   id="email"
                                                    name="email"/>
                                         </div>
                                     </div>
@@ -381,17 +392,20 @@
                                     <div class="card-body">
                                         <div class="form-group row">
                                             <label for="brandName" class="col-form-label">Brand Name</label>
-                                            <input type="text" required class="form-control form-control-sm" id="brandName"
+                                            <input type="text" required class="form-control form-control-sm"
+                                                   id="brandName"
                                                    name="brandName">
                                         </div>
                                         <div class="form-group row ">
                                             <label for="brandPrefix" class="col-form-label">Brand Prefix</label>
-                                            <input type="text" required class="form-control form-control-sm" id="brandPrefix"
+                                            <input type="text" required class="form-control form-control-sm"
+                                                   id="brandPrefix"
                                                    name="brandPrefix">
                                         </div>
                                         <div class="form-group row">
                                             <label for="remarks" class="col-form-label">Remarks</label>
-                                            <textarea class="form-control form-control-sm" id="remarks" name="remarks"></textarea>
+                                            <textarea class="form-control form-control-sm" id="remarks"
+                                                      name="remarks"></textarea>
                                         </div>
                                     </div>
                                     <div class="modal-footer justify-content-between">

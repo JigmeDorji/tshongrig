@@ -57,6 +57,9 @@ public class AssetOpeningService {
     private AutoVoucherService autoVoucherService;
 
 
+    @Autowired
+    AddItemService addItemService;
+
     public List<DropdownDTO> getFixedAssetGroupList() {
         return assetOpeningDao.getFixedAssetGroupList();
     }
@@ -79,6 +82,15 @@ public class AssetOpeningService {
             if (ledgerService.getCashLedgerByCashAccountHead(currentUser) == null) {
                 responseMessage.setStatus(0);
                 responseMessage.setText("There is no cash ledger. Please check.");
+                return responseMessage;
+            }
+        }
+
+        if (Objects.equals(openingAndBuyingDTO.getIsCash(), PaymentModeTypeEnum.CASH.getValue())) {
+            if (addItemService.checkCashBalance(PaymentModeTypeEnum.CASH.getValue(),
+                    openingAndBuyingDTO.getAmtReceived(), currentUser).getStatus() == 0) {
+                responseMessage.setStatus(0);
+                responseMessage.setText("Cash Insufficient.");
                 return responseMessage;
             }
         }

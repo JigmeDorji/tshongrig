@@ -157,7 +157,7 @@
 
                         <label class=" col-md-1 right-align">Unit</label>
                         <div class="col-md-1">
-                            <form:select class="form-control form-control-sm resetField" path="unitList" id="unitId"
+                            <form:select  class="form-control form-control-sm resetField" path="unitList" id="unitId"
                                          name="unitId">
                                 <form:option value="">----</form:option>
                                 <form:options items="${unitList}" itemValue="value" itemLabel="text"/>
