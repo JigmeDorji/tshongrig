@@ -45,7 +45,7 @@
 
     <bean id="spmsDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/test_tshongrig_db"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/bigapplebrand_db"/>
         <property name="username" value="root"/>
         <property name="password" value="root@Root@22"/>
         <property name="validationQuery" value="SELECT 1"/>
