@@ -112,6 +112,9 @@ voucherGroupList = (function () {
                     $('#totalCr').val((0).toFixed(2));
                     $('#totalDr').val((0).toFixed(2));
 
+                    $('#retainedEarningArea').attr('hidden', true);
+                    $('#currentEarningId').attr('hidden', true);
+
                     if (res.openingBal > 0) {
                         $('.openingBalance').val((res.openingBal).toFixed(2));
                         $('.openBalanceAmount').val(0.00.toFixed(2));
@@ -121,7 +124,9 @@ voucherGroupList = (function () {
                         $('.openBalanceAmount').val(Math.abs((openingAmt).toFixed(2)));
                     }
 
-                    if (res.accTypeId === 6) {//if its a capital acc type id
+
+                    //carry forward
+                    if (res.accTypeId === 6 && res.retainedEarning !== 0) {//if its a capital acc type id
                         $('#retainedEarningArea').attr('hidden', false);
                         $('#retainedEarningDr').val((0).toFixed(2));
                         $('#retainedEarningCr').val((0).toFixed(2));
@@ -137,14 +142,17 @@ voucherGroupList = (function () {
                         $('#retainedEarningArea').attr('hidden', true);
                     }
 
-                    if (res.currentEarning > 0) {
-                        $('#totalCr').val((res.currentEarning).toFixed(2));
-                        totalCrAmount = totalCrAmount + res.currentEarning;
-                        // $('#totalCr').val(spms.formatAmount((totalCrAmount).toFixed(2)));
-                    } else {
-                        $('#totalDr').val(Math.abs(res.currentEarning).toFixed(2));
-                        totalDrAmount = totalDrAmount + res.currentEarning;
-                        // $('#totalDr').val(spms.formatAmount((totalDrAmount).toFixed(2)));
+
+                    //This for current year PL
+                    if (res.currentEarning !== 0) {
+                        $('#currentEarningId').attr('hidden', false);
+                        if (res.currentEarning > 0) {
+                            $('#totalCr').val((res.currentEarning).toFixed(2));
+                            totalCrAmount = totalCrAmount + res.currentEarning;
+                        } else {
+                            $('#totalDr').val(Math.abs(res.currentEarning).toFixed(2));
+                            totalDrAmount = totalDrAmount + (-1 * res.currentEarning);
+                        }
                     }
 
                     $('#ledgerName').val(res.ledgerName);

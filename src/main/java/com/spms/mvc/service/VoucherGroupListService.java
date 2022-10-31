@@ -113,14 +113,15 @@ public class VoucherGroupListService {
         //profit and loss for only capital Account 6= is capital
         Double currentYearProfitAndLossAmount = 0.0;
 
-       /* if (voucherGroupListDao.checkIsCapital(ledgerId, 6)) {
+        if (voucherGroupListDao.checkIsCapital(ledgerId, 6)) {
             Date previousYearDate = voucherGroupListDao.getPreviousYear(currentUser.getCompanyId());
+
             currentYearProfitAndLossAmount = financialPositionService.getPNLAmt(currentUser,
-                    currentPeriodFrom, previousYearDate);
-        }*/
+                    currentPeriodFrom, currentPeriodTo);
+        }
 
         ledgerDTO.setRetainedEarning(previousYearProfitAndLossAmount);
-//        ledgerDTO.setCurrentEarning(currentYearProfitAndLossAmount);
+        ledgerDTO.setCurrentEarning(currentYearProfitAndLossAmount);
 
         if (ledgerDTO.getAccTypeId().equals(AccountTypeEnum.MATERIAL.getValue())) {
             ledgerDTO.setOpeningBal(voucherGroupListDao.getMaterialOpeningAmt(currentUser.getCompanyId(), currentPeriodFrom, currentPeriodTo));

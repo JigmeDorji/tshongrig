@@ -108,11 +108,16 @@ public class FinancialYearSetupDao extends BaseDao {
 
     @Transactional(readOnly = true)
     public FinancialYearDTO getPreviousFinancialYearDetail(Integer companyId, Integer financialYearId) {
-        String query = "SELECT financialYearId,financialYearTo,financialYearFrom,status\n" +
+ /*       String query = "SELECT financialYearId,financialYearTo,financialYearFrom,status\n" +
                 "FROM tbl_financial_year_setup \n" +
                 "where companyId=:companyId and \n" +
                 "financialYearId<(select financialYearId from tbl_financial_year_setup where status='A' and companyId=:companyId)\n" +
-                "order by financialYearId desc limit 1;";
+                "order by financialYearId desc limit 1;";*/
+
+        String query = "SELECT financialYearId,financialYearTo,financialYearFrom,status\n" +
+                "FROM tbl_financial_year_setup where companyId=:companyId and  status='I'\n" +
+                "order by financialYearId desc\n" +
+                "LIMIT 1";
         Session session = sessionFactory.getCurrentSession();
         return (FinancialYearDTO) session.createSQLQuery(query)
                 .setParameter("companyId", companyId)

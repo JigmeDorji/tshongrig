@@ -136,7 +136,7 @@
                                     </td>
 
                                 </tr>
-                                <tr>
+                                <tr id="currentEarningId">
                                     <td style="border-left: dotted;"></td>
                                     <td></td>
                                     <td class="right-align"><strong>Current</strong></td>
@@ -159,7 +159,7 @@
                                                style="border-radius: 0;height: 28px !important;" id="retainedEarningDr"
                                                readonly>
                                     </td>
-                                    <td style="border-right: dotted;">
+                                    <td style="border-right: dotted;" >
                                         <input type="text"
                                                class="form-control form-control-sm   right-align"
                                                style="border-radius: 0; height: 28px !important;"
