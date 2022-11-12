@@ -82,9 +82,15 @@ public class FixedAssetSaleDao {
     @Transactional
     public void insertToReceiptSerialCounter(Integer companyId) {
         Session session = sessionFactory.getCurrentSession();
-        String sql = "INSERT INTO tbl_fa_receipt_counter VALUES(1,0,:companyId)";
+        String sqlQuery = "SELECT MAX(id)  FROM tbl_fa_receipt_counter";
+
+        Integer id = (Integer) session.createSQLQuery(sqlQuery).uniqueResult();
+        id = id == null ? 1 : id + 1;
+
+        String sql = "INSERT INTO tbl_fa_receipt_counter VALUES(:id,0,:companyId)";
         session.createSQLQuery(sql)
                 .setParameter("companyId", companyId)
+                .setParameter("id", id)
                 .executeUpdate();
     }
 
@@ -187,7 +193,7 @@ public class FixedAssetSaleDao {
     }
 
     @Transactional(readOnly = true)
-    public BigInteger getAssetDetailId(String particular,Integer companyId) {
+    public BigInteger getAssetDetailId(String particular, Integer companyId) {
         String query = "SELECT a.assetDetailId FROM tbl_fa_item_setup_detail a \n" +
                 "inner Join tbl_fa_item_setup b on a.assetId=b.assetId\n" +
                 "where b.companyId=:companyId and particular=:particular";

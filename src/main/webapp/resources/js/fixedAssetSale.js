@@ -60,7 +60,7 @@ fixedAssetSale = (function () {
                     "<td><input type='text' id='assetCode' readonly name='saleItemListDTO[" + i + "].assetCode' class='form-control assetCode' value='" + assetCode.val().toUpperCase() + "'></td>" +
                     "<td><input type='text' readonly  class='form-control' value='" + group.val() + "'></td>" +
                     "<td><input type='text' readonly name='saleItemListDTO[" + i + "].sellingPrice' class='form-control sellingPrice right-align' value='" + sellingPrice.val() + "'></td>" +
-                    "<td><input type='button'  id='itemEditBtn' class='btn btn-primary btn-xs fa fa-trash' value='Edit'><input type='button'  id='btnDeleteItem' class='btn btn-danger btn-xs fa fa-trash' value='Delete'></td>" +
+                    "<td><input type='button'  id='itemEditBtn' class='btn btn-primary btn-xs fa fa-trash' value='Edit'><input type='button'  id='btnDeleteItem' class='btn btn-danger btn-xm fa fa-trash' value='Delete'></td>" +
                     "</tr>";
                 i++;
                 let tableGrid = $('#faSaleItemGrid');
