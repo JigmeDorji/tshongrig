@@ -114,7 +114,7 @@ public class FixedAssetSaleService {
                 for (SaleItemListDTO saleItemListDTO : saleItemDTO.getSaleItemListDTO()) {
 
                     //net amount is amount after depreciation
-                    Double netAmount = calculateNetValueOfAsset(saleItemListDTO.getAssetCode(), currentUser,
+                    Double netAmount = calculateNetValueOfAsset(saleItemListDTO.getFaPurchaseDetailId(), currentUser,
                             saleItemDTO.getSaleDate());
 
                     if (saleItemListDTO.getSellingPrice() > netAmount) {
@@ -130,7 +130,7 @@ public class FixedAssetSaleService {
                     }
 
                     saveToSaleRecordDetail(currentUser, saleRecordId,
-                            saleItemListDTO.getAssetCode(), saleItemListDTO.getSellingPrice(),
+                            saleItemListDTO.getFaPurchaseDetailId(), saleItemListDTO.getSellingPrice(),
                             netAmount);
 
                     //update the status is purchase
@@ -266,12 +266,12 @@ public class FixedAssetSaleService {
     }
 
     private void saveToSaleRecordDetail(CurrentUser currentUser, BigInteger saleRecordId,
-                                        String assetCode, double sellingPrice, double netSellingAmount) {
+                                        BigInteger purchaseDetailId, double sellingPrice, double netSellingAmount) {
         FaSaleRecordDetail faSaleRecordDetail = new FaSaleRecordDetail();
         faSaleRecordDetail.setSaleRecordId(saleRecordId);
         faSaleRecordDetail.setSellingPrice(sellingPrice);
         faSaleRecordDetail.setNetAmount(netSellingAmount);
-        faSaleRecordDetail.setAssetCode(assetCode);
+        faSaleRecordDetail.setFaPurchaseDetailId(purchaseDetailId);
         faSaleRecordDetail.setSetDate(currentUser.getCreatedDate());
         faSaleRecordDetail.setCreatedBy(currentUser.getLoginId());
         fixedAssetSaleDao.saveFaItemDetails(faSaleRecordDetail);
@@ -281,10 +281,10 @@ public class FixedAssetSaleService {
         return fixedAssetSaleDao.getVoucherNoByReceiptMemoNo(receiptMemoNo, currentUser);
     }
 
-    public Double calculateNetValueOfAsset(String assetCode, CurrentUser currentUser, Date asOnDate) throws ParseException {
+    public Double calculateNetValueOfAsset(BigInteger faPurchaseDetailId, CurrentUser currentUser, Date asOnDate) throws ParseException {
 
         OpeningAndBuyingListDTO openingAndBuyingListDTO = fixedAssetSaleDao
-                .getAssetDetailByAssetCode(assetCode, currentUser.getCompanyId());
+                .getAssetDetailByAssetCode(faPurchaseDetailId, currentUser.getCompanyId());
 
         double netValue = 0.00;
         Double depreciationRate = openingAndBuyingListDTO.getAccTypeId()

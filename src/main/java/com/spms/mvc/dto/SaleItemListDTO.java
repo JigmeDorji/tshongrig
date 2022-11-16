@@ -1,6 +1,7 @@
 package com.spms.mvc.dto;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 
 /**
@@ -29,6 +30,8 @@ public class SaleItemListDTO {
     private Double costPrice;
 
     private String assetCode;
+
+    private BigInteger faPurchaseDetailId;
 
     public Boolean getIsReturn() {
         return isReturn;
@@ -205,5 +208,13 @@ public class SaleItemListDTO {
 
     public void setAssetCode(String assetCode) {
         this.assetCode = assetCode;
+    }
+
+    public BigInteger getFaPurchaseDetailId() {
+        return faPurchaseDetailId;
+    }
+
+    public void setFaPurchaseDetailId(BigInteger faPurchaseDetailId) {
+        this.faPurchaseDetailId = faPurchaseDetailId;
     }
 }

@@ -139,12 +139,13 @@ public class FixedAssetSaleDao {
     public List<OpeningAndBuyingListDTO> getAssetSaleRecordByReceiptMemoNo(String receiptMemoNo, Integer companyId) {
         String query = "SELECT SUM(b.netAmount) as totalAmount, g.accTypeId FROM tbl_fa_sale_record a\n" +
                 "INNER JOIN tbl_fa_sale_record_detail b ON a.saleRecordId=b.saleRecordId\n" +
-                "INNER JOIN tbl_fa_purchase_detail c ON c.assetCode=b.assetCode\n" +
+                "INNER JOIN tbl_fa_purchase_detail c ON c.faPurchaseDetailId=b.faPurchaseDetailId\n" +
                 "INNER JOIN tbl_fa_purchase d ON d.faPurchaseId=c.faPurchaseId\n" +
                 "INNER JOIN tbl_fa_item_setup_detail e ON e.assetDetailId=d.assetDetailId\n" +
                 "INNER JOIN tbl_fa_item_setup f ON f.assetId=e.assetId\n" +
                 "INNER JOIN tbl_fa_group g ON g.assetClassId=f.assetClassId\n" +
                 "WHERE a.receiptMemoNo=:receiptMemoNo AND a.companyId=:companyId GROUP BY g.assetClassId";
+
         Session session = sessionFactory.getCurrentSession();
         return session.createSQLQuery(query)
                 .setParameter("companyId", companyId)
@@ -153,17 +154,17 @@ public class FixedAssetSaleDao {
     }
 
     @Transactional(readOnly = true)
-    public OpeningAndBuyingListDTO getAssetDetailByAssetCode(String assetCode, Integer companyId) {
+    public OpeningAndBuyingListDTO getAssetDetailByAssetCode(BigInteger faPurchaseDetailId, Integer companyId) {
         String query = "SELECT b.purchaseDate, b.openingBalance, b.depreciatedValue,b.rate, b.qty, e.accTypeId\n" +
                 " FROM tbl_fa_purchase_detail a\n" +
                 "INNER JOIN tbl_fa_purchase b ON a.faPurchaseId=b.faPurchaseId\n" +
                 "INNER JOIN tbl_fa_item_setup_detail c ON c.assetDetailId=b.assetDetailId\n" +
                 "INNER JOIN tbl_fa_item_setup d ON d.assetId=c.assetId\n" +
                 "INNER JOIN tbl_fa_group e ON e.assetClassId=d.assetClassId\n" +
-                "WHERE a.assetCode=:assetCode and d.companyId=:companyId";
+                "WHERE a.faPurchaseDetailId=:faPurchaseDetailId and d.companyId=:companyId";
         Session session = sessionFactory.getCurrentSession();
         return (OpeningAndBuyingListDTO) session.createSQLQuery(query)
-                .setParameter("assetCode", assetCode)
+                .setParameter("faPurchaseDetailId", faPurchaseDetailId)
                 .setParameter("companyId", companyId)
                 .setResultTransformer(Transformers.aliasToBean(OpeningAndBuyingListDTO.class)).uniqueResult();
     }

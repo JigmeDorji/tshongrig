@@ -31,8 +31,8 @@ public class FaSaleRecordDetail {
     @Column(name = "saleRecordId")
     private BigInteger saleRecordId;
 
-    @Column(name = "assetCode")
-    private String assetCode;
+    @Column(name = "faPurchaseDetailId")
+    private BigInteger faPurchaseDetailId;
 
     @Column(name = "sellingPrice")
     private Double sellingPrice;
@@ -62,12 +62,12 @@ public class FaSaleRecordDetail {
         this.saleRecordId = saleRecordId;
     }
 
-    public String getAssetCode() {
-        return assetCode;
+    public BigInteger getFaPurchaseDetailId() {
+        return faPurchaseDetailId;
     }
 
-    public void setAssetCode(String assetCode) {
-        this.assetCode = assetCode;
+    public void setFaPurchaseDetailId(BigInteger faPurchaseDetailId) {
+        this.faPurchaseDetailId = faPurchaseDetailId;
     }
 
     public Double getSellingPrice() {

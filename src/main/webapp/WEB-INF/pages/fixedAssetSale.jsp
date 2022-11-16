@@ -69,6 +69,10 @@
                             <input type="text" tabindex="2" class="form-control form-control-sm resetField  right-align"
                                    name="assetCode"
                                    id="assetCode"/>
+
+                            <input type="hidden" tabindex="2" class="form-control form-control-sm resetField  right-align"
+                                   name="faPurchaseDetailId"
+                                   id="faPurchaseDetailId"/>
                         </div>
                     </div>
 

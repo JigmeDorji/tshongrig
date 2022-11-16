@@ -45,6 +45,7 @@ fixedAssetSale = (function () {
             let i = 1;
             let itemName = $('#itemName');
             let assetCode = $('#assetCode');
+            let faPurchaseDetailId = $('#faPurchaseDetailId');
             let group = $('#group');
             let sellingPrice = $('#sellingPrice');
             if (!fieldValidation(assetCode, itemName, sellingPrice, group)) {
@@ -56,11 +57,11 @@ fixedAssetSale = (function () {
 
                 let row = "<tr>" +
                     "<td><input type='text' id='index' readonly class='form-control' value='" + i + "'></td>" +
-                    "<td><input type='text' id='itemName' readonly name='saleItemListDTO[" + i + "].itemName' class='form-control' value='" + itemName.val() + "'></td>" +
+                    "<td><input type='hidden' id='faPurchaseDetailId' readonly name='saleItemListDTO[" + i + "].faPurchaseDetailId' class='form-control' value='" + faPurchaseDetailId.val() + "'><input type='text' id='itemName' readonly name='saleItemListDTO[" + i + "].itemName' class='form-control' value='" + itemName.val() + "'></td>" +
                     "<td><input type='text' id='assetCode' readonly name='saleItemListDTO[" + i + "].assetCode' class='form-control assetCode' value='" + assetCode.val().toUpperCase() + "'></td>" +
                     "<td><input type='text' readonly  class='form-control' value='" + group.val() + "'></td>" +
                     "<td><input type='text' readonly name='saleItemListDTO[" + i + "].sellingPrice' class='form-control sellingPrice right-align' value='" + sellingPrice.val() + "'></td>" +
-                    "<td><input type='button'  id='itemEditBtn' class='btn btn-primary btn-xs fa fa-trash' value='Edit'><input type='button'  id='btnDeleteItem' class='btn btn-danger btn-xm fa fa-trash' value='Delete'></td>" +
+                    "<td><input type='button'  id='itemEditBtn' class='btn btn-primary btn-xm fa fa-trash' value='Edit'><input type='button'  id='btnDeleteItem' class='btn btn-danger btn-xm fa fa-trash' value='Delete'></td>" +
                     "</tr>";
                 i++;
                 let tableGrid = $('#faSaleItemGrid');
@@ -327,7 +328,7 @@ fixedAssetSale = (function () {
                                         "<td><input type='text' readonly name='saleItemListDTO[" + i + "].unitName' class='form-control' value='" + res.saleItemListDTO[i].unitName + "'></td>",
                                         "<td><input type='text' readonly name='saleItemListDTO[" + i + "].sellingPrice' class='form-control sellingPrice right-align' value='" + res.saleItemListDTO[i].sellingPrice + "'></td>",
                                         "<td><input type='text' readonly class='form-control totalAmount right-align totalAmount' id='totalAmount'   value=" + res.saleItemListDTO[i].totalAmount + " ><input type='hidden' readonly class='form-control formatDate right-align' id='saleDate'  name='saleItemListDTO[" + i + "].saleDate' value=" + formatAsDate(res.saleItemListDTO[i].saleDate) + " ></td>",
-                                        "<td><input type='button'  id='itemEditBtn' class='btn btn-primary btn-xs fa fa-trash' value='Edit'></td>"
+                                        "<td><input type='button'  id='itemEditBtn' class='btn btn-primary btn-xm fa fa-trash' value='Edit'></td>"
                                     ]
                                 );
                                 iterator = iterator + 1;
@@ -664,7 +665,10 @@ fixedAssetSale = (function () {
                                                 return '<div>' + data.assetCode + '</div>'
                                             },
                                         }
-                                    })
+                                    }).on('typeahead:selected', function (event, data) {
+                                    $('#faPurchaseDetailId').val(data.value);
+                                });
+
                             }
                         })
                     });
