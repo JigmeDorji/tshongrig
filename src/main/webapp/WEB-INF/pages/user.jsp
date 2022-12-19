@@ -49,13 +49,15 @@
                 <input type="hidden" id="companyName" value="${currentUser.companyName}">
 
                 <div class="form-group row">
-                    <label class="col-form-label col-lg-2 required ">Username</label>
+                    <label class="col-form-label col-lg-2 required " >Username</label>
                     <div class="col-lg-4">
                         <div class="input-group">
-                            <input type="text" class="form-control form-control-sm col-md-8" required name="username"
-                                   id="username">
+                            <input type="text" class="form-control form-control-sm col-md-8"  required name="username"
+                                   id="username" autocomplete="off">
                             <span class="input-group-prepend">
-								<span class="input-group-text" id="companyAbbreviation"></span>
+<%--								<span class="input-group-text" id="companyAbbreviation"></span>--%>
+                                <span class="input-group-text" id="companyAbbreviations">${currentUser.loginId}</span>
+
 							</span>
                         </div>
                     </div>

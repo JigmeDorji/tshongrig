@@ -58,6 +58,7 @@ public class UserController extends BaseController {
         model.addAttribute("statusInactive", CommonStatus.Inactive.getValue());
         model.addAttribute("loginCompany", companyCreationService.getLoginCompany(getCurrentUser(request).getCompanyId()));
         model.addAttribute("companyList", companyCreationService.loadCompanyList());
+        model.addAttribute("currentUser",currentUser);
 
         return "user";
     }
