@@ -38,9 +38,32 @@ public class AccTrialBalanceService {
     @Autowired
     private FinancialYearSetupService financialYearSetupService;
 
+    @Autowired
+    private FinancialPositionService financialPositionService;
+
     public List<AccTrialBalanceDTO> getTrialBalance(CurrentUser currentUser, Date fromDate, Date toDate) {
-        return accTrialBalanceDao.getTrialBalance(currentUser.getCompanyId(), currentUser.getFinancialYearId(),
+        List<AccTrialBalanceDTO> accTrialBalanceDTOList = accTrialBalanceDao.getTrialBalance(currentUser.getCompanyId(), currentUser.getFinancialYearId(),
                 fromDate, toDate);
+
+
+        List<AccTrialBalanceDTO> arrayList = new ArrayList<>();
+
+        //Adding retained Amount
+        for (AccTrialBalanceDTO accTrialBalanceDTO : accTrialBalanceDTOList) {
+            AccTrialBalanceDTO accTrialBalanceDTO1 = new AccTrialBalanceDTO();
+            accTrialBalanceDTO1 = accTrialBalanceDTO;
+            if (accTrialBalanceDTO.getParticular().trim().equals("Capital")) {
+                FinancialYearDTO preFinancialYearDTO = financialYearSetupService.getPreviousFinancialYearDetail(currentUser.getCompanyId(), currentUser.getFinancialYearId());
+                if (preFinancialYearDTO != null) {
+                    Double previousYearProfitAndLossAmount = financialPositionService.getPrePNLAmt(currentUser, preFinancialYearDTO.getFinancialYearFrom(),
+                            preFinancialYearDTO.getFinancialYearTo(), preFinancialYearDTO.getFinancialYearId());
+                    accTrialBalanceDTO1.setCrAmount(accTrialBalanceDTO.getCrAmount() + previousYearProfitAndLossAmount);
+                }
+
+            }
+            arrayList.add(accTrialBalanceDTO1);
+        }
+        return arrayList;
     }
 
     private List<AccTrialBalanceDTO> openingBalance(Integer companyId, Date fromDate, Date toDate) {

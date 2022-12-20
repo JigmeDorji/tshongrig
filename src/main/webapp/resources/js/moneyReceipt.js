@@ -100,7 +100,8 @@ moneyReceipt = (function () {
         $('#tDSType').on('change', function () {
             let receivedAmt = $('#amount').val();
             let tDSType = $('#tDSType').val();
-            if (receivedAmt === '') {
+
+            if ((receivedAmt <= 0 || receivedAmt === '') && $(this).val() !== '') {
                 $(this).val('');
                 $('#tDSAmount').val('');
                 $('#tDSPercentage').val('');
@@ -108,7 +109,7 @@ moneyReceipt = (function () {
                 return false;
             }
 
-            var tDSAmt = '';
+            let tDSAmt = '';
             if (tDSType !== '') {
 
                 if (tDSType == 1) {

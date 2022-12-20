@@ -95,17 +95,10 @@ public class VoucherGroupListService {
         tnxAmtBeforeFromDate = tnxAmtBeforeFromDate == null ? 0 : tnxAmtBeforeFromDate;
 
         ledgerDTO.setOpeningBal(ledgerDTO.getOpeningBal() + (tnxAmtBeforeFromDate));
-//        if (preFinancialYearDTO != null) {
-//            ledgerDTO.setOpeningBal(voucherGroupListDao.getClosingBalOfPreviousYear(currentUser.getCompanyId(), ledgerId, preFinancialYearDTO.getFinancialYearFrom(), preFinancialYearDTO.getFinancialYearTo()));
-//        }
 
         //To get Net profit from PNL of previous Year
         Double previousYearProfitAndLossAmount = 0.00;
         if (preFinancialYearDTO != null) {
-
-//            List<AccProfitAndLossReportDTO> accProfitAndLossReportDTOs = accProfitAndLossReportService.getProfitAndLossDetails(currentUser.getCompanyId(), preFinancialYearDTO.getFinancialYearFrom(), preFinancialYearDTO.getFinancialYearTo(), currentUser.getBusinessType(), currentUser.getFinancialYearId());
-
-//            previousYearProfitAndLossAmount = accProfitAndLossReportDTOs.get(accProfitAndLossReportDTOs.size() - 1).getAmount();
             previousYearProfitAndLossAmount = financialPositionService.getPrePNLAmt(currentUser, preFinancialYearDTO.getFinancialYearFrom(),
                     preFinancialYearDTO.getFinancialYearTo(), preFinancialYearDTO.getFinancialYearId());
         }
@@ -114,8 +107,6 @@ public class VoucherGroupListService {
         Double currentYearProfitAndLossAmount = 0.0;
 
         if (voucherGroupListDao.checkIsCapital(ledgerId, 6)) {
-            Date previousYearDate = voucherGroupListDao.getPreviousYear(currentUser.getCompanyId());
-
             currentYearProfitAndLossAmount = financialPositionService.getPNLAmt(currentUser,
                     currentPeriodFrom, currentPeriodTo);
         }

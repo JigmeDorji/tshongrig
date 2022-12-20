@@ -16,7 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.interceptor.TransactionInterceptor;
 
 import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -144,9 +146,8 @@ public class FixedAssetSaleService {
                 List<VoucherDetailDTO> voucherDetailDTOs = new ArrayList<>();
 
                 //get detail of asset sale by receipt memo number.
-                List<OpeningAndBuyingListDTO> openingAndBuyingListDTO =
-                        fixedAssetSaleDao.getAssetSaleRecordByReceiptMemoNo(receiptMemoNo,
-                                currentUser.getCompanyId());
+                List<OpeningAndBuyingListDTO> openingAndBuyingListDTO = fixedAssetSaleDao.getAssetSaleRecordByReceiptMemoNo(receiptMemoNo,
+                        currentUser.getCompanyId());
 
                 for (OpeningAndBuyingListDTO openingAndBuyingList : openingAndBuyingListDTO) {
 
@@ -283,6 +284,10 @@ public class FixedAssetSaleService {
 
     public Double calculateNetValueOfAsset(BigInteger faPurchaseDetailId, CurrentUser currentUser, Date asOnDate) throws ParseException {
 
+        NumberFormat numberFormat = NumberFormat.getInstance(Locale.getDefault());
+        numberFormat.setMaximumFractionDigits(2);
+        numberFormat.setRoundingMode(RoundingMode.DOWN);
+
         OpeningAndBuyingListDTO openingAndBuyingListDTO = fixedAssetSaleDao
                 .getAssetDetailByAssetCode(faPurchaseDetailId, currentUser.getCompanyId());
 
@@ -317,7 +322,7 @@ public class FixedAssetSaleService {
             netValue = purchaseValue - currentYearDepreciation;
         }
 
-        return Math.round(netValue * 100.0) / 100.0;
+        return Double.parseDouble(numberFormat.format(netValue));
     }
 
     public List<FixedAssetScheduleDTO> getFixedAssetSchedule(Date asOnDate, Integer companyId) {
@@ -358,7 +363,7 @@ public class FixedAssetSaleService {
         voucherCreationService.performPurchaseAndSaleVoucherEntry(voucherDTO, currentUser);
 
         ledgerService.updateOpeningBalance(ledgerService.getLedgerIdByLedgerName(
-                        ledgerService.getAccountTypeNameByAccType(accTypeId), currentUser, accTypeId), currentUser.getCompanyId(),
+                ledgerService.getAccountTypeNameByAccType(accTypeId), currentUser, accTypeId), currentUser.getCompanyId(),
                 (-1 * openingBalance));
 
         assetOpeningDao.deleteItemFromDetailByAssetDetailId(assetDetailId);

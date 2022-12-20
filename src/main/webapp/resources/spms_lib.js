@@ -44,8 +44,8 @@ function indexRowNo(tableId) {
 
 spms = (function () {
 
-    $('.homeBtn').on('click',function (){
-       window.location.href='/redirectHome';
+    $('.homeBtn').on('click', function () {
+        window.location.href = '/redirectHome';
     })
 
     /**
@@ -131,14 +131,14 @@ spms = (function () {
     }
 
     function getUrl() {
-        // return window.location.protocol + '//' + window.location.host + '/tshong-rig/';
-        return window.location.protocol + '//' + window.location.host + '/';
+        return window.location.protocol + '//' + window.location.host + '/tshong-rig/';
+        // return window.location.protocol + '//' + window.location.host + '/';
         // return 'http://www.autga.bt/bcs/';
     }
 
     function baseReportLocation() {
-        // return window.location.protocol + '//' + window.location.host + '/tshong-rig/resources/reports/';
-        return window.location.protocol + '//' + window.location.host + '/resources/reports/';
+        return window.location.protocol + '//' + window.location.host + '/tshong-rig/resources/reports/';
+        // return window.location.protocol + '//' + window.location.host + '/resources/reports/';
     }
 
     //index the table gridaccProfitAndLossReport
