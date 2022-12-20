@@ -134,7 +134,14 @@ public class LedgerService {
             bankId = saveBankDetail(ledgerDTO);
         }
         ledger.setBankId(bankId);
-        ledger.setOpeningBal(ledgerDTO.getOpeningBal());
+
+        if(ledger.getAccTypeId()>=12 && ledger.getAccTypeId()<=17){
+            ledger.setOpeningBal(0.0);
+        }else {
+            ledger.setOpeningBal(ledgerDTO.getOpeningBal());
+        }
+
+
         ledger.setCompanyId(currentUser.getCompanyId());
         ledger.setCreatedBy(currentUser.getLoginId());
         ledger.setSetDate(currentUser.getCreatedDate());

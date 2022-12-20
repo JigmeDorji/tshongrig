@@ -141,6 +141,7 @@ ledger = (function () {
                 success: function (res) {
 
                     $('#editLedgerModal').modal('show');
+
                     if (res.isBankAccLedger) {
                         $('.editBankAccDetail').attr('hidden', false);
                         $('.editBankAccDetail').attr('disabled', false);
@@ -159,7 +160,13 @@ ledger = (function () {
                         $('.editBankAccDetail').attr('disabled', true);
                         $('#editLedgerName').val(res.ledgerName);
                         $('#editAccTypeId').val(res.accTypeId).trigger('change');
-                        $('#editOpeningBal').val(res.openingBal);
+
+
+                        if(res.accTypeId>=12 && res.accTypeId<=17 ){
+                            $('#editOpeningBal').val(res.openingBal).attr('disabled', 'disabled');
+                        }else {
+                            $('#editOpeningBal').val(res.openingBal).removeAttr('disabled');
+                        }
                     }
                     $('#editLedgerId').val(ledgerId);
                 }
