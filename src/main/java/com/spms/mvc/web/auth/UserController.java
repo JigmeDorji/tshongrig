@@ -58,6 +58,13 @@ public class UserController extends BaseController {
         model.addAttribute("statusInactive", CommonStatus.Inactive.getValue());
         model.addAttribute("loginCompany", companyCreationService.getLoginCompany(getCurrentUser(request).getCompanyId()));
         model.addAttribute("companyList", companyCreationService.loadCompanyList());
+        model.addAttribute("currentUser",currentUser);
+
+        UserDTO userDTO=new UserDTO();
+
+        userDTO.setUsername("MEME");
+//        String username=userDTO.getUsername().concat("@").concat(currentUser.getCompanyName().replaceAll("\\B.|\\P{L}", "").toUpperCase());
+        String username=userDTO.getUsername().concat("@")+currentUser.getLoginId();
 
         return "user";
     }

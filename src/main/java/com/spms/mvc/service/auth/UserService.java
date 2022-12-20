@@ -147,7 +147,8 @@ public class UserService {
         }
 
         try {
-            String username=userDTO.getUsername().concat("@").concat(currentUser.getCompanyName().replaceAll("\\B.|\\P{L}", "").toUpperCase());
+            String username=userDTO.getUsername().concat("@")+currentUser.getLoginId();
+//            String username=userDTO.getUsername().concat("@").concat(currentUser.getCompanyName().replaceAll("\\B.|\\P{L}", "").toUpperCase());
             user.setUserFullName(userDTO.getUserFullName());
             if (userDTO.getUserId() == null) {
                 String saltValue = generateSaltValue(6);
