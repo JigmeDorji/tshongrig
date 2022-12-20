@@ -53,7 +53,7 @@
 <!--        <property name="password" value="root"/>-->
 
 
-        <property name="url" value="jdbc:mysql://localhost:3306/tshongrig_db"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/bom_test_db"/>
         <property name="password" value="root@Root@22"/>
 
         <property name="validationQuery" value="SELECT 1"/>

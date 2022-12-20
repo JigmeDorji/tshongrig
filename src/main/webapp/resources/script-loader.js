@@ -210,6 +210,10 @@ $(document).ready(function () {
 
     if (document.URL.search("financialPosition") > 1)
         scriptLoader("resources/js/financialPosition.js");
+
+    if (document.URL.search("rawMaterialLocationSetup") > 1)
+        scriptLoader("resources/js/rawMaterialLocationSetup.js");
+
 });
 var scriptLoader = function (url) {
     $.ajax({
