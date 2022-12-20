@@ -316,4 +316,16 @@ $(document).ready(function () {
     ledger.redirectToLedgerDetail();
     ledger.checkLedgerName();
     ledger.deleteLedgerDetails();
+
+    $("#accTypeId").change(function(){
+
+        let selectedValue = $(this).children("option:selected").val();
+        if(selectedValue>=12 && selectedValue<=17 ){
+            $('#openingBal').attr('disabled', 'disabled');
+        }else {
+            $('#openingBal').removeAttr('disabled');
+        }
+    });
+
 });
+

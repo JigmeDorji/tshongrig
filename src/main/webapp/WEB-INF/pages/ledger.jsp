@@ -59,6 +59,7 @@
                                               itemLabel="text"/>
                             </form:select>
                         </div>
+
                     </div>
                     <div class="bankAccDetail" hidden>
                         <div class="form-group row">
@@ -115,6 +116,9 @@
                         </div>
                     </div>
                     <div class="form-group row">
+<%--                        <c:if test = "${accTypeList.get(11)=""}}">--%>
+
+
                         <label class="col-md-2  required">Opening Balance</label>
 
                         <div class="col-md-3">
@@ -122,6 +126,7 @@
                                    name="openingBal"
                                    id="openingBal" required="required" value="0"/>
                         </div>
+<%--                        </c:if>--%>
                     </div>
 
                     <div class="form-group row">
