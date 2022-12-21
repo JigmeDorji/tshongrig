@@ -23,8 +23,6 @@ public class RawMaterialLocationSetupService {
     public ResponseMessage save(RawMaterialLocationSetupDTO rawMaterialLocationSetupDTO, CurrentUser currentUser) {
 
 
-
-//        if (rawMaterialLocationSetupDTO.getLocationSetUpId() != null) {
         if (rawMaterialLocationSetupDTO.getRawMaterialLocationSetUpId() != null) {
             ResponseMessage responseMessage = new ResponseMessage();
             RawMaterialLocationSetup rawMaterialLocationSetup=new RawMaterialLocationSetup();
@@ -61,5 +59,9 @@ public class RawMaterialLocationSetupService {
 
     public List<LocationSetUpDTO> getAllLocationList() {
         return rawMaterialLocationSetupDao.getAllLocationList();
+    }
+
+    public List<LocationSetUpDTO> getAllLocationList(int locationSetupId) {
+        return rawMaterialLocationSetupDao.getAllLocationList(locationSetupId);
     }
 }

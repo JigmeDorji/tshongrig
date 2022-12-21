@@ -37,7 +37,6 @@ public class RawMaterialLocationSetupDao {
 
         Session session = sessionFactory.getCurrentSession();
 
-
         return session.createSQLQuery(query)
                 .setParameter("companyId",companyId)
                 .setResultTransformer(Transformers.aliasToBean(LocationSetUpDTO.class)).list();
@@ -55,11 +54,23 @@ public class RawMaterialLocationSetupDao {
 
     @Transactional(readOnly = true)
     public List<LocationSetUpDTO> getAllLocationList() {
-
         String query = "SELECT locationSetUpId AS locationSetUpId,locationId AS locationId ,description AS description" +
                 "  FROM tbl_rawmateriallocationsetup ";
         Session session = sessionFactory.getCurrentSession();
         return session.createSQLQuery(query)
                 .setResultTransformer(Transformers.aliasToBean(LocationSetUpDTO.class)).list();
     }
+
+    @Transactional(readOnly = true)
+    public List<LocationSetUpDTO> getAllLocationList(int locationSetupId) {
+        String query = "SELECT locationSetUpId AS locationSetUpId,locationId AS locationId ,description AS description" +
+                "  FROM tbl_rawmateriallocationsetup  where locationSetUpId=:locationSetupId";
+        Session session = sessionFactory.getCurrentSession();
+
+        return session.createSQLQuery(query)
+                .setParameter("locationSetupId",locationSetupId)
+                .setResultTransformer(Transformers.aliasToBean(LocationSetUpDTO.class)).list();
+
+    }
+
 }

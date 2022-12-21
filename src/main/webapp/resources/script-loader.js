@@ -211,8 +211,14 @@ $(document).ready(function () {
     if (document.URL.search("financialPosition") > 1)
         scriptLoader("resources/js/financialPosition.js");
 
+    //Raw Material
+
+    //Raw Material Location Setup
     if (document.URL.search("rawMaterialLocationSetup") > 1)
         scriptLoader("resources/js/rawMaterialLocationSetup.js");
+
+    if (document.URL.search("openingBalanceForRawMaterial") > 1)
+        scriptLoader("resources/js/openingBalanceForRawMaterial.js");
 
 });
 var scriptLoader = function (url) {
