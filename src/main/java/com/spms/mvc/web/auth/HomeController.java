@@ -69,7 +69,13 @@ public class HomeController {
         currentUser.setCompanyId(companyCreationDTO.getCompanyId());
 
         //region Auto financial year creation
-        if (new Date().after(financialYearDTO.getFinancialYearTo())) {
+
+        Calendar presentDate = Calendar.getInstance();
+        Calendar financialYearToDate = Calendar.getInstance();
+        presentDate.setTime(new Date());
+        financialYearToDate.setTime(financialYearDTO.getFinancialYearTo());
+
+        if (presentDate.after(financialYearToDate)) {
             Date newFromDate = DateUtils.addYears(financialYearDTO.getFinancialYearFrom(), 1);
             Date newToDate = DateUtils.addYears(financialYearDTO.getFinancialYearTo(), 1);
             financialYearDTO.setFinancialYearFrom(newFromDate);
@@ -113,7 +119,7 @@ public class HomeController {
     }
 
 
-    @RequestMapping(value = { "redirectHome"})
+    @RequestMapping(value = {"redirectHome"})
     public ModelAndView redirectHome(HttpServletRequest request, HttpServletResponse response, Model model, Authentication authentication) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("home");

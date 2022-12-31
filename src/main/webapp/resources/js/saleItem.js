@@ -184,7 +184,7 @@ saleItem = (function () {
                                 });
 
                             }
-                        },complete:function (){
+                        }, complete: function () {
                             $('#printBtn').attr('disabled', false);
                         }
                     });
@@ -405,8 +405,15 @@ saleItem = (function () {
                 row.find('.totalAmount').val(totalAmount);
                 grandTotal = grandTotal + totalAmount;
             });
+
             $('#grandTotal').val(grandTotal);
-            $('#amtReturn').val((parseInt(Math.abs($('#amountReceivedInBank').val())) + parseInt(Math.abs($('#amtReceived').val())) + parseInt($('#discountRate').val())) - grandTotal)
+            let totalValue = (parseInt(Math.abs($('#amountReceivedInBank').val())) + parseInt(Math.abs($('#amtReceived').val())) + parseInt($('#discountRate').val()));
+
+            if (totalValue < grandTotal) {
+                $('#amtReturn').val(0);
+            } else {
+                $('#amtReturn').val(totalValue - grandTotal)
+            }
 
             if (parseFloat(grandTotal) === 0) {
                 $('#amtReceived').val(0);
