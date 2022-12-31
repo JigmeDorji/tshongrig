@@ -53,8 +53,8 @@
 <!--        <property name="password" value="root"/>-->
 
 
-        <property name="url" value="jdbc:mysql://localhost:3306/tshongrig_db"/>
-        <property name="password" value="root@Root@22"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/tshongrig_db_test"/>
+        <property name="password" value="root"/>
         <property name="validationQuery" value="SELECT 1"/>
     </bean>
 
