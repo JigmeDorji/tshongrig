@@ -131,14 +131,14 @@ spms = (function () {
     }
 
     function getUrl() {
-        // return window.location.protocol + '//' + window.location.host + '/tshong-rig/';
-        return window.location.protocol + '//' + window.location.host + '/';
+        return window.location.protocol + '//' + window.location.host + '/tshong-rig/';
+        // return window.location.protocol + '//' + window.location.host + '/';
         // return 'http://www.autga.bt/bcs/';
     }
 
-    function baseReportLocation() {l
-        // return window.location.protocol + '//' + window.location.host + '/tshong-rig/resources/reports/';
-        return window.location.protocol + '//' + window.location.host + '/resources/reports/';
+    function baseReportLocation() {
+        return window.location.protocol + '//' + window.location.host + '/tshong-rig/resources/reports/';
+        // return window.location.protocol + '//' + window.location.host + '/resources/reports/';
     }
 
     //index the table gridaccProfitAndLossReport
@@ -762,7 +762,6 @@ $(document).ready(function () {
                 let curMonth = currentDate.getUTCMonth() + 1; //months from 1-12
                 let curDay = currentDate.getUTCDate();
                 let curYear = currentDate.getUTCFullYear();
-                alert(spms.formattedDate(curDay, curMonth, curYear))
                 let curDate = new Date(spms.formattedDate(curDay, curMonth, curYear));
                 new Date(curDay, curMonth - 1, curYear);
                 // if (curDate < enteredDate) {
