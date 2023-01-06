@@ -63,7 +63,8 @@ public class UserController extends BaseController {
 
         List<CommonCompanyLoginId> commonCompanyLoginIds=companyCreationService.getCompanyLoginDetail(currentUser.getCompanyId());
 
-        model.addAttribute("currentUserLoginDetail",commonCompanyLoginIds);
+        String currentCompanyLoginId=commonCompanyLoginIds.get(0).getCompanyLoginId();
+        model.addAttribute("currentCompanyLoginId",currentCompanyLoginId);
 
 
 //        UserDTO userDTO=new UserDTO();

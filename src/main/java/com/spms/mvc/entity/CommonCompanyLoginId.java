@@ -51,3 +51,11 @@ public class CommonCompanyLoginId {
         this.company = company;
     }
 }
+/**
+ create table tbl_common_company_login_id(
+ id int primary key not null auto_increment,
+ companyId int,
+ loginId varchar(50),
+ company varchar(100)
+ );
+ */
