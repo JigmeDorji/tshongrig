@@ -34,20 +34,20 @@ public class CompanyCreationDao {
 
     @Transactional(readOnly = true)
     public List<CompanyCreationDTO> getCompanyDetailList() {
-        String query = "SELECT distinct c.id AS companyId,\n" +
-                "                CONCAT(c.companyName,\"(\",ifnull(u.username,\"---\"),\")\") AS companyName,\n" +
-                "                c.mailingAddress AS mailingAddress,\n" +
-                "                c.mobileNo AS mobileNo,\n" +
-                "                c.email AS email,\n" +
-                "                c.website AS website, \n" +
-                "                c.fnYrStart AS fnYrStart,\n" +
-                "                c.pfPercentage AS pfPercentage,\n" +
-                "                c.contactPerson,\n" +
-                "                c.status,\n" +
-                "                c.trialExpiryDate,\n" +
-                "                c.businessType AS businessType\n" +
+        String query = "SELECT distinct id AS companyId,\n" +
+                "                CONCAT(companyName,\"(\",ifnull(username,\"---\"),\")\") AS companyName,\n" +
+                "                mailingAddress AS mailingAddress,\n" +
+                "                mobileNo AS mobileNo,\n" +
+                "                email AS email,\n" +
+                "                website AS website, \n" +
+                "                fnYrStart AS fnYrStart,\n" +
+                "                pfPercentage AS pfPercentage,\n" +
+                "                contactPerson,\n" +
+                "                status,\n" +
+                "                trialExpiryDate,\n" +
+                "                businessType AS businessType\n" +
                 "                FROM tbl_common_company c \n" +
-                "                left join tbl_user u on c.id=u.companyId \n" +
+                "                left join tbl_user  on id=companyId \n" +
                 "                group by companyId order by id desc";
         Session session = sessionFactory.getCurrentSession();
         return session.createSQLQuery(query)
