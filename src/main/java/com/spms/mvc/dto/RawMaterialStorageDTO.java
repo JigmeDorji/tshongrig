@@ -1,5 +1,6 @@
 package com.spms.mvc.dto;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class RawMaterialStorageDTO {
@@ -11,8 +12,9 @@ public class RawMaterialStorageDTO {
     private int rawMaterialParticularQty;
     private int rawMaterialParticularUnit;
 
-    private double rawMaterialParticularPrice;
+    private BigDecimal rawMaterialParticularPrice;
     private int rawMaterialParticularLocation;
+
 
     public String getStorageModifier() {
         return storageModifier;
@@ -54,11 +56,11 @@ public class RawMaterialStorageDTO {
         this.rawMaterialParticularUnit = rawMaterialParticularUnit;
     }
 
-    public double getRawMaterialParticularPrice() {
+    public BigDecimal getRawMaterialParticularPrice() {
         return rawMaterialParticularPrice;
     }
 
-    public void setRawMaterialParticularPrice(double rawMaterialParticularPrice) {
+    public void setRawMaterialParticularPrice(BigDecimal rawMaterialParticularPrice) {
         this.rawMaterialParticularPrice = rawMaterialParticularPrice;
     }
 
@@ -68,18 +70,5 @@ public class RawMaterialStorageDTO {
 
     public void setRawMaterialParticularLocation(int rawMaterialParticularLocation) {
         this.rawMaterialParticularLocation = rawMaterialParticularLocation;
-    }
-
-    @Override
-    public String toString() {
-        return "RawMaterialStorageDTO{" +
-                "storageModifier='" + storageModifier + '\'' +
-                ", openBalanceEntryDate=" + openBalanceEntryDate +
-                ", rawMaterialParticularName='" + rawMaterialParticularName + '\'' +
-                ", rawMaterialParticularQty=" + rawMaterialParticularQty +
-                ", rawMaterialParticularUnit=" + rawMaterialParticularUnit +
-                ", rawMaterialParticularPrice=" + rawMaterialParticularPrice +
-                ", rawMaterialParticularLocation=" + rawMaterialParticularLocation +
-                '}';
     }
 }

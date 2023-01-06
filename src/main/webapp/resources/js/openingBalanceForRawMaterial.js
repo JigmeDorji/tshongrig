@@ -11,7 +11,8 @@ openingBalanceForRawMaterial = (function () {
         $('.globalForm').validate({
             submitHandler: function (form) {
                 $.ajax({
-                    url: 'openingBalanceForRawMaterial/save',
+                    // url: 'openingBalanceForRawMaterial/save',
+                    url: 'purchasesForRawMaterial/save',
                     type: 'POST',
                     data: $(form).serializeArray(),
                     success: function (res) {

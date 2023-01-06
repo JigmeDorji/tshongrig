@@ -802,7 +802,6 @@ saleItem = (function () {
                 }
             })
         }
-
         function onCounterOrSupply() {
             $('#counterOrSupply').on('change', function () {
                 if (parseInt($(this).val()) === 1) {

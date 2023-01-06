@@ -2,28 +2,30 @@ package com.spms.mvc.entity;
 
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
-@Table(name = "tbl_rawmaterial_storage")
+@Table(name = "tbl_raw_material_opening_balance_storage")
 public class RawMaterialStorage {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "openingBalanceId")
     private Integer id;
-    @Column(name = "particular_name")
-    private String particularName;
+    @Column(name = "particular_itemName")
+    private String particularItemName;
     @Column(name = "quantity")
     private int quantity;
-    @Column(name = "Unit")
-    private String Unit;
-    @Column(name = "Price")
-    private double Price;
-    @Column(name = "location")
-    private String location;
-    @Column(name = "rawMaterial_date")
-    private Date date;
+    @Column(name = "unitId")
+    private int unitId;
+    @Column(name = "price")
+    private BigDecimal price;
+    @Column(name = "locationId")
+    private int locationId;
+    @Column(name = "openingBalanceDate")
+    private Date openingBalanceDate;
     @Column(name = "storageModifier")
     private String storageModifier;
     @Column(name = "companyId")
@@ -39,12 +41,12 @@ public class RawMaterialStorage {
         this.id = id;
     }
 
-    public String getParticularName() {
-        return particularName;
+    public String getParticularItemName() {
+        return particularItemName;
     }
 
-    public void setParticularName(String particularName) {
-        this.particularName = particularName;
+    public void setParticularItemName(String particularItemName) {
+        this.particularItemName = particularItemName;
     }
 
     public int getQuantity() {
@@ -55,36 +57,36 @@ public class RawMaterialStorage {
         this.quantity = quantity;
     }
 
-    public String getUnit() {
-        return Unit;
+    public int getUnitId() {
+        return unitId;
     }
 
-    public void setUnit(String unit) {
-        Unit = unit;
+    public void setUnitId(int unitId) {
+        this.unitId = unitId;
     }
 
-    public double getPrice() {
-        return Price;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setPrice(double price) {
-        Price = price;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
-    public String getLocation() {
-        return location;
+    public int getLocationId() {
+        return locationId;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setLocationId(int locationId) {
+        this.locationId = locationId;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getOpeningBalanceDate() {
+        return openingBalanceDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setOpeningBalanceDate(Date openingBalanceDate) {
+        this.openingBalanceDate = openingBalanceDate;
     }
 
     public String getStorageModifier() {
@@ -112,20 +114,3 @@ public class RawMaterialStorage {
     }
 }
 
-/*
-
-
-CREATE TABLE `bigapplebrand_db`.`tbl_rawmaterial_storage` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `particular_name` VARCHAR(100) NULL,
-  `quantity` INT NULL,
-  `Unit` VARCHAR(45) NULL,
-  `Price` DOUBLE NULL,
-  `location` VARCHAR(45) NULL,
-  `date` DATE NULL,
-  `createdby` VARCHAR(45) NULL,
-  `companyId` INT NULL,
-  `companyName` VARCHAR(45) NULL,
-  PRIMARY KEY (`id`));
-
- */

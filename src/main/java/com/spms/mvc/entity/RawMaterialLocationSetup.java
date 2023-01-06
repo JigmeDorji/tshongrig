@@ -13,6 +13,7 @@ public class RawMaterialLocationSetup {
     private Integer locationSetUpId;
 
 
+
     @Column(name = "locationId")
     private String locationId;
 

@@ -1,10 +1,12 @@
 package com.spms.mvc.web;
 
+import com.spms.mvc.Enumeration.AccountTypeEnum;
+import com.spms.mvc.Enumeration.BusinessType;
+import com.spms.mvc.Enumeration.VoucherTypeEnum;
 import com.spms.mvc.dao.RawMaterialStorageDao;
-import com.spms.mvc.dto.LocationSetUpDTO;
-import com.spms.mvc.dto.RawMaterialStorageDTO;
-import com.spms.mvc.dto.RawMaterialStorageViewDTO;
+import com.spms.mvc.dto.*;
 import com.spms.mvc.entity.RawMaterialLocationSetup;
+import com.spms.mvc.library.helper.AccountingUtil;
 import com.spms.mvc.library.helper.CurrentUser;
 import com.spms.mvc.library.helper.DropdownDTO;
 import com.spms.mvc.library.helper.ResponseMessage;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,6 +39,9 @@ public class OpeningBalanceForRawMaterialController {
 
     @Autowired
     private RawMaterialStorageService rawMaterialStorageService;
+
+    @Autowired
+    PurchasesForRawMaterialService purchasesForRawMaterialService;
 
 
 
@@ -61,14 +67,16 @@ public class OpeningBalanceForRawMaterialController {
 
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public ResponseMessage save(HttpServletRequest request, RawMaterialStorageDTO rawMaterialStorageDTO) throws
-            IOException {
-        CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
+//    @ResponseBody
+//    @RequestMapping(value = "/save", method = RequestMethod.POST)
+//    public ResponseMessage save(HttpServletRequest request, RawMaterialStorageDTO rawMaterialStorageDTO) throws
+//            IOException {
+//        CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
+//        return rawMaterialStorageService.save(rawMaterialStorageDTO, currentUser);
+//
+//    }
 
-        return rawMaterialStorageService.save(rawMaterialStorageDTO, currentUser,rawMaterialLocationSetupService,addItemService);
-    }
+
 
 
 
