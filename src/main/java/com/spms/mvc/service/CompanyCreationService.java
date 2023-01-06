@@ -8,6 +8,7 @@ import com.spms.mvc.dao.auth.UserDao;
 import com.spms.mvc.dto.CompanyCreationDTO;
 import com.spms.mvc.dto.FinancialYearDTO;
 import com.spms.mvc.dto.UserDTO;
+import com.spms.mvc.entity.CommonCompanyLoginId;
 import com.spms.mvc.entity.CompanyCreation;
 import com.spms.mvc.entity.FinancialYear;
 import com.spms.mvc.entity.User;
@@ -114,6 +115,9 @@ public class CompanyCreationService extends BaseController {
                 user.setUserId(lastUserId);
                 String companyAbbreviation = companyCreationDTO.getCompanyName().replaceAll("\\B.|\\P{L}", "").toUpperCase();
                 companyAbbreviation = companyAbbreviation.concat(lastUserId.toString());
+
+
+
                 user.setUsername(companyAbbreviation);
                 user.setUserFullName("Administrator");
                 String saltValue = generateSaltValue(6);
@@ -130,6 +134,12 @@ public class CompanyCreationService extends BaseController {
                 user.setCreatedBy(currentUser.getLoginId());
                 user.setCreatedDate(new Date());
                 userId = userDao.addUser(user);
+
+                CommonCompanyLoginId commonCompanyLoginId=new CommonCompanyLoginId();
+                commonCompanyLoginId.setCompanyLoginId(companyAbbreviation);
+                commonCompanyLoginId.setCompany(companyCreationDTO.getCompanyName());
+                commonCompanyLoginId.setCompanyId(companyCreationDTO.getCompanyId());
+                companyCreationDao.saveCompanyLoginDetail(commonCompanyLoginId);
             }
 
 
@@ -218,6 +228,12 @@ public class CompanyCreationService extends BaseController {
 
         return companyCreationFinalDTO;
     }
+
+    public List<CommonCompanyLoginId> getCompanyLoginDetail(Integer companyId){
+        return companyCreationDao.getCompanyLoginDetail(companyId);
+    }
+
+
 
     public FinancialYearDTO getCurrentFinancialYearIdByCompany(Integer companyId) {
         return companyCreationDao.getCurrentFinancialYearIdByCompany(companyId);
