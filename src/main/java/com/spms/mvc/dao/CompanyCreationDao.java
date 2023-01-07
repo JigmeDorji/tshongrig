@@ -2,6 +2,7 @@ package com.spms.mvc.dao;
 
 import com.spms.mvc.dto.CompanyCreationDTO;
 import com.spms.mvc.dto.FinancialYearDTO;
+import com.spms.mvc.entity.CommonCompanyLoginId;
 import com.spms.mvc.entity.CompanyCreation;
 import com.spms.mvc.library.helper.DropdownDTO;
 import org.hibernate.Session;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -305,5 +308,25 @@ public class CompanyCreationDao {
         return session.createSQLQuery(query)
                 .setParameter("companyId",companyId)
                 .setResultTransformer(Transformers.aliasToBean(CompanyCreationDTO.class)).list();
+    }
+
+    @Transactional(readOnly = true)
+    public List<CommonCompanyLoginId> getCompanyLoginDetail(Integer companyId) {
+        String query = "SELECT id AS id," +
+                " companyId AS companyId," +
+                " loginId AS  companyLoginId," +
+                " company AS company" +
+                "  FROM tbl_common_company_login_id where companyId=:companyId";
+        Session session = sessionFactory.getCurrentSession();
+        return session.createSQLQuery(query)
+                .setParameter("companyId",companyId)
+                .setResultTransformer(Transformers.aliasToBean(CommonCompanyLoginId.class)).list();
+    }
+
+    public void saveCompanyLoginDetail(CommonCompanyLoginId commonCompanyLoginId) {
+
+        Session session = sessionFactory.getCurrentSession();
+       session.save(commonCompanyLoginId);
+
     }
 }

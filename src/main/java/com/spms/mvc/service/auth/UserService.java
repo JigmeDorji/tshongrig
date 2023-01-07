@@ -16,12 +16,14 @@ import com.spms.mvc.Enumeration.SystemDataInt;
 import com.spms.mvc.Enumeration.UserRoleType;
 import com.spms.mvc.dao.auth.UserDao;
 import com.spms.mvc.dto.UserDTO;
+import com.spms.mvc.entity.CommonCompanyLoginId;
 import com.spms.mvc.entity.CompanyMapping;
 import com.spms.mvc.entity.User;
 import com.spms.mvc.entity.User_a;
 import com.spms.mvc.library.helper.CurrentUser;
 import com.spms.mvc.library.helper.DropdownDTO;
 import com.spms.mvc.library.helper.ResponseMessage;
+import com.spms.mvc.service.CompanyCreationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -41,6 +43,10 @@ public class UserService {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    private CompanyCreationService companyCreationService;
+
     //region public method
 
     /**
@@ -147,7 +153,13 @@ public class UserService {
         }
 
         try {
-            String username=userDTO.getUsername().concat("@")+currentUser.getLoginId();
+
+            List<CommonCompanyLoginId> commonCompanyLoginIds=companyCreationService.getCompanyLoginDetail(currentUser.getCompanyId());
+//            for(int i=0;i<commonCompanyLoginIds.size();i++){
+//                System.out.println(commonCompanyLoginIds.get(i).getCompanyId());
+//                System.out.println(commonCompanyLoginIds.get(i).getCompanyLoginId());
+//            }
+            String username=userDTO.getUsername().concat("@")+commonCompanyLoginIds.get(0).getCompanyLoginId();
 //            String username=userDTO.getUsername().concat("@").concat(currentUser.getCompanyName().replaceAll("\\B.|\\P{L}", "").toUpperCase());
             user.setUserFullName(userDTO.getUserFullName());
             if (userDTO.getUserId() == null) {
