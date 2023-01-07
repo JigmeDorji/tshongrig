@@ -5,6 +5,7 @@ import com.spms.mvc.dao.CompanyCreationDao;
 import com.spms.mvc.dto.CompanyCreationDTO;
 import com.spms.mvc.dto.FinancialYearDTO;
 import com.spms.mvc.dto.UserDTO;
+import com.spms.mvc.entity.CommonCompanyLoginId;
 import com.spms.mvc.library.helper.CurrentUser;
 import com.spms.mvc.library.helper.DateUtil;
 import com.spms.mvc.library.helper.DropdownDTO;
@@ -115,6 +116,12 @@ public class HomeController {
         currentUser.setUserId(userDTO.getUserId());
         request.getSession().setAttribute("currentUser", currentUser);
         modelAndView.setViewName("home");
+
+//        List<CommonCompanyLoginId> commonCompanyLoginIds=companyCreationService.getCompanyLoginDetail(currentUser.getCompanyId());
+//       for(int i=0;i<commonCompanyLoginIds.size();i++){
+//           System.out.println(commonCompanyLoginIds.get(i).getCompanyId());
+//           System.out.println(commonCompanyLoginIds.get(i).getCompanyLoginId());
+//       }
         return modelAndView;
     }
 

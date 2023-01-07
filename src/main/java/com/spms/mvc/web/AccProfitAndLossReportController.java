@@ -33,10 +33,9 @@ public class AccProfitAndLossReportController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String index(HttpServletRequest request, Model model) {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
-        DateUtil.fromTODateModel(currentUser,model);
+        DateUtil.fromTODateModel(currentUser, model);
         return "accProfitAndLossReport";
     }
-
 
 
     @ResponseBody
@@ -44,7 +43,7 @@ public class AccProfitAndLossReportController {
     public List<AccProfitAndLossReportDTO> getProfitAndLossDetails(HttpServletRequest request, Date fromDate, Date toDate) {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
         return accProfitAndLossReportService.getProfitAndLossDetails(currentUser.getCompanyId(), fromDate,
-                toDate,currentUser.getBusinessType(),currentUser.getFinancialYearId());
+                toDate, currentUser.getBusinessType(), currentUser.getFinancialYearId(), Boolean.FALSE);
     }
 
 }

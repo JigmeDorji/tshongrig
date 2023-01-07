@@ -2,6 +2,7 @@ package com.spms.mvc.web.auth;
 
 import com.spms.mvc.Enumeration.CommonStatus;
 import com.spms.mvc.dto.UserDTO;
+import com.spms.mvc.entity.CommonCompanyLoginId;
 import com.spms.mvc.library.helper.CurrentUser;
 import com.spms.mvc.library.helper.ResponseMessage;
 import com.spms.mvc.service.CompanyCreationService;
@@ -60,11 +61,16 @@ public class UserController extends BaseController {
         model.addAttribute("companyList", companyCreationService.loadCompanyList());
         model.addAttribute("currentUser",currentUser);
 
-        UserDTO userDTO=new UserDTO();
+        List<CommonCompanyLoginId> commonCompanyLoginIds=companyCreationService.getCompanyLoginDetail(currentUser.getCompanyId());
 
-        userDTO.setUsername("MEME");
+        model.addAttribute("currentUserLoginDetail",commonCompanyLoginIds);
+
+
+//        UserDTO userDTO=new UserDTO();
+
+//        userDTO.setUsername("MEME");
 //        String username=userDTO.getUsername().concat("@").concat(currentUser.getCompanyName().replaceAll("\\B.|\\P{L}", "").toUpperCase());
-        String username=userDTO.getUsername().concat("@")+currentUser.getLoginId();
+//        String username=userDTO.getUsername().concat("@")+currentUser.getLoginId();
 
         return "user";
     }
