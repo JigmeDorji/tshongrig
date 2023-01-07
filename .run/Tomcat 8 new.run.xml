@@ -4,9 +4,9 @@
     <option name="SHOW_DIALOG_ON_UPDATE" value="false" />
     <option name="UPDATING_POLICY" value="restart-server" />
     <deployment>
-      <artifact name="tshong-rig:war exploded">
+      <artifact name="tshong-rig:war">
         <settings>
-          <option name="CONTEXT_PATH" value="/" />
+          <option name="CONTEXT_PATH" value="/tshong_rig_war" />
         </settings>
       </artifact>
     </deployment>
@@ -86,7 +86,7 @@
     </ConfigurationWrapper>
     <method v="2">
       <option name="BuildArtifacts" enabled="true">
-        <artifact name="tshong-rig:war exploded" />
+        <artifact name="tshong-rig:war" />
       </option>
     </method>
   </configuration>
