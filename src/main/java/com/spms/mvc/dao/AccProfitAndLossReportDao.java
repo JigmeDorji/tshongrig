@@ -27,14 +27,13 @@ public class AccProfitAndLossReportDao {
                 "LEFT JOIN tbl_acc_ledger C ON C.ledgerId=A.ledgerId\n" +
                 "LEFT JOIN tbl_acc_acctype E ON E.accTypeId=C.accTypeId\n" +
                 "WHERE (:fromDate is null or B.voucherEntryDate>=:fromDate)  AND B.voucherEntryDate<=:toDate  AND E.accTypeId=:accountTypeId " +
-                "AND C.companyId=:companyId AND B.financialYearId=:financialYearId";
+                "AND C.companyId=:companyId";
         Double totalAmount = (Double) sessionFactory.getCurrentSession()
                 .createSQLQuery(sqlQry)
                 .setParameter("companyId", companyId)
                 .setParameter("accountTypeId", accountTypeId)
                 .setParameter("fromDate", fromDate)
                 .setParameter("toDate", toDate)
-                .setParameter("financialYearId", financialYearId)
                 .uniqueResult();
 
         return totalAmount == null ? 0 : totalAmount;
@@ -91,5 +90,26 @@ public class AccProfitAndLossReportDao {
                 .setParameter("fromDate", fromDate)
                 .setParameter("toDate", toDate).uniqueResult();
         return totalSale == null ? 0 : totalSale;
+    }
+
+
+    @Transactional(readOnly = true)
+    public double getDetailWithFinancialYear(Integer companyId, Integer accountTypeId, Date fromDate, Date toDate, Integer financialYearId) {
+        String sqlQry = "SELECT SUM(drcrAmount) FROM tbl_acc_voucher_entries_detail A\n" +
+                "INNER JOIN tbl_acc_voucher_entries B ON A.voucherId=B.voucherId\n" +
+                "LEFT JOIN tbl_acc_ledger C ON C.ledgerId=A.ledgerId\n" +
+                "LEFT JOIN tbl_acc_acctype E ON E.accTypeId=C.accTypeId\n" +
+                "WHERE (:fromDate is null or B.voucherEntryDate>=:fromDate)  AND B.voucherEntryDate<=:toDate  AND E.accTypeId=:accountTypeId " +
+                "AND C.companyId=:companyId AND B.financialYearId=:financialYearId";
+        Double totalAmount = (Double) sessionFactory.getCurrentSession()
+                .createSQLQuery(sqlQry)
+                .setParameter("companyId", companyId)
+                .setParameter("accountTypeId", accountTypeId)
+                .setParameter("fromDate", fromDate)
+                .setParameter("toDate", toDate)
+                .setParameter("financialYearId", financialYearId)
+                .uniqueResult();
+
+        return totalAmount == null ? 0 : totalAmount;
     }
 }

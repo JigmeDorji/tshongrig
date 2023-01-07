@@ -228,8 +228,10 @@
                                 </div>
                             </div>
                             <div class="creditDetails" hidden>
-                                <div class="col-md-7"></div>
+
                                 <div class="form-group row">
+                                    <div class="col-md-7"></div>
+
                                     <label class="col-md-2 right-label col-lg-offset-7 required">Party Name</label>
 
                                     <div class="col-md-3">

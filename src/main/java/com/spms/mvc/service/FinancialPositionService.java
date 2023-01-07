@@ -47,21 +47,20 @@ public class FinancialPositionService {
         List<AccTrialBalanceDTO> accTrialBalanceDTOS1 = new ArrayList<>();
 
         for (AccTrialBalanceDTO accTrialBalanceDTO : accTrialBalanceDTOS) {
-
             AccTrialBalanceDTO accTrialBalanceDTO1 = new AccTrialBalanceDTO();
             accTrialBalanceDTO1 = accTrialBalanceDTO;
+
             if (accTrialBalanceDTO.getParticular().trim().equals("Capital")) {
                 FinancialYearDTO preFinancialYearDTO = financialYearSetupService.getPreviousFinancialYearDetail(currentUser.getCompanyId(), currentUser.getFinancialYearId());
                 if (preFinancialYearDTO != null) {
-                    Double previousYearProfitAndLossAmount = getPrePNLAmt(currentUser, preFinancialYearDTO.getFinancialYearFrom(), preFinancialYearDTO.getFinancialYearTo(), preFinancialYearDTO.getFinancialYearId());
+                    Double previousYearProfitAndLossAmount = getPrePNLAmt(currentUser, preFinancialYearDTO.getFinancialYearFrom(),
+                            preFinancialYearDTO.getFinancialYearTo(), preFinancialYearDTO.getFinancialYearId());
                     accTrialBalanceDTO1.setCrAmount(accTrialBalanceDTO.getCrAmount() + previousYearProfitAndLossAmount);
                 }
 
             }
             accTrialBalanceDTOS1.add(accTrialBalanceDTO1);
-
         }
-
         return accTrialBalanceDTOS1;
     }
 
@@ -73,11 +72,10 @@ public class FinancialPositionService {
         Double openingBalance = accProfitAndLossReportDao.getOpeningBalanceDifference(companyId, fromDate, toDate);
         if (openingBalance < 0) {
             accTrialBalDTO.setCrAmount(Math.abs(openingBalance));
-
         } else {
             accTrialBalDTO.setDrAmount(openingBalance);
-
         }
+
         if (openingBalance != 0) {
             accTrialBalanceDTOs.add(accTrialBalDTO);
         }
@@ -201,7 +199,7 @@ public class FinancialPositionService {
             Date preToDate = calendarTo.getTime();
 
             List<AccProfitAndLossReportDTO> accProfitAndLossReportDTOs = accProfitAndLossReportService.getProfitAndLossDetails(
-                    currentUser.getCompanyId(), null, preToDate, currentUser.getBusinessType(), currentUser.getFinancialYearId());
+                    currentUser.getCompanyId(), null, preToDate, currentUser.getBusinessType(), currentUser.getFinancialYearId(), Boolean.TRUE);
 
             return accProfitAndLossReportDTOs.get(accProfitAndLossReportDTOs.size() - 1).getAmount();
         }
@@ -275,14 +273,14 @@ public class FinancialPositionService {
         //To get Net profit from PNL
         List<AccProfitAndLossReportDTO> accProfitAndLossReportDTOs = accProfitAndLossReportService
                 .getProfitAndLossDetails(currentUser.getCompanyId(), null, toDate,
-                        currentUser.getBusinessType(), currentUser.getFinancialYearId());
+                        currentUser.getBusinessType(), currentUser.getFinancialYearId(), Boolean.TRUE);
         return accProfitAndLossReportDTOs.get(accProfitAndLossReportDTOs.size() - 1).getReturnPNLAmount();
     }
 
     public Double getPrePNLAmt(CurrentUser currentUser, Date fromDate, Date toDate, Integer preFinancialYearId) {
         //To get Net profit from PNL
         List<AccProfitAndLossReportDTO> accProfitAndLossReportDTOs = accProfitAndLossReportService.getProfitAndLossDetails(currentUser.getCompanyId(), null, toDate,
-                currentUser.getBusinessType(), preFinancialYearId);
+                currentUser.getBusinessType(), preFinancialYearId, Boolean.FALSE);
         return accProfitAndLossReportDTOs.get(accProfitAndLossReportDTOs.size() - 1).getReturnPNLAmount();
     }
 }

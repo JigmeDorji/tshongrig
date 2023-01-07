@@ -4,12 +4,9 @@
 openingBalanceInventory = (function () {
     function saveItem() {
         $('#btnSave').on('click', function () {
-            var itemCode = $('#itemCode').val();
-            var itemName = $('#itemName').val();
-            var qty = $('#qty').val();
-            var sellingPrice = $('#sellingPrice').val();
             $('.globalForm').validate({
                 submitHandler: function (form) {
+                    $('#btnSave').attr('disabled', true);
                     var data = $(form).serializeArray();
                     $.ajax({
                         url: 'receivedItem/save',
@@ -132,7 +129,7 @@ openingBalanceInventory = (function () {
 
     function getItemDetails() {
         $('#itemCode').on('change', function () {
-            if($(this).val()!==''&& $(this).val()!==null){
+            if ($(this).val() !== '' && $(this).val() !== null) {
                 $.ajax({
                     url: 'receivedItem/getItemDetails',
                     type: 'GET',
@@ -371,7 +368,7 @@ openingBalanceInventory = (function () {
         $('#qty').on('keyup', function () {
             let itemCode = $('#itemCode').val();
             let asOnDate = new Date();
-            if (itemCode !== '' && $('#qty').val()!=='') {
+            if (itemCode !== '' && $('#qty').val() !== '') {
                 $.ajax({
                     url: 'viewItemDetail/getItemDetail',
                     type: 'GET',

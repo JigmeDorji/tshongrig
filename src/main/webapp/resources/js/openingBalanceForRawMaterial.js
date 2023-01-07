@@ -12,7 +12,7 @@ openingBalanceForRawMaterial = (function () {
             submitHandler: function (form) {
                 $.ajax({
                     // url: 'openingBalanceForRawMaterial/save',
-                    url: 'purchasesForRawMaterial/save',
+                    url: '/save',
                     type: 'POST',
                     data: $(form).serializeArray(),
                     success: function (res) {

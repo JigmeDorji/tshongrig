@@ -29,7 +29,7 @@
     <mvc:resources mapping="/resources/**" location="/resources/" cache-period="31556926"/>
 
     <!--Database Backup Config-->
-<!--    <import resource="config/schedularer-database-backup.xml"/>-->
+    <!--    <import resource="config/schedularer-database-backup.xml"/>-->
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages/"/>
@@ -44,18 +44,14 @@
     <!--Database connection config-->
     <bean id="spmsDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
-
         <property name="username" value="root"/>
 
-
         <!--  For Sir Dugay's Testing         -->
-<!--        <property name="url" value="jdbc:mysql://localhost:3306/bcs_db"/>-->
-<!--        <property name="password" value="root"/>-->
-
+        <!--        <property name="url" value="jdbc:mysql://localhost:3306/bcs_db"/>-->
+        <!--        <property name="password" value="root"/>-->
 
         <property name="url" value="jdbc:mysql://localhost:3306/aws_tshongrig_db"/>
         <property name="password" value="root@Root@22"/>
-
         <property name="validationQuery" value="SELECT 1"/>
     </bean>
 

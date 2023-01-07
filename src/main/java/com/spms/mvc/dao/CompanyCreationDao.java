@@ -47,7 +47,11 @@ public class CompanyCreationDao {
                 "                trialExpiryDate,\n" +
                 "                businessType AS businessType\n" +
                 "                FROM tbl_common_company c \n" +
+
                 "                left join tbl_user on id=companyId \n" +
+
+                "                left join tbl_user  on id=companyId \n" +
+
                 "                group by companyId order by id desc";
         Session session = sessionFactory.getCurrentSession();
         return session.createSQLQuery(query)

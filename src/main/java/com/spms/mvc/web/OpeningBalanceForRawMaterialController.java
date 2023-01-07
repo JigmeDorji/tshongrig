@@ -49,6 +49,7 @@ public class OpeningBalanceForRawMaterialController {
 
 
 
+
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String list(Model model, HttpServletRequest request) {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
@@ -67,14 +68,14 @@ public class OpeningBalanceForRawMaterialController {
 
     }
 
-//    @ResponseBody
-//    @RequestMapping(value = "/save", method = RequestMethod.POST)
-//    public ResponseMessage save(HttpServletRequest request, RawMaterialStorageDTO rawMaterialStorageDTO) throws
-//            IOException {
-//        CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
-//        return rawMaterialStorageService.save(rawMaterialStorageDTO, currentUser);
-//
-//    }
+    @ResponseBody
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public ResponseMessage save(HttpServletRequest request, RawMaterialStorageDTO rawMaterialStorageDTO) throws
+            IOException {
+        CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
+        return purchasesForRawMaterialService.openingBalanceForRawMaterial(rawMaterialStorageDTO, currentUser);
+
+    }
 
 
 
