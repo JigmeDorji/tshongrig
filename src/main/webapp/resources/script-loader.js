@@ -210,6 +210,23 @@ $(document).ready(function () {
 
     if (document.URL.search("financialPosition") > 1)
         scriptLoader("resources/js/financialPosition.js");
+
+    //Raw Material
+
+    //Raw Material Location Setup
+    if (document.URL.search("rawMaterialLocationSetup") > 1)
+        scriptLoader("resources/js/rawMaterialLocationSetup.js");
+
+    if (document.URL.search("openingBalanceForRawMaterial") > 1)
+        scriptLoader("resources/js/openingBalanceForRawMaterial.js");
+
+    if (document.URL.search("purchasesForRawMaterial") > 1)
+        scriptLoader("resources/js/purchasesForRawMaterial.js");
+
+    if (document.URL.search("viewItemsForRawMaterial") > 1)
+        scriptLoader("resources/js/viewItemsForRawMaterial.js");
+
+
 });
 var scriptLoader = function (url) {
     $.ajax({
