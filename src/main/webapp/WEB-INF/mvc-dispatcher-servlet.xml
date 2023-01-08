@@ -50,12 +50,9 @@
         <!--        <property name="url" value="jdbc:mysql://localhost:3306/bcs_db"/>-->
         <!--        <property name="password" value="root"/>-->
 
-<<<<<<< HEAD
 
-        <property name="url" value="jdbc:mysql://localhost:3306/tshongrig_db"/>
-=======
+
         <property name="url" value="jdbc:mysql://localhost:3306/aws_tshongrig_db"/>
->>>>>>> 2318cef35003812c1726688491db612406d34afa
         <property name="password" value="root@Root@22"/>
         <property name="validationQuery" value="SELECT 1"/>
     </bean>
