@@ -185,35 +185,35 @@
                         <ul class="nav nav-group-sub" data-submenu-title="Starter kit">
                             <li class="nav-item">
                                 <sec:authorize access="hasAuthority('12-VIEW')">
-                                    <a href="<c:url value='/locationSetUp' />" class="nav-link"> Location Setup</a>
+                                    <a href="<c:url value='/rawMaterialLocationSetup' />" class="nav-link"> sdLocation Setup</a>
                                 </sec:authorize>
                             </li>
                             <li class="nav-item">
                                 <sec:authorize access="hasAuthority('14-VIEW')">
-                                    <a class="nav-link" href="<c:url value='/openingRawMaterialPurchase' />">
+                                    <a class="nav-link" href="<c:url value='/openingBalanceForRawMaterial' />">
                                         Opening</a>
                                 </sec:authorize>
                             </li>
                             <li class="nav-item">
                                 <sec:authorize access="hasAuthority('14-VIEW')">
-                                    <a class="nav-link" href="<c:url value='/rawMaterialPurchase' />"> Purchase</a>
+                                    <a class="nav-link" href="<c:url value='/purchasesForRawMaterial' />"> Purchase</a>
                                 </sec:authorize>
                             </li>
                             <li class="nav-item">
                                 <sec:authorize access="hasAuthority('15-VIEW')">
-                                    <a class="nav-link" href="<c:url value='/viewItem' />"> View Item</a>
+                                    <a class="nav-link" href="<c:url value='/viewItemsForRawMaterial' />"> View Item</a>
                                 </sec:authorize>
                             </li>
-                            <li class="nav-item">
-                                <sec:authorize access="hasAuthority('17-VIEW')">
-                                    <a class="nav-link" href="<c:url value='/stockIssue' />"> Issue</a>
-                                </sec:authorize>
-                            </li>
-                            <li class="nav-item">
-                                <sec:authorize access="hasAuthority('16-VIEW')">
-                                    <a class="nav-link" href="<c:url value='/issueDetail' />"> Issue Detail</a>
-                                </sec:authorize>
-                            </li>
+                                <%--                            <li class="nav-item">--%>
+                                <%--                                <sec:authorize access="hasAuthority('17-VIEW')">--%>
+                                <%--                                    <a class="nav-link" href="<c:url value='/stockIssue' />"> Issue</a>--%>
+                                <%--                                </sec:authorize>--%>
+                                <%--                            </li>--%>
+                                <%--                            <li class="nav-item">--%>
+                                <%--                                <sec:authorize access="hasAuthority('16-VIEW')">--%>
+                                <%--                                    <a class="nav-link" href="<c:url value='/issueDetail' />"> Issue Detail</a>--%>
+                                <%--                                </sec:authorize>--%>
+                                <%--                            </li>--%>
                         </ul>
                     </li>
                     <%--BOQ--%>
@@ -249,39 +249,109 @@
                         <ul class="nav nav-group-sub" data-submenu-title="Starter kit">
                             <li class="nav-item">
                                 <sec:authorize access="hasAuthority('12-VIEW')">
-                                    <a href="<c:url value='/locationSetUp' />" class="nav-link"> Location Setup</a>
+                                    <a href="<c:url value='/rawMaterialLocationSetup' />" class="nav-link"> Location Setup</a>
                                 </sec:authorize>
                             </li>
                             <li class="nav-item">
                                 <sec:authorize access="hasAuthority('14-VIEW')">
-                                    <a class="nav-link" href="<c:url value='/openingRawMaterialPurchase' />">
+                                    <a class="nav-link" href="<c:url value='/openingBalanceForRawMaterial' />">
                                         Opening</a>
                                 </sec:authorize>
                             </li>
                             <li class="nav-item">
                                 <sec:authorize access="hasAuthority('14-VIEW')">
-                                    <a class="nav-link" href="<c:url value='/rawMaterialPurchase' />"> Purchase</a>
+                                    <a class="nav-link" href="<c:url value='/purchasesForRawMaterial' />"> Purchase</a>
                                 </sec:authorize>
                             </li>
                             <li class="nav-item">
                                 <sec:authorize access="hasAuthority('15-VIEW')">
-                                    <a class="nav-link" href="<c:url value='/viewItem' />"> View Item</a>
+                                    <a class="nav-link" href="<c:url value='/viewItemsForRawMaterial' />"> View Item</a>
                                 </sec:authorize>
                             </li>
-                            <li class="nav-item">
-                                <sec:authorize access="hasAuthority('17-VIEW')">
-                                    <a class="nav-link" href="<c:url value='/stockIssue' />"> Issue</a>
-                                </sec:authorize>
-                            </li>
-                            <li class="nav-item">
-                                <sec:authorize access="hasAuthority('16-VIEW')">
-                                    <a class="nav-link" href="<c:url value='/issueDetail' />"> Issue Detail</a>
-                                </sec:authorize>
-                            </li>
+                                <%--                            <li class="nav-item">--%>
+                                <%--                                <sec:authorize access="hasAuthority('17-VIEW')">--%>
+                                <%--                                    <a class="nav-link" href="<c:url value='/stockIssue' />"> Issue</a>--%>
+                                <%--                                </sec:authorize>--%>
+                                <%--                            </li>--%>
+                                <%--                            <li class="nav-item">--%>
+                                <%--                                <sec:authorize access="hasAuthority('16-VIEW')">--%>
+                                <%--                                    <a class="nav-link" href="<c:url value='/issueDetail' />"> Issue Detail</a>--%>
+                                <%--                                </sec:authorize>--%>
+                                <%--                            </li>--%>
                         </ul>
                     </li>
 
                 </c:if>
+
+                <%--        Bill of Material For Manufacturing Business Type--%>
+
+                <c:if test="${currentUser.businessType ==3}">
+                    <%--                <c:if test="${currentUser.businessType ==3}">--%>
+                    <li class="nav-item nav-item-submenu">
+                        <a href="#" class="nav-link"><i class="icon icon-hammer-wrench"></i> <span>
+<%--                <c:if test="${currentUser.businessType ==3}">--%>
+<%--                   <c:if test="${currentUser.businessType ==3}">--%>
+                       Bill Of Material
+<%--                   </c:if>--%>
+            </span></a>
+                        <ul class="nav nav-group-sub" data-submenu-title="Starter kit">
+
+                            <li class="nav-item">
+                                <sec:authorize access="hasAuthority('12-VIEW')">
+                                    <a href="<c:url value='/billOfMaterial' />" class="nav-link"> BOM</a>
+                                </sec:authorize>
+                            </li>
+
+                            <li class="nav-item">
+                                <sec:authorize access="hasAuthority('14-VIEW')">
+                                    <a class="nav-link" href="<c:url value='/dailyProduction' />">
+                                        Daily Production
+                                    </a>
+                                </sec:authorize>
+                            </li>
+
+
+
+                            <li class="nav-item nav-item-submenu">
+                                <a href="#" class="nav-link"> <span>
+<%--                        <c:if test="${currentUser.businessType ==3}">--%>
+                        <c:if test="${currentUser.businessType ==3}">
+                            Edit
+                        </c:if>
+                    </span></a>
+                                <ul class="nav nav-group-sub" data-submenu-title="Starter kit">
+
+                                    <li class="nav-item">
+                                        <sec:authorize access="hasAuthority('12-VIEW')">
+                                            <a href="<c:url value='/locationSetUp' />" class="nav-link"> BOM</a>
+                                        </sec:authorize>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <sec:authorize access="hasAuthority('14-VIEW')">
+                                            <a class="nav-link" href="<c:url value='/openingRawMaterialPurchase' />">
+                                                Daily Production
+                                            </a>
+                                        </sec:authorize>
+                                    </li>
+
+                                </ul>
+                            </li>
+
+
+
+
+                        </ul>
+                    </li>
+                </c:if>
+
+
+
+
+
+
+
+
 
                 <%--Financial Statement--%>
                 <li class="nav-item nav-item-submenu">
@@ -301,7 +371,6 @@
                               </sec:authorize>
                           </li>--%>
                         <li class="nav-item">
-
                             <sec:authorize access="hasAuthority('8-VIEW')">
                                 <a class="nav-link" href="<c:url value='/financialPosition' />"> Financial
                                     Position</a>

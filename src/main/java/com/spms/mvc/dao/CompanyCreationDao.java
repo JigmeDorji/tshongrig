@@ -2,6 +2,7 @@ package com.spms.mvc.dao;
 
 import com.spms.mvc.dto.CompanyCreationDTO;
 import com.spms.mvc.dto.FinancialYearDTO;
+import com.spms.mvc.entity.CommonCompanyLoginId;
 import com.spms.mvc.entity.CompanyCreation;
 import com.spms.mvc.library.helper.DropdownDTO;
 import org.hibernate.Session;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -34,25 +37,50 @@ public class CompanyCreationDao {
 
     @Transactional(readOnly = true)
     public List<CompanyCreationDTO> getCompanyDetailList() {
-        String query = "SELECT distinct c.id AS companyId,\n" +
-                "                CONCAT(c.companyName,\"(\",ifnull(u.username,\"---\"),\")\") AS companyName,\n" +
-                "                c.mailingAddress AS mailingAddress,\n" +
-                "                c.mobileNo AS mobileNo,\n" +
-                "                c.email AS email,\n" +
-                "                c.website AS website, \n" +
-                "                c.fnYrStart AS fnYrStart,\n" +
-                "                c.pfPercentage AS pfPercentage,\n" +
-                "                c.contactPerson,\n" +
-                "                c.status,\n" +
-                "                c.trialExpiryDate,\n" +
-                "                c.businessType AS businessType\n" +
+        String query = "SELECT distinct id AS companyId,\n" +
+                "                CONCAT(companyName,\"(\",ifnull(username,\"---\"),\")\") AS companyName,\n" +
+                "                mailingAddress AS mailingAddress,\n" +
+                "                mobileNo AS mobileNo,\n" +
+                "                email AS email,\n" +
+                "                website AS website, \n" +
+                "                fnYrStart AS fnYrStart,\n" +
+                "                pfPercentage AS pfPercentage,\n" +
+                "                contactPerson,\n" +
+                "                status,\n" +
+                "                trialExpiryDate,\n" +
+                "                businessType AS businessType\n" +
                 "                FROM tbl_common_company c \n" +
-                "                left join tbl_user u on c.id=u.companyId \n" +
+
+                "                left join tbl_user on id=companyId \n" +
+
+                "                left join tbl_user  on id=companyId \n" +
+
                 "                group by companyId order by id desc";
         Session session = sessionFactory.getCurrentSession();
         return session.createSQLQuery(query)
                 .setResultTransformer(Transformers.aliasToBean(CompanyCreationDTO.class)).list();
     }
+
+//    public List<CompanyCreationDTO> getCompanyDetailList() {
+//        String query = "SELECT distinct c.id AS companyId,\n" +
+//                "                CONCAT(c.companyName,\"(\",ifnull(u.username,\"---\"),\")\") AS companyName,\n" +
+//                "                c.mailingAddress AS mailingAddress,\n" +
+//                "                c.mobileNo AS mobileNo,\n" +
+//                "                c.email AS email,\n" +
+//                "                c.website AS website, \n" +
+//                "                c.fnYrStart AS fnYrStart,\n" +
+//                "                c.pfPercentage AS pfPercentage,\n" +
+//                "                c.contactPerson,\n" +
+//                "                c.status,\n" +
+//                "                c.trialExpiryDate,\n" +
+//                "                c.businessType AS businessType\n" +
+//                "                FROM tbl_common_company c \n" +
+//                "                left join tbl_user u on c.id=u.companyId \n" +
+//                "                group by companyId order by id desc";
+//        Session session = sessionFactory.getCurrentSession();
+//        return session.createSQLQuery(query)
+//                .setResultTransformer(Transformers.aliasToBean(CompanyCreationDTO.class)).list();
+//    }
 
     @Transactional(readOnly = true)
     public CompanyCreationDTO populateCompanyDetail(Integer companyId) {
@@ -280,5 +308,25 @@ public class CompanyCreationDao {
         return session.createSQLQuery(query)
                 .setParameter("companyId",companyId)
                 .setResultTransformer(Transformers.aliasToBean(CompanyCreationDTO.class)).list();
+    }
+
+    @Transactional(readOnly = true)
+    public List<CommonCompanyLoginId> getCompanyLoginDetail(Integer companyId) {
+        String query = "SELECT id AS id," +
+                " companyId AS companyId," +
+                " loginId AS  companyLoginId," +
+                " company AS company" +
+                "  FROM tbl_common_company_login_id where companyId=:companyId";
+        Session session = sessionFactory.getCurrentSession();
+        return session.createSQLQuery(query)
+                .setParameter("companyId",companyId)
+                .setResultTransformer(Transformers.aliasToBean(CommonCompanyLoginId.class)).list();
+    }
+
+    public void saveCompanyLoginDetail(CommonCompanyLoginId commonCompanyLoginId) {
+
+        Session session = sessionFactory.getCurrentSession();
+       session.save(commonCompanyLoginId);
+
     }
 }

@@ -9,6 +9,8 @@ import java.util.Date;
  */
 public class PurchaseDTO {
 
+
+
     private Date purchaseDate;
 
     private String purchaseInvoiceNo;

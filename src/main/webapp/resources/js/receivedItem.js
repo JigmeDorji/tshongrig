@@ -541,6 +541,9 @@ receivedItem = (function () {
     }
 
 
+
+
+
     function fieldValidation(qty, unitId, itemCode, itemName, sellingPrice, costPrice, brandId, type, partNo, locationId) {
         let errorExists = false;
 

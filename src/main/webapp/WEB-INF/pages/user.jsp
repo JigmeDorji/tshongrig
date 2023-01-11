@@ -56,7 +56,9 @@
                                    id="username" autocomplete="off">
                             <span class="input-group-prepend">
 <%--								<span class="input-group-text" id="companyAbbreviation"></span>--%>
-                                <span class="input-group-text" id="companyAbbreviations">@${currentUser.loginId}</span>
+<%--                                <span class="input-group-text" id="companyAbbreviations">@${currentUser.loginId}</span>--%>
+<%--                                <span class="input-group-text" id="companyAbbreviations">@${currentUserLoginDetail.get(0).companyLoginId}</span>--%>
+                                <span class="input-group-text" id="companyAbbreviations">@${currentCompanyLoginId}</span>
 
 							</span>
                         </div>
