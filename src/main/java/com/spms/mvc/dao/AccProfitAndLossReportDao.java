@@ -101,6 +101,7 @@ public class AccProfitAndLossReportDao {
                 "LEFT JOIN tbl_acc_acctype E ON E.accTypeId=C.accTypeId\n" +
                 "WHERE (:fromDate is null or B.voucherEntryDate>=:fromDate)  AND B.voucherEntryDate<=:toDate  AND E.accTypeId=:accountTypeId " +
                 "AND C.companyId=:companyId AND B.financialYearId=:financialYearId";
+
         Double totalAmount = (Double) sessionFactory.getCurrentSession()
                 .createSQLQuery(sqlQry)
                 .setParameter("companyId", companyId)
