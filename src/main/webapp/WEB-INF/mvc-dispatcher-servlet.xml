@@ -11,6 +11,8 @@
 
     <context:annotation-config/>
     <mvc:annotation-driven/>
+
+
     <mvc:default-servlet-handler/>
     <context:component-scan base-package="com.spms.mvc"/>
     <mvc:interceptors>
@@ -25,8 +27,6 @@
     <security:global-method-security pre-post-annotations="enabled"/>
     <aop:aspectj-autoproxy/>
 
-    <!--Load Resource Files-->
-    <mvc:resources mapping="/resources/**" location="/resources/" cache-period="31556926"/>
 
     <!--Database Backup Config-->
     <!--    <import resource="config/schedularer-database-backup.xml"/>-->
@@ -50,8 +50,8 @@
         <!--        <property name="url" value="jdbc:mysql://localhost:3306/bcs_db"/>-->
         <!--        <property name="password" value="root"/>-->
 
-        <property name="url" value="jdbc:mysql://localhost:3306/tshongrig_db_test"/>
-        <property name="password" value="root"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/autga_olakha_db"/>
+        <property name="password" value="root@Root@22"/>
         <property name="validationQuery" value="SELECT 1"/>
     </bean>
 
@@ -117,7 +117,7 @@
         <property name="passwordEncoder" ref="passwordEncoder"/>
     </bean>
 
-    <!--    &lt;!&ndash;Cache Controller&ndash;&gt;-->
-    <!--    <bean id="cacheControl" class="com.spms.mvc.library.helper.CacheControlHelper">-->
-    <!--    </bean>-->
+    <!--Load Resource Files-->
+    <mvc:resources mapping="/resources/**" location="/resources/" cache-period="31556926"/>
+
 </beans>
