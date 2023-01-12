@@ -83,17 +83,17 @@
             <version>1.3</version>
         </dependency>
 
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.26</version>
+<!--            <version>8.0.31</version>-->
+        </dependency>
 <!--        <dependency>-->
-<!--            <groupId>mysql</groupId>-->
-<!--            <artifactId>mysql-connector-java</artifactId>-->
-<!--&lt;!&ndash;            <version>8.0.26</version>&ndash;&gt;-->
+<!--            <groupId>com.mysql</groupId>-->
+<!--            <artifactId>mysql-connector-j</artifactId>-->
 <!--            <version>8.0.31</version>-->
 <!--        </dependency>-->
-        <dependency>
-            <groupId>com.mysql</groupId>
-            <artifactId>mysql-connector-j</artifactId>
-            <version>8.0.31</version>
-        </dependency>
 
         <dependency>
             <groupId>org.sitemesh</groupId>
