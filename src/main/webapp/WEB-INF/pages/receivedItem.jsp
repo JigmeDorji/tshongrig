@@ -162,13 +162,12 @@
                         <label class=" col-md-2 text-right ">qty</label>
 
                         <div class="col-md-1">
-                            <input type="text" id="qty" class="form-control form-control-sm decimal common" name="qty"
-                                   required/>
+                            <input type="text" id="qty" class="form-control form-control-sm decimal common" name="qty"/>
                         </div>
 
                         <label class=" col-md-1 text-right">Unit</label>
                         <div class="col-md-1">
-                            <form:select  class="form-control form-control-sm resetField" path="unitList" id="unitId"
+                            <form:select class="form-control form-control-sm resetField" path="unitList" id="unitId"
                                          name="unitId">
                                 <form:option value="">----</form:option>
                                 <form:options items="${unitList}" itemValue="value" itemLabel="text"/>
@@ -180,7 +179,7 @@
 
                         <div class="col-md-3">
                             <input type="text" id="costPrice" class="form-control form-control-sm amount common "
-                                   name="costPrice" required
+                                   name="costPrice"
                             />
                         </div>
                     </div>

@@ -104,7 +104,7 @@ public class UserService {
 //        if(currentUser.getUserRoleTypeId().equals(UserRoleType.Owner.getValue())){
 //            return  userDao.getOwnerUserList(companyId);
 //        }else {
-            return userDao.getUserList(companyId);
+        return userDao.getUserList(companyId);
 //        }
 
     }
@@ -154,12 +154,12 @@ public class UserService {
 
         try {
 
-            List<CommonCompanyLoginId> commonCompanyLoginIds=companyCreationService.getCompanyLoginDetail(currentUser.getCompanyId());
+            List<CommonCompanyLoginId> commonCompanyLoginIds = companyCreationService.getCompanyLoginDetail(currentUser.getCompanyId());
 //            for(int i=0;i<commonCompanyLoginIds.size();i++){
 //                System.out.println(commonCompanyLoginIds.get(i).getCompanyId());
 //                System.out.println(commonCompanyLoginIds.get(i).getCompanyLoginId());
 //            }
-            String username=userDTO.getUsername().concat("@")+commonCompanyLoginIds.get(0).getCompanyLoginId();
+            String username = userDTO.getUsername().concat("@") + commonCompanyLoginIds.get(0).getCompanyLoginId();
 //            String username=userDTO.getUsername().concat("@").concat(currentUser.getCompanyName().replaceAll("\\B.|\\P{L}", "").toUpperCase());
             user.setUserFullName(userDTO.getUserFullName());
             if (userDTO.getUserId() == null) {

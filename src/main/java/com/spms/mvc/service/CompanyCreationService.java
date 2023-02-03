@@ -113,9 +113,11 @@ public class CompanyCreationService extends BaseController {
                 BigInteger lastUserId = userDao.getLastUserId();
                 lastUserId = lastUserId == null ? BigInteger.ONE : lastUserId.add(BigInteger.ONE);
                 user.setUserId(lastUserId);
-                String companyAbbreviation = companyCreationDTO.getCompanyName().replaceAll("\\B.|\\P{L}", "").toUpperCase();
-                companyAbbreviation = companyAbbreviation.concat(lastUserId.toString());
 
+                Integer lastCompanyId = userDao.getLastCompanyId();
+
+                String companyAbbreviation = companyCreationDTO.getCompanyName().replaceAll("\\B.|\\P{L}", "").toUpperCase();
+                companyAbbreviation = companyAbbreviation.concat(lastCompanyId.toString());
 
 
                 user.setUsername(companyAbbreviation);
@@ -135,7 +137,7 @@ public class CompanyCreationService extends BaseController {
                 user.setCreatedDate(new Date());
                 userId = userDao.addUser(user);
 
-                CommonCompanyLoginId commonCompanyLoginId=new CommonCompanyLoginId();
+                CommonCompanyLoginId commonCompanyLoginId = new CommonCompanyLoginId();
                 commonCompanyLoginId.setCompanyLoginId(companyAbbreviation);
                 commonCompanyLoginId.setCompany(companyCreationDTO.getCompanyName());
                 commonCompanyLoginId.setCompanyId(companyCreationDTO.getCompanyId());
@@ -229,10 +231,9 @@ public class CompanyCreationService extends BaseController {
         return companyCreationFinalDTO;
     }
 
-    public List<CommonCompanyLoginId> getCompanyLoginDetail(Integer companyId){
+    public List<CommonCompanyLoginId> getCompanyLoginDetail(Integer companyId) {
         return companyCreationDao.getCompanyLoginDetail(companyId);
     }
-
 
 
     public FinancialYearDTO getCurrentFinancialYearIdByCompany(Integer companyId) {

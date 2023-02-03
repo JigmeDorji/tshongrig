@@ -50,11 +50,7 @@ public class CompanyCreationDao {
                 "                trialExpiryDate,\n" +
                 "                businessType AS businessType\n" +
                 "                FROM tbl_common_company c \n" +
-
-                "                left join tbl_user on id=companyId \n" +
-
                 "                left join tbl_user  on id=companyId \n" +
-
                 "                group by companyId order by id desc";
         Session session = sessionFactory.getCurrentSession();
         return session.createSQLQuery(query)
@@ -306,7 +302,7 @@ public class CompanyCreationDao {
                 " businessType AS businessType FROM tbl_common_company where id=:companyId order by id desc";
         Session session = sessionFactory.getCurrentSession();
         return session.createSQLQuery(query)
-                .setParameter("companyId",companyId)
+                .setParameter("companyId", companyId)
                 .setResultTransformer(Transformers.aliasToBean(CompanyCreationDTO.class)).list();
     }
 
@@ -319,14 +315,14 @@ public class CompanyCreationDao {
                 "  FROM tbl_common_company_login_id where companyId=:companyId";
         Session session = sessionFactory.getCurrentSession();
         return session.createSQLQuery(query)
-                .setParameter("companyId",companyId)
+                .setParameter("companyId", companyId)
                 .setResultTransformer(Transformers.aliasToBean(CommonCompanyLoginId.class)).list();
     }
 
     public void saveCompanyLoginDetail(CommonCompanyLoginId commonCompanyLoginId) {
 
         Session session = sessionFactory.getCurrentSession();
-       session.save(commonCompanyLoginId);
+        session.save(commonCompanyLoginId);
 
     }
 }

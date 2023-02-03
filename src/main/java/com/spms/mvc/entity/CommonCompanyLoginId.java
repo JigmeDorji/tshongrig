@@ -10,13 +10,16 @@ import javax.persistence.Table;
 public class CommonCompanyLoginId {
     @Id
     @Column(name = "id")
-   private int id;
+    private int id;
+
     @Column(name = "companyId")
-   private int companyId;
+    private int companyId;
+
     @Column(name = "loginId")
-   private String companyLoginId;
+    private String companyLoginId;
+
     @Column(name = "company")
-   private String company;
+    private String company;
 
 
     public int getId() {
@@ -52,10 +55,10 @@ public class CommonCompanyLoginId {
     }
 }
 /**
- create table tbl_common_company_login_id(
- id int primary key not null auto_increment,
- companyId int,
- loginId varchar(50),
- company varchar(100)
- );
+ * create table tbl_common_company_login_id(
+ * id int primary key not null auto_increment,
+ * companyId int,
+ * loginId varchar(50),
+ * company varchar(100)
+ * );
  */

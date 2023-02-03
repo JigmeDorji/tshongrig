@@ -242,5 +242,13 @@ public class UserDao extends BaseDao {
                 .uniqueResult();
     }
 
+    @Transactional(readOnly = true)
+    public Integer getLastCompanyId() {
+        String sqlQuery = "select max(c.id) from tbl_common_company c";
+        Session session = sessionFactory.getCurrentSession();
+        return (Integer) session.createSQLQuery(sqlQuery)
+                .uniqueResult();
+    }
+
     //endregion
 }

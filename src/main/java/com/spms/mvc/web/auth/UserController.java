@@ -59,12 +59,14 @@ public class UserController extends BaseController {
         model.addAttribute("statusInactive", CommonStatus.Inactive.getValue());
         model.addAttribute("loginCompany", companyCreationService.getLoginCompany(getCurrentUser(request).getCompanyId()));
         model.addAttribute("companyList", companyCreationService.loadCompanyList());
-        model.addAttribute("currentUser",currentUser);
+        model.addAttribute("currentUser", currentUser);
 
-        List<CommonCompanyLoginId> commonCompanyLoginIds=companyCreationService.getCompanyLoginDetail(currentUser.getCompanyId());
+        List<CommonCompanyLoginId> commonCompanyLoginIds = companyCreationService.getCompanyLoginDetail(currentUser.getCompanyId());
 
-        String currentCompanyLoginId=commonCompanyLoginIds.get(0).getCompanyLoginId();
-        model.addAttribute("currentCompanyLoginId",currentCompanyLoginId);
+        if (commonCompanyLoginIds.size() > 0) {
+            String currentCompanyLoginId = commonCompanyLoginIds.get(0).getCompanyLoginId();
+            model.addAttribute("currentCompanyLoginId", currentCompanyLoginId);
+        }
 
 
 //        UserDTO userDTO=new UserDTO();
@@ -104,7 +106,7 @@ public class UserController extends BaseController {
     @RequestMapping(value = "/getUserList", method = RequestMethod.GET)
     public List<UserDTO> getUserList(HttpServletRequest request) {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
-        return userService.getUserList(getCurrentUser(request).getCompanyId(),currentUser);
+        return userService.getUserList(getCurrentUser(request).getCompanyId(), currentUser);
     }
 
 

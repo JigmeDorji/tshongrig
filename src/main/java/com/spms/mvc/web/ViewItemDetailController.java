@@ -30,16 +30,17 @@ public class ViewItemDetailController {
     @Autowired
     private ViewItemDetailService viewItemDetailService;
 
-    @RequestMapping(value = "", method =     RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public String list(Model model, HttpServletRequest request) {
         return "viewItemDetail";
     }
 
     @ResponseBody
     @RequestMapping(value = "/getItemDetail", method = RequestMethod.GET)
-    public List<PurchaseDTO> getItemAvailable(String itemCode,Date asOnDate, HttpServletRequest request) {
+    public List<PurchaseDTO> getItemAvailable(String itemCode, Date asOnDate, HttpServletRequest request) {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
-        return viewItemDetailService.getItemDetail(currentUser.getCompanyId(), itemCode, currentUser.getFinancialYearId(),asOnDate);
+        return viewItemDetailService.getItemDetail(currentUser.getCompanyId(), itemCode,
+                currentUser.getFinancialYearId(), asOnDate);
     }
 
     @RequestMapping(value = "/navigateToPurchasePage", method = RequestMethod.GET)
