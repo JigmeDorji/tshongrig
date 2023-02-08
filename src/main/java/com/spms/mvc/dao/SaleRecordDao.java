@@ -151,7 +151,7 @@ public class SaleRecordDao {
                 "SUM(ifnull(A.discount,0)) AS discountRate\n" +
                 "FROM tbl_inv_sale_record A\n" +
                 "INNER JOIN tbl_inv_sale_record_detail C ON A.saleRecordId=C.saleRecordId \n" +
-                "INNER JOIN tbl_inv_purchase B ON C.itemCode=B.itemCode\n" +
+                "INNER JOIN tbl_inv_purchase B ON C.itemCode=B.itemCode and B.companyId=A.companyId\n" +
                 "WHERE A.saleDate>=:fromDate AND A.saleDate<=:toDate and A.companyId=:companyId \n" +
                 "GROUP BY C.itemCode";
         Session session = sessionFactory.getCurrentSession();
