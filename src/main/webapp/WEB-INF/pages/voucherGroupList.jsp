@@ -40,6 +40,7 @@
 
             <form id="voucherListForm" action="<c:url value='/voucherGroupList'/>" class="form-horizontal globalForm">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <input type="hidden" id="businessType" value="${businessType}"/>
                 <fieldset>
                     <div class="form-group row">
                         <label class="col-md-2">Ledger Name:</label>
@@ -159,7 +160,7 @@
                                                style="border-radius: 0;height: 28px !important;" id="retainedEarningDr"
                                                readonly>
                                     </td>
-                                    <td style="border-right: dotted;" >
+                                    <td style="border-right: dotted;">
                                         <input type="text"
                                                class="form-control form-control-sm   right-align"
                                                style="border-radius: 0; height: 28px !important;"

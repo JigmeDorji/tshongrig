@@ -68,6 +68,7 @@ public class VoucherGroupListService {
             profitAndLossReportDTO.setVoucherId(accProfitAndLossReportDTO.getVoucherId());
             profitAndLossReportDTO.setVoucherTypeId(accProfitAndLossReportDTO.getVoucherTypeId());
             profitAndLossReportDTO.setVoucherCreatedDate(accProfitAndLossReportDTO.getVoucherCreatedDate());
+            profitAndLossReportDTO.setGroupId(accProfitAndLossReportDTO.getGroupId());
             accProfitAndLossReportDTOList.add(profitAndLossReportDTO);
         }
         if (accProfitAndLossReportDTOList.size() > 0) {
