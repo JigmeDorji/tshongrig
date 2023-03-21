@@ -39,7 +39,11 @@
                     <div class="col-md-3">
                         <input type="text" tabindex="1" class="form-control form-control-sm datepicker"
                                id="asOnDate" required="required" value="${toDate}"/>
+                        <br>
+                        <a href="<c:url value="/viewItem/exportAllItemsToExcel"/>" class="btn btn-sm btn-success">Export
+                            All Items To Excel</a>
                     </div>
+
                 </div>
                 <div class="form-group">
                     <legend class="text-uppercase font-size-sm font-weight-bold">Item List</legend>
@@ -67,14 +71,16 @@
 
                 </div>
             </form>
-            <form id="viewBranWiseItemForm" action="<c:url value='/viewItem/viewBrandWiseItemDetail'/> " target="_blank">
-                <legend  class="text-uppercase font-size-sm font-weight-bold">View Brand Wise Item</legend>
+            <form id="viewBranWiseItemForm" action="<c:url value='/viewItem/viewBrandWiseItemDetail'/> "
+                  target="_blank">
+                <legend class="text-uppercase font-size-sm font-weight-bold">View Brand Wise Item</legend>
                 <div class="form-group">
                     <div class="col-md-12">
                         <div class="form-group row">
                             <label class="col-lg-2">Brand</label>
                             <div class="col-md-3">
-                                <form:select class="form-control form-control-sm resetField" path="brandList" id="brandId" required="required"
+                                <form:select class="form-control form-control-sm resetField" path="brandList"
+                                             id="brandId" required="required"
                                              name="brandId">
                                     <form:option value="">---Please Select---</form:option>
                                     <form:option value="0">All</form:option>

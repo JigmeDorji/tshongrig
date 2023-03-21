@@ -131,16 +131,16 @@ spms = (function () {
     }
 
     function getUrl() {
-        // return window.location.protocol + '//' + window.location.host + '/tshong-rig/';
+        return window.location.protocol + '//' + window.location.host + '/tshong-rig/';
         // return window.location.protocol + '//' + window.location.host + '/';
-        return window.location.protocol + '//' + window.location.host + '/tshong_rig_war_exploded/';
+        // return window.location.protocol + '//' + window.location.host + '/tshong_rig_war_exploded/';
         // return 'http://www.autga.bt/bcs/';
     }
 
     function baseReportLocation() {
         // return window.location.protocol + '//' + window.location.host + '/tshong-rig/resources/reports/';
         // return window.location.protocol + '//' + window.location.host + '/resources/reports/';
-        return window.location.protocol + '//' + window.location.host + '/tshong_rig_war_exploded/resources/reports/';
+        // return window.location.protocol + '//' + window.location.host + '/tshong_rig_war_exploded/resources/reports/';
     }
 
     //index the table gridaccProfitAndLossReport
