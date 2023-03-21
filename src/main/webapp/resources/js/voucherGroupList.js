@@ -18,6 +18,14 @@ voucherGroupList = (function () {
     let ledgerName = location.search.split('ledgerName=')[1].split('&&==')[0];
     $('#ledgerName').val(ledgerName);
 
+    function checkVoucherType(groupId) {
+        // 7 for business type NGO only
+        if (parseInt($('#businessType').val()) === 7) {
+            return parseInt(groupId) === 6;
+        }
+        return false;
+    }
+
     function loadVoucherDetails(fromDate, toDate) {
 
         fromDate = typeof fromDate === 'undefined' ? $('#fromDate').val() : fromDate;
@@ -34,6 +42,7 @@ voucherGroupList = (function () {
             success: function (res) {
                 $('#totalClosingBalanceCr').val('');
                 $('#totalClosingBalanceDr').val('');
+
                 voucherListGrid.dataTable().fnClearTable();
                 voucherListGrid.dataTable().fnDestroy();
                 if (res.length > 0) {
@@ -73,10 +82,11 @@ voucherGroupList = (function () {
                             data: 'voucherTypeName',
                             render: function (data, type, row) {
                                 let typeName = row.voucherTypeName;
+
                                 let btn = row.voucherTypeName === 'Purchase' || ledgerName === 'Purchase' ? '<a  href=' + "voucherGroupList" + '/navigateToPurchasePage?voucherNo=' +
                                     encodeURIComponent(row.voucherNo) + "&voucherNo=" + row.voucherNo + '>' +
                                     '<input type=button" class="btn btn-sm btn-primary btn-xs" style="width: 70px" value="View"></a>' :
-                                    typeName !== "Salary Admin" && typeName !== "Salary Production" && typeName !== "GIS" && typeName !== "PF(Employee)" && typeName !== "PF(Employer)" && typeName !== "Salary Payable" && typeName !== "HC" && typeName !== "Salary TDS" && typeName !== "Material" ? '<input type="button" class="btn btn-sm btn-danger btn-xs deleteBtn" style="width: 70px" value="Delete">' : ''
+                                    typeName !== "Salary Admin" && typeName !== "Salary Production" && typeName !== "GIS" && typeName !== "PF(Employee)" && typeName !== "PF(Employer)" && typeName !== "Salary Payable" && typeName !== "HC" && typeName !== "Salary TDS" && typeName !== "Material" && !checkVoucherType(row.groupId) ? '<input type="button" class="btn btn-sm btn-danger btn-xs deleteBtn" style="width: 70px" value="Delete">' : ''
                                 //return '<a href=' + "voucherGroupList" + '/deleteLedgerVoucherDetails?voucherNo=' + encodeURIComponent(row.voucherNo) + "&voucherTypeId=" + row.voucherTypeId + '>' + '<input type="button" class="btn btn-danger btn-xs deleteBtn" style="width: 70px" value="Delete"></a>'
                                 return btn
                             }

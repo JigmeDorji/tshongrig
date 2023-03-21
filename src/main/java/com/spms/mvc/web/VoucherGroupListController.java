@@ -52,6 +52,9 @@ public class VoucherGroupListController extends BaseController {
                 DateUtil.format(new Date(),
                         DateUtil.DD_MMM_YYYY));
 
+        model.addAttribute("businessType",
+                currentUser.getBusinessType());
+
         return new ModelAndView("voucherGroupList");
     }
 
