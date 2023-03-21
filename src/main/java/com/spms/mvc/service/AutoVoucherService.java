@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -702,5 +703,13 @@ public class AutoVoucherService extends BaseService {
 
     public Date getVoucherEntryDate(Integer voucherNo, CurrentUser currentUser, Integer type) {
         return autoVoucherDao.getVoucherEntryDate(voucherNo, currentUser, type);
+    }
+
+    public String getParticularNarrationForCurrentVoucherEntry(Integer voucherNumber, Integer type, Integer companyId) {
+        Date date = new Date();
+        SimpleDateFormat DateFor = new SimpleDateFormat("yyyy-MM-dd");
+        String stringDate = DateFor.format(date);
+        return autoVoucherDao.getParticularNarrationForCurrentVoucherEntry(voucherNumber, type, companyId, stringDate);
+
     }
 }

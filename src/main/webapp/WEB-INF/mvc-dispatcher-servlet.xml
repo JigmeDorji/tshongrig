@@ -47,11 +47,11 @@
         <property name="username" value="root"/>
 
         <!--  For Sir Dugay's Testing         -->
-        <!--        <property name="url" value="jdbc:mysql://localhost:3306/bcs_db"/>-->
-        <!--        <property name="password" value="root"/>-->
+<!--        <property name="url" value="jdbc:mysql://localhost:3306/bcs_db"/>-->
+<!--        <property name="password" value="root"/>-->
 
-        <property name="url" value="jdbc:mysql://localhost:3306/tshongrig_db"/>
-        <property name="password" value="root"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/tshongrig_db"/>
+                <property name="password" value="root@Root@22"/>
         <property name="validationQuery" value="SELECT 1"/>
     </bean>
 

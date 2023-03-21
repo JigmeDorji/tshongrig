@@ -123,6 +123,8 @@ public class PaymentController extends BaseController {
         List<VoucherDetailDTO> voucherDetailDTOList = autoVoucherService.getVoucherDetail(voucherNo, currentUser, type);
 
         JRDataSource jrDataSource = new JRBeanCollectionDataSource(voucherDetailDTOList, false);
+
+        String narration = autoVoucherService.getParticularNarrationForCurrentVoucherEntry(voucherNo, type, currentUser.getCompanyId());
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("datasource", jrDataSource);
 
@@ -139,6 +141,7 @@ public class PaymentController extends BaseController {
         params.put("reportName", reportName(type));
         params.put("printedDate", new Date());
         params.put("userName", currentUser.getTxtUserName());
+        params.put("narration", narration);
         return new ModelAndView("voucherReport", params);
     }
 

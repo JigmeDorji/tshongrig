@@ -132,13 +132,15 @@ spms = (function () {
 
     function getUrl() {
         // return window.location.protocol + '//' + window.location.host + '/tshong-rig/';
-        return window.location.protocol + '//' + window.location.host + '/';
+        // return window.location.protocol + '//' + window.location.host + '/';
+        return window.location.protocol + '//' + window.location.host + '/tshong_rig_war_exploded/';
         // return 'http://www.autga.bt/bcs/';
     }
 
     function baseReportLocation() {
         // return window.location.protocol + '//' + window.location.host + '/tshong-rig/resources/reports/';
-        return window.location.protocol + '//' + window.location.host + '/resources/reports/';
+        // return window.location.protocol + '//' + window.location.host + '/resources/reports/';
+        return window.location.protocol + '//' + window.location.host + '/tshong_rig_war_exploded/resources/reports/';
     }
 
     //index the table gridaccProfitAndLossReport
@@ -412,7 +414,7 @@ spms = (function () {
     }
 
     function autoSizeInputField(tableTBody) {
-        tableTBody.find('tr').each(function (e) {
+        tableTBody.find('tr').each(function (fe) {
             let selectedRow = $(this).closest('tr');
             selectedRow.find('.qty').find('.qty-container').css('height',
                 selectedRow.find('.description').height() + 'px');

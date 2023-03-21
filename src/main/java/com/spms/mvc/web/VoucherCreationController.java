@@ -40,7 +40,7 @@ public class VoucherCreationController extends BaseController {
     @RequestMapping(value = "getVoucherNo", method = RequestMethod.GET)
     public Integer getVoucherNo(HttpServletRequest request, Integer voucherTypeId) {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
-        return voucherCreationService.getCurrentVoucherNo(voucherTypeId, currentUser.getCompanyId(),currentUser.getFinancialYearId());
+        return voucherCreationService.getCurrentVoucherNo(voucherTypeId, currentUser.getCompanyId(), currentUser.getFinancialYearId());
     }
 
     @ResponseBody
