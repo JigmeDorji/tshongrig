@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import java.math.BigInteger;
 import java.util.List;
 
@@ -55,7 +54,7 @@ public class UserAccessPermissionDao extends BaseDao {
                 "                          ON a.screenId = b.screenId WHERE b.userRoleTypeId =:userRoleTypeId)) AS TEMP";
         Session session = sessionFactory.getCurrentSession();
         return session.createSQLQuery(sqlQuery)
-                .setParameter("userRoleTypeId",userRoleTypeId)
+                .setParameter("userRoleTypeId", userRoleTypeId)
                 .setResultTransformer(Transformers.aliasToBean(UserAccessPermissionListDTO.class)).list();
     }
 
@@ -70,7 +69,7 @@ public class UserAccessPermissionDao extends BaseDao {
     public Boolean isUserRoleAssigned(Integer roleTypeId) {
         String sqlQuery = "SELECT * FROM tbl_useraccesspermission WHERE userRoleTypeId=:roleTypeId";
         Session session = sessionFactory.getCurrentSession();
-        return session.createSQLQuery(sqlQuery).setParameter("roleTypeId",roleTypeId).list()!=null;
+        return session.createSQLQuery(sqlQuery).setParameter("roleTypeId", roleTypeId).list() != null;
     }
 
     @Transactional
@@ -86,10 +85,36 @@ public class UserAccessPermissionDao extends BaseDao {
     @Transactional(readOnly = true)
     public BigInteger getUserAccessPermissionIdSerial() {
         String sqlQuery = "SELECT userAccessPermissionId \n" +
-                           "FROM tbl_useraccesspermission \n" +
-                           "ORDER BY userAccessPermissionId DESC LIMIT 1";
+                "FROM tbl_useraccesspermission \n" +
+                "ORDER BY userAccessPermissionId DESC LIMIT 1";
         Session session = sessionFactory.getCurrentSession();
-        return (BigInteger)session.createSQLQuery(sqlQuery).uniqueResult();
+        return (BigInteger) session.createSQLQuery(sqlQuery).uniqueResult();
 
     }
 }
+
+/*
+
+SELECT * FROM (SELECT
+                                         a.screenId,
+                                       a.screenName ,
+                                        b.userAccessPermissionId ,
+                                         b.isScreenAccessAllowed,
+                                         b.isEditAccessAllowed,
+                                         b.isDeleteAccessAllowed,
+                                         b.isSaveAccessAllowed
+                                         FROM tbl_screen a INNER JOIN tbl_useraccesspermission b
+                                         ON a.screenId = b.screenId WHERE b.userRoleTypeId =:userRoleTypeId
+                                         UNION
+                                         SELECT
+                                         a.screenId,
+                                         a.screenName ,
+                                         null AS userAccessPermissionId,
+                                         null AS isScreenAccessAllowed,
+                                         null AS isEditAccessAllowed,
+                                         null AS isDeleteAccessAllowed,
+                                         null AS isSaveAccessAllowed
+                                         FROM tbl_screen a WHERE a.screenId NOT IN (SELECT a.screenId
+                                         FROM tbl_screen a INNER JOIN tbl_useraccesspermission b
+                                         ON a.screenId = b.screenId WHERE b.userRoleTypeId =:userRoleTypeId)) AS TEMP
+ */

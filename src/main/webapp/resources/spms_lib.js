@@ -138,7 +138,7 @@ spms = (function () {
     }
 
     function baseReportLocation() {
-        // return window.location.protocol + '//' + window.location.host + '/tshong-rig/resources/reports/';
+        return window.location.protocol + '//' + window.location.host + '/tshong-rig/resources/reports/';
         // return window.location.protocol + '//' + window.location.host + '/resources/reports/';
         // return window.location.protocol + '//' + window.location.host + '/tshong_rig_war_exploded/resources/reports/';
     }
@@ -988,7 +988,6 @@ $.fn.disableElements = function (status) {
 
 
 //Disabling Right Click
-/*document.addEventListener('contextmenu',
-    event => event.preventDefault());*/
+
 
 

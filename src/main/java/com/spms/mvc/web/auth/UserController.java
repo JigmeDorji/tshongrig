@@ -105,7 +105,9 @@ public class UserController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/getUserList", method = RequestMethod.GET)
     public List<UserDTO> getUserList(HttpServletRequest request) {
+
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
+
         return userService.getUserList(getCurrentUser(request).getCompanyId(), currentUser);
     }
 
