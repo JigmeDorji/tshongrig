@@ -42,8 +42,8 @@ public class LoginController {
      * @return ModelAndView
      */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(@RequestParam(value = "error", required = false) String error,
-                        HttpServletRequest request, Model model) {
+    public String login(@RequestParam(value = "error", required = false) String error, HttpServletRequest request, Model model) {
+
         if (error != null) {
             model.addAttribute("error", getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));
         }

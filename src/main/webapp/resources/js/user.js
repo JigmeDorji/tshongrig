@@ -12,12 +12,15 @@ user = (function () {
 
     function btnView() {
         $('#userListTableId tbody').on('click', 'tr #btnView', function () {
+
             let row = $(this).closest('tr');
             let selectedRow = row.addClass('selected');
             let userId = selectedRow.find('.userId').text();
             $('#userId').val(userId);
 
             let username = selectedRow.find('.username').text();
+            let readOnlyUserName = username.split("@")[0];
+
             $.ajax({
                 url: _baseURL() + 'getUserDetail',
                 type: 'GET',
@@ -27,6 +30,10 @@ user = (function () {
                     $('#txtConfirmPassword').removeAttr('required');
                     $('#userPassword').removeAttr('required');
                     $('#username').attr('readonly', true);
+                    $('#username').attr('hidden', true);
+                    $('#readOnlyUserName').attr('hidden', false);
+                    $('#readOnlyUserName').val(readOnlyUserName);
+
                     $('.viewUser').removeClass('hidden');
                     $('.newUser').addClass('hidden');
                     $('#btnUpdate').removeClass('hidden');
@@ -373,7 +380,8 @@ user = (function () {
     }
 
 
-    $('#companyAbbreviation').text("@"+getFirstLetters($('#companyName').val()));
+    $('#companyAbbreviation').text("@" + getFirstLetters($('#companyName').val()));
+
     function getFirstLetters(str) {
         const firstLetters = str
             .split(' ')

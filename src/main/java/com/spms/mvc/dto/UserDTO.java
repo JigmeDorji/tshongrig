@@ -243,5 +243,35 @@ public class UserDTO {
         this.companyMappingId = companyMappingId;
     }
 
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "userId=" + userId +
+                ", username='" + username + '\'' +
+                ", userFullName='" + userFullName + '\'' +
+                ", userMobileNo='" + userMobileNo + '\'' +
+                ", saltValue='" + saltValue + '\'' +
+                ", userPassword='" + userPassword + '\'' +
+                ", txtConfirmPassword='" + txtConfirmPassword + '\'' +
+                ", userStatus=" + userStatus +
+                ", userRoleTypeId=" + userRoleTypeId +
+                ", updatedBy='" + updatedBy + '\'' +
+                ", updatedDate=" + updatedDate +
+                ", createdBy='" + createdBy + '\'' +
+                ", createdDate=" + createdDate +
+                ", userRoleTypeName='" + userRoleTypeName + '\'' +
+                ", emailId='" + emailId + '\'' +
+                ", userAuditId=" + userAuditId +
+                ", cmdFlag=" + cmdFlag +
+                ", createdByFullName='" + createdByFullName + '\'' +
+                ", updatedByFullName='" + updatedByFullName + '\'' +
+                ", createdTime='" + createdTime + '\'' +
+                ", updatedTime='" + updatedTime + '\'' +
+                ", companyId=" + companyId +
+                ", companyMappingId=" + companyMappingId +
+                '}';
+    }
+
+
     //endregion
 }
