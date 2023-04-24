@@ -35,6 +35,6 @@
         </property>
     </bean>
 
-<!--    <bean name="kuenga_workshop_db_backup" class="com.spms.mvc.library.helper.Kuenga_workshop_db_backup"/>-->
+    <!--    <bean name="kuenga_workshop_db_backup" class="com.spms.mvc.library.helper.Kuenga_workshop_db_backup"/>-->
     <bean name="MonthlyDepreciationSchedule" class="com.spms.mvc.library.helper.MonthlyDepreciationSchedule"/>
 </beans>

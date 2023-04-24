@@ -62,6 +62,7 @@ public class VoucherGroupListController extends BaseController {
     @RequestMapping(value = "/getVoucherDetailsByLedgerId", method = RequestMethod.GET)
     public List<AccProfitAndLossReportDTO> getVoucherDetailsByLedgerId(HttpServletRequest request, String ledgerId, Date fromDate, Date toDate) throws ParseException {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
+        List<AccProfitAndLossReportDTO> getVoucherDetailsByLedgerId=voucherGroupListService.getVoucherDetailsByLedgerId(ledgerId, fromDate, toDate, currentUser);
         return voucherGroupListService.getVoucherDetailsByLedgerId(ledgerId, fromDate, toDate, currentUser);
     }
 

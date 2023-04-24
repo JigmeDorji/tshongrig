@@ -222,8 +222,7 @@
                             <div class="col-md-3">
                                 <input type="text" tabindex="2" class="form-control form-control-sm  formatDate "
                                        value="${currentDate}"
-                                       placeholder="DD.MM.YYYY" id="receiptDate" name="receiptDate" required="required"
-                                       readonly/>
+                                       placeholder="DD.MM.YYYY" id="receiptDate" name="receiptDate" required="required"/>
                             </div>
                         </div>
 

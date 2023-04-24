@@ -28,6 +28,9 @@ voucherGroupList = (function () {
 
     function loadVoucherDetails(fromDate, toDate) {
 
+        let currentDrTotalAmount = 0.0;
+        let currentCrTotalAmount = 0.0
+
         fromDate = typeof fromDate === 'undefined' ? $('#fromDate').val() : fromDate;
         toDate = typeof toDate === 'undefined' ? $('#toDate').val() : toDate;
 
@@ -40,6 +43,17 @@ voucherGroupList = (function () {
                 toDate: toDate
             },
             success: function (res) {
+
+
+                for (let counter = 0; counter < res.length; counter++) {
+                    currentCrTotalAmount += res[counter].creditAmount;
+                    currentDrTotalAmount += res[counter].debitAmount;
+                }
+
+                $('#currentCrTotalAmount').val(currentCrTotalAmount.toFixed(2))
+                $('#currentDrTotalAmount').val(currentDrTotalAmount.toFixed(2));
+
+
                 $('#totalClosingBalanceCr').val('');
                 $('#totalClosingBalanceDr').val('');
 
@@ -122,6 +136,9 @@ voucherGroupList = (function () {
                     $('#totalCr').val((0).toFixed(2));
                     $('#totalDr').val((0).toFixed(2));
 
+
+                    $('#currentDrAndCrAmount').attr('hidden', false);
+
                     $('#retainedEarningArea').attr('hidden', true);
                     $('#currentEarningId').attr('hidden', true);
 
@@ -138,6 +155,8 @@ voucherGroupList = (function () {
                     //carry forward
                     if (res.accTypeId === 6 && res.retainedEarning !== 0) {//if its a capital acc type id
                         $('#retainedEarningArea').attr('hidden', false);
+                        $('#currentDrAndCrAmount').attr('hidden', true);
+
                         $('#retainedEarningDr').val((0).toFixed(2));
                         $('#retainedEarningCr').val((0).toFixed(2));
                         if (res.retainedEarning > 0) {
@@ -177,6 +196,8 @@ voucherGroupList = (function () {
                     }
                     $('#bookBalance').val(spms.removeCommaSeparation(bookBalanceAmount));
                     $('#bankReconciliationAmount').val(spms.removeCommaSeparation(bookBalanceAmount));
+
+
                 }
             }).then(function () {
                 if ($('#ledgerName').val() === "Salary Payable" || $('#ledgerName').val() === "Salary Production"
@@ -264,7 +285,10 @@ voucherGroupList = (function () {
             rows[selectedRow].style.backgroundColor = "#B0BED9";
         };
         // rows[0].style.backgroundColor = "#B0BED9";
+
+
     }
+
 
     function getVoucherDetailsBasedOnDateRage() {
         $('.dateRange').on('change', function () {
