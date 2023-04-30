@@ -52,11 +52,15 @@
         <!--        <property name="url" value="jdbc:mysql://localhost:3306/bcs_db"/>-->
         <!--        <property name="password" value="root"/>-->
 
+
         <!--        <property name="url" value="jdbc:mysql://localhost:3306/babase_autga_db"/>-->
         <!--        <property name="url" value="jdbc:mysql://localhost:3306/au_babesa"/>-->
         <!--                <property name="url" value="jdbc:mysql://localhost:3306/salarysheet_db_1"/>-->
         <property name="url" value="jdbc:mysql://localhost:3306/04_21_2023"/>
         <property name="password" value="root@Root@22"/>
+
+
+
         <property name="validationQuery" value="SELECT 1"/>
     </bean>
 
