@@ -8,7 +8,6 @@ import com.spms.mvc.library.helper.DateUtil;
 import com.spms.mvc.library.helper.DropdownDTO;
 import com.spms.mvc.library.helper.ResponseMessage;
 import com.spms.mvc.service.CompanyCreationService;
-import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -51,9 +50,9 @@ public class CompanyCreationController extends BaseController {
 
     @ResponseBody
     @RequestMapping(value = "/selectCompany", method = RequestMethod.GET)
-    public ResponseMessage selectCompany(HttpServletRequest request,Integer companyId) {
-        ResponseMessage responseMessage= new ResponseMessage();
-        CurrentUser currentUser=getCurrentUser(request);
+    public ResponseMessage selectCompany(HttpServletRequest request, Integer companyId) {
+        ResponseMessage responseMessage = new ResponseMessage();
+        CurrentUser currentUser = getCurrentUser(request);
         CompanyCreationDTO companyCreationDTO = companyCreationService.getSelectedCompanyDetails(companyId);
 //       if(companyCreationDTO.getStatus()==null){
 //           responseMessage.setStatus(SystemDataInt.MESSAGE_STATUS_UNSUCCESSFUL.value());
@@ -103,7 +102,7 @@ public class CompanyCreationController extends BaseController {
                                               HttpServletRequest request) throws
             IOException {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
-        return companyCreationService.saveCompanyDetails(companyCreationDTO, currentUser,false);
+        return companyCreationService.saveCompanyDetails(companyCreationDTO, currentUser, false);
     }
 
 

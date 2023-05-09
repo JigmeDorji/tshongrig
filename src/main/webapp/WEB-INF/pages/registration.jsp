@@ -53,25 +53,28 @@
                                     </div>
                                     <div class="form-group row">
                                         <div class="form-group form-group-float col-md-6">
-                                            <label class="form-group-float-label animate required">Contact Person</label>
-                                            <input type="text" name="contactPerson" id="contactPerson" class="form-control field" placeholder="Contact Person">
+                                            <label class="form-group-float-label animate required">Contact
+                                                Person</label>
+                                            <input type="text" name="contactPerson" id="contactPerson"
+                                                   class="form-control field" placeholder="Contact Person">
 
                                         </div>
                                         <div class="form-group form-group-float col-md-6">
 
                                             <label class="form-group-float-label anim required">Contact No.</label>
-                                            <input type="text" name="mobileNo" class="form-control field" placeholder="Contact No.">
+                                            <input type="text" name="mobileNo" class="form-control field"
+                                                   placeholder="Contact No.">
 
                                         </div>
 
                                     </div>
                                     <div class="form-group row">
                                         <div class="form-group form-group-float col-md-6">
-                                            <label class="form-group-float-label animate required">Mailing
+                                            <label class="form-group-float-label animate required">
                                                 Address</label>
                                             <textarea type="text" class="form-control field" name="mailingAddress"
                                                       id="mailingAddress" required
-                                                      placeholder="Mailing Address"></textarea>
+                                                      placeholder="Address"></textarea>
                                         </div>
 
                                         <div class="form-group form-group-float col-md-6">

@@ -185,7 +185,7 @@
                         <ul class="nav nav-group-sub" data-submenu-title="Starter kit">
                             <li class="nav-item">
                                 <sec:authorize access="hasAuthority('12-VIEW')">
-                                    <a href="<c:url value='/rawMaterialLocationSetup' />" class="nav-link"> sdLocation Setup</a>
+                                    <a href="<c:url value='/rawMaterialLocationSetup' />" class="nav-link"> Location Setup</a>
                                 </sec:authorize>
                             </li>
                             <li class="nav-item">

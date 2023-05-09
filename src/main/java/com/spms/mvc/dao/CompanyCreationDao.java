@@ -37,21 +37,35 @@ public class CompanyCreationDao {
 
     @Transactional(readOnly = true)
     public List<CompanyCreationDTO> getCompanyDetailList() {
-        String query = "SELECT distinct id AS companyId,\n" +
-                "                CONCAT(companyName,\"(\",ifnull(username,\"---\"),\")\") AS companyName,\n" +
-                "                mailingAddress AS mailingAddress,\n" +
-                "                mobileNo AS mobileNo,\n" +
-                "                email AS email,\n" +
-                "                website AS website, \n" +
-                "                fnYrStart AS fnYrStart,\n" +
-                "                pfPercentage AS pfPercentage,\n" +
-                "                contactPerson,\n" +
-                "                status,\n" +
-                "                trialExpiryDate,\n" +
-                "                businessType AS businessType\n" +
-                "                FROM tbl_common_company c \n" +
-                "                left join tbl_user  on id=companyId \n" +
-                "                group by companyId order by id desc";
+//        String query = "SELECT distinct id AS companyId,\n" +
+//                "                CONCAT(companyName,\"(\",ifnull(username,\"---\"),\")\") AS companyName,\n" +
+//                "                mailingAddress AS mailingAddress,\n" +
+//                "                mobileNo AS mobileNo,\n" +
+//                "                email AS email,\n" +
+//                "                website AS website, \n" +
+//                "                fnYrStart AS fnYrStart,\n" +
+//                "                pfPercentage AS pfPercentage,\n" +
+//                "                contactPerson,\n" +
+//                "                status,\n" +
+//                "                trialExpiryDate,\n" +
+//                "                businessType AS businessType\n" +
+//                "                FROM tbl_common_company c \n" +
+//                "                left join tbl_user  on id=companyId \n" +
+//                "                group by companyId order by id desc";
+        String query="select distinct b.id as companyId, \n" +
+                "CONCAT(companyName, '(', COALESCE(c.loginId, '---'), ')') AS companyName,\n" +
+                "b.mailingAddress AS mailingAddress,\n" +
+                "b.mobileNo AS mobileNo,\n" +
+                "b.email AS email,\n" +
+                "b.website AS website,\n" +
+                "b.fnYrStart AS fnYrStart,\n" +
+                "b.pfPercentage AS pfPercentage,\n" +
+                "b.contactPerson,\n" +
+                "b.status,\n" +
+                "b.trialExpiryDate,\n" +
+                "b.businessType AS businessType\n" +
+                "from tbl_common_company b left join tbl_common_company_login_id c on c.companyId=b.id\n" +
+                "group by companyId order by companyId desc";
         Session session = sessionFactory.getCurrentSession();
         return session.createSQLQuery(query)
                 .setResultTransformer(Transformers.aliasToBean(CompanyCreationDTO.class)).list();

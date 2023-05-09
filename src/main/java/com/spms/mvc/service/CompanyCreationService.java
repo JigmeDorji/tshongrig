@@ -63,7 +63,40 @@ public class CompanyCreationService extends BaseController {
 
     public List<CompanyCreationDTO> getCompanyDetailList(CurrentUser currentUser) {
         if (currentUser.getUserRoleTypeId().equals(UserRoleType.Owner.getValue())) {
+
+            List<CompanyCreationDTO> list = companyCreationDao.getCompanyDetailList();
+            List<CompanyCreationDTO> filteredList = new ArrayList<>();
+
+            for (CompanyCreationDTO companyCreationDTO : list) {
+                String companyName = companyCreationDTO.getCompanyName();
+
+                int status = companyName.indexOf("@");
+                System.out.println(companyName + ":=> " + status);
+                if (status == -1) {
+                    CompanyCreationDTO creationDTO = new CompanyCreationDTO();
+                    creationDTO.setCompanyId(companyCreationDTO.getCompanyId());
+                    creationDTO.setMailingAddress(companyCreationDTO.getMailingAddress());
+                    creationDTO.setMobileNo(companyCreationDTO.getMobileNo());
+                    creationDTO.setEmail(companyCreationDTO.getEmail());
+                    creationDTO.setWebsite(companyCreationDTO.getWebsite());
+                    creationDTO.setFnYrStart(companyCreationDTO.getFnYrStart());
+                    creationDTO.setBusinessType(companyCreationDTO.getBusinessType());
+                    creationDTO.setStatus(companyCreationDTO.getStatus());
+                    creationDTO.setContactPerson(companyCreationDTO.getContactPerson());
+                    creationDTO.setRemarks(companyCreationDTO.getRemarks());
+                    creationDTO.setTotalSale(companyCreationDTO.getTotalSale());
+                    creationDTO.setPfPercentage(companyCreationDTO.getPfPercentage());
+                    creationDTO.setTotalListSale(companyCreationDTO.getTotalListSale());
+                    creationDTO.setSaleDate(companyCreationDTO.getSaleDate());
+                    creationDTO.setTrialExpiryDate(companyCreationDTO.getTrialExpiryDate());
+                    creationDTO.setSaleListDate(companyCreationDTO.getSaleListDate());
+                    creationDTO.setCompanyName(companyName);
+                    filteredList.add(creationDTO);
+                }
+
+            }
             return companyCreationDao.getCompanyDetailList();
+//            return filteredList;
         } else {
             return companyCreationDao.getCompanyLoginCompany(currentUser.getCompanyId());
         }
@@ -191,7 +224,8 @@ public class CompanyCreationService extends BaseController {
 
         }
         if (isSignup) {
-            responseMessage.setText("Successfully submitted, trail will be approved within 24 hrs.");
+//            responseMessage.setText("Successfully submitted, trail will be approved within 24 hrs.");
+            responseMessage.setText("Trial will be approved in 24 hours.");
             responseMessage.setStatus(1);
             responseMessage.setCompanyId(companyId);
         } else {

@@ -131,16 +131,16 @@ spms = (function () {
     }
 
     function getUrl() {
-        // return window.location.protocol + '//' + window.location.host + '/tshong-rig/';
+        return window.location.protocol + '//' + window.location.host + '/tshong-rig/';
         // return window.location.protocol + '//' + window.location.host + '/';
-        return window.location.protocol + '//' + window.location.host + '/tshong_rig_war_exploded/';
+        // return window.location.protocol + '//' + window.location.host + '/tshong_rig_war_exploded/';
         // return 'http://www.autga.bt/bcs/';
     }
 
     function baseReportLocation() {
-        // return window.location.protocol + '//' + window.location.host + '/tshong-rig/resources/reports/';
+        return window.location.protocol + '//' + window.location.host + '/tshong-rig/resources/reports/';
         // return window.location.protocol + '//' + window.location.host + '/resources/reports/';
-        return window.location.protocol + '//' + window.location.host + '/tshong_rig_war_exploded/resources/reports/';
+        // return window.location.protocol + '//' + window.location.host + '/tshong_rig_war_exploded/resources/reports/';
     }
 
     //index the table gridaccProfitAndLossReport
@@ -172,6 +172,8 @@ spms = (function () {
         });
     }
 
+
+
     function loadGridDropDown(element, data) {
         if (!data) {
             data = [];
@@ -183,6 +185,7 @@ spms = (function () {
                     '<option/>', {
                         value: "",
                         text: "-- Please Select --"
+                        // text: "-- Please Download--"
                     }
                 )
             );
@@ -198,13 +201,17 @@ spms = (function () {
                                 }
                             )
                         );
+
+
                     }
                     if (itemData.id != null) {
+
                         element.append(
                             $(
                                 '<option/>', {
                                     value: itemData.id,
                                     text: itemData.text
+
                                 }
                             )
                         );
@@ -478,7 +485,7 @@ spms = (function () {
         numberWithCommas: numberWithCommas,
         autoSizeInputField: autoSizeInputField,
         calculateTdsAmount: calculateTdsAmount,
-        calTotalTDSPayableAmount: calTotalTDSPayableAmount
+        calTotalTDSPayableAmount: calTotalTDSPayableAmount,
     }
 })();
 
@@ -908,7 +915,8 @@ function successMsg(msg, callback) {
 function successMsg2(msg) {
     $('.responseMsg').append('<div class="alert alert-success border-0 alert-dismissible">\n' +
         '<button type="button" class="close" data-dismiss="alert"><span>×</span></button>\n' +
-        '<span class="font-weight-semibold">Well done! </span>' + msg + '</div>')
+        // '<span class="font-weight-semibold">Well done! </span>' + msg + '</div>')
+        '<span class="font-weight-semibold">KADRINCHE LA </span>' + msg + '</div>')
 }
 
 function confirmMessage(msg, callback) {

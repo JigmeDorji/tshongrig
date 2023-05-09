@@ -153,5 +153,12 @@
     <orderEntry type="library" name="Maven: com.github.stephenc:jamm:0.2.2" level="project" />
     <orderEntry type="library" name="Maven: se.jiderhamn:classloader-leak-prevention:1.15.2" level="project" />
     <orderEntry type="library" name="Maven: javax.servlet:servlet-api:2.5" level="project" />
+    <orderEntry type="library" name="Maven: com.amazonaws:aws-java-sdk-s3:1.12.22" level="project" />
+    <orderEntry type="library" name="Maven: com.amazonaws:aws-java-sdk-kms:1.12.22" level="project" />
+    <orderEntry type="library" name="Maven: com.amazonaws:aws-java-sdk-core:1.12.22" level="project" />
+    <orderEntry type="library" name="Maven: software.amazon.ion:ion-java:1.0.2" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:2.12.3" level="project" />
+    <orderEntry type="library" name="Maven: joda-time:joda-time:2.8.1" level="project" />
+    <orderEntry type="library" name="Maven: com.amazonaws:jmespath-java:1.12.22" level="project" />
   </component>
 </module>

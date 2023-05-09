@@ -252,5 +252,7 @@ public class VoucherCreationService {
     }
 
 
-
+    public List<DropdownDTO> getLedgerListForContraVoucherType(Integer companyId) {
+        return voucherCreationDao.getLedgerListForContraVoucherType(companyId);
+    }
 }

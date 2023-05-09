@@ -234,6 +234,7 @@ public class UserDao extends BaseDao {
                 .setParameter("userId", userId)
                 .executeUpdate();
     }
+
     @Transactional(readOnly = true)
     public Integer getCompanyId(String username) {
         String sqlQuery = "SELECT companyId FROM tbl_user where username=:username";
@@ -245,11 +246,21 @@ public class UserDao extends BaseDao {
 
     @Transactional(readOnly = true)
     public Integer getLastCompanyId() {
-        String sqlQuery = "select max(c.id) from tbl_common_company c";
+        String sqlQuery = "SELECT COUNT(*) FROM tbl_common_company_login_id";
         Session session = sessionFactory.getCurrentSession();
-        return (Integer) session.createSQLQuery(sqlQuery)
-                .uniqueResult();
+        Object result = session.createSQLQuery(sqlQuery).uniqueResult();
+        return ((Number) result).intValue();
     }
+
+//    public Integer getLastCompanyId() {
+////        String sqlQuery = "select max(c.id) from tbl_common_company c";
+//        String sqlQuery = "SELECT COUNT(id) FROM tbl_common_company_login_id";
+//        Session session = sessionFactory.getCurrentSession();
+//        BigInteger bigInteger = new BigInteger(String.valueOf(session.createSQLQuery(sqlQuery)));
+//
+////        return (Integer) session.createSQLQuery(sqlQuery)
+//        return bigInteger.intValue();
+//    }
 
     //endregion
 }
