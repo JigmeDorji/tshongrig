@@ -21,18 +21,15 @@ voucherCreation = (function () {
 
     function loadLedgerDropdown() {
 
-        // $('#voucherTypeId').on('change', function () {
-        //     let contraOptionVoucherType = parseInt($('#voucherTypeId').val())
-        //     $('#ledgerId1').find('option').remove();
-        //     // alert(contraOptionVoucherType)
-        //     if (contraOptionVoucherType === 3) {
-        //         getLedgerListForContraVoucherType(1);
-        //     } else {
-        //         _loadGridDropDown(1);
-        //     }
-        // });
-
-        // $('#voucherCreationGrid tbody').find('option').remove();
+        $('#voucherTypeId').on('change', function () {
+            let contraOptionVoucherType = parseInt($('#voucherTypeId').val())
+            $('#ledgerId1').find('option').remove();
+            if (contraOptionVoucherType === 3) {
+                getLedgerListForContraVoucherType(1);
+            } else {
+                _loadGridDropDown(1);
+            }
+        });
         _loadGridDropDown(1);
 
     }
