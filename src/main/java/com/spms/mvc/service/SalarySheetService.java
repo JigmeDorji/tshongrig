@@ -223,7 +223,7 @@ public class SalarySheetService extends BaseService {
         Integer currentYear = Integer.parseInt(dateParts[2]);
 
 
-        List<EmployeeSetupDTO> salarySheetGeneratedData = salarySheetDao.getGeneratedSalarySheet(currentUser.getCompanyId(), selectedMonthId, cost);
+        List<EmployeeSetupDTO> salarySheetGeneratedData = salarySheetDao.getGeneratedSalarySheet(currentUser.getCompanyId(), selectedMonthId, cost,currentUser.getFinancialYearId());
         List<EmployeeSetupDTO> employeeSetupData = salarySheetDao.getEmpSetupList(currentUser.getCompanyId(), cost, selectedMonthId, currentYear);
         if (salarySheetGeneratedData.size() > 0) {
             salarySheetData = salarySheetGeneratedData;
@@ -258,7 +258,7 @@ public class SalarySheetService extends BaseService {
         }
 
 
-        salarySheetGeneratedData = salarySheetDao.getGeneratedSalarySheet(currentUser.getCompanyId(), selectedMonthId, cost);
+        salarySheetGeneratedData = salarySheetDao.getGeneratedSalarySheet(currentUser.getCompanyId(), selectedMonthId, cost,currentUser.getFinancialYearId());
         employeeSetupData = salarySheetDao.getEmpSetupList(currentUser.getCompanyId(), cost, selectedMonthId, currentYear);
         if (salarySheetGeneratedData.size() > 0) {
             salarySheetData = salarySheetGeneratedData;

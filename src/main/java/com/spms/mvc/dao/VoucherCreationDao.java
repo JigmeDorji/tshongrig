@@ -377,6 +377,8 @@ public class VoucherCreationDao {
 //
 //        String query = "SELECT ledgerId AS id,ledgerName AS text FROM tbl_acc_ledger where companyId=:companyId" +
 //                " ORDER BY ledgerName";
+//        SELECT ledgerId AS id,ledgerName AS text FROM tbl_acc_ledger where companyId=:companyId" +
+//        " ORDER BY ledgerName"
         String query = "SELECT ledgerId AS id,ledgerName AS text FROM tbl_acc_ledger WHERE accTypeId IN (3, 4, 11) AND companyId=:companyId ORDER BY ledgerName";
         Session session = sessionFactory.getCurrentSession();
         return session.createSQLQuery(query)

@@ -60,7 +60,7 @@ employeeSetup = (function () {
                 var t = $('#employeeSetUpList').DataTable({
                     data: res,
                     columns: columnDef,
-                    bSort:false
+                    bSort: false
                 });
                 t.on('order.dt search.dt', function () {
                     t.column(0, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
@@ -99,6 +99,8 @@ employeeSetup = (function () {
     function save() {
         $('.globalForm').validate({
             submitHandler: function (form) {
+                $('#btnSave').prop('disabled', true)
+
                 if ($('#incrementEffectDate').val() == '') {
                     $('#incrementEffectDate').attr("disabled", true);
                 }
@@ -119,6 +121,8 @@ employeeSetup = (function () {
                         } else {
                             errorMsg(res.text)
                         }
+                    }, complete: () => {
+                        $(this).prop('disabled', false)
                     }
                 });
             }

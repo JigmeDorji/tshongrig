@@ -69,13 +69,64 @@ user = (function () {
      * to add new user
      */
     function addUser() {
+
+        // $('#btnSave').on('click', function () {
+        //     $.validator.setDefaults({
+        //         submitHandler: function (form) {
+        //             isSubmitted = true;
+        //             $('#userId').prop('disabled', false);
+        //             $('#btnSave').attr('disabled', true);
+        //             let data = new FormData($('.userFormId')[0]);
+        //             $.ajax({
+        //                 url: _baseURL() + 'addUser',
+        //                 type: 'POST',
+        //                 data: data,
+        //                 processData: false,
+        //                 contentType: false,
+        //                 success: function (res) {
+        //                     if (res.status === 1) {
+        //                         swal({
+        //                                 title: res.text,
+        //                                 text: "Click OK to exit",
+        //                                 type: "success"
+        //                             }, function () {
+        //                                 window.location.reload();
+        //                             }
+        //                         );
+        //                     } else {
+        //                         $('#btnSave').attr("disabled", false);
+        //                         errorMsg(res.text);
+        //                     }
+        //                 }, complete: function (res) {
+        //                     $('#btnSave').attr("disabled", false);
+        //                 }
+        //             });
+        //         }
+        //     });
+        //     form.validate({
+        //         errorElement: 'span',
+        //         errorPlacement: function (error, element) {
+        //             error.addClass('invalid-feedback');
+        //             element.closest('.col-4').append(error);
+        //         },
+        //         highlight: function (element, errorClass, validClass) {
+        //             $(element).addClass('is-invalid');
+        //         },
+        //         unhighlight: function (element, errorClass, validClass) {
+        //             $(element).removeClass('is-invalid');
+        //         }
+        //     });
+        // });
+
         $('#btnSave').on('click', function () {
+            var $submitButton = $(this);
             $.validator.setDefaults({
                 submitHandler: function (form) {
+                    $submitButton.prop('disabled', true); // Disable the button immediately
                     isSubmitted = true;
                     $('#userId').prop('disabled', false);
-                    $('#btnSave').attr('disabled', true);
-                    let data = new FormData($('.userFormId')[0]);
+
+                    var data = new FormData($('.userFormId')[0]);
                     $.ajax({
                         url: _baseURL() + 'addUser',
                         type: 'POST',
@@ -85,23 +136,24 @@ user = (function () {
                         success: function (res) {
                             if (res.status === 1) {
                                 swal({
-                                        title: res.text,
-                                        text: "Click OK to exit",
-                                        type: "success"
-                                    }, function () {
-                                        window.location.reload();
-                                    }
-                                );
+                                    title: res.text,
+                                    text: "Click OK to exit",
+                                    type: "success"
+                                }, function () {
+                                    window.location.reload();
+                                });
                             } else {
-                                $('#btnSave').attr("disabled", false);
+                                $submitButton.prop("disabled", false); // Re-enable the button on error
                                 errorMsg(res.text);
                             }
-                        }, complete: function (res) {
-                            $('#btnSave').attr("disabled", false);
+                        },
+                        complete: function (res) {
+                            $submitButton.prop("disabled", false); // Re-enable the button after AJAX request completes
                         }
                     });
                 }
             });
+
             form.validate({
                 errorElement: 'span',
                 errorPlacement: function (error, element) {
@@ -116,11 +168,14 @@ user = (function () {
                 }
             });
         });
+
     }
 
     function updateUser() {
         $('#btnUpdate').on('click', function () {
+            var $submitButton = $(this);
             spms.isFormValid(form);
+            $submitButton.prop('disabled', true); // Disable the button immediately
             if (form.valid()) {
                 isSubmitted = true;
                 $('#userId').prop('disabled', false);
@@ -150,6 +205,7 @@ user = (function () {
                         $('#username').attr('readonly', false);
                     }, complete: function (res) {
                         isSubmitted = false;
+                        $submitButton.prop('disabled', false); // Disable the button immediately
                         $('#btnSave').attr("disabled", false);
                         errorMsg(res.text);
                     }

@@ -10,7 +10,7 @@ otherRemittance = (function () {
 
     function getOtherRemittanceDetails() {
         $('#cost').on('change', function () {
-            if($(this).val()!==null && $(this).val()!==''){
+            if ($(this).val() !== null && $(this).val() !== '') {
                 let monthId = $('#monthId').val();
                 let cost = $(this).val();
                 if (monthId === '') {
@@ -54,9 +54,9 @@ otherRemittance = (function () {
                             },
                             {data: 'empName'},
                             {data: 'basicSalary'},
-                            {data: 'pF',class: 'pF'},
-                            {data: 'gIS',class: 'gIS'},
-                            {data: 'totalAmount',class: 'totalAmount'},
+                            {data: 'pF', class: 'pF'},
+                            {data: 'gIS', class: 'gIS'},
+                            {data: 'totalAmount', class: 'totalAmount'},
                         ];
 
                         let table = otherRemittanceGrid.DataTable({
@@ -64,38 +64,38 @@ otherRemittance = (function () {
                             columns: columnDef
                         });
 
-                       /* let totalPF = table.column(3);
-                        let totalPFSum = 0
-                        let totalGIS = table.column(4);
-                        let totalGISSum = 0
-                        let totalAmount = table.column(5);
-                        let totalAmountSum = 0
-                        if (res.dto.length > 1) {
-                            totalPFSum = totalPF.data().reduce(function (a, b) {
-                                return '<input class="form-control text-center pF"  readonly name="pF" value="' + parseFloat(a + b) + '">';
-                            });
-                            totalGISSum = totalGIS.data().reduce(function (a, b) {
-                                return '<input class="form-control text-center gIS" readonly name="gIS" value="' + parseFloat(a + b) + '">';
-                            });
-                            totalAmountSum = totalAmount.data().reduce(function (a, b) {
-                                return '<input class="form-control text-center totalAmount"  readonly name="totalAmount" value="' + parseFloat(a + b) + '">';
-                            });
-                        } else {
-                            totalPFSum = totalPF.data().reduce(function (a, b) {
-                                return '<input class="form-control text-center pF"  readonly name="pF" value="' + parseFloat(a + b) + '">';
-                            }, 0);
-                            totalGISSum = totalGIS.data().reduce(function (a, b) {
-                                return '<input class="form-control text-center gIS"  readonly name="gIS" value="' + parseFloat(a + b) + '">';
-                            }, 0);
+                        /* let totalPF = table.column(3);
+                         let totalPFSum = 0
+                         let totalGIS = table.column(4);
+                         let totalGISSum = 0
+                         let totalAmount = table.column(5);
+                         let totalAmountSum = 0
+                         if (res.dto.length > 1) {
+                             totalPFSum = totalPF.data().reduce(function (a, b) {
+                                 return '<input class="form-control text-center pF"  readonly name="pF" value="' + parseFloat(a + b) + '">';
+                             });
+                             totalGISSum = totalGIS.data().reduce(function (a, b) {
+                                 return '<input class="form-control text-center gIS" readonly name="gIS" value="' + parseFloat(a + b) + '">';
+                             });
+                             totalAmountSum = totalAmount.data().reduce(function (a, b) {
+                                 return '<input class="form-control text-center totalAmount"  readonly name="totalAmount" value="' + parseFloat(a + b) + '">';
+                             });
+                         } else {
+                             totalPFSum = totalPF.data().reduce(function (a, b) {
+                                 return '<input class="form-control text-center pF"  readonly name="pF" value="' + parseFloat(a + b) + '">';
+                             }, 0);
+                             totalGISSum = totalGIS.data().reduce(function (a, b) {
+                                 return '<input class="form-control text-center gIS"  readonly name="gIS" value="' + parseFloat(a + b) + '">';
+                             }, 0);
 
-                            totalAmountSum = totalAmount.data().reduce(function (a, b) {
-                                return '<input class="form-control text-center totalAmount"  readonly name="totalAmount" value="' + parseFloat(a + b) + '">';
-                            }, 0);
-                        }
-                        $(totalPF.footer()).html(totalPFSum);
-                        $(totalGIS.footer()).html(totalGISSum);
-                        $(totalAmount.footer()).html(totalAmountSum);
-*/
+                             totalAmountSum = totalAmount.data().reduce(function (a, b) {
+                                 return '<input class="form-control text-center totalAmount"  readonly name="totalAmount" value="' + parseFloat(a + b) + '">';
+                             }, 0);
+                         }
+                         $(totalPF.footer()).html(totalPFSum);
+                         $(totalGIS.footer()).html(totalGISSum);
+                         $(totalAmount.footer()).html(totalAmountSum);
+ */
                         let tableBody = $('#otherRemittanceGrid tbody');
                         calculateTotal(tableBody);
                         spms._formIndexing(tableBody, tableBody.find('tr'));
@@ -131,42 +131,68 @@ otherRemittance = (function () {
     }
 
     function otherRemitDetail() {
-        $('#otherRemitBtn').on('click', function () {
-            $('.globalForm').validate({
-                submitHandler: function (form) {
-                    $.ajax({
-                        url: baseURL() + '/remitOtherRemittance',
-                        type: 'POST',
-                        data: $(form).serializeArray(),
-                        success: function (res) {
-                            if (res.status === 1) {
-                                swal({
-                                    timer: 800,
-                                    type: "success",
-                                    title: res.text,
-                                    showConfirmButton: false
-                                });
-                                $('#monthId').val('');
-                                $('.totalAmount').val('');
-                                $('#remitBtn').attr('disabled', true);
-                            } else {
-                                $('.pF').val('');
-                                $('.gIS').val('');
-                                $('.totalAmount').val('');
-                                btnExport.attr('disabled', true);
-                                otherRemitBtn.attr('disabled', true);
-                                errorMsg(res.text)
-                                errorMsg(res.text)
-                            }
-                            otherRemittanceGrid.dataTable().fnClearTable();
-                            $('.totalPF').val('')
-                            $('.totalGIS').val('')
-                            $('.grandAmt').val('')
-                        }
+        perClickSubmissionValidatorHandler('#otherRemitBtn', '.globalForm', baseURL() + '/remitOtherRemittance', (res) => {
+                if (res.status === 1) {
+                    swal({
+                        timer: 800,
+                        type: "success",
+                        title: res.text,
+                        showConfirmButton: false
                     });
+                    $('#monthId').val('');
+                    $('.totalAmount').val('');
+                    $('#remitBtn').attr('disabled', true);
+                } else {
+                    $('.pF').val('');
+                    $('.gIS').val('');
+                    $('.totalAmount').val('');
+                    btnExport.attr('disabled', true);
+                    otherRemitBtn.attr('disabled', true);
+                    errorMsg(res.text)
+                    errorMsg(res.text)
                 }
-            });
-        })
+                otherRemittanceGrid.dataTable().fnClearTable();
+                $('.totalPF').val('')
+                $('.totalGIS').val('')
+                $('.grandAmt').val('')
+            }
+        )
+        // $('#otherRemitBtn').on('click', function () {
+        //     $('.globalForm').validate({
+        //         submitHandler: function (form) {
+        //             $.ajax({
+        //                 url: baseURL() + '/remitOtherRemittance',
+        //                 type: 'POST',
+        //                 data: $(form).serializeArray(),
+        //                 success: function (res) {
+        //                     if (res.status === 1) {
+        //                         swal({
+        //                             timer: 800,
+        //                             type: "success",
+        //                             title: res.text,
+        //                             showConfirmButton: false
+        //                         });
+        //                         $('#monthId').val('');
+        //                         $('.totalAmount').val('');
+        //                         $('#remitBtn').attr('disabled', true);
+        //                     } else {
+        //                         $('.pF').val('');
+        //                         $('.gIS').val('');
+        //                         $('.totalAmount').val('');
+        //                         btnExport.attr('disabled', true);
+        //                         otherRemitBtn.attr('disabled', true);
+        //                         errorMsg(res.text)
+        //                         errorMsg(res.text)
+        //                     }
+        //                     otherRemittanceGrid.dataTable().fnClearTable();
+        //                     $('.totalPF').val('')
+        //                     $('.totalGIS').val('')
+        //                     $('.grandAmt').val('')
+        //                 }
+        //             });
+        //         }
+        //     });
+        // })
     }
 
     function exportReport() {

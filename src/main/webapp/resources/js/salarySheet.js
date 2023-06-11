@@ -360,6 +360,7 @@ salarySheet = (function () {
     function save() {
         $('.globalForm').validate({
             submitHandler: function (form) {
+                $('#btnSalarySheet').prop('disabled', true)
                 $.ajax({
                     url: 'salarySheet/save',
                     type: 'POST',
@@ -379,6 +380,9 @@ salarySheet = (function () {
                         } else {
                             errorMsg(res.text);
                         }
+                    },
+                    complete:()=>{
+                        $('#btnSalarySheet').prop('disabled', false)
                     }
                 });
             }
@@ -399,8 +403,10 @@ salarySheet = (function () {
     }
 
     function exportReport() {
+
         $('#generateReportBtn').on('click', function () {
 
+            $('#generateReportBtn').prop('disabled', true)
             $.ajax({
                 url: _baseURL() + 'generateReport',
                 type: 'GET',
@@ -415,6 +421,9 @@ salarySheet = (function () {
                     if (res.status === 1) {
                         window.open(spms.baseReportLocation() + res.dto.reportName, '_blank');
                     }
+                },
+                complete:()=>{
+                    $('#generateReportBtn').prop('disabled', false)
                 }
             });
         })

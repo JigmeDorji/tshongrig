@@ -168,7 +168,13 @@ public class PaymentController extends BaseController {
                     || voucherDetailDTO.getAccTypeId().equals(AccountTypeEnum.BANK_OVER_DRAFT.getValue()))
                 if (voucherDetailDTO.getDrcrAmount() > 0) {
                     totalAmount = totalAmount + (voucherDetailDTO.getDrcrAmount());
+
+                } else {
+                    totalAmount = voucherDetailDTO.getDrAmount();
+//                    totalAmount+=voucherDetailDTO.getCrAmount();
                 }
+            System.out.println(voucherDetailDTO.getCrAmount());
+            System.out.println(voucherDetailDTO.getDrAmount());
         }
         return totalAmount;
     }

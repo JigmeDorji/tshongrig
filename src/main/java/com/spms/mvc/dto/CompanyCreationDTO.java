@@ -38,6 +38,7 @@ public class CompanyCreationDTO {
     private Date saleDate;
     private Date trialExpiryDate;
     private List<Date> saleListDate;
+    private String loginId;
 
     public Integer getCompanyId() {
         return companyId;
@@ -173,5 +174,13 @@ public class CompanyCreationDTO {
 
     public void setTrialExpiryDate(Date trialExpiryDate) {
         this.trialExpiryDate = trialExpiryDate;
+    }
+
+    public String getLoginId() {
+        return loginId;
+    }
+
+    public void setLoginId(String loginId) {
+        this.loginId = loginId;
     }
 }

@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
@@ -52,6 +50,7 @@ public class SalarySheetController extends BaseController {
     @RequestMapping(value = "/getEmpListDetails", method = RequestMethod.GET)
     public List<EmployeeSetupDTO> getEmpListDetails(HttpServletRequest request, Integer selectedMonthId, Integer cost) {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
+        List<EmployeeSetupDTO> sd = salarySheetService.getEmpSetupList(currentUser, selectedMonthId, cost);
         return salarySheetService.getEmpSetupList(currentUser, selectedMonthId, cost);
     }
 
@@ -67,7 +66,7 @@ public class SalarySheetController extends BaseController {
     @RequestMapping(value = "/getMaxMonthId", method = RequestMethod.GET)
     public Integer getMaxMonthId(HttpServletRequest request, Integer cost) {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
-        return salarySheetService.getMaxMonthId(currentUser,cost);
+        return salarySheetService.getMaxMonthId(currentUser, cost);
     }
 
     @ResponseBody
@@ -78,7 +77,7 @@ public class SalarySheetController extends BaseController {
 
     @ResponseBody
     @RequestMapping(value = "/generateReport", method = {RequestMethod.GET})
-    public ResponseMessage generateReport(HttpServletRequest request, String reportFormat, Integer month, String monthText,Integer cost) {
+    public ResponseMessage generateReport(HttpServletRequest request, String reportFormat, Integer month, String monthText, Integer cost) {
         ResponseMessage responseMessage = new ResponseMessage();
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
         Map<String, Object> params = new HashMap<String, Object>();

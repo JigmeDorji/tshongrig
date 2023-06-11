@@ -143,19 +143,26 @@ fixedAssetSale = (function () {
         function saveSaleItemDetails() {
             $('#printBtn').on('click', function () {
                 if (validateRequiredField()) {
+                    const $submitButton = $(this); // Cache the submit button element
+                    $('#printBtn').prop('disabled', true); // D
                     $.ajax({
-                        url: baseURL() + '/saveSaleItemDetails',
-                        type: 'POST',
-                        data: $('#fixedAssetSaleForm').serializeArray(),
-                        success: function (res) {
-                            if (res.status === 1) {
-                                successMsg(res.text)
-                                window.location.reload();
-                            } else {
-                                errorMsg(res.text)
-                            }
+                            url: baseURL() + '/saveSaleItemDetails',
+                            type: 'POST',
+                            data: $('#fixedAssetSaleForm').serializeArray(),
+                            success: function (res) {
+                                if (res.status === 1) {
+                                    successMsg(res.text)
+                                    window.location.reload();
+                                } else {
+                                    errorMsg(res.text)
+                                }
+                            }, complete: function () {
+                            $('#printBtn').prop('disabled', false); // D
+                            },error:()=>{
+                            $('#printBtn').prop('disabled', false); // D
                         }
-                    });
+                        },
+                    );
                 }
             })
         }

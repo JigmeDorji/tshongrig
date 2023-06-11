@@ -30,7 +30,7 @@ voucherCreation = (function () {
                 _loadGridDropDown(1);
             }
         });
-        _loadGridDropDown(1);
+        // _loadGridDropDown(1);
 
     }
 
@@ -184,7 +184,23 @@ voucherCreation = (function () {
         var allRow = tableBody.find('tr');
         spms._formIndexing(tableBody, allRow);
         voucherCreationGridTBody.find('tr').find('#ledgerId' + index).select2();
-        _loadGridDropDown(index);
+        // _loadGridDropDown(index);
+
+
+        let contraOptionVoucherType = parseInt($('#voucherTypeId').val())
+
+        $($('#ledgerId2').target).find('option').remove();
+
+
+        if (contraOptionVoucherType === 3) {
+
+            getLedgerListForContraVoucherType(index);
+
+        } else {
+            _loadGridDropDown(index);
+        }
+
+
     }
 
 
@@ -356,6 +372,7 @@ voucherCreation = (function () {
                                                 encodeURIComponent(res.dto.voucherNo) + '&type=' + $('#voucherTypeId').val();
 
                                             $('#voucherTypeId').val('');
+                                            $('#narration').val('');
                                         });
 
                                     } else {

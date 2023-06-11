@@ -317,8 +317,13 @@ public class AddItemDao {
     }
 
     @Transactional(readOnly = true)
-    public List<DropdownDTO> getBrandList(Integer companyId) {
+    public List<DropdownDTO> getBrandList(Integer companyId, Integer companyBusinessType) {
         String query = "SELECT brandId AS value, brandName AS text FROM tbl_item_code WHERE  companyId=:companyId";
+
+        if (companyBusinessType == 8) {
+            companyId = 8000;
+        }
+
         return sessionFactory.getCurrentSession().createSQLQuery(query)
                 .setParameter("companyId", companyId)
                 .setResultTransformer(Transformers.aliasToBean(DropdownDTO.class)).list();
@@ -326,6 +331,7 @@ public class AddItemDao {
 
     @Transactional(readOnly = true)
     public PurchaseDTO getSlNo(Integer brandId) {
+
         String query = "SELECT serialNo AS serialNo, brandPrefix AS prefixCode FROM tbl_item_code WHERE brandId=:brandId";
         Session session = sessionFactory.getCurrentSession();
         return (PurchaseDTO) session.createSQLQuery(query)
@@ -333,6 +339,8 @@ public class AddItemDao {
                 .setResultTransformer(Transformers.aliasToBean(PurchaseDTO.class))
                 .uniqueResult();
     }
+
+
 
     @Transactional
     public void updateBrandWiseSerialNo(Integer brandId, Integer maxSerialNo, Integer companyId) {
@@ -518,7 +526,7 @@ public class AddItemDao {
     }
 
     @Transactional(readOnly = true)
-    public Double getTotalCashOutFlow(String ledgerId, Integer companyId, Date curFromDate,Date curToDate) {
+    public Double getTotalCashOutFlow(String ledgerId, Integer companyId, Date curFromDate, Date curToDate) {
       /*  String sqlQuery = "SELECT\n" +
                 "SUM(c.drcrAmount) as amount\n" +
                 "FROM tbl_acc_acctype a\n" +
@@ -527,7 +535,7 @@ public class AddItemDao {
                 "LEFT JOIN tbl_acc_voucher_entries d on d.voucherId=c.voucherId\n" +
                 "WHERE d.companyId=:companyId AND d.financialYearId=:financialYearId AND a.accTypeId=:accountType AND c.drcrAmount > 0\n" +
                 "GROUP BY a.accTypeId";*/
-        String sqlQuery="SELECT\n" +
+        String sqlQuery = "SELECT\n" +
                 "SUM(IFNULL(A.drcrAmount,0)) AS drcrAmount\n" +
                 "FROM tbl_acc_voucher_entries_detail A\n" +
                 "INNER JOIN tbl_acc_voucher_entries B ON A.voucherId=B.voucherId\n" +
@@ -651,8 +659,8 @@ public class AddItemDao {
         String sqlQry = "SELECT * FROM tbl_inv_purchase where itemName=:itemName and companyId=:companyId and itemCode!=:itemCode";
         SQLQuery hibernate = sessionFactory.getCurrentSession().createSQLQuery(sqlQry);
         return hibernate.setParameter("itemName", itemName)
-                        .setParameter("itemCode", itemCode)
-                .setParameter("companyId", currentUser.getCompanyId()).list().size()>0;
+                .setParameter("itemCode", itemCode)
+                .setParameter("companyId", currentUser.getCompanyId()).list().size() > 0;
     }
 }
 

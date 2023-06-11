@@ -71,7 +71,7 @@ public class CompanyCreationService extends BaseController {
                 String companyName = companyCreationDTO.getCompanyName();
 
                 int status = companyName.indexOf("@");
-                System.out.println(companyName + ":=> " + status);
+//                System.out.println(companyName + ":=> " + status);
                 if (status == -1) {
                     CompanyCreationDTO creationDTO = new CompanyCreationDTO();
                     creationDTO.setCompanyId(companyCreationDTO.getCompanyId());
@@ -170,11 +170,18 @@ public class CompanyCreationService extends BaseController {
                 user.setCreatedDate(new Date());
                 userId = userDao.addUser(user);
 
+
+//                Updating the User Login ID in Common Company Table
+                companyCreationDao.updateCommonCompanyTableForUserLoginId(companyId, companyAbbreviation);
+
+//                updating the User Login Detail in  commonCompanyLoginId table
                 CommonCompanyLoginId commonCompanyLoginId = new CommonCompanyLoginId();
                 commonCompanyLoginId.setCompanyLoginId(companyAbbreviation);
                 commonCompanyLoginId.setCompany(companyCreationDTO.getCompanyName());
                 commonCompanyLoginId.setCompanyId(companyCreationDTO.getCompanyId());
                 companyCreationDao.saveCompanyLoginDetail(commonCompanyLoginId);
+
+
             }
 
 

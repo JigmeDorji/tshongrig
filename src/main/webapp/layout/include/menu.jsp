@@ -147,7 +147,7 @@
                     </ul>
                 </li>
 
-                <c:if test="${currentUser.businessType ==1}">
+                <c:if test="${currentUser.businessType ==1 || currentUser.businessType == 8}">
                     <%--Inventory--%>
                     <li class="nav-item nav-item-submenu">
                         <a href="#" class="nav-link"><i class="icon-list3"></i> <span>Inventory</span></a>

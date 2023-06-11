@@ -131,17 +131,17 @@ spms = (function () {
     }
 
     function getUrl() {
-        return window.location.protocol + '//' + window.location.host + '/tshong-rig/';
+        // return window.location.protocol + '//' + window.location.host + '/tshong-rig/';
         // return window.location.protocol + '//' + window.location.host + '/';
-        // return window.location.protocol + '//' + window.location.host + '/tshong_rig_war_exploded/';
-        // return 'http://www.autga.bt/bcs/';
+        return window.location.protocol + '//' + window.location.host + '/tshong_rig_war_exploded/';
     }
 
     function baseReportLocation() {
-        return window.location.protocol + '//' + window.location.host + '/tshong-rig/resources/reports/';
+        // return window.location.protocol + '//' + window.location.host + '/tshong-rig/resources/reports/';
         // return window.location.protocol + '//' + window.location.host + '/resources/reports/';
-        // return window.location.protocol + '//' + window.location.host + '/tshong_rig_war_exploded/resources/reports/';
+        return window.location.protocol + '//' + window.location.host + '/tshong_rig_war_exploded/resources/reports/';
     }
+
 
     //index the table gridaccProfitAndLossReport
     function _formIndexing(tableBody, row, serialNo, iterator) {
@@ -171,7 +171,6 @@ spms = (function () {
             $(this).closest('tr').find('#index').val(idx + 1);
         });
     }
-
 
 
     function loadGridDropDown(element, data) {
@@ -998,4 +997,56 @@ $.fn.disableElements = function (status) {
 //Disabling Right Click
 
 
+// document.addEventListener('readystatechange', function() {
+//     if (document.readyState !== 'complete') {
+//         // Web application is still loading
+//         console.log("Loading")
+//     } else {
+//         // Web application has finished loading
+//         console.log("Loaded")
+//     }
+// // });
+// document.addEventListener('DOMContentLoaded', function() {
+//     // Entire DOM is loaded and ready for manipulation
+//
+//     // Example: Change the text color of a paragraph
+//     console.log("EDE")
+// });
+
+function perClickSubmissionValidatorHandler(clickBtnSelector, form, postUrl, successAjaxFun) {
+    if (isStringParameterValid(clickBtnSelector) && isStringParameterValid(form) && isStringParameterValid(postUrl)) {
+        $(clickBtnSelector).on('click', function () {
+            const $submitButton = $(this); // Cache the submit button element
+            const $form = $(form); // Cache the form element
+            $form.validate({
+                submitHandler: function (form) {
+                    $submitButton.prop('disabled', true); // Disable the button immediately
+                    $.ajax({
+                        url: postUrl,
+                        type: 'POST',
+                        data: $form.serializeArray(),
+                        success: function (res) {
+                            successAjaxFun(res);
+                        },
+                        error: function () {
+                            $submitButton.prop('disabled', false);
+                            errorMsg("Error occurred while submission");
+                            // Handle AJAX error if needed
+                        },
+                        complete: function () {
+                            $submitButton.prop('disabled', false); // Re-enable the button after AJAX request completes
+                        }
+                    });
+                }
+            });
+        });
+    } else {
+        errorMsg("Please check the function parameters!");
+    }
+
+    // Helper Internal Function
+    function isStringParameterValid(parameter) {
+        return parameter && typeof parameter === 'string' && parameter.trim() !== '';
+    }
+}
 

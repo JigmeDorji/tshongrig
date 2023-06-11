@@ -140,34 +140,51 @@ salaryRemittance = (function () {
     }
 
     function remitSalary() {
-        $('#remitBtn').on('click', function () {
-            $('.globalForm').validate({
-                submitHandler: function (form) {
-                    $.ajax({
-                        url: baseURL() + '/remitSalary',
-                        type: 'POST',
-                        data: $(form).serializeArray(),
-                        success: function (res) {
-                            if (res.status === 1) {
-                                swal({
-                                    timer: 800,
-                                    type: "success",
-                                    title: res.text,
-                                    showConfirmButton: false
-                                });
-                                $('#monthId').val('');
-                                $('#bankLedgerId').val('');
-                                $('.totalAmount').val('');
-                                $('#remitBtn').attr('disabled', true);
-                                employeeSalarySheetList.dataTable().fnClearTable();
-                            } else {
-                                errorMsg(res.text)
-                            }
-                        }
-                    });
-                }
-            });
+        perClickSubmissionValidatorHandler("#remitBtn",'.globalForm',baseURL() + '/remitSalary',(res)=> {
+            if (res.status === 1) {
+                swal({
+                    timer: 800,
+                    type: "success",
+                    title: res.text,
+                    showConfirmButton: false
+                });
+                $('#monthId').val('');
+                $('#bankLedgerId').val('');
+                $('.totalAmount').val('');
+                $('#remitBtn').attr('disabled', true);
+                employeeSalarySheetList.dataTable().fnClearTable();
+            } else {
+                errorMsg(res.text)
+            }
         })
+        // $('#remitBtn').on('click', function () {
+        //     $('.globalForm').validate({
+        //         submitHandler: function (form) {
+        //             $.ajax({
+        //                 url: baseURL() + '/remitSalary',
+        //                 type: 'POST',
+        //                 data: $(form).serializeArray(),
+        //                 success: function (res) {
+        //                     if (res.status === 1) {
+        //                         swal({
+        //                             timer: 800,
+        //                             type: "success",
+        //                             title: res.text,
+        //                             showConfirmButton: false
+        //                         });
+        //                         $('#monthId').val('');
+        //                         $('#bankLedgerId').val('');
+        //                         $('.totalAmount').val('');
+        //                         $('#remitBtn').attr('disabled', true);
+        //                         employeeSalarySheetList.dataTable().fnClearTable();
+        //                     } else {
+        //                         errorMsg(res.text)
+        //                     }
+        //                 }
+        //             });
+        //         }
+        //     });
+        // })
     }
 
     function exportReport() {

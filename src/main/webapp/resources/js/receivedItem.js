@@ -4,7 +4,7 @@
 receivedItem = (function () {
     let purchaseItemTableBody = $('#purchaseItemTable tbody');
 
-    if($('#purchaseDateEdit').val()!==''){
+    if ($('#purchaseDateEdit').val() !== '') {
         $('#purchaseDate').val(formatAsDate($('#purchaseDateEdit').val()));
     }
 
@@ -16,6 +16,7 @@ receivedItem = (function () {
             var sellingPrice = $('#sellingPrice').val();
             $('.globalForm').validate({
                 submitHandler: function (form) {
+                    // $('#btnSave').prop('disabled',true)
                     var data = $(form).serializeArray();
                     $('#btnSave').attr('disabled', true);
                     $.ajax({
@@ -36,7 +37,9 @@ receivedItem = (function () {
                                 errorMsg(res.text)
                             }
 
-                        },complete:function (){
+                        }, complete: function () {
+                            $('#btnSave').attr('disabled', false);
+                        }, error: () => {
                             $('#btnSave').attr('disabled', false);
                         }
                     });
@@ -225,6 +228,7 @@ receivedItem = (function () {
         $('#pModalButton').on('click', function () {
             $('.brandForm').validate({
                 submitHandler: function (form) {
+                    $('#pModalButton').prop('disabled', true)
                     $.ajax({
                         url: 'receivedItem/saveBrandDetail',
                         type: 'POST',
@@ -237,6 +241,10 @@ receivedItem = (function () {
                                 errorMsg(res.text);
                             }
                             $('#brandModal').modal('hide');
+                        }, error: () => {
+                            $('#pModalButton').prop('disabled', false)
+                        }, complete: () => {
+                            $('#pModalButton').prop('disabled', false)
                         }
                     })
                 }
@@ -497,7 +505,6 @@ receivedItem = (function () {
                 locationId.removeClass('error');
 
 
-
                 let row = "<tr>" +
                     "<td><input type='text' id='index' readonly class='form-control form-control-sm input-group-sm' value='" + i + "'>" +
                     "<input type='hidden' id='type' name='purchaseDTOS[" + i + "].type'  class='form-control form-control-sm input-group-sm' value='" + type.val() + "'>" +
@@ -539,9 +546,6 @@ receivedItem = (function () {
         })
 
     }
-
-
-
 
 
     function fieldValidation(qty, unitId, itemCode, itemName, sellingPrice, costPrice, brandId, type, partNo, locationId) {
@@ -638,10 +642,10 @@ receivedItem = (function () {
             selectedRow.remove();
             let allRow = purchaseItemTableBody.find('tr');
             spms._formIndexing(purchaseItemTableBody, allRow);
-            if(parseInt(purchaseItemTableBody.find('tr').length)===0){
-                $('#btnSave').attr('disabled',true);
-            }else {
-                $('#btnSave').attr('disabled',false);
+            if (parseInt(purchaseItemTableBody.find('tr').length) === 0) {
+                $('#btnSave').attr('disabled', true);
+            } else {
+                $('#btnSave').attr('disabled', false);
             }
             calculateTotal();
         })
@@ -716,7 +720,7 @@ receivedItem = (function () {
 
                 let tableGrid = $('#purchaseItemTable');
                 let tableBody = tableGrid.find('tbody');
-                let delBtn=res[i].purchaseId!==null?'':"<input type='button'  id='btnDeleteItem' class='btn btn-danger btn-xs fa fa-trash' value='Delete'>";
+                let delBtn = res[i].purchaseId !== null ? '' : "<input type='button'  id='btnDeleteItem' class='btn btn-danger btn-xs fa fa-trash' value='Delete'>";
                 let row = "<tr>" +
                     "<td><input type='text' id='index' readonly class='form-control form-control-sm input-group-sm' value='" + parseInt(i + 1) + "'>" +
                     "<input type='hidden' id='' name='purchaseDTOS[" + i + "].type'  class='form-control form-control-sm input-group-sm' value='" + res[i].type + "'>" +
@@ -733,7 +737,7 @@ receivedItem = (function () {
                     "<td><input type='hidden' id='initialQty' readonly class='form-control form-control-sm input-group-sm initialQty right-align' value=" + res[i].qty + " ><input type='text' id='qty' readonly class='form-control form-control-sm input-group-sm qty right-align amount'   name='purchaseDTOS[" + i + "].qty' value=" + res[i].qty + " ></td>" +
                     "<td><input type='hidden' readonly name='purchaseDTOS[" + i + "].unitId' class='form-control form-control-sm input-group-sm costPrice right-align' value='" + res[i].unitId + "'><input type='text' readonly  class='form-control form-control-sm input-group-sm costPrice right-align' value='" + res[i].unitName + "'></td>" +
                     "<td><input type='text' readonly class='form-control form-control-sm input-group-sm totalAmount right-align totalAmount' id='totalAmount'  name='purchaseDTOS[" + i + "].totalAmount' value=" + res[i].costPrice + " ></td>" +
-                    "<td><input type='button'  id='itemEditBtn' class='btn btn-primary btn-sm btn-xs fa fa-trash' value='Edit'>"+delBtn+"</td>" +
+                    "<td><input type='button'  id='itemEditBtn' class='btn btn-primary btn-sm btn-xs fa fa-trash' value='Edit'>" + delBtn + "</td>" +
                     "</tr>";
                 tableGrid.find('tbody').append(row);
                 calculateTotal();
@@ -814,7 +818,7 @@ receivedItem = (function () {
 
     function deleteLedgerDetails() {
         $('#btnDelete').on('click', function () {
-            if(_validateDeletePurchase()){
+            if (_validateDeletePurchase()) {
                 let purchaseVoucherNo = $('#purchaseVoucherNo').val();
                 let purchaseInvoiceNo = $('#purchaseInvoiceNo').val();
                 if (purchaseVoucherNo !== '') {

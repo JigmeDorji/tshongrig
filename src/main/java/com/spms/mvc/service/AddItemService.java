@@ -373,10 +373,11 @@ public class AddItemService {
     }
 
     public List<DropdownDTO> getBrandList(CurrentUser currentUser) {
-        return addItemDao.getBrandList(currentUser.getCompanyId());
+        return addItemDao.getBrandList(currentUser.getCompanyId(),currentUser.getBusinessType());
     }
 
     public PurchaseDTO getSlNo(Integer brandId) {
+//        addItemDao.getSlNoForTradingBusinessType();
         PurchaseDTO purchaseDTO = addItemDao.getSlNo(brandId);
         Integer itemCode = Integer.parseInt(purchaseDTO.getSerialNo());
         purchaseDTO.setItemCode(purchaseDTO.getPrefixCode() + itemCode.toString());

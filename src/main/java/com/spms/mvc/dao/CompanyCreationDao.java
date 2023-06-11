@@ -12,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -52,20 +50,36 @@ public class CompanyCreationDao {
 //                "                FROM tbl_common_company c \n" +
 //                "                left join tbl_user  on id=companyId \n" +
 //                "                group by companyId order by id desc";
-        String query="select distinct b.id as companyId, \n" +
-                "CONCAT(companyName, '(', COALESCE(c.loginId, '---'), ')') AS companyName,\n" +
-                "b.mailingAddress AS mailingAddress,\n" +
-                "b.mobileNo AS mobileNo,\n" +
-                "b.email AS email,\n" +
-                "b.website AS website,\n" +
-                "b.fnYrStart AS fnYrStart,\n" +
-                "b.pfPercentage AS pfPercentage,\n" +
-                "b.contactPerson,\n" +
-                "b.status,\n" +
-                "b.trialExpiryDate,\n" +
-                "b.businessType AS businessType\n" +
-                "from tbl_common_company b left join tbl_common_company_login_id c on c.companyId=b.id\n" +
-                "group by companyId order by companyId desc";
+
+//        String query="select distinct b.id as companyId, \n" +
+//                "CONCAT(companyName, '(', COALESCE(c.loginId, '---'), ')') AS companyName,\n" +
+//                "b.mailingAddress AS mailingAddress,\n" +
+//                "b.mobileNo AS mobileNo,\n" +
+//                "b.email AS email,\n" +
+//                "b.website AS website,\n" +
+//                "b.fnYrStart AS fnYrStart,\n" +
+//                "b.pfPercentage AS pfPercentage,\n" +
+//                "b.contactPerson,\n" +
+//                "b.status,\n" +
+//                "b.trialExpiryDate,\n" +
+//                "b.businessType AS businessType\n" +
+//                "from tbl_common_company b left join tbl_common_company_login_id c on c.companyId=b.id\n" +
+//                "group by companyId order by companyId desc";
+
+        String query = "select  b.id as companyId, \n" +
+                "              CONCAT(companyName, '(', COALESCE(loginId, '---'), ')') as companyName,\n" +
+                "                b.mailingAddress AS mailingAddress,\n" +
+                "                b.mobileNo AS mobileNo,\n" +
+                "                b.email AS email,\n" +
+                "                b.website AS website,\n" +
+                "                b.fnYrStart AS fnYrStart,\n" +
+                "                b.pfPercentage AS pfPercentage,\n" +
+                "                b.contactPerson,\n" +
+                "                b.status,\n" +
+                "                b.trialExpiryDate,\n" +
+                "                b.businessType AS businessType\n" +
+                "                from tbl_common_company b \n" +
+                "                group by companyId order by companyId desc;";
         Session session = sessionFactory.getCurrentSession();
         return session.createSQLQuery(query)
                 .setResultTransformer(Transformers.aliasToBean(CompanyCreationDTO.class)).list();
@@ -333,10 +347,21 @@ public class CompanyCreationDao {
                 .setResultTransformer(Transformers.aliasToBean(CommonCompanyLoginId.class)).list();
     }
 
+
     public void saveCompanyLoginDetail(CommonCompanyLoginId commonCompanyLoginId) {
 
         Session session = sessionFactory.getCurrentSession();
         session.save(commonCompanyLoginId);
 
+    }
+
+    @Transactional(readOnly = true)
+    public void updateCommonCompanyTableForUserLoginId(Integer companyId, String companyAbbreviation) {
+        Session session = sessionFactory.getCurrentSession();
+        String sql = "UPDATE  tbl_common_company set loginId=:loginId where  id=:id";
+        session.createSQLQuery(sql)
+                .setParameter("id", companyId)
+                .setParameter("loginId", companyAbbreviation)
+                .executeUpdate();
     }
 }
