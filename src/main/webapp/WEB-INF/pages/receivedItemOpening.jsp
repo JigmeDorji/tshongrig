@@ -31,6 +31,11 @@
                 <a href="." class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Inventory</a>
                 <span class="breadcrumb-item active">Item Opening</span>
             </div>
+
+<%--            <input hidden aria-label="currentUserBusinessType" type="number" id="currentUserBusinessType"--%>
+<%--                   value="${currentUser.businessType}">--%>
+<%--            <input hidden aria-label="companyCode" type="text" id="companyCode" value="${currentUser.loginId}">--%>
+<%--            <input hidden aria-label="companyId" type="number" id="companyId" value="${currentUser.companyId}">--%>
             <a href="." class="header-elements-toggle text-body d-lg-none"><i class="icon-more"></i></a>
         </div>
     </div>
@@ -42,451 +47,222 @@
     <div class="card">
         <div class="card-body">
 
-
-
-
-            <c:if test="${currentUser.businessType == 1}">
-                <form id="returnItemForm" action="<c:url value='/openingBalanceInventory'/> "
-                      class="form-horizontal globalForm">
-                    <input type="hidden" class="resetfield" id="itemId" name="itemId">
-                    <input type="hidden" id="purchaseId" name="purchaseDTOS[0].purchaseId" value="${purchaseId}">
-                    <input type="hidden" id="purchaseVoucherNo" name="voucherNo" value="${purchaseVoucherNumber}">
-                    <input type="hidden" id="supplierName" name="supplierName">
-                    <input type="hidden" id="brandNameID" name="purchaseDTOS[0].brandId">
-                    <input type="hidden" id="isOpeningEntry" class="form-control form-control-sm " name="isOpeningEntry"
-                           value="Y">
-                    <input type="hidden" id="isCash" class="form-control form-control-sm " name="isCash"
-                           value="0"/>
-                    <fieldset>
-                        <legend class="text-uppercase font-size-sm font-weight-bold">Enter item details</legend>
-                        <div class="form-group row">
-                            <label class="  col-md-3 left-label required">Entry Date:</label>
-
-                            <div class="col-md-3">
-                                <input type="text" tabindex="2" class="form-control form-control-sm  right-align"
-                                       value="${currentUser.financialYearFrom}"
-                                       placeholder="DD.MM.YYYY" id="purchaseDate" name="purchaseDate" readonly
-                                       required="required"/>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-md-3">
-                                <input type="hidden" id="purchaseInvoiceNo" class="form-control form-control-sm "
-                                       name="purchaseInvoiceNo"
-                                       value="0"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-md-3  required">Brand</label>
-                            <div class="col-md-3">
-                                <input type="text" id="brandId" class="form-control form-control-sm "
-                                       required="required"/>
-                            </div>
-                            <div class="col-md-2">
-                                <input type="button" data-toggle="modal" class="btn btn-sm btn-primary btn-xs"
-                                       value="New Brand"
-                                       id="btnAddBrand">
-                            </div>
-                            <label class="col-md-1 left-label">Serial:</label>
-
-                            <div class="col-md-1">
-                                <input type="text" tabindex="2" class="form-control form-control-sm  right-align"
-                                       id="currentSerial" readonly/>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="  col-md-3 left-label">Item Code:</label>
-
-                            <div class="col-md-3">
-                                <input type="text" tabindex="2" class="form-control form-control-sm  right-align"
-                                       id="itemCode" name="purchaseDTOS[0].itemCode"/>
-                            </div>
-
-                                <%--Garment--%>
-                                <%--<div class="col-md-3">--%>
-                                <%--<input type="text" tabindex="2" class="form-control form-control-sm  right-align" value="${itemCode}" readonly--%>
-                                <%--id="itemCode" name="itemCode"/>--%>
-                                <%--</div>--%>
-
-
-                        </div>
-
-
-                        <div class="form-group row">
-                            <label class="col-md-3  required">Type</label>
-                            <div class="col-md-3">
-                                <input type="text" id="type" class="form-control form-control-sm "
-                                       required="required" name="purchaseDTOS[0].type"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="  col-md-3 left-label">Part Number:</label>
-
-                            <div class="col-md-3">
-                                <input type="text" tabindex="2" class="form-control form-control-sm  right-align"
-                                       id="partNo" name="purchaseDTOS[0].partNo"/>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-
-                            <label class=" col-md-3 left-label required">Item Name</label>
-
-                            <div class="col-md-1">
-                                <input type="text"
-                                       id="itemNamePrefix" class="form-control form-control-sm" readonly
-                                       name="purchaseDTOS[0].prefixCode"
-                                       required="required"/>
-                            </div>
-                            <div class="col-md-4" style="margin-left: -30px">
-                                <input type="text" id="itemName" class="form-control form-control-sm common"
-                                       name="purchaseDTOS[0].itemName"
-                                       required="required"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-
-                            <label class=" col-md-3 left-label required">qty</label>
-
-                            <div class="col-md-1">
-                                <input type="text" id="qty" class="form-control form-control-sm amount common"
-                                       name="purchaseDTOS[0].qty" required="required"/>
-                                <input type="hidden" id="originalQty"
-                                       class="form-control form-control-sm amount common"/>
-                            </div>
-                            <label class=" col-md-1 right-align">Unit</label>
-                            <div class="col-md-1">
-                                <form:select class="form-control form-control-sm resetField" path="unitList" id="unitId"
-                                             required="required"
-                                             name="purchaseDTOS[0].unitId">
-                                    <form:option value="">----</form:option>
-                                    <form:options items="${unitList}" itemValue="value" itemLabel="text"/>
-                                </form:select>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-
-                            <label class=" col-md-3 left-label required">Cost Price</label>
-
-                            <div class="col-md-3">
-                                <input type="text" id="costPrice" class="form-control form-control-sm amount common"
-                                       name="purchaseDTOS[0].costPrice"
-                                       required="required"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-
-                            <label class=" col-md-3 left-label required">Selling Price</label>
-
-                            <div class="col-md-3">
-                                <input type="text" id="sellingPrice" class="form-control form-control-sm amount common"
-                                       required="required"
-                                       name="purchaseDTOS[0].sellingPrice"/>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class=" col-md-3 left-label required">Location</label>
-
-                            <div class="col-md-3">
-
-                                <form:select class="form-control form-control-sm resetField common" path="locationList"
-                                             id="locationId"
-                                             required="required"
-                                             name="purchaseDTOS[0].locationId">
-                                    <form:option value="">---Please Select---</form:option>
-                                    <form:options items="${locationList}" itemValue="value" itemLabel="text"/>
-                                </form:select>
-                            </div>
-                        </div>
-                        <br/>
-
-                        <div class="form-group row creditDetails" hidden>
-                            <label class="col-md-3  required">Supplier Name:</label>
-
-                            <div class="col-md-3">
-                                <select id="supplierId" required class="form-control form-control-sm "
-                                        name="supplierId"></select>
-                            </div>
-
-                            <div class="col-md-3">
-                                <input type="button" data-toggle="modal" class="btn btn-primary btn-xs"
-                                       value="Add Supplier"
-                                       id="btnAddNewSupplier">
-                            </div>
-                        </div>
-
-                        <div class="form-group row" id="bankDetails" hidden>
-                            <label class=" col-md-3 left-label">Select Bank Account</label>
-
-                            <div class="col-md-3">
-                                <form:select class="form-control form-control-sm resetField" path="bankList"
-                                             id="bankLedgerId" required="required"
-                                             name="bankLedgerId">
-                                    <form:option value="">---Please Select---</form:option>
-                                    <form:options items="${bankList}" itemValue="id" itemLabel="text"/>
-                                </form:select>
-                            </div>
-                        </div>
-
-                            <%--
-                                        <div class="form-group row">
-                                            &lt;%&ndash;<label class="  col-md-2 left-label required">Amount:</label>
-
-                                            <div class="col-md-2">
-                                                <input type="text" id="amount" class="form-control form-control-sm  "
-                                                       name="amount"/>
-                                            </div>&ndash;%&gt;
-                                            <label class=" col-md-2 left-label required"> Location</label>
-
-                                            <div class="col-md-2">
-                                                <Select type="text" id="cashOrBank" class="form-control form-control-sm "
-                                                        name="isCash" required="required">
-                                                    <option value="">--Select--</option>
-                                                    <option value="1">Cash</option>
-                                                    <option value="0">Bank</option>
-                                                </Select>
-                                            </div>
-                                        </div>--%>
-
-                    </fieldset>
+            <form id="returnItemForm" action="<c:url value='/openingBalanceInventory'/> "
+                  class="form-horizontal globalForm">
+                <input type="hidden" class="resetfield" id="itemId" name="itemId">
+                <input type="hidden" id="purchaseId" name="purchaseDTOS[0].purchaseId" value="${purchaseId}">
+                <input type="hidden" id="purchaseVoucherNo" name="voucherNo" value="${purchaseVoucherNumber}">
+                <input type="hidden" id="supplierName" name="supplierName">
+                <input type="hidden" id="brandNameID" name="purchaseDTOS[0].brandId">
+                <input type="hidden" id="isOpeningEntry" class="form-control form-control-sm " name="isOpeningEntry"
+                       value="Y">
+                <input type="hidden" id="isCash" class="form-control form-control-sm " name="isCash"
+                       value="0"/>
+                <fieldset>
+                    <legend class="text-uppercase font-size-sm font-weight-bold">Enter item details</legend>
                     <div class="form-group row">
+                        <label class="  col-md-3 left-label required">Entry Date:</label>
+
                         <div class="col-md-3">
-                                <%--            <input type="button" class="btn btn-primary btn-block" value="Back" id="backBtn">--%>
-                        </div>
-                        <div class="col-md-3">
-                            <input type="submit" class="btn btn-primary btn-block" value="Save" id="btnSave">
+                            <input type="text" tabindex="2" class="form-control form-control-sm  right-align"
+                                   value="${currentUser.financialYearFrom}"
+                                   placeholder="DD.MM.YYYY" id="purchaseDate" name="purchaseDate" readonly
+                                   required="required"/>
                         </div>
                     </div>
-                </form>
-
-            </c:if>
-
-            <c:if test="${currentUser.businessType == 8}">
-
-                <form id="returnItemForm" action="<c:url value='/openingBalanceInventory'/> "
-                      class="form-horizontal globalForm">
-                    <input type="hidden" class="resetfield" id="itemId" name="itemId">
-                    <input type="hidden" id="purchaseId" name="purchaseDTOS[0].purchaseId" value="${purchaseId}">
-                    <input type="hidden" id="purchaseVoucherNo" name="voucherNo" value="${purchaseVoucherNumber}">
-                    <input type="hidden" id="supplierName" name="supplierName">
-                    <input type="hidden" id="brandNameID" name="purchaseDTOS[0].brandId">
-                    <input type="hidden" id="isOpeningEntry" class="form-control form-control-sm " name="isOpeningEntry"
-                           value="Y">
-                    <input type="hidden" id="isCash" class="form-control form-control-sm " name="isCash"
-                           value="0"/>
-                    <fieldset>
-                        <legend class="text-uppercase font-size-sm font-weight-bold">Enter item details</legend>
-                        <div class="form-group row">
-                            <label class="  col-md-3 left-label required">Entry Date:</label>
-
-                            <div class="col-md-3">
-                                <input type="text" tabindex="2" class="form-control form-control-sm  right-align"
-                                       value="${currentUser.financialYearFrom}"
-                                       placeholder="DD.MM.YYYY" id="purchaseDate" name="purchaseDate" readonly
-                                       required="required"/>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-md-3">
-                                <input type="hidden" id="purchaseInvoiceNo" class="form-control form-control-sm "
-                                       name="purchaseInvoiceNo"
-                                       value="0"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group row" hidden>
-<%--                            <label class="col-md-3  required">Brand</label>--%>
-                            <div class="col-md-3">
-                                <input type="text" id="brandId" class="form-control form-control-sm "
-                                       required="required" value="${generalBrand.text}"/>
-                            </div>
-                            <div class="col-md-2">
-                                <input type="button" data-toggle="modal" class="btn btn-sm btn-primary btn-xs"
-                                       value="New Brand"
-                                       id="btnAddBrand">
-                            </div>
-                            <label class="col-md-1 left-label">Serial:</label>
-
-                            <div class="col-md-1">
-                                <input type="text" tabindex="2" class="form-control form-control-sm  right-align"
-                                       id="currentSerial" readonly value="${getSlNo.serialNo}"/>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="  col-md-3 left-label">Item Code:</label>
-
-                            <div class="col-md-3">
-                                <input type="text" tabindex="2" class="form-control form-control-sm  right-align"
-                                       id="itemCode" name="purchaseDTOS[0].itemCode"/>
-                            </div>
-
-                                <%--Garment--%>
-                                <%--<div class="col-md-3">--%>
-                                <%--<input type="text" tabindex="2" class="form-control form-control-sm  right-align" value="${itemCode}" readonly--%>
-                                <%--id="itemCode" name="itemCode"/>--%>
-                                <%--</div>--%>
-
-
-                        </div>
-
-
-                        <div class="form-group row" hidden>
-                            <label class="col-md-3  required">Type</label>
-                            <div class="col-md-3">
-                                <input type="text" id="type" class="form-control form-control-sm "
-                                       required="required" name="purchaseDTOS[0].type" value="GeneralTradingType-${currentUser.businessType}"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group row" hidden>
-                            <label class="  col-md-3 left-label">Part Number:</label>
-
-                            <div class="col-md-3">
-                                <input type="text" tabindex="2" class="form-control form-control-sm  right-align"
-                                       id="partNo" name="purchaseDTOS[0].partNo" value="${currentUser.loginId}-GT"/>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-
-                            <label class=" col-md-3 left-label required">Item Name</label>
-
-                            <div class="col-md-1" hidden>
-                                <input type="text"
-                                       id="itemNamePrefix" class="form-control form-control-sm" readonly
-                                       name="purchaseDTOS[0].prefixCode"
-                                       required="required" value="${getSlNo.prefixCode}" />
-                            </div>
-                            <div class="col-md-3">
-                                <input type="text" id="itemName" class="form-control form-control-sm common"
-                                       name="purchaseDTOS[0].itemName"
-                                       required="required"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-
-                            <label class=" col-md-3 left-label required">qty</label>
-
-                            <div class="col-md-1">
-                                <input type="text" id="qty" class="form-control form-control-sm amount common"
-                                       name="purchaseDTOS[0].qty" required="required"/>
-                                <input type="hidden" id="originalQty"
-                                       class="form-control form-control-sm amount common"/>
-                            </div>
-                            <label class=" col-md-1 right-align">Unit</label>
-                            <div class="col-md-1">
-                                <form:select class="form-control form-control-sm resetField" path="unitList" id="unitId"
-                                             required="required"
-                                             name="purchaseDTOS[0].unitId">
-                                    <form:option value="">----</form:option>
-                                    <form:options items="${unitList}" itemValue="value" itemLabel="text"/>
-                                </form:select>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-
-                            <label class=" col-md-3 left-label required">Cost Price</label>
-
-                            <div class="col-md-3">
-                                <input type="text" id="costPrice" class="form-control form-control-sm amount common"
-                                       name="purchaseDTOS[0].costPrice"
-                                       required="required"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-
-                            <label class=" col-md-3 left-label required">Selling Price</label>
-
-                            <div class="col-md-3">
-                                <input type="text" id="sellingPrice" class="form-control form-control-sm amount common"
-                                       required="required"
-                                       name="purchaseDTOS[0].sellingPrice"/>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class=" col-md-3 left-label required">Location</label>
-
-                            <div class="col-md-3">
-
-                                <form:select class="form-control form-control-sm resetField common" path="locationList"
-                                             id="locationId"
-                                             required="required"
-                                             name="purchaseDTOS[0].locationId">
-                                    <form:option value="">---Please Select---</form:option>
-                                    <form:options items="${locationList}" itemValue="value" itemLabel="text"/>
-                                </form:select>
-                            </div>
-                        </div>
-                        <br/>
-
-                        <div class="form-group row creditDetails" hidden>
-                            <label class="col-md-3  required">Supplier Name:</label>
-
-                            <div class="col-md-3">
-                                <select id="supplierId" required class="form-control form-control-sm "
-                                        name="supplierId"></select>
-                            </div>
-
-                            <div class="col-md-3">
-                                <input type="button" data-toggle="modal" class="btn btn-primary btn-xs"
-                                       value="Add Supplier"
-                                       id="btnAddNewSupplier">
-                            </div>
-                        </div>
-
-                        <div class="form-group row" id="bankDetails" hidden>
-                            <label class=" col-md-3 left-label">Select Bank Account</label>
-
-                            <div class="col-md-3">
-                                <form:select class="form-control form-control-sm resetField" path="bankList"
-                                             id="bankLedgerId" required="required"
-                                             name="bankLedgerId">
-                                    <form:option value="">---Please Select---</form:option>
-                                    <form:options items="${bankList}" itemValue="id" itemLabel="text"/>
-                                </form:select>
-                            </div>
-                        </div>
-
-                            <%--
-                                        <div class="form-group row">
-                                            &lt;%&ndash;<label class="  col-md-2 left-label required">Amount:</label>
-
-                                            <div class="col-md-2">
-                                                <input type="text" id="amount" class="form-control form-control-sm  "
-                                                       name="amount"/>
-                                            </div>&ndash;%&gt;
-                                            <label class=" col-md-2 left-label required"> Location</label>
-
-                                            <div class="col-md-2">
-                                                <Select type="text" id="cashOrBank" class="form-control form-control-sm "
-                                                        name="isCash" required="required">
-                                                    <option value="">--Select--</option>
-                                                    <option value="1">Cash</option>
-                                                    <option value="0">Bank</option>
-                                                </Select>
-                                            </div>
-                                        </div>--%>
-
-                    </fieldset>
                     <div class="form-group row">
                         <div class="col-md-3">
-                                <%--            <input type="button" class="btn btn-primary btn-block" value="Back" id="backBtn">--%>
-                        </div>
-                        <div class="col-md-3">
-                            <input type="submit" class="btn btn-primary btn-block" value="Save" id="btnSave">
+                            <input type="hidden" id="purchaseInvoiceNo" class="form-control form-control-sm "
+                                   name="purchaseInvoiceNo"
+                                   value="0"/>
                         </div>
                     </div>
-                </form>
 
-            </c:if>
+                    <div class="form-group row">
+                        <label class="col-md-3  required">Brand</label>
+                        <div class="col-md-3">
+                            <input type="text" id="brandId" class="form-control form-control-sm "
+                                   required="required"/>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="button" data-toggle="modal" class="btn btn-sm btn-primary btn-xs"
+                                   value="New Brand"
+                                   id="btnAddBrand">
+                        </div>
+                        <label class="col-md-1 left-label">Serial:</label>
+
+                        <div class="col-md-1">
+                            <input type="text" tabindex="2" class="form-control form-control-sm  right-align"
+                                   id="currentSerial" readonly/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="  col-md-3 left-label">Item Code:</label>
+
+                        <div class="col-md-3">
+                            <input type="text" tabindex="2" class="form-control form-control-sm  right-align"
+                                   id="itemCode" name="purchaseDTOS[0].itemCode"/>
+                        </div>
+
+                        <%--Garment--%>
+                        <%--<div class="col-md-3">--%>
+                        <%--<input type="text" tabindex="2" class="form-control form-control-sm  right-align" value="${itemCode}" readonly--%>
+                        <%--id="itemCode" name="itemCode"/>--%>
+                        <%--</div>--%>
 
 
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label class="col-md-3  required">Type</label>
+                        <div class="col-md-3">
+                            <input type="text" id="type" class="form-control form-control-sm "
+                                   required="required" name="purchaseDTOS[0].type"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="  col-md-3 left-label">Part Number:</label>
+
+                        <div class="col-md-3">
+                            <input type="text" tabindex="2" class="form-control form-control-sm  right-align"
+                                   id="partNo" name="purchaseDTOS[0].partNo"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+
+                        <label class=" col-md-3 left-label required">Item Name</label>
+
+                        <div class="col-md-1">
+                            <input type="text"
+                                   id="itemNamePrefix" class="form-control form-control-sm" readonly
+                                   name="purchaseDTOS[0].prefixCode"
+                                   required="required"/>
+                        </div>
+                        <div class="col-md-4" style="margin-left: -30px">
+                            <input type="text" id="itemName" class="form-control form-control-sm common"
+                                   name="purchaseDTOS[0].itemName"
+                                   required="required"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+
+                        <label class=" col-md-3 left-label required">qty</label>
+
+                        <div class="col-md-1">
+                            <input type="text" id="qty" class="form-control form-control-sm amount common"
+                                   name="purchaseDTOS[0].qty" required="required"/>
+                            <input type="hidden" id="originalQty"
+                                   class="form-control form-control-sm amount common"/>
+                        </div>
+                        <label class=" col-md-1 right-align">Unit</label>
+                        <div class="col-md-1">
+                            <form:select class="form-control form-control-sm resetField" path="unitList" id="unitId"
+                                         required="required"
+                                         name="purchaseDTOS[0].unitId">
+                                <form:option value="">----</form:option>
+                                <form:options items="${unitList}" itemValue="value" itemLabel="text"/>
+                            </form:select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+
+                        <label class=" col-md-3 left-label required">Cost Price</label>
+
+                        <div class="col-md-3">
+                            <input type="text" id="costPrice" class="form-control form-control-sm amount common"
+                                   name="purchaseDTOS[0].costPrice"
+                                   required="required"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+
+                        <label class=" col-md-3 left-label required">Selling Price</label>
+
+                        <div class="col-md-3">
+                            <input type="text" id="sellingPrice" class="form-control form-control-sm amount common"
+                                   required="required"
+                                   name="purchaseDTOS[0].sellingPrice"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class=" col-md-3 left-label required">Location</label>
+
+                        <div class="col-md-3">
+
+                            <form:select class="form-control form-control-sm resetField common" path="locationList"
+                                         id="locationId"
+                                         required="required"
+                                         name="purchaseDTOS[0].locationId">
+                                <form:option value="">---Please Select---</form:option>
+                                <form:options items="${locationList}" itemValue="value" itemLabel="text"/>
+                            </form:select>
+                        </div>
+                    </div>
+                    <br/>
+
+                    <div class="form-group row creditDetails" hidden>
+                        <label class="col-md-3  required">Supplier Name:</label>
+
+                        <div class="col-md-3">
+                            <select id="supplierId" required class="form-control form-control-sm "
+                                    name="supplierId"></select>
+                        </div>
+
+                        <div class="col-md-3">
+                            <input type="button" data-toggle="modal" class="btn btn-primary btn-xs"
+                                   value="Add Supplier"
+                                   id="btnAddNewSupplier">
+                        </div>
+                    </div>
+
+                    <div class="form-group row" id="bankDetails" hidden>
+                        <label class=" col-md-3 left-label">Select Bank Account</label>
+
+                        <div class="col-md-3">
+                            <form:select class="form-control form-control-sm resetField" path="bankList"
+                                         id="bankLedgerId" required="required"
+                                         name="bankLedgerId">
+                                <form:option value="">---Please Select---</form:option>
+                                <form:options items="${bankList}" itemValue="id" itemLabel="text"/>
+                            </form:select>
+                        </div>
+                    </div>
+
+                    <%--
+                                <div class="form-group row">
+                                    &lt;%&ndash;<label class="  col-md-2 left-label required">Amount:</label>
+
+                                    <div class="col-md-2">
+                                        <input type="text" id="amount" class="form-control form-control-sm  "
+                                               name="amount"/>
+                                    </div>&ndash;%&gt;
+                                    <label class=" col-md-2 left-label required"> Location</label>
+
+                                    <div class="col-md-2">
+                                        <Select type="text" id="cashOrBank" class="form-control form-control-sm "
+                                                name="isCash" required="required">
+                                            <option value="">--Select--</option>
+                                            <option value="1">Cash</option>
+                                            <option value="0">Bank</option>
+                                        </Select>
+                                    </div>
+                                </div>--%>
+
+                </fieldset>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <%--            <input type="button" class="btn btn-primary btn-block" value="Back" id="backBtn">--%>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="submit" class="btn btn-primary btn-block" value="Save" id="btnSave">
+                    </div>
+                </div>
+            </form>
             <div class="modal fade" id="supplierModal" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">

@@ -226,6 +226,8 @@ $(document).ready(function () {
     if (document.URL.search("viewItemsForRawMaterial") > 1)
         scriptLoader("resources/js/viewItemsForRawMaterial.js");
 
+    if (document.URL.search("closingStock") > 1)
+        scriptLoader("resources/js/closingStock.js");
 
 });
 var scriptLoader = function (url) {

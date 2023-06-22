@@ -2,16 +2,15 @@ package com.spms.mvc.service;
 
 import com.spms.mvc.Enumeration.CommonStatus;
 import com.spms.mvc.Enumeration.UserRoleType;
+import com.spms.mvc.dao.AddItemDao;
 import com.spms.mvc.dao.CompanyCreationDao;
 import com.spms.mvc.dao.FinancialYearSetupDao;
 import com.spms.mvc.dao.auth.UserDao;
 import com.spms.mvc.dto.CompanyCreationDTO;
 import com.spms.mvc.dto.FinancialYearDTO;
 import com.spms.mvc.dto.UserDTO;
-import com.spms.mvc.entity.CommonCompanyLoginId;
 import com.spms.mvc.entity.CompanyCreation;
-import com.spms.mvc.entity.FinancialYear;
-import com.spms.mvc.entity.User;
+import com.spms.mvc.entity.*;
 import com.spms.mvc.library.helper.CurrentUser;
 import com.spms.mvc.library.helper.DateUtil;
 import com.spms.mvc.library.helper.DropdownDTO;
@@ -171,6 +170,13 @@ public class CompanyCreationService extends BaseController {
                 userId = userDao.addUser(user);
 
 
+//                Saving the Brand For General Trading Company
+                if (companyCreationDTO.getBusinessType() == 8) {
+//                    savingBrandDetailOnCompanyApprovalOnce(companyAbbreviation, companyCreationDTO.getCompanyName());
+                    savingBrandDetailOnCompanyApprovalOnce(companyAbbreviation, companyCreationDTO);
+                }
+
+
 //                Updating the User Login ID in Common Company Table
                 companyCreationDao.updateCommonCompanyTableForUserLoginId(companyId, companyAbbreviation);
 
@@ -299,5 +305,46 @@ public class CompanyCreationService extends BaseController {
 
     public List<DropdownDTO> getScreenList(BigInteger userId) {
         return companyCreationDao.getScreenList(userId);
+    }
+
+    public void updateTheUserStatus(Character status, Integer companyId) {
+
+        List<BigInteger> userIds = companyCreationDao.getUserAt(companyId);
+        if (status.equals('A')) {
+            updateTheUserStatus(userIds, 'A');
+        }
+        if (status.equals('N')) {
+            updateTheUserStatus(userIds, 'N');
+        }
+    }
+
+    private void updateTheUserStatus(List<BigInteger> userIds, Character status) {
+        for (BigInteger userId : userIds) {
+            companyCreationDao.updateTheUserStatus(status, userId);
+        }
+    }
+
+
+//   Added on 21/06/2023 For General Trading Business Brand Creation
+
+    @Autowired
+    private AddItemDao addItemDao;
+
+
+    private void savingBrandDetailOnCompanyApprovalOnce(String companyAbbreviation, CompanyCreationDTO companyCreationDTO) {
+        String brandName = companyAbbreviation + "GT" + companyAbbreviation;
+        Boolean isBrandExist = !companyCreationDao.checkInBrandExistsOnCompanyApprovalOnce(companyCreationDao.getCompanyId());
+        if (!isBrandExist) {//adding  New Brand Detail once on approval time
+            BrandWiseItemCode brandWiseItemCode = new BrandWiseItemCode();
+            brandWiseItemCode.setBrandId(addItemDao.getMaxBrandId() + 1);
+            brandWiseItemCode.setBrandName(brandName);
+            brandWiseItemCode.setBrandPrefix(companyAbbreviation);
+            brandWiseItemCode.setSerialNo(1);
+            brandWiseItemCode.setRemarks("Brand For General Trading : " + companyCreationDTO.getCompanyName());
+            brandWiseItemCode.setCompanyId(companyCreationDTO.getCompanyId());
+            brandWiseItemCode.setSetDate(new Date());
+            brandWiseItemCode.setCreatedBy(companyAbbreviation);
+            companyCreationDao.savingBrandDetailOnCompanyApprovalOnce(brandWiseItemCode);
+        }
     }
 }

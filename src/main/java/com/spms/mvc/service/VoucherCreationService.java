@@ -26,7 +26,7 @@ import java.util.Objects;
 /**
  * Created by jigmePc on 5/8/2019.
  */
-@Service("voucherCreationService")
+@Service()
 public class VoucherCreationService {
 
     @Autowired

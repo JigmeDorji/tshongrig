@@ -81,7 +81,7 @@ public class AccProfitAndLossReportService {
 
         AccProfitAndLossReportDTO accProfitAndLossReportDTO = new AccProfitAndLossReportDTO();
 
-        if (BusinessType.Trading.getValue().equals(businessType)) {
+        if (BusinessType.Trading.getValue().equals(businessType) || BusinessType.GeneralTrading.getValue().equals(businessType)) {
             //Sale
             totalSales = getTotalAmountByAccountTypeId(companyId, AccountTypeEnum.SALES.getValue(), fromDate, toDate, financialYearId, calFrom);
             accProfitAndLossReportDTOList.addAll(getSaleDetailList(totalSales));

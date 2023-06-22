@@ -1,5 +1,6 @@
 package com.spms.mvc.web;
 
+
 import com.spms.mvc.dto.PurchaseDTO;
 import com.spms.mvc.library.helper.CurrentUser;
 import com.spms.mvc.library.helper.DateUtil;
@@ -17,23 +18,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by SonamPC on 15-Dec-16.
- */
 @Controller
 @PreAuthorize("isAuthenticated()")
-@RequestMapping(value = "/viewItem")
-public class ViewItemController {
+@RequestMapping("/closingStock")
+public class ClosingStockController {
+
 
     @Autowired
     private ViewItemService viewItemService;
@@ -45,11 +44,13 @@ public class ViewItemController {
     public String list(Model model, HttpServletRequest request) {
 
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
-        model.addAttribute("currentUser", currentUser);
         model.addAttribute("brandList", addItemService.getBrandList(currentUser));
+
+        model.addAttribute("currentUser", currentUser);
         DateUtil.fromTODateModel(currentUser, model);
+
 //        model.addAttribute("totalStockBalAmt",df2.format(viewItemService.getTotalStockBal(currentUser)));
-        return "viewItem";
+        return "closingStock";
     }
 
 
@@ -57,50 +58,30 @@ public class ViewItemController {
     @RequestMapping(value = "/getItemAvailable", method = RequestMethod.GET)
     public List<PurchaseDTO> getItemAvailable(HttpServletRequest request, Date asOnDate) {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
-        List<PurchaseDTO> result = viewItemService.getItemAvailable(currentUser, asOnDate);
-        if (currentUser.getBusinessType() == 8) {
-            List<PurchaseDTO> sortedArray = new ArrayList<>();
-            for (int integer = 0; integer < result.size(); integer++) {
-                PurchaseDTO purchaseDTO = new PurchaseDTO();
-                purchaseDTO.setSerialNo(String.valueOf(integer + 1));
-                purchaseDTO.setPurchaseId(result.get(integer).getPurchaseId());
-                purchaseDTO.setItemCode(result.get(integer).getItemCode());
-                purchaseDTO.setItemName(result.get(integer).getItemName());
-                purchaseDTO.setLocationId(result.get(integer).getLocationId());
-                purchaseDTO.setQtyBig(result.get(integer).getQtyBig());
-                purchaseDTO.setUnitName(result.get(integer).getUnitName());
-                purchaseDTO.setSellingPrice(result.get(integer).getSellingPrice());
-                sortedArray.add(purchaseDTO);
-            }
 
-            return sortedArray;
-        } else {
-            return viewItemService.getItemAvailable(currentUser, asOnDate);
+        List<PurchaseDTO> result = viewItemService.getItemAvailable(currentUser, asOnDate);
+        List<PurchaseDTO> sortedArray = new ArrayList<>();
+        for (int integer = 0; integer < result.size(); integer++) {
+
+            PurchaseDTO purchaseDTO = new PurchaseDTO();
+            purchaseDTO.setSerialNo(String.valueOf(integer+1));
+            purchaseDTO.setItemCode(result.get(integer).getItemCode());
+            purchaseDTO.setItemName(result.get(integer).getItemName());
+            purchaseDTO.setLocationId(result.get(integer).getLocationId());
+            purchaseDTO.setQtyBig(result.get(integer).getQtyBig());
+            purchaseDTO.setUnitName(result.get(integer).getUnitName());
+            purchaseDTO.setCostPrice(result.get(integer).getCostPrice());
+            purchaseDTO.setClosingStockAmount(result.get(integer).getQtyBig().multiply(BigDecimal.valueOf(result.get(integer).getCostPrice())));
+            sortedArray.add(purchaseDTO);
         }
 
-//
+        return sortedArray;
     }
 
-    @RequestMapping(value = "/navigateToDetail", method = RequestMethod.GET)
-    public String navigateToDetail(HttpServletRequest request, String itemCode, Date asOnDate, RedirectAttributes redirectAttributes) {
-        CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
-        redirectAttributes.addFlashAttribute("itemCode", itemCode);
-        redirectAttributes.addFlashAttribute("asOnDate", DateUtil.format(asOnDate, DateUtil.DD_MMM_YYYY));
-        redirectAttributes.addFlashAttribute("itemName", viewItemService.getItemName(itemCode, currentUser));
-        return "redirect:/viewItemDetail";
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/viewBrandWiseItemDetail", method = {RequestMethod.GET})
-    public ModelAndView viewBrandWiseItemDetail(HttpServletRequest request, Integer brandId) {
-        CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
-        return viewItemService.viewBrandWiseItemDetail(brandId, currentUser.getCompanyId(), currentUser.getLoginId());
-    }
-
-
-    @RequestMapping(value = "/exportAllItemsToExcel", method = RequestMethod.GET)
+    @RequestMapping(value = "/exportClosingItems", method = RequestMethod.GET)
     public ModelAndView exportExcel(HttpServletResponse response, HttpServletRequest request) throws IOException {
         // create a list of data to be exported
+
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
 
         List<PurchaseDTO> data = viewItemService.getItemAvailable(currentUser, new Date());
@@ -112,24 +93,28 @@ public class ViewItemController {
         // create a header row
         Row headerRow = sheet.createRow(0);
         headerRow.createCell(0).setCellValue("SI.NO");
-        headerRow.createCell(1).setCellValue("Part Number");
-        headerRow.createCell(2).setCellValue("Item Coder");
+        headerRow.createCell(1).setCellValue("Item Code");
+        headerRow.createCell(2).setCellValue("Item Name");
         headerRow.createCell(3).setCellValue("Location ");
-        headerRow.createCell(4).setCellValue("Qty");
         headerRow.createCell(5).setCellValue("Unit");
-        headerRow.createCell(6).setCellValue("Selling Price");
+        headerRow.createCell(4).setCellValue("Qty");
+        headerRow.createCell(6).setCellValue("Cost Price");
+        headerRow.createCell(7).setCellValue("Amount");
 
+
+//        SI.NO	Item Code	Item Name	Location	Qty	Cost PRice		Amount
         // create data rows
         int rowNum = 1;
         for (int i = 0; i < data.size(); i++) {
             Row row = sheet.createRow(rowNum++);
             row.createCell(0).setCellValue((i + 1));
-            row.createCell(1).setCellValue(data.get(i).getItemName());
-            row.createCell(2).setCellValue(data.get(i).getItemCode());
+            row.createCell(1).setCellValue(data.get(i).getItemCode());
+            row.createCell(2).setCellValue(data.get(i).getItemName());
             row.createCell(3).setCellValue(data.get(i).getLocationId());
-            row.createCell(4).setCellValue(String.valueOf(data.get(i).getQtyBig()));
-            row.createCell(5).setCellValue(data.get(i).getUnitName());
-            row.createCell(6).setCellValue(data.get(i).getSellingPrice());
+            row.createCell(4).setCellValue(data.get(i).getUnitName());
+            row.createCell(5).setCellValue(String.valueOf(data.get(i).getQtyBig()));
+            row.createCell(6).setCellValue(data.get(i).getCostPrice());
+            row.createCell(7).setCellValue(String.valueOf(data.get(i).getQtyBig().multiply(BigDecimal.valueOf(data.get(i).getCostPrice()))));
         }
 
         // set the response content type and headers
@@ -145,6 +130,4 @@ public class ViewItemController {
         // return null to indicate that the response has been handled
         return null;
     }
-
-
 }

@@ -60,12 +60,13 @@
         <!--        <property name="url" value="jdbc:mysql://localhost:3306/au_babesa"/>-->
         <!--                <property name="url" value="jdbc:mysql://localhost:3306/salarysheet_db_1"/>-->
 <!--        <property name="url" value="jdbc:mysql://localhost:3306/tshongrig_06_06_2023_db"/>-->
-        <property name="url" value="jdbc:mysql://localhost:3306/tshongrig_07_06_2023_db"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/tshongrig_db_db"/>
         <property name="password" value="root@Root@22"/>
 
 
         <property name="validationQuery" value="SELECT 1"/>
     </bean>
+
 
     <!--Linux-->
     <!--   <bean id="spmsDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
@@ -102,11 +103,18 @@
             </value>
         </property>
     </bean>
+<!--    &lt;!&ndash; Hibernate Transaction Manager &ndash;&gt;-->
+<!--    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">-->
+<!--        <property name="sessionFactory" ref="spmsSessionFactory"/>-->
+<!--    </bean>-->
+
     <!-- Hibernate Transaction Manager -->
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="spmsSessionFactory"/>
     </bean>
-    <!-- Activates annotation based transaction management -->
+
+<!--    &lt;!&ndash; Activates annotation based transaction management &ndash;&gt;-->
+<!--    <tx:annotation-driven transaction-manager="transactionManager"/>-->
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
     <!--Configure Messages-->
@@ -117,6 +125,8 @@
 
     <!--Bean Configuration in Current User-->
     <bean class="com.spms.mvc.library.helper.CurrentUser" id="currentUser" scope="request"/>
+
+
 
     <!--Report configuration-->
     <bean id="xmlViewResolver" class="org.springframework.web.servlet.view.XmlViewResolver">

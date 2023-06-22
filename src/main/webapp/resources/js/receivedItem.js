@@ -1,6 +1,48 @@
 /**
  * Created by SonamPC on 12-Dec-16.
  */
+
+isGeneralTrader = generalTrader().isGeneralTrader("openingBalanceInventory");
+
+
+if (isGeneralTrader) {
+    function defaultValueSetter() {
+        $.ajax({
+            url: 'receivedItem/getBrandList',
+            type: 'GET',
+            success: function (res) {
+                $('#brandId').val(res[0].text).attr("readonly", true);
+
+                $.ajax({
+                    url: 'receivedItem/getSlNo',
+                    type: 'GET',
+                    data: {brandId: res[0].value},
+                    success: function (res) {
+
+                        $.ajax({
+                            url: 'receivedItem/getSINo',
+                            type: 'POST',
+                            success: function (response) {
+                                let   SiNo = parseInt(response) + 1;
+                                $('#itemCode').val(res.itemCode + SiNo).attr("readonly", true);
+                                $('#currentSerial').val(SiNo)
+
+                            }
+                        });
+
+                        $('#currentSerial').val(res.itemCode)
+                        $('#itemNamePrefix').val(res.prefixCode).attr("readonly", true);
+                        $('#type').val('GENERAL-' + res.itemCode).attr("readonly", true);
+                        $('#partNo').val(res.itemCode + res.itemCode).attr("readonly", true);
+                    }
+                });
+
+            }
+        })
+        $('#btnAddBrand').attr("disabled", true)
+    }
+    defaultValueSetter();
+}
 receivedItem = (function () {
     let purchaseItemTableBody = $('#purchaseItemTable tbody');
 

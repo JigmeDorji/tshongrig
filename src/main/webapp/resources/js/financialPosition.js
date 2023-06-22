@@ -30,6 +30,8 @@ financialPosition = (function () {
                 async: false,
                 success: function (res) {
                     pNLAmount = res;
+                    // pNLAmount = 120;
+                    console.log(res)
                 }
             })
 
@@ -40,6 +42,8 @@ financialPosition = (function () {
                 data: {fromDate: fromDate, toDate: toDate},
                 async: false,
                 success: function (res) {
+
+                    console.log(res)
                     let totalDrAmount = 0;
                     let totalCrAmount = 0;
 

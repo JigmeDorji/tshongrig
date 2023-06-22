@@ -50,18 +50,7 @@ public class ReceivedItemController {
     public String list(Model model, HttpServletRequest request) {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
 
-        model.addAttribute("currentUser",currentUser);
-
-        if (currentUser.getBusinessType() == 8) {
-
-            List<DropdownDTO> getBrandList = addItemService.getBrandList(currentUser);
-            DropdownDTO generalBrand = getBrandList.get(0);
-            model.addAttribute("generalBrand", generalBrand);
-            PurchaseDTO getSlNo = addItemService.getSlNo(8000);
-            model.addAttribute("getSlNo", getSlNo);
-
-
-        }
+        model.addAttribute("currentUser", currentUser);
 
         List<DropdownDTO> locationList = locationSetUpService.getLocationSetUpList(currentUser);
         model.addAttribute("locationList", locationList);
@@ -70,6 +59,8 @@ public class ReceivedItemController {
 
         List<DropdownDTO> supplierList = supplierSetupService.getSupplierListDropDown(currentUser);
         model.addAttribute("supplierList", supplierList);
+
+
 
 
         Date newDate = new Date();
@@ -94,13 +85,10 @@ public class ReceivedItemController {
     public ResponseMessage save(PurchaseCallingDTO purchaseCallingDTO, HttpServletRequest request) throws
             IOException, ParseException {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
-        if (currentUser.getBusinessType() == 8) {
-            for (int i = 0; i < purchaseCallingDTO.getPurchaseDTOS().size(); i++) {
-                purchaseCallingDTO.getPurchaseDTOS().get(i).setBrandId(800);
-            }
-        }
+
         return addItemService.save(purchaseCallingDTO, currentUser);
     }
+
 
     @ResponseBody
     @RequestMapping(value = "/saveBrandDetail", method = RequestMethod.POST)
@@ -121,8 +109,10 @@ public class ReceivedItemController {
     @RequestMapping(value = "/getOpeningPurchaseDetail", method = RequestMethod.GET)
     public PurchaseDTO getOpeningPurchaseDetail(HttpServletRequest request, Integer purchaseId, String purchaseDate, Integer voucherNo) {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
+
         return addItemService.getOpeningPurchaseDetail(purchaseId, DateUtil.toDate(purchaseDate, DateUtil.DD_MMM_YYYY), voucherNo);
     }
+
 
     @ResponseBody
     @RequestMapping(value = "/getRecentPurchaseData", method = RequestMethod.GET)
@@ -141,6 +131,14 @@ public class ReceivedItemController {
     public PurchaseDTO getSlNo(Integer brandId) {
         return addItemService.getSlNo(brandId);
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/getSINo", method = RequestMethod.POST)
+    public Integer getSINo(HttpServletRequest request, Integer companyId) {
+        CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
+        return addItemService.getSINo(currentUser);
+    }
+
 
     @ResponseBody
     @RequestMapping(value = "/getItemDetails", method = RequestMethod.GET)
@@ -162,6 +160,7 @@ public class ReceivedItemController {
         return addItemService.getBrandList((CurrentUser) request.getSession()
                 .getAttribute("currentUser"));
     }
+
 
     @ResponseBody
     @RequestMapping(value = "/getTypeDetail", method = RequestMethod.GET)

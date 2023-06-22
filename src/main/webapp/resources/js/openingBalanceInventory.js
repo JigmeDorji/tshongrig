@@ -1,6 +1,53 @@
 /**
  * Created by jigme.dorji on 5/23/2021.
  */
+
+let isGeneralTrader = generalTrader().isGeneralTrader("openingBalanceInventory");
+
+
+if (isGeneralTrader) {
+    function defaultValueSetter() {
+        $.ajax({
+            url: 'receivedItem/getBrandList',
+            type: 'GET',
+            success: function (res) {
+                $('#brandId').val(res[0].text).attr("readonly", true);
+                $('#brandNameID').val(res[0].data);
+
+                $.ajax({
+                    url: 'receivedItem/getSlNo',
+                    type: 'GET',
+                    data: {brandId: res[0].value},
+                    success: function (res) {
+                        //getSINo
+
+
+                        $.ajax({
+                            url: 'receivedItem/getSINo',
+                            type: 'POST',
+                            success: function (response) {
+                            let   SiNo = parseInt(response) + 1;
+                                $('#itemCode').val(res.itemCode + SiNo).attr("readonly", true);
+                                $('#currentSerial').val(SiNo)
+
+                            }
+                        });
+
+                        $('#currentSerial').val(res.itemCode)
+
+                        $('#itemNamePrefix').val(res.prefixCode).attr("readonly", true);
+                        $('#type').val('GENERAL-' + res.itemCode).attr("readonly", true);
+                        $('#partNo').val(res.itemCode + res.itemCode).attr("readonly", true);
+                    }
+                });
+
+            }
+        })
+        $('#btnAddBrand').attr("disabled", true)
+    }
+
+    defaultValueSetter();
+}
 openingBalanceInventory = (function () {
     function saveItem() {
         $('#btnSave').on('click', function () {
@@ -208,35 +255,35 @@ openingBalanceInventory = (function () {
             url: 'receivedItem/getBrandList',
             type: 'GET',
             success: function (res) {
-
-                res.unshift({
-                    value: "NEW",
-                    text: "Add new Brand"
-                });
-
-                $('#brandId').devbridgeAutocomplete({
-                    lookup: $.map(res, function (value) {
-                        return {data: value.value, value: value.text}
-                    }),
-                    onSelect: function (suggestion) {
-                        if (suggestion.data === "NEW") {
-                            $('#brandId').val('');
-                            $('#brandModal').modal('show');
-                        } else {
-                            $('#brandNameID').val(suggestion.data);
-                            $.ajax({
-                                url: 'receivedItem/getSlNo',
-                                type: 'GET',
-                                data: {brandId: suggestion.data},
-                                success: function (res) {
-                                    $('#currentSerial').val(res.itemCode);
-                                    $('#itemCode').val(res.itemCode);
-                                    $('#itemNamePrefix').val(res.prefixCode);
-                                }
-                            });
+                if (!isGeneralTrader) {
+                    res.unshift({
+                        value: "NEW",
+                        text: "Add new Brand"
+                    });
+                    $('#brandId').devbridgeAutocomplete({
+                        lookup: $.map(res, function (value) {
+                            return {data: value.value, value: value.text}
+                        }),
+                        onSelect: function (suggestion) {
+                            if (suggestion.data === "NEW") {
+                                $('#brandId').val('');
+                                $('#brandModal').modal('show');
+                            } else {
+                                $('#brandNameID').val(suggestion.data);
+                                $.ajax({
+                                    url: 'receivedItem/getSlNo',
+                                    type: 'GET',
+                                    data: {brandId: suggestion.data},
+                                    success: function (res) {
+                                        $('#currentSerial').val(res.itemCode);
+                                        $('#itemCode').val(res.itemCode);
+                                        $('#itemNamePrefix').val(res.prefixCode);
+                                    }
+                                });
+                            }
                         }
-                    }
-                })
+                    })
+                }
             }
         })
     }
@@ -468,3 +515,7 @@ $(document).ready(function () {
     openingBalanceInventory.checkQtyIsNegative();
     // receivedItem.dateFormat();
 });
+
+
+console.log(generalTrader().isGeneralTrader("openingBalanceInventory"))
+console.log(generalTrader().getFirstSecondPartOfItemCode("openingBalanceInventory", "G M"))

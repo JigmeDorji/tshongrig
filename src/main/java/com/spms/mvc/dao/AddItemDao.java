@@ -317,13 +317,8 @@ public class AddItemDao {
     }
 
     @Transactional(readOnly = true)
-    public List<DropdownDTO> getBrandList(Integer companyId, Integer companyBusinessType) {
+    public List<DropdownDTO> getBrandList(Integer companyId) {
         String query = "SELECT brandId AS value, brandName AS text FROM tbl_item_code WHERE  companyId=:companyId";
-
-        if (companyBusinessType == 8) {
-            companyId = 8000;
-        }
-
         return sessionFactory.getCurrentSession().createSQLQuery(query)
                 .setParameter("companyId", companyId)
                 .setResultTransformer(Transformers.aliasToBean(DropdownDTO.class)).list();
@@ -661,6 +656,15 @@ public class AddItemDao {
         return hibernate.setParameter("itemName", itemName)
                 .setParameter("itemCode", itemCode)
                 .setParameter("companyId", currentUser.getCompanyId()).list().size() > 0;
+    }
+
+    @Transactional
+    public BigInteger getSINo(Integer companyId) {
+        String sqlQry="SELECT count(purchaseId) FROM tbl_inv_purchase where companyId=:companyId";
+        SQLQuery hibernate = sessionFactory.getCurrentSession().createSQLQuery(sqlQry);
+        return (BigInteger) hibernate
+                .setParameter("companyId", companyId)
+                .uniqueResult();
     }
 }
 

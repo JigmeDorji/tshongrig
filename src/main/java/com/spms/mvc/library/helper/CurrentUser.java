@@ -16,6 +16,10 @@
  */
 package com.spms.mvc.library.helper;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.stereotype.Component;
+
 import java.math.BigInteger;
 import java.util.Date;
 

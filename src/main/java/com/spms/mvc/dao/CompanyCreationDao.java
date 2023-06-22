@@ -2,6 +2,7 @@ package com.spms.mvc.dao;
 
 import com.spms.mvc.dto.CompanyCreationDTO;
 import com.spms.mvc.dto.FinancialYearDTO;
+import com.spms.mvc.entity.BrandWiseItemCode;
 import com.spms.mvc.entity.CommonCompanyLoginId;
 import com.spms.mvc.entity.CompanyCreation;
 import com.spms.mvc.library.helper.DropdownDTO;
@@ -364,4 +365,45 @@ public class CompanyCreationDao {
                 .setParameter("loginId", companyAbbreviation)
                 .executeUpdate();
     }
+
+    @Transactional(readOnly = true)
+    public List<BigInteger> getUserAt(Integer companyId) {
+        Session session = sessionFactory.getCurrentSession();
+        List list = session.createSQLQuery("SELECT userId FROM tbl_user  where companyId=:companyId")
+                .setParameter("companyId", companyId).list();
+        return list;
+
+    }
+
+
+    @Transactional
+    public void updateTheUserStatus(Character status, BigInteger userId) {
+        Session session = sessionFactory.getCurrentSession();
+        String sql = "UPDATE  tbl_user set userStatus=:userStatus where  userId=:userId";
+        session.createSQLQuery(sql)
+                .setParameter("userStatus", status)
+                .setParameter("userId", userId)
+                .executeUpdate();
+
+    }
+
+
+    @Transactional
+    public void savingBrandDetailOnCompanyApprovalOnce(BrandWiseItemCode brandWiseItemCode) {
+        sessionFactory.getCurrentSession().saveOrUpdate(brandWiseItemCode);
+    }
+
+
+    @Transactional(readOnly = true)
+    public Boolean checkInBrandExistsOnCompanyApprovalOnce(Integer companyId) {
+        String sqlQry = "SELECT count(*) FROM tbl_item_code WHERE companyId = :companyId";
+        BigInteger count = (BigInteger) sessionFactory.getCurrentSession()
+                .createSQLQuery(sqlQry)
+                .setParameter("companyId", companyId)
+                .uniqueResult();
+        return count.equals(BigInteger.ZERO);
+    }
+
+
+
 }

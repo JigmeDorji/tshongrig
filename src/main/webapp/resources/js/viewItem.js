@@ -2,7 +2,10 @@
  * Created by SonamPC on 12-Dec-16.
  */
 
-viewItem = (function () {
+let isGeneralTrader = generalTrader().isGeneralTrader("openingBalanceInventory");
+
+
+closingStock = (function () {
 
 
     /* var viewItemTable = $('#viewItemTable').dataTable({
@@ -40,46 +43,74 @@ viewItem = (function () {
                 success: function (res) {
                     $('#itemTable').dataTable().fnDestroy();
                     let totalAmt = 0;
-                    var columnDef = [
-                        {data: 'purchaseId', class: 'hidden'},
-                        {data: 'partNo', class: 'commonFields'},
-                        {data: 'itemCode'},
-                        {data: 'itemName'},
-                        {data: 'locationId'},
-                        {data: 'qtyBig'},
-                        {data: 'unitName'},
-                        // {
-                        //     data: 'costPrice', class: "right-align",
-                        //     render: function (data) {
-                        //         return spms.formatAmount(data.toFixed(2));
-                        //     }
-                        // },
-                        {
-                            data: 'sellingPrice', class: 'commonFields',
-                            // render: function (data, type, row) {
-                            //     let amount = row.amount;
-                            //     if (row.qtyBig === 0) {
-                            //         amount = -1 * amount;
+                    console.log(res)
+                    var columnDef
+                    if (isGeneralTrader) {
+                         columnDef = [
+                            {data: 'purchaseId', class: 'hidden'},
+                            {data: 'purchaseId', class: 'hidden'},
+                            {data: 'serialNo', class: 'commonFields'},
+                            {data: 'itemCode'},
+                            {data: 'itemName'},
+                            {data: 'locationId'},
+                            {data: 'qtyBig'},
+                            {data: 'unitName'},
+                            {data: 'sellingPrice', class: 'commonFields'},
+
+                             {
+                                 data: 'action', class: '',
+                                 render: function (detail, type, row) {
+                                     let itemCode = row.itemCode;
+                                     let asOnDate = $('#asOnDate').val();
+                                     return '<a href=' + "viewItem" + '/navigateToDetail?itemCode=' +
+                                         encodeURIComponent(itemCode) + "&asOnDate=" + asOnDate + '>' +
+                                         '<input type=button" class="btn btn-sm btn-primary td-center" style="width: 70px" value="View"></a>'
+                                 }
+                             },
+                        ];
+                    } else {
+                        columnDef = [
+                            {data: 'purchaseId', class: 'hidden'},
+                            {data: 'partNo', class: 'commonFields'},
+                            {data: 'itemCode'},
+                            {data: 'itemName'},
+                            {data: 'locationId'},
+                            {data: 'qtyBig'},
+                            {data: 'unitName'},
+                            // {
+                            //     data: 'costPrice', class: "right-align",
+                            //     render: function (data) {
+                            //         return spms.formatAmount(data.toFixed(2));
                             //     }
-                            //     return spms.formatAmount(amount.toFixed(2));
-                            // }
-                        },
-                        {
-                            data: 'action', class: '',
-                            render: function (detail, type, row) {
-                                let itemCode = row.itemCode;
-                                let asOnDate = $('#asOnDate').val();
-                                return '<a href=' + "viewItem" + '/navigateToDetail?itemCode=' +
-                                    encodeURIComponent(itemCode) + "&asOnDate=" + asOnDate + '>' +
-                                    '<input type=button" class="btn btn-sm btn-primary td-center" style="width: 70px" value="View"></a>'
-                            }
-                        },
-                    ];
+                            // },
+                            {
+                                data: 'sellingPrice', class: 'commonFields',
+                                // render: function (data, type, row) {
+                                //     let amount = row.amount;
+                                //     if (row.qtyBig === 0) {
+                                //         amount = -1 * amount;
+                                //     }
+                                //     return spms.formatAmount(amount.toFixed(2));
+                                // }
+                            },
+                            {
+                                data: 'action', class: '',
+                                render: function (detail, type, row) {
+                                    let itemCode = row.itemCode;
+                                    let asOnDate = $('#asOnDate').val();
+                                    return '<a href=' + "viewItem" + '/navigateToDetail?itemCode=' +
+                                        encodeURIComponent(itemCode) + "&asOnDate=" + asOnDate + '>' +
+                                        '<input type=button" class="btn btn-sm btn-primary td-center" style="width: 70px" value="View"></a>'
+                                }
+                            },
+                        ];
+                    }
+
 
                     $('#itemTable').DataTable({
                         'iDisplayLength': [100],
                         data: res,
-                        bSort:false,
+                        bSort: false,
                         columns: columnDef,
                         "footerCallback": function (row, data, start, end, display) {
                             var api = this.api(), data;
@@ -148,7 +179,7 @@ viewItem = (function () {
 })();
 
 $(document).ready(function () {
-    viewItem.getItemAvailable();
-    viewItem.onAsOnDateChange();
+    closingStock.getItemAvailable();
+    closingStock.onAsOnDateChange();
 
 });

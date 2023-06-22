@@ -1048,5 +1048,88 @@ function perClickSubmissionValidatorHandler(clickBtnSelector, form, postUrl, suc
     function isStringParameterValid(parameter) {
         return parameter && typeof parameter === 'string' && parameter.trim() !== '';
     }
+
+
 }
+
+function generalTrader() {
+
+    function isGeneralTrader(baseUrl) {
+        let result = false;
+        $.ajax({
+            url: baseUrl + '/isGeneralTrader',
+            type: 'POST',
+            async: false, // Make the request synchronous
+            success: function (res) {
+                result = res; // Assign the response to the variable
+            },
+            error: () => {
+                result = null; // Handle the error case
+            }
+        });
+        return result; // Return the response synchronously
+    }
+
+
+    function getFirstSecondPartOfItemCode(baseUrl,itemNameInputValue) {
+        return getCompanyCode(baseUrl) + itemCodeAbbreviation(itemNameInputValue);
+    }
+
+
+    //function  getting SiNo.
+    function getSiNo() {
+        //getting the SiNo respectively to the company Id
+        let result = -1;
+        $.ajax({
+            url: baseURL()+'getSINo',
+            type: 'POST',
+            async: false, // Make the request synchronous
+            success: function (res) {
+                result = res; // Assign the response to the variable
+            },
+            error: () => {
+                result = null; // Handle the error case
+            }
+        });
+        return result; // Return the response synchronously
+    }
+
+    //Helper Functions
+
+    //Getting First Part of ItemCode => CompanyCode
+    function getCompanyCode(baseUrl) {
+        let companyCode = null;
+        $.ajax({
+            url: baseUrl + '/getCompanyCode',
+            type: 'POST',
+            async: false, // Make the request synchronous
+            success: function (res) {
+                companyCode = res; // Assign the response to the variable
+            },
+            error: () => {
+                companyCode = null; // Handle the error case
+            }
+        });
+
+        return companyCode;
+
+    }
+
+    //To obtain the first letter of each word entered in an input field and combine them
+    function itemCodeAbbreviation(inputValue) {
+        return inputValue.split(" ").map(word => word.charAt(0).toUpperCase()).join("");
+    }
+
+    //Getting companyId
+
+
+
+
+    return {
+        isGeneralTrader: isGeneralTrader,
+        getFirstSecondPartOfItemCode: getFirstSecondPartOfItemCode,
+        getSiNo: getSiNo,
+    }
+}
+
 

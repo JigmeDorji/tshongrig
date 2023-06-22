@@ -1,3 +1,5 @@
+
+
 package com.spms.mvc.service;
 
 import com.spms.mvc.Enumeration.*;
@@ -16,11 +18,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.interceptor.TransactionInterceptor;
 
-import javax.transaction.Transactional;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by SonamPC on 13-Dec-16.
@@ -60,7 +65,7 @@ public class AddItemService {
         return addItemDao.getItemNameList();
     }
 
-//    @Transactional(rollbackOn = Exception.class)
+    //    @Transactional(rollbackOn = Exception.class)
     public ResponseMessage save(PurchaseCallingDTO purchaseCallingDTO, CurrentUser currentUser) throws ParseException {
 
         ResponseMessage responseMessage = new ResponseMessage();
@@ -87,7 +92,7 @@ public class AddItemService {
                 }
             }
             VoucherDTO voucherDTO = new VoucherDTO();
-            if (purchaseCallingDTO.getIsOpeningEntry() == 'N') {
+            if (purchaseCallingDTO.getIsOpeningEntry() == 'N' ) {
                 //region accounting
                 if (purchaseCallingDTO.getIsCash().equals(PaymentModeTypeEnum.CASH.getValue())) {
                     if (checkCashBalance(purchaseCallingDTO.getIsCash(), purchaseCallingDTO.getTotalTranAmount(), currentUser).getStatus() == 0) {
@@ -165,8 +170,8 @@ public class AddItemService {
                 //endregion
 
 
-
             } else {
+
                 voucherDTO.setVoucherNo(0);
                 purchaseCallingDTO.setIsCash(0);
                 if (purchaseCallingDTO.getPurchaseDTOS().get(0).getPurchaseId() == null) {
@@ -178,6 +183,7 @@ public class AddItemService {
 
             for (PurchaseDTO purchaseDTO : purchaseCallingDTO.getPurchaseDTOS()) {
                 Integer brandId;
+
                 if (purchaseCallingDTO.getIsOpeningEntry() == 'N') {
                     brandId = addItemDao.getBrandIdByName(purchaseDTO.getBrandName(), currentUser.getCompanyId());
                 } else {
@@ -270,7 +276,9 @@ public class AddItemService {
                 addItemDao.savePurchaseCreditSupplierDetail(purchaseCreditSupplierDetail);
             }
         } catch (Exception ex) {
+            ex.printStackTrace();
             TransactionInterceptor.currentTransactionStatus().setRollbackOnly();
+
             responseMessage.setStatus(0);
             responseMessage.setText("Error while saving.");
             return responseMessage;
@@ -295,10 +303,10 @@ public class AddItemService {
 
         if (cash.equals(PaymentModeTypeEnum.CASH.getValue())) {
 
-           String ledgerId = ledgerService.getLedgerIdByAccountTypeId(AccountTypeEnum.CASH.getValue(),
+            String ledgerId = ledgerService.getLedgerIdByAccountTypeId(AccountTypeEnum.CASH.getValue(),
                     currentUser.getCompanyId());
 
-            if (ledgerId!=null) {
+            if (ledgerId != null) {
                 openingBalance = voucherGroupListService.getOpeningBalance(ledgerId,
                         currentPeriodFrom, currentPeriodTo, currentUser).getOpeningBal();
             }
@@ -308,7 +316,7 @@ public class AddItemService {
 
             totalCashOutFlow = addItemDao.getTotalCashOutFlow(ledgerId,
                     currentUser.getCompanyId(),
-                    currentPeriodFrom,currentPeriodTo);
+                    currentPeriodFrom, currentPeriodTo);
 
             totalCashAmount = totalCashAmount == null ? 0.0 : totalCashAmount;
             totalCashOutFlow = totalCashOutFlow == null ? 0.0 : totalCashOutFlow;
@@ -373,7 +381,7 @@ public class AddItemService {
     }
 
     public List<DropdownDTO> getBrandList(CurrentUser currentUser) {
-        return addItemDao.getBrandList(currentUser.getCompanyId(),currentUser.getBusinessType());
+        return addItemDao.getBrandList(currentUser.getCompanyId());
     }
 
     public PurchaseDTO getSlNo(Integer brandId) {
@@ -491,5 +499,11 @@ public class AddItemService {
 
     public List<DropdownDTO> getUnitList() {
         return addItemDao.getUnitList();
+    }
+
+
+    public Integer getSINo(CurrentUser currentUser) {
+        String SiNo= String.valueOf(addItemDao.getSINo(currentUser.getCompanyId()));
+        return Integer.valueOf(SiNo);
     }
 }

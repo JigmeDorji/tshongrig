@@ -161,6 +161,8 @@
                             </li>
                             <li class="nav-item"><a href="<c:url value='/viewItem' />" class="nav-link"> View Item</a>
                             </li>
+                            <li class="nav-item"><a href="<c:url value='/closingStock' />" class="nav-link"> Closing Stock</a>
+                            </li>
                             <li class="nav-item"><a href="<c:url value='/saleItem' />" class="nav-link"> Sale</a></li>
                             <li class="nav-item"><a href="<c:url value='/saleDetail' />" class="nav-link"> Sale
                                 Detail</a>
