@@ -50,7 +50,7 @@ public class SaleItemService extends BaseService {
 
 
     public List<SaleItemDTO> getItemDetails(String itemCode, CurrentUser currentUser) {
-        return saleItemDao.getItemDetails(itemCode, currentUser.getCompanyId());
+        return saleItemDao.getItemDetails(itemCode, currentUser);
     }
 
 

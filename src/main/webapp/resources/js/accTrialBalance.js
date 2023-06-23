@@ -20,6 +20,7 @@ accTrialBalance = (function () {
                 data: {fromDate: fromDate, toDate: toDate},
                 async: false,
                 success: function (res) {
+
                     var totalDrAmount = 0;
                     var totalCrAmount = 0;
                     //trialBalanceGrid.fnDestroy();
@@ -77,6 +78,8 @@ accTrialBalance = (function () {
                             }
                         }
                     });
+
+                    console.log(res)
                     $('#totalDrAmount').text(spms.formatAmount(totalDrAmount.toFixed(2)));
                     $('#totalCrAmount').text(spms.formatAmount(totalCrAmount.toFixed(2)));
 

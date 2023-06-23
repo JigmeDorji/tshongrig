@@ -1,3 +1,6 @@
+// const  isGeneralTrader = generalTrader().isGeneralTrader("openingBalanceInventory");
+//
+
 saleItem = (function () {
 
         let saleItemGrid = $('#saleItemGrid').dataTable({

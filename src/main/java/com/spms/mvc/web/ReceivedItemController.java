@@ -149,8 +149,9 @@ public class ReceivedItemController {
 
     @ResponseBody
     @RequestMapping(value = "/getItemDetailsByPartNo", method = RequestMethod.GET)
-    public PurchaseDTO getItemDetailsByPartNo(String partNo) {
-        return addItemService.getItemDetailsByPartNo(partNo);
+    public PurchaseDTO getItemDetailsByPartNo(HttpServletRequest request,String partNo) {
+        CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
+        return addItemService.getItemDetailsByPartNo(partNo,currentUser.getCompanyId());
     }
 
 

@@ -439,7 +439,7 @@
 
 
                             <%--      Hidden Properties                  --%>
-                        <div >
+                        <div>
                             <div class="form-group row">
                                 <label class="col-md-2 text-right">Brand</label>
                                 <div class="col-md-3">
@@ -492,6 +492,7 @@
                         <br/>
                         <div class="col-md-12">
                             <table class="table" id="purchaseItemTable">
+
                                 <thead>
                                 <tr class="bg-primary text-white">
                                     <th width="2%">SL.NO</th>

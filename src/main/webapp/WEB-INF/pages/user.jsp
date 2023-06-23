@@ -81,7 +81,7 @@
 
                     <div class="col-md-4">
                         <input type="password" name="userPassword" required
-                               id="userPassword" class="form-control form-control-sm field" autocomplete="off">
+                               id="userPassword" class="form-control form-control-sm field" autocomplete="new-password">
                     </div>
                     <label class="col-form-label col-lg-2 required ">Confirm
                         Password</label>

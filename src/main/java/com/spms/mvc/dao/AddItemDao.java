@@ -471,7 +471,7 @@ public class AddItemDao {
     }
 
     @Transactional(readOnly = true)
-    public PurchaseDTO getItemDetailsByPartNo(String partNo) {
+    public PurchaseDTO getItemDetailsByPartNo(String partNo,Integer companyId) {
         String query = "SELECT A.itemCode AS itemCode, \n" +
                 "B.brandName AS brandName,\n" +
                 "A.purchaseId AS purchaseId,\n" +
@@ -483,9 +483,11 @@ public class AddItemDao {
                 "A.locationId AS locationId\n" +
                 "FROM tbl_inv_purchase A\n" +
                 "INNER JOIN tbl_item_code B ON A.brandId=B.brandId\n" +
-                "WHERE A.partNo=:partNo";
+                "WHERE A.partNo=:partNo and A.companyId=:companyId";
         Session session = sessionFactory.getCurrentSession();
-        return (PurchaseDTO) session.createSQLQuery(query).setParameter("partNo", partNo)
+        return (PurchaseDTO) session.createSQLQuery(query)
+                .setParameter("partNo", partNo)
+                .setParameter("companyId", companyId)
                 .setResultTransformer(Transformers.aliasToBean(PurchaseDTO.class)).uniqueResult();
     }
 

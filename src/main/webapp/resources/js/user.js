@@ -1,6 +1,8 @@
 /**
  * Created by jigme.dorji on 24-Apr-2020.
  */
+
+
 user = (function () {
     "use strict";
     let form = $('#userFormId');
@@ -462,6 +464,9 @@ user = (function () {
 })();
 
 $(document).ready(function () {
+
+
+    // $('#username').val(null)
     user.addUser();
     user.updateUser();
     user.checkIfExist();

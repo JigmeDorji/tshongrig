@@ -423,8 +423,8 @@ public class AddItemService {
         return responseMessage;
     }
 
-    public PurchaseDTO getItemDetailsByPartNo(String partNo) {
-        return addItemDao.getItemDetailsByPartNo(partNo);
+    public PurchaseDTO getItemDetailsByPartNo(String partNo,Integer companyId) {
+        return addItemDao.getItemDetailsByPartNo(partNo,companyId);
     }
 
     public List<DropdownDTO> getTypeDetail(CurrentUser currentUser) {
