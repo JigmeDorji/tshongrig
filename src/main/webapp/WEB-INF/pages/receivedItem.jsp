@@ -439,7 +439,7 @@
 
 
                             <%--      Hidden Properties                  --%>
-                        <div>
+                        <div hidden>
                             <div class="form-group row">
                                 <label class="col-md-2 text-right">Brand</label>
                                 <div class="col-md-3">

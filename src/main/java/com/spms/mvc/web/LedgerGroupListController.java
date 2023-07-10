@@ -33,6 +33,7 @@ public class LedgerGroupListController {
     @RequestMapping(value = "/getLedgerGroupList", method = RequestMethod.GET)
     public List<AccProfitAndLossReportDTO> getLedgerGroupList(HttpServletRequest request, Integer accountTypeId) {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
+        List<AccProfitAndLossReportDTO> getLedgerGroupList=ledgerGroupListService.getLedgerGroupList(currentUser, accountTypeId);
         return ledgerGroupListService.getLedgerGroupList(currentUser, accountTypeId);
     }
 

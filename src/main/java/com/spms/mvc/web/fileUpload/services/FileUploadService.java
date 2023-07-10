@@ -1,4 +1,4 @@
-package com.spms.mvc.web.fileUpload.controller;
+package com.spms.mvc.web.fileUpload.services;
 
 import com.spms.mvc.entity.FileParams;
 import com.spms.mvc.library.helper.CurrentUser;
@@ -51,7 +51,20 @@ public class FileUploadService {
 
             } else {
 
-                renamedFilename = file.getFileNameToReplace() + "_" + fileParamsDao.getLastCountVal(currentUser.getCompanyId()) + "_" + datePatch + fileExtension;
+//                System.out.println(originalFilename.lastIndexOf("."));
+                String fileEx = file.getFileNameToReplace().substring(file.getFileNameToReplace().lastIndexOf(".") + 1);
+//                System.out.println(fileEx);
+
+                if (isFileExtensionDuplicateExists(file.getFileNameToReplace(), fileExtension)) {
+                    String originalString = file.getFileNameToReplace();
+                    int endIndex = originalString.indexOf(fileExtension);
+                    String extractedString = originalString.substring(0, endIndex);
+                    renamedFilename = extractedString + "_" + fileParamsDao.getLastCountVal(currentUser.getCompanyId()) + "_" + datePatch+fileExtension;
+                } else {
+                    renamedFilename = file.getFileNameToReplace() + "_" + fileParamsDao.getLastCountVal(currentUser.getCompanyId()) + "_" + datePatch + fileExtension;
+                }
+
+
             }
 
 
@@ -64,6 +77,12 @@ public class FileUploadService {
             fileParams.setCompanyId(currentUser.getCompanyId());
             fileParams.setCreatedBy(currentUser.getLoginId());
             fileParams.setCreatedDate(new Date());
+            fileParams.setIsMovedToBin(0);
+            if (fileExtension.equals(".pdf")) {
+                fileParams.setIsPdfFile(1);
+            } else {
+                fileParams.setIsPdfFile(0);
+            }
             fileParamsDao.saveFileParams(fileParams);
 
             isFileSaved = fileFolderOperation.saveOperation(file.getFile(), renamedFilename, session, currentUser.getCompanyId());
@@ -72,6 +91,20 @@ public class FileUploadService {
             }
         }
         return isFileSaved;
+    }
+
+    private boolean isFileExtensionDuplicateExists(String fileName, String strFileExtension) {
+        // Add a dot prefix to the file extension
+
+        // Check if the file name ends with the given file extension
+        if (fileName.endsWith(strFileExtension)) {
+            // Extract the substring representing the file extension from the file name
+            String extractedExtension = fileName.substring(fileName.lastIndexOf("."));
+            // Compare the extracted file extension with the given file extension
+            return extractedExtension.equalsIgnoreCase(strFileExtension); // The file extension already exists in the file name
+        }
+
+        return false; // The file extension does not exist in the file name
     }
 
 

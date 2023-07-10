@@ -71,6 +71,10 @@
     <listener>
         <listener-class>se.jiderhamn.classloader.leak.prevention.ClassLoaderLeakPreventor</listener-class>
     </listener>
+    <listener>
+        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+    </listener>
+
 
     <filter>
         <filter-name>sitemesh</filter-name>
@@ -100,5 +104,8 @@
         <session-timeout>-1</session-timeout>
         <tracking-mode>COOKIE</tracking-mode>
     </session-config>
+
+
+
 
 </web-app>

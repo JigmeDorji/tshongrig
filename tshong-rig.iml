@@ -85,8 +85,6 @@
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-acl:3.2.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.aspectj:aspectjrt:1.8.4" level="project" />
     <orderEntry type="library" name="Maven: org.aspectj:aspectjweaver:1.8.4" level="project" />
-    <orderEntry type="library" name="Maven: commons-fileupload:commons-fileupload:1.2.2" level="project" />
-    <orderEntry type="library" name="Maven: commons-io:commons-io:2.4" level="project" />
     <orderEntry type="library" name="Maven: net.sf.jasperreports:jasperreports:6.3.1" level="project" />
     <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.2" level="project" />
     <orderEntry type="library" name="Maven: commons-digester:commons-digester:2.1" level="project" />
@@ -153,12 +151,10 @@
     <orderEntry type="library" name="Maven: com.github.stephenc:jamm:0.2.2" level="project" />
     <orderEntry type="library" name="Maven: se.jiderhamn:classloader-leak-prevention:1.15.2" level="project" />
     <orderEntry type="library" name="Maven: javax.servlet:servlet-api:2.5" level="project" />
-    <orderEntry type="library" name="Maven: com.amazonaws:aws-java-sdk-s3:1.12.22" level="project" />
-    <orderEntry type="library" name="Maven: com.amazonaws:aws-java-sdk-kms:1.12.22" level="project" />
-    <orderEntry type="library" name="Maven: com.amazonaws:aws-java-sdk-core:1.12.22" level="project" />
-    <orderEntry type="library" name="Maven: software.amazon.ion:ion-java:1.0.2" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:2.12.3" level="project" />
-    <orderEntry type="library" name="Maven: joda-time:joda-time:2.8.1" level="project" />
-    <orderEntry type="library" name="Maven: com.amazonaws:jmespath-java:1.12.22" level="project" />
+    <orderEntry type="library" name="Maven: com.dropbox.core:dropbox-core-sdk:5.4.5" level="project" />
+    <orderEntry type="library" name="Maven: commons-fileupload:commons-fileupload:1.5" level="project" />
+    <orderEntry type="library" name="Maven: commons-io:commons-io:2.11.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.maven:maven-model:3.8.1" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.plexus:plexus-utils:3.2.1" level="project" />
   </component>
 </module>

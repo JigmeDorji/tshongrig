@@ -122,7 +122,8 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class=" col-md-3 left-label">Mobilization Amount</label>
+<%--                            <label class=" col-md-3 left-label">Mobilization Amount</label>--%>
+                            <label class=" col-md-3 left-label">Mobilization Advance</label>
 
                             <div class="col-md-4">
                                 <input type="text" tabindex="1" class="form-control form-control-sm  amount"

@@ -39,7 +39,8 @@ ledgerGroupList = (function () {
                             if (data === 0) {
                                 return ''
                             } else {
-                                return spms.formatAmount(data.toFixed(2));
+                                const  absValue=Math.abs(data);
+                                return spms.formatAmount(absValue.toFixed(2));
                             }
                         }
                     }

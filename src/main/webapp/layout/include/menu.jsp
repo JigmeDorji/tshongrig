@@ -71,6 +71,52 @@
                     </ul>
                 </li>
 
+                <li class="nav-item nav-item-submenu">
+                    <a href="#" class="nav-link">
+                        <i class="icon-file-plus"></i>
+                        <span>File Upload</span>
+                    </a>
+                    <ul class="nav nav-group-sub" data-submenu-title="Layouts">
+                        <li class="nav-item">
+                            <a href="<c:url value='/fileUpload'/>" class="nav-link">
+                                Upload
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                        <li class="nav-item nav-item-submenu">
+                            <a href="#" class="nav-link">
+                                <span>View</span>
+                            </a>
+                            <ul class="nav nav-group-sub" data-submenu-title="Layouts">
+                                <li class="nav-item">
+                                    <a href="<c:url value='/viewNewFiles'/>" class="nav-link">
+                                        New
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<c:url value='/viewCompletedFiles'/>" class="nav-link">
+                                        Completed
+                                    </a>
+
+                                </li>
+
+
+                            </ul>
+                        </li>
+
+
+                        </li>
+                        <li class="nav-item">
+                            <a href="<c:url value='/filesBin'/>" class="nav-link">
+                                Bin
+                            </a>
+                        </li>
+
+
+                    </ul>
+                </li>
+
+
                 <%--Human Resource--%>
                 <li class="nav-item nav-item-submenu">
                     <a href="#" class="nav-link"><i class="icon-users"></i><span>Human Resources</span></a>

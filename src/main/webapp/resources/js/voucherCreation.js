@@ -69,11 +69,31 @@ voucherCreation = (function () {
 
     $('#voucherCreationGrid tbody').on('keydown', 'td', function (e) {
         if (e.keyCode === 13) {
+
             selectedRowIndex = ($(this).closest('td').parent()[0].sectionRowIndex) + 1;
             selectedTd = $(this).closest('tr').find('td');
             selectedRow = $(this).closest('tr');
         }
     });
+
+    // $('#voucherCreationGrid tbody').on('keydown', 'td', function (e) {
+    //     if (e.keyCode === 13) {
+    //         e.preventDefault(); // Prevent form submission or default behavior
+    //
+    //         var nextInput = $(this).closest('td').next('td').find('input');
+    //         if (nextInput.length > 0) {
+    //             nextInput.focus();
+    //         } else {
+    //             // No next input field found, you can handle this case as needed
+    //             // For example, move focus to the first input field in the next row
+    //             var nextRow = $(this).closest('tr').next('tr');
+    //             if (nextRow.length > 0) {
+    //                 nextInput = nextRow.find('input').first();
+    //                 nextInput.focus();
+    //             }
+    //         }
+    //     }
+    // });
 
     function addRowToGrid() {
         document.body.onkeydown = function (e) {
@@ -418,6 +438,7 @@ voucherCreation = (function () {
         $('#voucherCreationGrid tbody').on('change', '.crOrDr', function () {
             let selectedRow = $(this).closest('tr');
             if (parseInt(selectedRow.find('.crOrDr').val()) === 1) {
+
                 selectedRow.find('td').find('.debitAmount').val('');
                 selectedRow.find('td').find('.creditAmount').val('');
                 selectedRow.find('td').find('.debitAmount').attr('disabled', false);
@@ -435,11 +456,13 @@ voucherCreation = (function () {
     }
 
     $('#voucherCreationGrid tbody').on('change', '.ledgerId', function () {
-        var rowIndex = $(this).closest('td').parent()[0].sectionRowIndex + 1;
+
+        var rowIndex = $(this).closest('td').parent()[0].sectionRowIndex +1;
         voucherCreationGridTBody.find('tr').find('#ledgerId' + rowIndex).removeClass('error');
     });
 
     function _checkItsDrOrCr(isDebit, index) {
+
         var debitAmountId = $('#debitAmount' + index);
         var creditAmountId = $('#creditAmount' + index);
 

@@ -131,15 +131,13 @@ spms = (function () {
     }
 
     function getUrl() {
-        return window.location.protocol + '//' + window.location.host + '/tshong-rig/';
-        // return window.location.protocol + '//' + window.location.host + '/';
-        // return window.location.protocol + '//' + window.location.host + '/tshong_rig_war_exploded/';
+        // return window.location.protocol + '//' + window.location.host + '/tshong-rig/';
+        return window.location.protocol + '//' + window.location.host + '/tshong_rig_war_exploded/';
     }
 
     function baseReportLocation() {
-        return window.location.protocol + '//' + window.location.host + '/tshong-rig/resources/reports/';
-        // return window.location.protocol + '//' + window.location.host + '/resources/reports/';
-        // return window.location.protocol + '//' + window.location.host + '/tshong_rig_war_exploded/resources/reports/';
+        // return window.location.protocol + '//' + window.location.host + '/tshong-rig/resources/reports/';
+        return window.location.protocol + '//' + window.location.host + '/tshong_rig_war_exploded/resources/reports/';
     }
 
 
@@ -1132,4 +1130,18 @@ function generalTrader() {
     }
 }
 
-
+//
+// function handleKeyDown(event) {
+//     if (event.keyCode === 13) { // 13 represents the Enter key
+//         alert("Next")
+//         event.preventDefault(); // Prevent form submission
+//         const input = event.target;
+//         const form = input.form;
+//         const index = Array.prototype.indexOf.call(form, input);
+//         form.elements[index + 1].focus();
+//         return false;
+//     }
+//     return true;
+// }
+//
+// handleKeyDown(document)

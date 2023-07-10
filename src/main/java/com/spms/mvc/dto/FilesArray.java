@@ -1,4 +1,4 @@
-package com.spms.mvc.web.fileUpload;
+package com.spms.mvc.dto;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 

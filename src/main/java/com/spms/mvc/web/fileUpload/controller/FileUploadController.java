@@ -1,11 +1,11 @@
-package com.spms.mvc.web.fileUpload;
+package com.spms.mvc.web.fileUpload.controller;
 
 import com.spms.mvc.dto.FilesArray;
 import com.spms.mvc.library.helper.CurrentUser;
 import com.spms.mvc.library.helper.ResponseMessage;
 import com.spms.mvc.web.fileUpload.dao.FileParamsDao;
 import com.spms.mvc.web.fileUpload.dto.FilesBundleDTO;
-import com.spms.mvc.web.fileUpload.controller.FileUploadService;
+import com.spms.mvc.web.fileUpload.services.FileUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

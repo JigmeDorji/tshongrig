@@ -1,35 +1,45 @@
-package com.mvcSpring.util.libs.fileOrFolderOperation;
+package com.spms.mvc.web.fileUpload.fileOrFolderOperation;
 
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Comparator;
 
 public class FileFolderOperation {
 
-    //    Save file
-    public void fileSaveOperation(String uploadDirectory, int thresholdSize, CommonsMultipartFile file, HttpSession session) throws IOException {
 
-        DiskFileItemFactory factory = new DiskFileItemFactory();
-        factory.setSizeThreshold(thresholdSize);
-        factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
-        ServletContext context = session.getServletContext();
-        String uploadPath = context.getRealPath(uploadDirectory);
-        byte[] bytes = file.getBytes();
-        BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(uploadPath + File.separator + file.getOriginalFilename())));
-        stream.write(bytes);
-        stream.flush();
-        stream.close();
+    private static final String UPLOAD_DIRECTORY = "/resources/fileCenter";
+
+
+    public boolean saveOperation(CommonsMultipartFile file, String fileNameToReplace, HttpSession session, Integer companyId) throws IOException {
+        String uploadPath = session.getServletContext().getRealPath(UPLOAD_DIRECTORY);
+
+        // Create the upload directory if it doesn't exist
+        File uploadPathDirectory = new File(uploadPath, "companyId_" + companyId);
+        if (!uploadPathDirectory.exists()) {
+            uploadPathDirectory.mkdirs();
+        }
+
+        // Save the file with the new name inside the folder
+        Path destinationPath = uploadPathDirectory.toPath().resolve(fileNameToReplace);
+
+        // Use Java NIO to copy the file contents to the destination path
+        try {
+            Files.copy(file.getInputStream(), destinationPath, StandardCopyOption.REPLACE_EXISTING);
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle exception appropriately
+            return false;
+        }
     }
+
 
     public int deleteThisDirectory(String directoryPath) throws IOException {
         Path dir = Paths.get(directoryPath); //path to the directory

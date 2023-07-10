@@ -4,13 +4,15 @@
        xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:task="http://www.springframework.org/schema/task"
        xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
-    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
-    <context:annotation-config/>
+<context:annotation-config/>
     <mvc:annotation-driven/>
+
 
 
     <mvc:default-servlet-handler/>
@@ -42,9 +44,13 @@
     </bean>
 
     <!--Image Spring Upload Config-->
+<!--    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
+<!--        <property name="defaultEncoding" value="utf-8"/>-->
+<!--    </bean>-->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <property name="defaultEncoding" value="utf-8"/>
+        <property name="maxUploadSize" value="10485760"/> <!-- Set the maximum file size allowed -->
     </bean>
+
 
     <!--Database connection config-->
     <bean id="spmsDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
@@ -60,8 +66,8 @@
         <!--        <property name="url" value="jdbc:mysql://localhost:3306/au_babesa"/>-->
         <!--                <property name="url" value="jdbc:mysql://localhost:3306/salarysheet_db_1"/>-->
 <!--        <property name="url" value="jdbc:mysql://localhost:3306/tshongrig_06_06_2023_db"/>-->
-<!--        <property name="url" value="jdbc:mysql://localhost:3306/tshongrig_db_db"/>-->
-        <property name="url" value="jdbc:mysql://localhost:3306/tshongrig_db"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/tshongrig_db_db"/>
+<!--        <property name="url" value="jdbc:mysql://localhost:3306/tshongrig_db"/>-->
         <property name="password" value="root@Root@22"/>
 
 
@@ -129,6 +135,7 @@
 
 
 
+
     <!--Report configuration-->
     <bean id="xmlViewResolver" class="org.springframework.web.servlet.view.XmlViewResolver">
         <property name="location" value="/WEB-INF/config/report-config.xml"/>
@@ -142,5 +149,8 @@
 
     <!--Load Resource Files-->
     <mvc:resources mapping="/resources/**" location="/resources/" cache-period="31556926"/>
+
+    <task:annotation-driven/>
+
 
 </beans>
