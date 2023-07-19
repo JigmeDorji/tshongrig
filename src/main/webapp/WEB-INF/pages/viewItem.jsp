@@ -61,7 +61,7 @@
                                     <th></th>
                                     <th class="commonFields">Part Number</th>
                                     <th>Item Code</th>
-                                    <th>Item Name</th>
+                                    <th>Part Name</th>
                                     <th>Location</th>
                                     <th>Qty</th>
                                     <th>Unit</th>

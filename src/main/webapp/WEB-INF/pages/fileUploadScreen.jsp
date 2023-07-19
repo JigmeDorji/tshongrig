@@ -56,7 +56,7 @@
                                     max-height: 100%;
                                 }
                             </style>
-                            <input class="fileName form-control">
+                            <input class="fileName form-control" id="fileNameEdit" hidden>
                             File: Max Size : 10 MB !
                             <input type="file"
                                    accept="application/pdf, image/jpeg, image/png, image/gif"

@@ -78,6 +78,9 @@ public class FileUploadService {
             fileParams.setCreatedBy(currentUser.getLoginId());
             fileParams.setCreatedDate(new Date());
             fileParams.setIsMovedToBin(0);
+            fileParams.setIsRetrieved(0);
+
+
             if (fileExtension.equals(".pdf")) {
                 fileParams.setIsPdfFile(1);
             } else {

@@ -20,16 +20,26 @@ public class ViewFilesService {
     private ViewFilesDao viewFilesDao;
 
     public List<FileParamsDTO> getNewFiles(Integer companyId) {
-        return viewFilesDao.getViewFileOnCondition(companyId, 1, 0, 0);
+        return viewFilesDao.getViewFileOnCondition(companyId, 1, 0, 0, 0);
     }
 
     public List<FileParamsDTO> getCompletedFiles(Integer companyId) {
-        return viewFilesDao.getViewFileOnCondition(companyId, 0, 1, 0);
+        return viewFilesDao.getViewFileOnCondition(companyId, 0, 1, 0, 0);
+    }
+
+    public List<FileParamsDTO> filesMovedToBin(Integer companyId) {
+        return viewFilesDao.getViewFileOnCondition(companyId, 0, 0, 1, 0);
+    }
+
+    public List<FileParamsDTO> getRetrievedFiles(Integer companyId) {
+        return viewFilesDao.getViewFileOnCondition(companyId, 0, 0, 0, 1);
+
     }
 
     public FileParamsDTO getFileById(Integer fileId, Integer companyId) {
         return viewFilesDao.getFileById(fileId, companyId);
     }
+
 
     public ResponseMessage onMarkedAsCompletedBtn(Integer fileId, Integer companyId) {
         if (viewFilesDao.isMarkedCompleted(fileId, companyId)) {
@@ -49,9 +59,7 @@ public class ViewFilesService {
         }
     }
 
-    public List<FileParamsDTO> filesMovedToBin(Integer companyId) {
-        return viewFilesDao.getViewFileOnCondition(companyId, 0, 0, 1);
-    }
+
 
     public ResponseMessage onRetrieval(Integer fileId, Integer companyId) {
         if (viewFilesDao.isRetrieved(fileId, companyId)) {
@@ -80,4 +88,6 @@ public class ViewFilesService {
         }
 
     }
+
+
 }

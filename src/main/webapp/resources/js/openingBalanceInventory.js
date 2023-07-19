@@ -6,14 +6,29 @@ let isGeneralTrader = generalTrader().isGeneralTrader("openingBalanceInventory")
 
 
 if (isGeneralTrader) {
+    $('#btnSave').attr("disabled", true)
+
+    // $('#btnSave').attr("disabled", true)
+
+    $('#itemName').on("change", (e) => {
+
+        $('#btnSave').attr("disabled", false)
+        defaultValueSetter()
+    })
+
     function defaultValueSetter() {
         $.ajax({
             url: 'receivedItem/getBrandList',
             type: 'GET',
             success: function (res) {
+
+                if (res.length === 0) {
+                    alert("Old Version Company Data: Re-approval of the company is required to meet the upgraded system! Or Please contact the relevant authority for further assistance");
+                }
+
+                // console.log(res)
                 $('#brandId').val(res[0].text).attr("readonly", true);
                 $('#brandNameID').val(res[0].data);
-
                 $.ajax({
                     url: 'receivedItem/getSlNo',
                     type: 'GET',
@@ -26,10 +41,9 @@ if (isGeneralTrader) {
                             url: 'receivedItem/getSINo',
                             type: 'POST',
                             success: function (response) {
-                            let   SiNo = parseInt(response) + 1;
+                                let SiNo = parseInt(response) + 1;
                                 $('#itemCode').val(res.itemCode + SiNo).attr("readonly", true);
                                 $('#currentSerial').val(SiNo)
-
                             }
                         });
 
@@ -40,13 +54,12 @@ if (isGeneralTrader) {
                         $('#partNo').val(res.itemCode + res.itemCode).attr("readonly", true);
                     }
                 });
-
             }
         })
         $('#btnAddBrand').attr("disabled", true)
     }
 
-    defaultValueSetter();
+    // defaultValueSetter();
 }
 openingBalanceInventory = (function () {
     function saveItem() {
@@ -225,7 +238,7 @@ openingBalanceInventory = (function () {
                     type: 'GET',
                     data: {partNo: $('#partNo').val()},
                     success: function (res) {
-                        console.log(res)
+                        // console.log(res)
                         if (res !== '') {
                             populate(res);
                             $('#brandId').val(res.brandName)
@@ -517,5 +530,5 @@ $(document).ready(function () {
 });
 
 
-console.log(generalTrader().isGeneralTrader("openingBalanceInventory"))
-console.log(generalTrader().getFirstSecondPartOfItemCode("openingBalanceInventory", "G M"))
+// console.log(generalTrader().isGeneralTrader("openingBalanceInventory"))
+// console.log(generalTrader().getFirstSecondPartOfItemCode("openingBalanceInventory", "G M"))

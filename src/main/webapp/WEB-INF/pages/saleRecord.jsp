@@ -46,7 +46,9 @@
                         <div class="col-md-2">
                             <input type="text" tabindex="2" class="form-control form-control-sm datepicker"
                                    name="fromDate"
-                                   id="fromDate" required/>
+                                   id="fromDate" required
+                                   value="${date}"
+                            />
                         </div>
 
                         <label class="col-md-1 right-align required">To</label>
@@ -54,7 +56,10 @@
                         <div class="col-md-2">
                             <input type="text" tabindex="3" class="form-control form-control-sm datepicker"
                                    name="toDate"
-                                   id="toDate" required/>
+                                   id="toDate" required
+                                   value="${date}"
+
+                            />
                         </div>
                     </div>
                     <div class="form-group row">
@@ -67,7 +72,101 @@
 
 
             </form>
+
+            <style>
+                table#database th, table#database td {
+                    border: 1px solid black;
+                    padding: 2px;
+                }
+
+                table#database th {
+                    background-color: #f2f2f2;
+                }
+            </style>
+
+
+        <div class="table-responsive">
+                <table class="table" id="database">
+                    <thead>
+                    <tr class="text-center">
+                        <th>SI.NO</th>
+                        <th>Item Code</th>
+                        <th>Item Name</th>
+                        <th>Qty</th>
+                        <th>Rate</th>
+                        <th>Amount</th>
+                    </tr>
+                    </thead>
+                    <tbody class="text-center"></tbody>
+                    <tfoot>
+                    <tr class="text-right" id="inventorySaleRow">
+                        <td colspan="5">Inventory Sale</td>
+                        <td>
+                            <span id="inventorySaleTotalAmount"></span>
+                        </td>
+                    </tr>
+                    <tr class="text-right">
+                        <td colspan="5">Invoice Sale</td>
+                        <td id="totalAmtInvoiceSale">
+                            ${totalAmtInvoiceSale}
+                            <%-- Total amount --%>
+                        </td>
+                    </tr>
+                    <tr class="text-right">
+                        <td colspan="5">Total Sale</td>
+                        <td>
+                            <span id="totalSale"></span>
+                            <%-- Total amount --%>
+                        </td>
+                    </tr>
+                    <tr class="text-right">
+                        <td colspan="5">Discount</td>
+                        <td>
+                            ${totalTotalDiscount}
+                            <%-- Total amount --%>
+                        </td>
+                    </tr>
+                    <tr class="text-right">
+                        <td colspan="5">Return/Exchange</td>
+                        <td>
+                            ${saleReplaceDiffAmt}
+                            <%-- Total amount --%>
+                        </td>
+                    </tr>
+                    <tr class="text-right">
+                        <td colspan="5">Credit</td>
+                        <td>
+                            ${totalAmtCredit}
+                            <%-- Total amount --%>
+                        </td>
+                    </tr>
+                    <tr class="text-right">
+                        <td colspan="5">Bank</td>
+                        <td>
+                            ${totalAmtBank}
+                            <%-- Total amount --%>
+                        </td>
+                    </tr>
+                    <tr class="text-right">
+                        <td colspan="5">Cash</td>
+                        <td>
+                            ${totalAmtCash}
+                            <%-- Total amount --%>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+
         </div>
+
+
+
+
+
+
+        <hr/>
+
     </div>
 </div>
 </body>

@@ -97,7 +97,11 @@
                                     <a href="<c:url value='/viewCompletedFiles'/>" class="nav-link">
                                         Completed
                                     </a>
-
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<c:url value='/viewRetrieved'/>" class="nav-link">
+                                        Retrieved
+                                    </a>
                                 </li>
 
 

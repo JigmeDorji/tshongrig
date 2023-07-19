@@ -61,6 +61,8 @@ public class CompanyCreationService extends BaseController {
     }
 
     public List<CompanyCreationDTO> getCompanyDetailList(CurrentUser currentUser) {
+
+
         if (currentUser.getUserRoleTypeId().equals(UserRoleType.Owner.getValue())) {
 
             List<CompanyCreationDTO> list = companyCreationDao.getCompanyDetailList();
@@ -103,11 +105,15 @@ public class CompanyCreationService extends BaseController {
     }
 
     public CompanyCreationDTO populateCompanyDetail(Integer companyId) {
+//        Boolean isCompanyExist = companyCreationDao.isCompanyExist(companyId);
+
         return companyCreationDao.populateCompanyDetail(companyId);
     }
 
     @Transactional(rollbackFor = Exception.class)
     public ResponseMessage saveCompanyDetails(CompanyCreationDTO companyCreationDTO, CurrentUser currentUser, Boolean isSignup) {
+
+
         ResponseMessage responseMessage = new ResponseMessage();
         CompanyCreation companyCreation = new CompanyCreation();
 
@@ -135,6 +141,8 @@ public class CompanyCreationService extends BaseController {
             companyId = companyCreationDao.getCompanyId();
             companyCreationDao.saveCompanyDetails(companyCreation);
         } else {//during approval time
+
+
             CompanyCreationDTO companyDetailPrevious = companyCreationDao.populateCompanyDetail(companyCreationDTO.getCompanyId());
 
             companyId = companyCreationDTO.getCompanyId();
@@ -176,16 +184,18 @@ public class CompanyCreationService extends BaseController {
                     savingBrandDetailOnCompanyApprovalOnce(companyAbbreviation, companyCreationDTO);
                 }
 
-
+                Boolean isCompanyExist = companyCreationDao.isCompanyExist(companyCreationDTO.getCompanyId());
+                if (!isCompanyExist) {
 //                Updating the User Login ID in Common Company Table
-                companyCreationDao.updateCommonCompanyTableForUserLoginId(companyId, companyAbbreviation);
-
+                    companyCreationDao.updateCommonCompanyTableForUserLoginId(companyId, companyAbbreviation);
 //                updating the User Login Detail in  commonCompanyLoginId table
-                CommonCompanyLoginId commonCompanyLoginId = new CommonCompanyLoginId();
-                commonCompanyLoginId.setCompanyLoginId(companyAbbreviation);
-                commonCompanyLoginId.setCompany(companyCreationDTO.getCompanyName());
-                commonCompanyLoginId.setCompanyId(companyCreationDTO.getCompanyId());
-                companyCreationDao.saveCompanyLoginDetail(commonCompanyLoginId);
+                    CommonCompanyLoginId commonCompanyLoginId = new CommonCompanyLoginId();
+                    commonCompanyLoginId.setCompanyLoginId(companyAbbreviation);
+                    commonCompanyLoginId.setCompany(companyCreationDTO.getCompanyName());
+                    commonCompanyLoginId.setCompanyId(companyCreationDTO.getCompanyId());
+                    companyCreationDao.saveCompanyLoginDetail(commonCompanyLoginId);
+
+                }
 
 
             }
@@ -216,6 +226,7 @@ public class CompanyCreationService extends BaseController {
             if (companyCreationDTO.getStatus().equals(CommonStatus.Approve.getValue())) {
                 companyCreation.setTrialExpiryDate(DateUtils.addMonths(new Date(), 1));
             }
+
             companyCreation.setId(companyCreationDTO.getCompanyId());
             companyCreation.setMailingAddress(companyCreationDTO.getMailingAddress());
             companyCreation.setMobileNo(companyCreationDTO.getMobileNo());
@@ -334,7 +345,8 @@ public class CompanyCreationService extends BaseController {
     private void savingBrandDetailOnCompanyApprovalOnce(String companyAbbreviation, CompanyCreationDTO companyCreationDTO) {
         String brandName = companyAbbreviation + "GT" + companyAbbreviation;
         Boolean isBrandExist = !companyCreationDao.checkInBrandExistsOnCompanyApprovalOnce(companyCreationDao.getCompanyId());
-        if (!isBrandExist) {//adding  New Brand Detail once on approval time
+//        System.out.println(companyCreationDao.checkInBrandExistsOnCompanyApprovalOnce(companyCreationDao.getCompanyId()));
+        if (isBrandExist) {//adding  New Brand Detail once on approval time
             BrandWiseItemCode brandWiseItemCode = new BrandWiseItemCode();
             brandWiseItemCode.setBrandId(addItemDao.getMaxBrandId() + 1);
             brandWiseItemCode.setBrandName(brandName);

@@ -154,7 +154,7 @@
                                 <input type="text" tabindex="2" class="form-control form-control-sm  text-right common"
                                        id="partNo" name="partNo"/>
                             </div>
-                            <label class=" col-md-2 text-right">Item Name</label>
+                            <label class=" col-md-2 text-right">Part Name</label>
 
                             <div class="col-md-1" hidden>
                                 <input type="text"

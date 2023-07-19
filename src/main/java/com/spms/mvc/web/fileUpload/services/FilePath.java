@@ -17,7 +17,7 @@ public class FilePath {
          * serverType = > null for development,window for window server,linux for linux Server
          */
         EnvironmentType environmentType;
-//        environmentType = new EnvironmentType(0, "development","tshong-rig");
+//        environmentType = new EnvironmentType(0, "development", "tshong-rig");
         environmentType = new EnvironmentType(1, "window", "tshong-rig");
 //        environmentType = new EnvironmentType(2, "linux","tshong-rig");
 

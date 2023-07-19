@@ -9,6 +9,7 @@ import com.spms.mvc.service.CompanyCreationService;
 import com.spms.mvc.service.auth.UserAccessPermissionService;
 import com.spms.mvc.service.auth.UserService;
 import com.spms.mvc.web.BaseController;
+import com.spms.mvc.web.fileUpload.dao.ClearBinScheduleTaskDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -37,6 +38,9 @@ public class UserController extends BaseController {
 
     @Autowired
     private CompanyCreationService companyCreationService;
+
+//    @Autowired
+//    private ClearBinScheduleTaskDao clearBinScheduleTaskDao;
     //endregion
 
     //region public method
@@ -60,6 +64,8 @@ public class UserController extends BaseController {
         model.addAttribute("loginCompany", companyCreationService.getLoginCompany(getCurrentUser(request).getCompanyId()));
         model.addAttribute("companyList", companyCreationService.loadCompanyList());
         model.addAttribute("currentUser", currentUser);
+
+//        clearBinScheduleTaskDao.fileParamsDTOS();
 
         List<CommonCompanyLoginId> commonCompanyLoginIds = companyCreationService.getCompanyLoginDetail(currentUser.getCompanyId());
 

@@ -58,6 +58,7 @@ viewNewFiles = (function () {
                         $('#onPrintBtn').attr('accessKey', res.isPdfFile)
                         $('#onDeleteBtn').attr('accessKey', res.id)
                         $('#onPermanentlyDelBtn').attr('accessKey', res.id)
+                        $('.onPermanentlyDelBtn').attr('accessKey', res.id)
                         $('#onRetrieveBtn').attr('id', res.id)
 
 
@@ -210,6 +211,19 @@ viewNewFiles = (function () {
         $('#onPermanentlyDelBtn').on('click', function () {
             const fileId = parseInt($(this).attr('accessKey'));
             // alert(fileId)
+            // alert(fileId)
+            confirmFunction(fileId);
+
+
+        });
+        $('.onPermanentlyDelBtn').on('click', function () {
+            const fileId = parseInt($(this).attr('accessKey'));
+            confirmFunction(fileId);
+
+        });
+
+
+        function confirmFunction(fileId) {
             confirmMessage("Do you want to delete permanently?", (e) => {
                 if (e) {
                     // const fileId = parseInt($(this).attr('accessKey'));
@@ -237,8 +251,7 @@ viewNewFiles = (function () {
                     });
                 }
             })
-
-        });
+        }
     }
 
 

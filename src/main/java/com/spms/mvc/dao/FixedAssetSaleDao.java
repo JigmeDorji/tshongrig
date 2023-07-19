@@ -39,11 +39,21 @@ public class FixedAssetSaleDao {
 
     @Transactional(readOnly = true)
     public List<DropdownDTO> getItemList(Integer companyId) {
-        String query = "SELECT b.particular AS text, b.assetDetailId AS valueBigInteger, d.accTypeName \n" +
+        String query = "SELECT b.particular AS text, b.assetDetailId AS valueBigInteger,a.assetNo as assetCode, d.accTypeName \n" +
                 "FROM tbl_fa_item_setup  a INNER JOIN  tbl_fa_item_setup_detail  b\n" +
                 "ON a.assetId=b.assetId INNER JOIN tbl_fa_group c on c.assetClassId=a.assetClassId\n" +
                 "INNER JOIN tbl_acc_acctype d on c.accTypeId=d.accTypeId\n" +
                 "WHERE a.companyId=:companyId";
+
+
+//        String query = "SELECT b.particular AS text, b.assetDetailId AS valueBigInteger,\n" +
+//                "    (SELECT assetCode FROM tbl_fa_purchase_detail WHERE faPurchaseId = (SELECT DISTINCT faPurchaseId FROM tbl_fa_purchase WHERE assetDetailId = b.assetDetailId ORDER BY faPurchaseId DESC LIMIT 1)) AS assetCode,\n" +
+//                "    d.accTypeName\n" +
+//                "FROM tbl_fa_item_setup AS a\n" +
+//                "INNER JOIN tbl_fa_item_setup_detail AS b ON a.assetId = b.assetId\n" +
+//                "INNER JOIN tbl_fa_group AS c ON c.assetClassId = a.assetClassId\n" +
+//                "INNER JOIN tbl_acc_acctype AS d ON c.accTypeId = d.accTypeId\n" +
+//                "WHERE a.companyId=:companyId";
         return sessionFactory.getCurrentSession().createSQLQuery(query)
                 .setParameter("companyId", companyId)
                 .setResultTransformer(Transformers.aliasToBean(DropdownDTO.class)).list();
@@ -178,11 +188,13 @@ public class FixedAssetSaleDao {
                 .executeUpdate();
     }
 
+
     @Transactional
     public List<FixedAssetScheduleDTO> getFixedAssetSchedule(Date asOnDate, Integer companyId) {
         String query = "CALL sp_fa_fixed_asset_schedule(:companyId,:asOnDate)";
 
         Session session = sessionFactory.getCurrentSession();
+
         session.createSQLQuery(query)
                 .setParameter("companyId", companyId)
                 .setParameter("asOnDate", asOnDate)

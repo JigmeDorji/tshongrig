@@ -396,7 +396,7 @@ public class CompanyCreationDao {
 
     @Transactional(readOnly = true)
     public Boolean checkInBrandExistsOnCompanyApprovalOnce(Integer companyId) {
-        String sqlQry = "SELECT count(*) FROM tbl_item_code WHERE companyId = :companyId";
+        String sqlQry = "SELECT COUNT(*) FROM tbl_item_code WHERE companyId = :companyId";
         BigInteger count = (BigInteger) sessionFactory.getCurrentSession()
                 .createSQLQuery(sqlQry)
                 .setParameter("companyId", companyId)
@@ -404,6 +404,15 @@ public class CompanyCreationDao {
         return count.equals(BigInteger.ZERO);
     }
 
+    @Transactional(readOnly = true)
+    public Boolean isCompanyExist(Integer companyId) {
+        String sqlQry = "SELECT COUNT(*) FROM tbl_common_company_login_id WHERE companyId = :companyId";
+        BigInteger count = (BigInteger) sessionFactory.getCurrentSession()
+                .createSQLQuery(sqlQry)
+                .setParameter("companyId", companyId)
+                .uniqueResult();
+        return !count.equals(BigInteger.ZERO);
+    }
 
 
 }

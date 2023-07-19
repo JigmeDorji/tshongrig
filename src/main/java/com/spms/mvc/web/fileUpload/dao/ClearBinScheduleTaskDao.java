@@ -19,13 +19,10 @@ public class ClearBinScheduleTaskDao {
 
     @Transactional
     public List<FileParamsDTO> fileParamsDTOS() {
-        String query = "SELECT * " +
-                " FROM tbl_file_params " +
-                " WHERE " +
-                " isNew=0 and isCompleted=0 " +
-                " and isMovedToBin=1 " +
-                " and " +
-                " movedToBinDate <= DATE_SUB(NOW(), INTERVAL 1 MONTH)";
+
+        String query = " SELECT * FROM tbl_file_params WHERE \n" +
+                "                isNew=0 and isCompleted=0 and isMovedToBin=1  and \n" +
+                "              movedToBinDate <= DATE_SUB(NOW(), INTERVAL 1 MONTH) || (RetrievedDate <= DATE_SUB(NOW(), INTERVAL 1 MONTH)  and   isRetrieved=1) ";
         Session session = sessionFactory.getCurrentSession();
         return session.createSQLQuery(query)
                 .setResultTransformer(Transformers.aliasToBean(FileParamsDTO.class)).list();

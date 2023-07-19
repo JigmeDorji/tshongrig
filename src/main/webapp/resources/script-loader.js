@@ -238,7 +238,10 @@ $(document).ready(function () {
   if (document.URL.search("viewCompletedFiles") > 1)
         scriptLoader("resources/js/viewNewAndCompletedFiles.js");
 
-if (document.URL.search("filesBin") > 1)
+    if (document.URL.search("filesBin") > 1)
+        scriptLoader("resources/js/viewNewAndCompletedFiles.js");
+
+    if (document.URL.search("viewRetrieved") > 1)
         scriptLoader("resources/js/viewNewAndCompletedFiles.js");
 
 });

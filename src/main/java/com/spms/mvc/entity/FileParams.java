@@ -39,10 +39,18 @@ public class FileParams {
     private Integer isPdfFile;
 
     @Column(name = "isMovedToBin")
-    private Integer isMovedToBin;;
+    private Integer isMovedToBin;
 
     @Column(name = "movedToBinDate")
-    private Date movedToBinDate;;
+    private Date movedToBinDate;
+
+    @Column(name = "isRetrieved")
+    private Integer isRetrieved;
+
+    @Column(name = "RetrievedDate")
+    private Date RetrievedDate;
+
+
 
 
 
@@ -158,5 +166,22 @@ public class FileParams {
 
     public void setMovedToBinDate(Date movedToBinDate) {
         this.movedToBinDate = movedToBinDate;
+    }
+
+
+    public Integer getIsRetrieved() {
+        return isRetrieved;
+    }
+
+    public void setIsRetrieved(Integer isRetrieved) {
+        this.isRetrieved = isRetrieved;
+    }
+
+    public Date getRetrievedDate() {
+        return RetrievedDate;
+    }
+
+    public void setRetrievedDate(Date retrievedDate) {
+        RetrievedDate = retrievedDate;
     }
 }

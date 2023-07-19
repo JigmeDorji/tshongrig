@@ -82,7 +82,12 @@
                                 <th></th>
                                 <th class="commonFields">SI.NO</th>
                                 <th>Item Code</th>
-                                <th>Item Name</th>
+                                <c:if test="${currentUser.businessType!=8}">
+                                    <th>Part Name</th>
+                                </c:if>
+                                <c:if test="${currentUser.businessType==8}">
+                                    <th>Item Name</th>
+                                </c:if>
                                 <th>Location</th>
                                 <th>Qty</th>
                                 <th>Unit</th>

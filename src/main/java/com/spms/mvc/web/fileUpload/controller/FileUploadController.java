@@ -45,8 +45,6 @@ public class FileUploadController {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
 
         return fileUploadService.saveFilesUploaded(currentUser, request, session, filesBundleDTOS);
-
-
     }
 
 

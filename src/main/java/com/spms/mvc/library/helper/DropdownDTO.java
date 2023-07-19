@@ -36,6 +36,7 @@ public class DropdownDTO {
     private Character valueChar;
     private BigDecimal valueBigDecimal;
     private BigInteger valueBigInteger;
+    private String assetCode;
     //endregion
 
     //region empty constructor
@@ -156,6 +157,15 @@ public class DropdownDTO {
     public void setAccTypeName(String accTypeName) {
         this.accTypeName = accTypeName;
     }
+
+    public String getAssetCode() {
+        return assetCode;
+    }
+
+    public void setAssetCode(String assetCode) {
+        this.assetCode = assetCode;
+    }
+
     //endregion
 
     @Override
@@ -194,5 +204,22 @@ public class DropdownDTO {
             return false;
 
         return true;
+    }
+
+
+    @Override
+    public String toString() {
+        return "DropdownDTO{" +
+                "value=" + value +
+                ", text='" + text + '\'' +
+                ", voucherTypeName='" + voucherTypeName + '\'' +
+                ", accTypeName='" + accTypeName + '\'' +
+                ", id='" + id + '\'' +
+                ", valueShort=" + valueShort +
+                ", valueInteger=" + valueInteger +
+                ", valueChar=" + valueChar +
+                ", valueBigDecimal=" + valueBigDecimal +
+                ", valueBigInteger=" + valueBigInteger +
+                '}';
     }
 }

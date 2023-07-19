@@ -606,6 +606,7 @@ fixedAssetSale = (function () {
                 type: 'GET',
                 success: function (res) {
 
+                    console.log(res)
                     let items = new Bloodhound({
                         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('text', 'accTypeName'),
                         queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -637,6 +638,20 @@ fixedAssetSale = (function () {
                             data: {assetDetailId: data.valueBigInteger},
                             success: function (result) {
 
+                                console.log(result)
+                                if (result.length === 1) {
+                                    $('#assetCode').val(result[0].text);
+                                    $('#faPurchaseDetailId').val(result[0].valueBigInteger);
+                                }else {
+                                    $('#assetCode').val(result[result.length - 1].text);
+                                    $('#faPurchaseDetailId').val(result[result.length - 1].valueBigInteger);
+
+                                }
+
+
+
+
+
                                 let assetCode = $('#assetCode');
 
                                 let itemCode = new Bloodhound({
@@ -650,6 +665,7 @@ fixedAssetSale = (function () {
                                         return {assetCode: value.text, value: value.valueBigInteger};
                                     })
                                 });
+
 
                                 assetCode.typeahead('val', '');
                                 assetCode.typeahead('destroy');

@@ -143,7 +143,7 @@ public class SaleRecordDao {
 
     @Transactional(readOnly = true)
     public List<SaleItemDTO> getSaleRecordListSummaryAll(Date fromDate, Date toDate, Integer companyId) {
-        String query = "SELECT C.itemCode AS itemCode,\n" +
+        String query = "SELECT CAST(ROW_NUMBER() OVER (ORDER BY C.itemCode) AS CHAR) AS SerialNumber, C.itemCode AS itemCode, \n" +
                 "B.itemName AS itemName,\n" +
                 "SUM(C.qty) AS sumQty,\n" +
                 "B.sellingPrice AS sellingPrice,\n" +
@@ -160,6 +160,9 @@ public class SaleRecordDao {
                 .setParameter("toDate", toDate)
                 .setParameter("companyId", companyId)
                 .setResultTransformer(Transformers.aliasToBean(SaleItemDTO.class)).list();
+//        Tue Jul 11 15:23:40 BDT 2023
+//        Tue Jul 11 15:23:40 BDT 2023
+//        Tue Jul 11 00:00:00 BDT 2023
     }
 
     @Transactional(readOnly = true)

@@ -167,6 +167,7 @@ assetSetup = (function () {
             });
         }
 
+
         function getItemDetailView() {
             fixedAssetItemDetailGridTBody.on('click', 'tr #btnView', function () {
 
@@ -184,6 +185,8 @@ assetSetup = (function () {
                     type: 'GET',
                     data: {assetDetailId: selectedRow.find('.assetDetailId').text()},
                     success: function (res) {
+
+
                         let i = 1;
                         let columnDef = [{
                             data: 'rowNo', class: 'text-center', render: function () {
@@ -278,7 +281,7 @@ assetSetup = (function () {
             saveAssetClass: saveAssetClass,
             getFixedAssetDetail: getFixedAssetDetail,
             saveAssetSubClassCategories: saveAssetSubClassCategories,
-            // onClickEdit: onClickEdit,
+            onClickEdit: onClickEdit,
             getItemDetailView: getItemDetailView
         }
     }
@@ -292,7 +295,7 @@ $(document).ready(function () {
     assetSetup.saveAssetClass();
     assetSetup.saveAssetSubClassCategories();
     assetSetup.getFixedAssetDetail();
-    // assetSetup.onClickEdit();
+    assetSetup.onClickEdit();
     assetSetup.getItemDetailView();
 
 });

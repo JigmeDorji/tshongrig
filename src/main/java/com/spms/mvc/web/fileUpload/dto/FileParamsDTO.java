@@ -29,6 +29,12 @@ public class FileParamsDTO {
 
     private int isMovedToBin;
     private Date movedToBinDate;
+    private Integer isRetrieved;
+
+
+    private Date RetrievedDate;
+
+
 
 
     public Integer getId() {
@@ -125,6 +131,23 @@ public class FileParamsDTO {
 
     public void setMovedToBinDate(Date movedToBinDate) {
         this.movedToBinDate = movedToBinDate;
+    }
+
+    public Integer getIsRetrieved() {
+        return isRetrieved;
+    }
+
+    public void setIsRetrieved(Integer isRetrieved) {
+        this.isRetrieved = isRetrieved;
+    }
+
+
+    public Date getRetrievedDate() {
+        return RetrievedDate;
+    }
+
+    public void setRetrievedDate(Date retrievedDate) {
+        RetrievedDate = retrievedDate;
     }
 
     @Override

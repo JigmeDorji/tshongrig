@@ -55,14 +55,19 @@ public class ReceivedItemOpeningController  extends GeneralTrading {
 
         List<DropdownDTO> supplierList = supplierSetupService.getSupplierListDropDown(currentUser);
         model.addAttribute("supplierList", supplierList);
+        List<DropdownDTO> getBrandList = addItemService.getBrandList(currentUser);
+//            DropdownDTO generalBrand = getBrandList.get(0);
+//            model.addAttribute("generalBrand", generalBrand);
+//            PurchaseDTO getSlNo = addItemService.getSlNo(8000);
+//            model.addAttribute("getSlNo", getSlNo);
 
-        if (currentUser.getBusinessType() == 8) {
-            List<DropdownDTO> getBrandList = addItemService.getBrandList(currentUser);
-            DropdownDTO generalBrand = getBrandList.get(0);
-            model.addAttribute("generalBrand", generalBrand);
-            PurchaseDTO getSlNo = addItemService.getSlNo(8000);
-            model.addAttribute("getSlNo", getSlNo);
-        }
+//        if (currentUser.getBusinessType() == 8) {
+//            List<DropdownDTO> getBrandList = addItemService.getBrandList(currentUser);
+//            DropdownDTO generalBrand = getBrandList.get(0);
+//            model.addAttribute("generalBrand", generalBrand);
+//            PurchaseDTO getSlNo = addItemService.getSlNo(8000);
+//            model.addAttribute("getSlNo", getSlNo);
+//        }
 
         Date newDate = new Date();
         String date = new SimpleDateFormat("dd-MMM-yyyy").format(newDate);

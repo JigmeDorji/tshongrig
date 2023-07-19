@@ -18,14 +18,15 @@ public class ViewFilesDao {
     SessionFactory sessionFactory;
 
     @Transactional
-    public List<FileParamsDTO> getViewFileOnCondition(Integer companyId, int isNew, int isCompleted, int isMovedToBin) {
-        String query = "SELECT  *  from tbl_file_params  where companyId=:companyId and isNew=:isNew and isCompleted=:isCompleted and isMovedToBin=:isMovedToBin ORDER BY id DESC";
+    public List<FileParamsDTO> getViewFileOnCondition(Integer companyId, int isNew, int isCompleted, int isMovedToBin, int isRetrieved) {
+        String query = "SELECT  *  from tbl_file_params  where companyId=:companyId and isNew=:isNew and isCompleted=:isCompleted and isMovedToBin=:isMovedToBin and isRetrieved=:isRetrieved ORDER BY id DESC";
         Session session = sessionFactory.getCurrentSession();
         return session.createSQLQuery(query)
                 .setParameter("companyId", companyId)
                 .setParameter("isNew", isNew)
                 .setParameter("isCompleted", isCompleted)
                 .setParameter("isMovedToBin", isMovedToBin)
+                .setParameter("isRetrieved", isRetrieved)
                 .setResultTransformer(Transformers.aliasToBean(FileParamsDTO.class)).list();
     }
 
@@ -44,7 +45,7 @@ public class ViewFilesDao {
     public boolean isMarkedCompleted(Integer fileId, Integer companyId) {
 
 
-        String sqlQry = "UPDATE tbl_file_params SET isNew = 0,isMovedToBin=0, movedToBinDate=null,isCompleted = 1  WHERE id = :id AND companyId = :companyId";
+        String sqlQry = "UPDATE tbl_file_params SET isNew = 0,isMovedToBin=0, movedToBinDate=null,isCompleted = 1,isRetrieved=0, RetrievedDate=null WHERE id = :id AND companyId = :companyId";
         int rowsUpdated = sessionFactory.getCurrentSession()
                 .createSQLQuery(sqlQry)
                 .setParameter("id", fileId)
@@ -81,12 +82,14 @@ public class ViewFilesDao {
     @Transactional
     public boolean isRetrieved(Integer fileId, Integer companyId) {
         Date date = new Date();
-        String sqlQry = "UPDATE tbl_file_params SET isNew = 1,isMovedToBin=0, isCompleted = 0,movedToBinDate=null,createdDate=:createdDate WHERE id = :id AND companyId = :companyId";
+//        String sqlQry = "UPDATE tbl_file_params SET isNew = 0,isMovedToBin=0, isCompleted = 0,movedToBinDate=null,createdDate=:createdDate WHERE id = :id AND companyId = :companyId";
+        String sqlQry = "UPDATE tbl_file_params SET isNew = 0,isMovedToBin=0,isRetrieved=1,isCompleted = 0,movedToBinDate=null,RetrievedDate=:RetrievedDate WHERE id = :id AND companyId = :companyId";
+
         int rowsUpdated = sessionFactory.getCurrentSession()
                 .createSQLQuery(sqlQry)
                 .setParameter("id", fileId)
                 .setParameter("companyId", companyId)
-                .setParameter("createdDate", date)
+                .setParameter("RetrievedDate", date)
                 .executeUpdate();
 
         return rowsUpdated > 0;
