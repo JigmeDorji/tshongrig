@@ -45,6 +45,7 @@ voucherGroupList = (function () {
             success: function (res) {
 
 
+                // console.log(res)
                 for (let counter = 0; counter < res.length; counter++) {
                     currentCrTotalAmount += res[counter].creditAmount;
                     currentDrTotalAmount += res[counter].debitAmount;
@@ -78,6 +79,7 @@ voucherGroupList = (function () {
                                 let amount = '';
                                 if (data != null) {
                                     amount = spms.formatAmount(data.toFixed(2));
+                                    // amount = data;
                                 }
                                 return amount;
                             }
@@ -133,8 +135,8 @@ voucherGroupList = (function () {
                 },
                 success: function (res) {
 
-                    $('#totalCr').val((0).toFixed(2));
-                    $('#totalDr').val((0).toFixed(2));
+                    $('#totalCr').val((0).toFixed(3));
+                    $('#totalDr').val((0).toFixed(3));
 
 
                     $('#currentDrAndCrAmount').attr('hidden', false);

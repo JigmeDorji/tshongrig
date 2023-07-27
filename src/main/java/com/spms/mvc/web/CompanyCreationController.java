@@ -1,7 +1,6 @@
 package com.spms.mvc.web;
 
 import com.spms.mvc.Enumeration.SystemDataInt;
-import com.spms.mvc.dto.BrandDTO;
 import com.spms.mvc.dto.CompanyCreationDTO;
 import com.spms.mvc.dto.FinancialYearDTO;
 import com.spms.mvc.library.helper.CurrentUser;
@@ -101,14 +100,15 @@ public class CompanyCreationController extends BaseController {
 
     @ResponseBody
     @RequestMapping(value = "/saveCompanyDetails", method = RequestMethod.POST)
-    public ResponseMessage saveCompanyDetails(CompanyCreationDTO companyCreationDTO,
-                                              HttpServletRequest request) throws
-            IOException {
-
-        companyCreationService.updateTheUserStatus(companyCreationDTO.getStatus(), companyCreationDTO.getCompanyId());
+    public ResponseMessage saveCompanyDetails(CompanyCreationDTO companyCreationDTO, HttpServletRequest request) throws IOException {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
 
 
+
+//        Updating the User Status on Blocking Access
+        companyCreationService.updateTheUserStatus(companyCreationDTO.getStatus(), companyCreationDTO.getCompanyId());
+
+//        Main Saving Business
         return companyCreationService.saveCompanyDetails(companyCreationDTO, currentUser, false);
     }
 
@@ -118,5 +118,8 @@ public class CompanyCreationController extends BaseController {
     public ResponseMessage deleteCompanyDetails(Integer companyId) {
         return companyCreationService.deleteCompanyDetails(companyId);
     }
+
+
+
 
 }

@@ -87,7 +87,7 @@
                     <div class="signin-box">
                         <%--                        <h2 class="slim-logo"><a href="index.html">slim<span>.</span></a></h2>--%>
                         <%--                        <img src="<c:url value='/resources/images/logobcs.png'/>" class="img-fluid pb-2" alt="logo">--%>
-                        <img src="<c:url value='/resources/limitless/global_assets/images/tshongrig-logo.png'/>"
+                        <img  src="<c:url value='/resources/limitless/global_assets/images/logo.png'/>"
                              class="img-fluid pb-2" alt="logo">
                         <p style="font-style: italic;font-family:Helvetica">"We care for your Business"</p>
                         <p>Our first product, <strong>Tshong Rig ERP system</strong> is here to help you manage your

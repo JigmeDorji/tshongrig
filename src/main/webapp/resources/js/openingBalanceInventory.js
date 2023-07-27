@@ -22,8 +22,9 @@ if (isGeneralTrader) {
             type: 'GET',
             success: function (res) {
 
+                // console.log(res)
                 if (res.length === 0) {
-                    alert("Old Version Company Data: Re-approval of the company is required to meet the upgraded system! Or Please contact the relevant authority for further assistance");
+                    alert("Re-approval of the company is required to meet the upgraded system! Or Please contact the relevant authority for further assistance");
                 }
 
                 // console.log(res)

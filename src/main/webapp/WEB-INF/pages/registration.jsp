@@ -106,7 +106,7 @@
                 <div class="signin-left col-md-4 text-center">
                     <div class="signin-box">
                         <%--                        <h2 class="slim-logo"><a href="index.html">slim<span>.</span></a></h2>--%>
-                        <img src="<c:url value='/resources/images/logobcs.png'/>" class="img-fluid pb-2" alt="logo">
+                        <img  src="<c:url value='/resources/limitless/global_assets/images/logo.png'/>" class="img-fluid pb-2" alt="logo">
                         <h1>Start a 30-day free trial</h1>
                         <h5>Subscribe Tshong Rig ERP system today to power your business.</h5>
                         <p class="pt-5"><a href="<c:url value='/login'/>" class="btn btn-outline-secondary pd-x-25"><i

@@ -183,4 +183,28 @@ public class CompanyCreationDTO {
     public void setLoginId(String loginId) {
         this.loginId = loginId;
     }
+
+    @Override
+    public String toString() {
+        return "CompanyCreationDTO{" +
+                "companyId=" + companyId +
+                ", companyName='" + companyName + '\'' +
+                ", mailingAddress='" + mailingAddress + '\'' +
+                ", mobileNo='" + mobileNo + '\'' +
+                ", email='" + email + '\'' +
+                ", website='" + website + '\'' +
+                ", fnYrStart=" + fnYrStart +
+                ", businessType=" + businessType +
+                ", status=" + status +
+                ", contactPerson='" + contactPerson + '\'' +
+                ", remarks='" + remarks + '\'' +
+                ", totalSale=" + totalSale +
+                ", pfPercentage=" + pfPercentage +
+                ", totalListSale=" + totalListSale +
+                ", saleDate=" + saleDate +
+                ", trialExpiryDate=" + trialExpiryDate +
+                ", saleListDate=" + saleListDate +
+                ", loginId='" + loginId + '\'' +
+                '}';
+    }
 }

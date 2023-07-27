@@ -344,9 +344,11 @@ public class CompanyCreationService extends BaseController {
 
     private void savingBrandDetailOnCompanyApprovalOnce(String companyAbbreviation, CompanyCreationDTO companyCreationDTO) {
         String brandName = companyAbbreviation + "GT" + companyAbbreviation;
-        Boolean isBrandExist = !companyCreationDao.checkInBrandExistsOnCompanyApprovalOnce(companyCreationDao.getCompanyId());
-//        System.out.println(companyCreationDao.checkInBrandExistsOnCompanyApprovalOnce(companyCreationDao.getCompanyId()));
-        if (isBrandExist) {//adding  New Brand Detail once on approval time
+        Boolean noBrandExist = companyCreationDao.checkInBrandExistsOnCompanyApprovalOnce(companyCreationDTO.getCompanyId());
+        System.out.println(noBrandExist);
+
+////        System.out.println(companyCreationDao.checkInBrandExistsOnCompanyApprovalOnce(companyCreationDao.getCompanyId()));
+        if (noBrandExist) {//adding  New Brand Detail once on approval time
             BrandWiseItemCode brandWiseItemCode = new BrandWiseItemCode();
             brandWiseItemCode.setBrandId(addItemDao.getMaxBrandId() + 1);
             brandWiseItemCode.setBrandName(brandName);
@@ -359,4 +361,12 @@ public class CompanyCreationService extends BaseController {
             companyCreationDao.savingBrandDetailOnCompanyApprovalOnce(brandWiseItemCode);
         }
     }
+
+    //Auto Brand Creation For only Trading Company
+    public void autoBrandCreationForGeneralTrading(CompanyCreationDTO companyCreationDTO,CurrentUser currentUser) {
+
+
+
+    }
+
 }

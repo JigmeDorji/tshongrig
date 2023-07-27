@@ -67,8 +67,9 @@
         <!--                <property name="url" value="jdbc:mysql://localhost:3306/salarysheet_db_1"/>-->
         <!--        <property name="url" value="jdbc:mysql://localhost:3306/tshongrig_06_06_2023_db"/>-->
         <!--                <property name="url" value="jdbc:mysql://localhost:3306/tshongrig_db_db"/>-->
-<!--                        <property name="url" value="jdbc:mysql://localhost:3306/tshongrig_bugs"/>-->
-        <property name="url" value="jdbc:mysql://localhost:3306/tshongrig_db"/>
+                        <property name="url" value="jdbc:mysql://localhost:3306/tshongrig_bugs"/>
+<!--                        <property name="url" value="jdbc:mysql://localhost:3306/new_db"/>-->
+<!--        <property name="url" value="jdbc:mysql://localhost:3306/tshongrig_db"/>-->
         <property name="password" value="root@Root@22"/>
 
 

@@ -135,6 +135,20 @@ voucherCreation = (function () {
                         }
                     } else {
                         if ((selectedTd.find('.ledgerId').val()) && (selectedTd.find('.debitAmount').val() || selectedTd.find('.creditAmount').val())) {
+
+                            function onFocusInputJump(){
+                                let newRowIndex = row.length + 1;
+                                let inputField = selectedTd.find('.ledgerId');
+                                if (parseInt(isDebitOrCredit) === 1) {
+                                    inputField = selectedTd.find('.debitAmount');
+                                } else {
+                                    inputField = selectedTd.find('.creditAmount');
+                                }
+                                inputField.focus();
+                            }
+                            onFocusInputJump();
+
+
                             _addRow(voucherCreationGridTBody, row, index);
                         }
                     }

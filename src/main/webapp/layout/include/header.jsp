@@ -83,7 +83,7 @@
         </style>
         <a href="<c:url value='/redirectHome'/>" class="d-inline-block">
             <%--            <img src="<c:url value='/resources/limitless/global_assets/images/logo_trans.png'/>"--%>
-            <img src="<c:url value='/resources/limitless/global_assets/images/tshongrig-logo.png'/>"
+            <img src="<c:url value='/resources/limitless/global_assets/images/logo.png'/>"
                  style="padding-left:10%;width: 180px; height: 50px; margin-top: -10px"
             <%--                 style="padding-left:10%;width: 10%; height: 10%; margin-top: -10px"--%>
                  class="d-none d-sm-block"

@@ -234,6 +234,7 @@ public class AccProfitAndLossReportService {
             accProfitAndLossReportIndirectIncomeDTO.setIsTopParent(Boolean.TRUE);
             accProfitAndLossReportDTOList.add(accProfitAndLossReportIndirectIncomeDTO);
         }
+        System.out.println(accProfitAndLossReportDTOList);
         return accProfitAndLossReportDTOList;
     }
 
