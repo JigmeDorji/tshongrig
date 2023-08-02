@@ -230,4 +230,7 @@ public class VoucherGroupListService {
     }
 
 
+    public boolean isDepreciationLedger(String ledgerId, Integer companyId) {
+      return   voucherCreationDao.isDepreciationLedger(ledgerId,companyId);
+    }
 }

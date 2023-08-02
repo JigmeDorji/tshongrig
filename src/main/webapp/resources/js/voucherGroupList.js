@@ -336,7 +336,7 @@ voucherGroupList = (function () {
 
             swal({
                 title: "Confirmation",
-                text: "Are you sure that you want to proceed ?",
+                text: "Please Confirm",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#dd6b55",

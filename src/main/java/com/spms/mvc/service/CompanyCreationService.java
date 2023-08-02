@@ -143,6 +143,8 @@ public class CompanyCreationService extends BaseController {
         } else {//during approval time
 
 
+            Boolean isCompanyExist = companyCreationDao.isCompanyExist(companyCreationDTO.getCompanyId());
+
             CompanyCreationDTO companyDetailPrevious = companyCreationDao.populateCompanyDetail(companyCreationDTO.getCompanyId());
 
             companyId = companyCreationDTO.getCompanyId();
@@ -175,7 +177,11 @@ public class CompanyCreationService extends BaseController {
                 user.setUpdatedDate(null);
                 user.setCreatedBy(currentUser.getLoginId());
                 user.setCreatedDate(new Date());
-                userId = userDao.addUser(user);
+
+                if(!isCompanyExist){
+                    userId = userDao.addUser(user);
+                }
+
 
 
 //                Saving the Brand For General Trading Company
@@ -184,7 +190,6 @@ public class CompanyCreationService extends BaseController {
                     savingBrandDetailOnCompanyApprovalOnce(companyAbbreviation, companyCreationDTO);
                 }
 
-                Boolean isCompanyExist = companyCreationDao.isCompanyExist(companyCreationDTO.getCompanyId());
                 if (!isCompanyExist) {
 //                Updating the User Login ID in Common Company Table
                     companyCreationDao.updateCommonCompanyTableForUserLoginId(companyId, companyAbbreviation);
@@ -345,7 +350,7 @@ public class CompanyCreationService extends BaseController {
     private void savingBrandDetailOnCompanyApprovalOnce(String companyAbbreviation, CompanyCreationDTO companyCreationDTO) {
         String brandName = companyAbbreviation + "GT" + companyAbbreviation;
         Boolean noBrandExist = companyCreationDao.checkInBrandExistsOnCompanyApprovalOnce(companyCreationDTO.getCompanyId());
-        System.out.println(noBrandExist);
+//        System.out.println(noBrandExist);
 
 ////        System.out.println(companyCreationDao.checkInBrandExistsOnCompanyApprovalOnce(companyCreationDao.getCompanyId()));
         if (noBrandExist) {//adding  New Brand Detail once on approval time

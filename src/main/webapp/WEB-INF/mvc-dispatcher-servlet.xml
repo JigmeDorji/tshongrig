@@ -57,19 +57,8 @@
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
         <property name="username" value="root"/>
 
-        <!--  For Sir Dugay's Testing         -->
-        <!--        <property name="url" value="jdbc:mysql://localhost:3306/bcs_db"/>-->
-        <!--        <property name="password" value="root"/>-->
-
-
-        <!--        <property name="url" value="jdbc:mysql://localhost:3306/babase_autga_db"/>-->
-        <!--        <property name="url" value="jdbc:mysql://localhost:3306/au_babesa"/>-->
-        <!--                <property name="url" value="jdbc:mysql://localhost:3306/salarysheet_db_1"/>-->
-        <!--        <property name="url" value="jdbc:mysql://localhost:3306/tshongrig_06_06_2023_db"/>-->
-        <!--                <property name="url" value="jdbc:mysql://localhost:3306/tshongrig_db_db"/>-->
-                        <property name="url" value="jdbc:mysql://localhost:3306/tshongrig_bugs"/>
-<!--                        <property name="url" value="jdbc:mysql://localhost:3306/new_db"/>-->
-<!--        <property name="url" value="jdbc:mysql://localhost:3306/tshongrig_db"/>-->
+        <!--                                <property name="url" value="jdbc:mysql://localhost:3306/tshongrig_bugs"/>-->
+        <property name="url" value="jdbc:mysql://localhost:3306/tshongrig_db"/>
         <property name="password" value="root@Root@22"/>
 
 

@@ -386,4 +386,16 @@ public class VoucherCreationDao {
                 .setResultTransformer(Transformers.aliasToBean(DropdownDTO.class)).list();
     }
 
+    @Transactional(readOnly = true)
+    public boolean isDepreciationLedger(String ledgerId, Integer companyId) {
+        String query = "SELECT COUNT(*) FROM tbl_acc_ledger WHERE ledgerId = :ledgerId AND companyId = :companyId AND accTypeId = 15";
+        Session session = sessionFactory.getCurrentSession();
+        BigInteger count = (BigInteger) session.createSQLQuery(query)
+                .setParameter("ledgerId", ledgerId)
+                .setParameter("companyId", companyId)
+                .uniqueResult();
+
+        return count != null && count.intValue() > 0;
+    }
+
 }

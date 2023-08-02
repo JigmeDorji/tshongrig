@@ -50,7 +50,7 @@ public class SalarySheetController extends BaseController {
     @RequestMapping(value = "/getEmpListDetails", method = RequestMethod.GET)
     public List<EmployeeSetupDTO> getEmpListDetails(HttpServletRequest request, Integer selectedMonthId, Integer cost) {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
-        List<EmployeeSetupDTO> sd = salarySheetService.getEmpSetupList(currentUser, selectedMonthId, cost);
+//        List<EmployeeSetupDTO> sd = salarySheetService.getEmpSetupList(currentUser, selectedMonthId, cost);
         return salarySheetService.getEmpSetupList(currentUser, selectedMonthId, cost);
     }
 
