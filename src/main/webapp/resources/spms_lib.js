@@ -131,15 +131,15 @@ spms = (function () {
     }
 
     function getUrl() {
-        // return window.location.protocol + '//' + window.location.host + '/tshong-rig/';
-        return window.location.protocol + '//' + window.location.host + '/';
-        // return 'http://www.autga.bt/bcs/';
+        return window.location.protocol + '//' + window.location.host + '/tshong-rig/';
+        // return window.location.protocol + '//' + window.location.host + '/tshong_rig_war_exploded/';
     }
 
     function baseReportLocation() {
-        // return window.location.protocol + '//' + window.location.host + '/tshong-rig/resources/reports/';
-        return window.location.protocol + '//' + window.location.host + '/resources/reports/';
+        return window.location.protocol + '//' + window.location.host + '/tshong-rig/resources/reports/';
+        // return window.location.protocol + '//' + window.location.host + '/tshong_rig_war_exploded/resources/reports/';
     }
+
 
     //index the table gridaccProfitAndLossReport
     function _formIndexing(tableBody, row, serialNo, iterator) {
@@ -170,6 +170,7 @@ spms = (function () {
         });
     }
 
+
     function loadGridDropDown(element, data) {
         if (!data) {
             data = [];
@@ -181,6 +182,7 @@ spms = (function () {
                     '<option/>', {
                         value: "",
                         text: "-- Please Select --"
+                        // text: "-- Please Download--"
                     }
                 )
             );
@@ -196,13 +198,17 @@ spms = (function () {
                                 }
                             )
                         );
+
+
                     }
                     if (itemData.id != null) {
+
                         element.append(
                             $(
                                 '<option/>', {
                                     value: itemData.id,
                                     text: itemData.text
+
                                 }
                             )
                         );
@@ -412,7 +418,7 @@ spms = (function () {
     }
 
     function autoSizeInputField(tableTBody) {
-        tableTBody.find('tr').each(function (e) {
+        tableTBody.find('tr').each(function (fe) {
             let selectedRow = $(this).closest('tr');
             selectedRow.find('.qty').find('.qty-container').css('height',
                 selectedRow.find('.description').height() + 'px');
@@ -476,7 +482,7 @@ spms = (function () {
         numberWithCommas: numberWithCommas,
         autoSizeInputField: autoSizeInputField,
         calculateTdsAmount: calculateTdsAmount,
-        calTotalTDSPayableAmount: calTotalTDSPayableAmount
+        calTotalTDSPayableAmount: calTotalTDSPayableAmount,
     }
 })();
 
@@ -906,7 +912,8 @@ function successMsg(msg, callback) {
 function successMsg2(msg) {
     $('.responseMsg').append('<div class="alert alert-success border-0 alert-dismissible">\n' +
         '<button type="button" class="close" data-dismiss="alert"><span>×</span></button>\n' +
-        '<span class="font-weight-semibold">Well done! </span>' + msg + '</div>')
+        // '<span class="font-weight-semibold">Well done! </span>' + msg + '</div>')
+        '<span class="font-weight-semibold">KADRINCHE LA </span>' + msg + '</div>')
 }
 
 function confirmMessage(msg, callback) {
@@ -986,7 +993,155 @@ $.fn.disableElements = function (status) {
 
 
 //Disabling Right Click
-/*document.addEventListener('contextmenu',
-    event => event.preventDefault());*/
 
 
+// document.addEventListener('readystatechange', function() {
+//     if (document.readyState !== 'complete') {
+//         // Web application is still loading
+//         console.log("Loading")
+//     } else {
+//         // Web application has finished loading
+//         console.log("Loaded")
+//     }
+// // });
+// document.addEventListener('DOMContentLoaded', function() {
+//     // Entire DOM is loaded and ready for manipulation
+//
+//     // Example: Change the text color of a paragraph
+//     console.log("EDE")
+// });
+
+function perClickSubmissionValidatorHandler(clickBtnSelector, form, postUrl, successAjaxFun) {
+    if (isStringParameterValid(clickBtnSelector) && isStringParameterValid(form) && isStringParameterValid(postUrl)) {
+        $(clickBtnSelector).on('click', function () {
+            const $submitButton = $(this); // Cache the submit button element
+            const $form = $(form); // Cache the form element
+            $form.validate({
+                submitHandler: function (form) {
+                    $submitButton.prop('disabled', true); // Disable the button immediately
+                    $.ajax({
+                        url: postUrl,
+                        type: 'POST',
+                        data: $form.serializeArray(),
+                        success: function (res) {
+                            successAjaxFun(res);
+                        },
+                        error: function () {
+                            $submitButton.prop('disabled', false);
+                            errorMsg("Error occurred while submission");
+                            // Handle AJAX error if needed
+                        },
+                        complete: function () {
+                            $submitButton.prop('disabled', false); // Re-enable the button after AJAX request completes
+                        }
+                    });
+                }
+            });
+        });
+    } else {
+        errorMsg("Please check the function parameters!");
+    }
+
+    // Helper Internal Function
+    function isStringParameterValid(parameter) {
+        return parameter && typeof parameter === 'string' && parameter.trim() !== '';
+    }
+
+
+}
+
+function generalTrader() {
+
+    function isGeneralTrader(baseUrl) {
+        let result = false;
+        $.ajax({
+            url: baseUrl + '/isGeneralTrader',
+            type: 'POST',
+            async: false, // Make the request synchronous
+            success: function (res) {
+                result = res; // Assign the response to the variable
+            },
+            error: () => {
+                result = null; // Handle the error case
+            }
+        });
+        return result; // Return the response synchronously
+    }
+
+
+    function getFirstSecondPartOfItemCode(baseUrl,itemNameInputValue) {
+        return getCompanyCode(baseUrl) + itemCodeAbbreviation(itemNameInputValue);
+    }
+
+
+    //function  getting SiNo.
+    function getSiNo() {
+        //getting the SiNo respectively to the company Id
+        let result = -1;
+        $.ajax({
+            url: baseURL()+'getSINo',
+            type: 'POST',
+            async: false, // Make the request synchronous
+            success: function (res) {
+                result = res; // Assign the response to the variable
+            },
+            error: () => {
+                result = null; // Handle the error case
+            }
+        });
+        return result; // Return the response synchronously
+    }
+
+    //Helper Functions
+
+    //Getting First Part of ItemCode => CompanyCode
+    function getCompanyCode(baseUrl) {
+        let companyCode = null;
+        $.ajax({
+            url: baseUrl + '/getCompanyCode',
+            type: 'POST',
+            async: false, // Make the request synchronous
+            success: function (res) {
+                companyCode = res; // Assign the response to the variable
+            },
+            error: () => {
+                companyCode = null; // Handle the error case
+            }
+        });
+
+        return companyCode;
+
+    }
+
+    //To obtain the first letter of each word entered in an input field and combine them
+    function itemCodeAbbreviation(inputValue) {
+        return inputValue.split(" ").map(word => word.charAt(0).toUpperCase()).join("");
+    }
+
+    //Getting companyId
+
+
+
+
+    return {
+        isGeneralTrader: isGeneralTrader,
+        getFirstSecondPartOfItemCode: getFirstSecondPartOfItemCode,
+        getSiNo: getSiNo,
+    }
+}
+
+//
+// function handleKeyDown(event) {
+//     if (event.keyCode === 13) { // 13 represents the Enter key
+//         alert("Next")
+//         event.preventDefault(); // Prevent form submission
+//         const input = event.target;
+//         const form = input.form;
+//         const index = Array.prototype.indexOf.call(form, input);
+//         form.elements[index + 1].focus();
+//         return false;
+//     }
+//     return true;
+// }
+//
+// handleKeyDown(document)

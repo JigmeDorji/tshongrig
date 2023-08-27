@@ -49,4 +49,7 @@
         src="<c:url value='/resources/bcs_lib/jquery.double-keypress.js'/>"></script>
 <script defer type="text/javascript" src="<c:url value='/resources/shortcut-key.js'/>"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script defer type="text/javascript" src="<c:url value='/resources/domLoaderChecker.js'/>"></script>
+
 

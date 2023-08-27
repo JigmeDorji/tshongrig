@@ -49,16 +49,21 @@
                 <input type="hidden" id="companyName" value="${currentUser.companyName}">
 
                 <div class="form-group row">
-                    <label class="col-form-label col-lg-2 required " >Username</label>
+                    <label class="col-form-label col-lg-2 required ">Username</label>
                     <div class="col-lg-4">
                         <div class="input-group">
-                            <input  type="text" class="form-control  form-control-sm col-md-8"  required name="username"
+                            <input type="text" class="form-control  form-control-sm col-md-8" required name="username"
                                    id="username" autocomplete="off">
+
+                            <input type="text" class="form-control  form-control-sm col-md-8" readonly
+                                   id="readOnlyUserName" autocomplete="off" hidden>
+
                             <span class="input-group-prepend">
 <%--								<span class="input-group-text" id="companyAbbreviation"></span>--%>
 <%--                                <span class="input-group-text" id="companyAbbreviations">@${currentUser.loginId}</span>--%>
 <%--                                <span class="input-group-text" id="companyAbbreviations">@${currentUserLoginDetail.get(0).companyLoginId}</span>--%>
-                                <span class="input-group-text" id="companyAbbreviations">@${currentCompanyLoginId}</span>
+                                <span class="input-group-text"
+                                      id="companyAbbreviations">@${currentCompanyLoginId}</span>
 
 							</span>
                         </div>
@@ -76,7 +81,7 @@
 
                     <div class="col-md-4">
                         <input type="password" name="userPassword" required
-                               id="userPassword" class="form-control form-control-sm field" autocomplete="off" >
+                               id="userPassword" class="form-control form-control-sm field" autocomplete="new-password">
                     </div>
                     <label class="col-form-label col-lg-2 required ">Confirm
                         Password</label>
@@ -131,19 +136,19 @@
                     </div>
 
                     <%--                    <div class="companyHiddenId">--%>
-                   <%-- <label class="col-form-label col-lg-2 required companyHiddenId ">Company</label>
+                    <%-- <label class="col-form-label col-lg-2 required companyHiddenId ">Company</label>
 
-                    <div class="col-md-4 companyHiddenId">
-                        <form:select class="form-control form-control-sm select2"
-                                     path="loginCompany"
-                                     id="companyId"
-                                     name="companyId">
-                            <form:option
-                                    value="">---Please Select---</form:option>
-                            <form:options items="${loginCompany}" itemValue="value"
-                                          itemLabel="text"/>
-                        </form:select>
-                    </div>--%>
+                     <div class="col-md-4 companyHiddenId">
+                         <form:select class="form-control form-control-sm select2"
+                                      path="loginCompany"
+                                      id="companyId"
+                                      name="companyId">
+                             <form:option
+                                     value="">---Please Select---</form:option>
+                             <form:options items="${loginCompany}" itemValue="value"
+                                           itemLabel="text"/>
+                         </form:select>
+                     </div>--%>
                     <%--                    </div>--%>
                 </div>
 

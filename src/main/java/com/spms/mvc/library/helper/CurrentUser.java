@@ -180,4 +180,29 @@ public class CurrentUser {
     }
 
     //endregion
+
+
+    @Override
+    public String toString() {
+        return "CurrentUser{" +
+                "loginId='" + loginId + '\'' +
+                ", txtUserName='" + txtUserName + '\'' +
+                ", companyId=" + companyId +
+                ", financialYearId=" + financialYearId +
+                ", financialYearFrom='" + financialYearFrom + '\'' +
+                ", financialYearTo='" + financialYearTo + '\'' +
+                ", companyName='" + companyName + '\'' +
+                ", companyAdd='" + companyAdd + '\'' +
+                ", email='" + email + '\'' +
+                ", contact='" + contact + '\'' +
+                ", createdDate=" + createdDate +
+                ", userStatus=" + userStatus +
+                ", permissionType=" + permissionType +
+                ", businessType=" + businessType +
+                ", mailingAddress='" + mailingAddress + '\'' +
+                ", userId=" + userId +
+                ", userRoleTypeId=" + userRoleTypeId +
+                '}';
+    }
 }
+

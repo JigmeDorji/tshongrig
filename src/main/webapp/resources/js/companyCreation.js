@@ -58,7 +58,14 @@ companyCreation = (function () {
                     {
                         data: 'businessType', class: 'text-center',
                         render: function (data) {
-                            return data === 1 ? "Trading" : data === 2 ? "Service" : data === 3 ? "Manufacturing" : data === 4 ? "Construction" : data === 5 ? "Hotel" : data === 6 ? "Restaurant" : "NGO"
+                            return data === 1 ?
+                                "Auto WorkShop" : data === 2 ?
+                                    "Service" : data === 3 ?
+                                        "Manufacturing" : data === 4 ?
+                                            "Construction" : data === 5 ?
+                                                "Hotel" : data === 6 ?
+                                                    "Restaurant" : data === 7 ?
+                                                        "NGO" : "Trading";
                         }
                     },
                     {

@@ -27,7 +27,7 @@ public class AssetSetupDTO {
     private String assetNo;
     private String particular;
     private Integer assetClassId;
-    private Integer voucherNo;
+    private String voucherNo;
     private Integer groupId;
     private String parentAssetCode;
     private String assetCode;
@@ -101,11 +101,11 @@ public class AssetSetupDTO {
         this.assetClassId = assetClassId;
     }
 
-    public Integer getVoucherNo() {
+    public String getVoucherNo() {
         return voucherNo;
     }
 
-    public void setVoucherNo(Integer voucherNo) {
+    public void setVoucherNo(String voucherNo) {
         this.voucherNo = voucherNo;
     }
 

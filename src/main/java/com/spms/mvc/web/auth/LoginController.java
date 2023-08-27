@@ -5,6 +5,8 @@ import com.spms.mvc.Enumeration.LoginErrorCode;
 import com.spms.mvc.dto.CreateUserDTO;
 import com.spms.mvc.service.CompanyCreationService;
 import com.spms.mvc.service.auth.UserLoginService;
+
+import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -20,6 +22,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URISyntaxException;
+
 
 @Controller
 @RequestMapping(value = "")
@@ -34,6 +39,7 @@ public class LoginController {
 
     //region public method
 
+
     /**
      * login loader
      *
@@ -42,13 +48,25 @@ public class LoginController {
      * @return ModelAndView
      */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(@RequestParam(value = "error", required = false) String error,
-                        HttpServletRequest request, Model model) {
+    public String login(@RequestParam(value = "error", required = false) String error, HttpServletRequest request, Model model) throws XmlPullParserException, IOException, URISyntaxException {
+
+
+
         if (error != null) {
             model.addAttribute("error", getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));
         }
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth instanceof AnonymousAuthenticationToken) {
+//            ArrayList<String> arrayList= clearBinScheduleTaskService.scheduledExecutor();
+//            model.addAttribute("s",arrayList);
+//
+//            for (String s:arrayList){
+//                System.out.println(s);
+//            }
+
+
+
+
             model.addAttribute("companyList", companyCreationService.loadCompanyList());
             return "login";
         } else {

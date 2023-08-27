@@ -40,7 +40,7 @@ public class VoucherCreationController extends BaseController {
     @RequestMapping(value = "getVoucherNo", method = RequestMethod.GET)
     public Integer getVoucherNo(HttpServletRequest request, Integer voucherTypeId) {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
-        return voucherCreationService.getCurrentVoucherNo(voucherTypeId, currentUser.getCompanyId(),currentUser.getFinancialYearId());
+        return voucherCreationService.getCurrentVoucherNo(voucherTypeId, currentUser.getCompanyId(), currentUser.getFinancialYearId());
     }
 
     @ResponseBody
@@ -48,6 +48,15 @@ public class VoucherCreationController extends BaseController {
     public List<DropdownDTO> getLedgerList(HttpServletRequest request, Model model) {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
         return voucherCreationService.getLedgerList(currentUser.getCompanyId());
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "getLedgerListForContraVoucherType", method = RequestMethod.GET)
+    public List<DropdownDTO> getLedgerListForContraVoucherType(HttpServletRequest request, Model model) {
+        CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
+        List<DropdownDTO> list=voucherCreationService.getLedgerListForContraVoucherType(currentUser.getCompanyId());
+        list.forEach(e-> System.out.println(e));
+        return voucherCreationService.getLedgerListForContraVoucherType(currentUser.getCompanyId());
     }
 
 

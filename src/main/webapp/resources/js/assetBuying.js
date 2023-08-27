@@ -16,37 +16,58 @@ assetBuying = (function () {
 
 
         function saveItem() {
-            $('#btnSave').on('click', function () {
-                $('.globalForm').validate({
-                    submitHandler: function (form) {
-                        $.ajax({
-                            url: 'assetBuying/save',
-                            type: 'POST',
-                            data: $(form).serializeArray(),
-                            success: function (res) {
-                                if (res.status === 1) {
-                                    swal({
-                                        timer: 800,
-                                        type: "success",
-                                        title: res.text,
-                                        showConfirmButton: false
-                                    }, function () {
-                                        window.location = 'assetBuying';
-                                    });
-                                } else {
-                                    swal({
-                                        title: res.text,
-                                        text: "Click OK to exit",
-                                        type: "warning"
-                                    }, function () {
-                                    });
-                                }
-                                $('#btnSave').attr('disabled', false);
-                            }
-                        });
-                    }
-                });
-            });
+
+            perClickSubmissionValidatorHandler('#btnSave', '.globalForm', 'assetBuying/save', (res) => {
+                if (res.status === 1) {
+                    swal({
+                        timer: 800,
+                        type: "success",
+                        title: res.text,
+                        showConfirmButton: false
+                    }, function () {
+                        window.location = 'assetBuying';
+                    });
+                } else {
+                    swal({
+                        title: res.text,
+                        text: "Click OK to exit",
+                        type: "warning"
+                    }, function () {
+                    });
+                }
+                $('#btnSave').attr('disabled', false);
+            })
+            // $('#btnSave').on('click', function () {
+            //     $('.globalForm').validate({
+            //         submitHandler: function (form) {
+            //             $.ajax({
+            //                 url: 'assetBuying/save',
+            //                 type: 'POST',
+            //                 data: $(form).serializeArray(),
+            //                 success: function (res) {
+            //                     if (res.status === 1) {
+            //                         swal({
+            //                             timer: 800,
+            //                             type: "success",
+            //                             title: res.text,
+            //                             showConfirmButton: false
+            //                         }, function () {
+            //                             window.location = 'assetBuying';
+            //                         });
+            //                     } else {
+            //                         swal({
+            //                             title: res.text,
+            //                             text: "Click OK to exit",
+            //                             type: "warning"
+            //                         }, function () {
+            //                         });
+            //                     }
+            //                     $('#btnSave').attr('disabled', false);
+            //                 }
+            //             });
+            //         }
+            //     });
+            // });
         }
 
         function getItemSuggestionList() {

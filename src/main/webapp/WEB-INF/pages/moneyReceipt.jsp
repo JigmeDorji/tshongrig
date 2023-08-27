@@ -122,7 +122,8 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class=" col-md-3 left-label">Mobilization Amount</label>
+<%--                            <label class=" col-md-3 left-label">Mobilization Amount</label>--%>
+                            <label class=" col-md-3 left-label">Mobilization Advance</label>
 
                             <div class="col-md-4">
                                 <input type="text" tabindex="1" class="form-control form-control-sm  amount"
@@ -222,8 +223,7 @@
                             <div class="col-md-3">
                                 <input type="text" tabindex="2" class="form-control form-control-sm  formatDate "
                                        value="${currentDate}"
-                                       placeholder="DD.MM.YYYY" id="receiptDate" name="receiptDate" required="required"
-                                       readonly/>
+                                       placeholder="DD.MM.YYYY" id="receiptDate" name="receiptDate" required="required"/>
                             </div>
                         </div>
 

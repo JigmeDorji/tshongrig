@@ -73,7 +73,26 @@ public class PurchaseDTO {
 
     private Character isOpeningEntry;
 
+    private BigDecimal closingStockAmount;
 
+    private String SerialNumber;
+
+
+    public String getSerialNumber() {
+        return SerialNumber;
+    }
+
+    public void setSerialNumber(String serialNumber) {
+        SerialNumber = serialNumber;
+    }
+
+    public BigDecimal getClosingStockAmount() {
+        return closingStockAmount;
+    }
+
+    public void setClosingStockAmount(BigDecimal closingStockAmount) {
+        this.closingStockAmount = closingStockAmount;
+    }
 
     public Date getPurchaseDate() {
         return purchaseDate;

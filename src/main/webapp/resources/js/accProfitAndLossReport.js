@@ -26,6 +26,7 @@ accProfitAndLossReport = (function () {
                 data: {fromDate: fromDate, toDate: toDate},
                 success: function (res) {
 
+                    console.log(res)
                     $('#pnlTable').dataTable().fnDestroy();
 
                     var columnDef = [

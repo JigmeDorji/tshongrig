@@ -10,6 +10,8 @@ userAccessPermission = (function () {
     function save() {
         $('.globalForm').validate({
             submitHandler: function (form) {
+                const $submitButton = $(this);
+
                 $(form).find('input[type="checkbox"]').each(function () {
                     if ($(this).is(':checked')) {
                         $(this).next('input[type="hidden"]').val('Y');
@@ -34,6 +36,9 @@ userAccessPermission = (function () {
                                 loadScreenList($('#userRoleTypeId').val())
                             });
                         }
+                    },
+                    complete: function () {
+                        $submitButton.prop('disabled', false); // Disable the button immediately
                     }
                 });
             }

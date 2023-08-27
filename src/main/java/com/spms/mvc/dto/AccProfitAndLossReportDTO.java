@@ -205,4 +205,32 @@ public class AccProfitAndLossReportDTO {
     public void setReturnPNLAmount(Double returnPNLAmount) {
         this.returnPNLAmount = returnPNLAmount;
     }
+
+    @Override
+    public String toString() {
+        return "AccProfitAndLossReportDTO{" +
+                "particular='" + particular + '\'' +
+                ", groupLevel=" + groupLevel +
+                ", amount=" + amount +
+                ", returnPNLAmount=" + returnPNLAmount +
+                ", ledgerId='" + ledgerId + '\'' +
+                ", voucherId=" + voucherId +
+                ", ledgerName='" + ledgerName + '\'' +
+                ", accTypeId=" + accTypeId +
+                ", debitAmount=" + debitAmount +
+                ", creditAmount=" + creditAmount +
+                ", accTypeName='" + accTypeName + '\'' +
+                ", isTopParent=" + isTopParent +
+                ", voucherCreatedDate=" + voucherCreatedDate +
+                ", totalCredit=" + totalCredit +
+                ", totalDebit=" + totalDebit +
+                ", voucherTypeId=" + voucherTypeId +
+                ", voucherTypeName='" + voucherTypeName + '\'' +
+                ", voucherNo=" + voucherNo +
+                ", groupId=" + groupId +
+                ", isNotLedger=" + isNotLedger +
+                ", isLedgerGroup=" + isLedgerGroup +
+                ", drcrAmount=" + drcrAmount +
+                '}';
+    }
 }

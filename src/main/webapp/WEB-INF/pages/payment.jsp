@@ -54,7 +54,8 @@
                             <select class="form-control form-control-sm" id="paidForId" required
                                     name="paidForTypeId">
                                 <option value="">---Please select ---</option>
-                                <option value="1" id="costId">Cost</option>
+                                <%--                                <option value="1" id="costId">Cost</option>--%>
+                                <option value="1" id="costId">Expenses</option>
                                 <option value="2" id="advanceId">Advance</option>
                                 <option value="3" id="repaymentId">Repayment</option>
                                 <option value="4" id="remittance">Remittance</option>

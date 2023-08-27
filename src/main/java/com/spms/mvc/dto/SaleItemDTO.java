@@ -9,6 +9,8 @@ import java.util.List;
  * Created by SonamPC on 16-Dec-16.
  */
 public class SaleItemDTO {
+
+    private String SerialNumber;
     private Integer itemCategoryId;
     private String partNumber;
     private String partDescription;
@@ -348,5 +350,57 @@ public class SaleItemDTO {
 
     public void setIssueTo(String issueTo) {
         this.issueTo = issueTo;
+    }
+
+
+    public String getSerialNumber() {
+        return SerialNumber;
+    }
+
+    public void setSerialNumber(String serialNumber) {
+        SerialNumber = serialNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "SaleItemDTO{" +
+                "itemCategoryId=" + itemCategoryId +
+                ", partNumber='" + partNumber + '\'' +
+                ", partDescription='" + partDescription + '\'' +
+                ", pricePerQty=" + pricePerQty +
+                ", locationId='" + locationId + '\'' +
+                ", isCash=" + isCash +
+                ", qty=" + qty +
+                ", unitName='" + unitName + '\'' +
+                ", sumQty=" + sumQty +
+                ", amount=" + amount +
+                ", advanceAmountPaid=" + advanceAmountPaid +
+                ", discountRate=" + discountRate +
+                ", qtyLeft=" + qtyLeft +
+                ", saleDate=" + saleDate +
+                ", id=" + id +
+                ", unit='" + unit + '\'' +
+                ", sellingPrice=" + sellingPrice +
+                ", itemCode='" + itemCode + '\'' +
+                ", itemName='" + itemName + '\'' +
+                ", partyName='" + partyName + '\'' +
+                ", partyEmail='" + partyEmail + '\'' +
+                ", partyContactNo='" + partyContactNo + '\'' +
+                ", partyAddress='" + partyAddress + '\'' +
+                ", bankLedgerId='" + bankLedgerId + '\'' +
+                ", amtReceived=" + amtReceived +
+                ", amtReturn=" + amtReturn +
+                ", voucherNo=" + voucherNo +
+                ", ledgerId='" + ledgerId + '\'' +
+                ", accTypeId=" + accTypeId +
+                ", receiptMemoNo='" + receiptMemoNo + '\'' +
+                ", saleItemListDTO=" + saleItemListDTO +
+                ", amountReceivedInBank=" + amountReceivedInBank +
+                ", partyId=" + partyId +
+                ", saleInType=" + saleInType +
+                ", invoiceNo='" + invoiceNo + '\'' +
+                ", costPrice=" + costPrice +
+                ", issueTo='" + issueTo + '\'' +
+                '}';
     }
 }

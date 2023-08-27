@@ -248,10 +248,18 @@ label.required:after {
     margin-right: auto;
     width: 8em
 }
-@media print{
 
-    body{
-        color:black;
+@media print {
+
+    body {
+        color: black;
     }
 
+}
+
+@media (min-width: 992px) {
+    .navbar-expand-lg .navbar-brand {
+        /*min-width: 30.5rem*/
+        min-width: 18%
+    }
 }

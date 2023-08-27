@@ -6,8 +6,28 @@
 ledger = (function () {
 
     function save() {
+        // perClickSubmissionValidatorHandler("#btnSave", "#ledgerForm", "ledger/save", (res) => {
+        //     if (res.status === 1) {
+        //         swal({
+        //                 title: res.text,
+        //                 text: "Click OK to exit",
+        //                 type: "success"
+        //             }, function () {
+        //                 window.location.reload();
+        //             }
+        //         )
+        //     } else {
+        //         swal({
+        //             title: res.text,
+        //             text: "Click OK to exit",
+        //             type: "warning"
+        //         });
+        //     }
+        //
+        // })
         $('.globalForm').validate({
             submitHandler: function (form) {
+                $('#btnSave').prop('disabled', true); // Disable the button immediately
                 if ($('#reconciliationDate').val() === '') {
                     $('#reconciliationDate').attr('disabled', true);
                 }
@@ -32,6 +52,11 @@ ledger = (function () {
                                 type: "warning"
                             });
                         }
+                    },
+                    complete: function () {
+
+                        $('#btnSave').prop('disabled', false); // Re-enable the button after AJAX request completes
+
                     }
                 });
             }
@@ -117,6 +142,7 @@ ledger = (function () {
 
     function onUnderAccountTypeChange() {
         $('#editAccTypeId').on('change', function () {
+
             if ($(this).val() == 3) {
                 $('.editBankAccDetail').attr('hidden', false);
                 $('.editBankAccDetail').attr('disabled', false);
@@ -161,12 +187,16 @@ ledger = (function () {
                         $('#editLedgerName').val(res.ledgerName);
                         $('#editAccTypeId').val(res.accTypeId).trigger('change');
 
-
-                        if(res.accTypeId>=12 && res.accTypeId<=17 ){
+                        if (res.accTypeId >= 12 && res.accTypeId <= 17) {
                             $('#editOpeningBal').val(res.openingBal).attr('disabled', 'disabled');
-                        }else {
+                        } else {
                             $('#editOpeningBal').val(res.openingBal).removeAttr('disabled');
                         }
+                        // if(res.accTypeId>=12 && res.accTypeId<=17 ){
+                        //   console.log("we")
+                        // }
+                        // $('#editOpeningBal').val(res.openingBal).removeAttr('disabled');
+
                     }
                     $('#editLedgerId').val(ledgerId);
                 }
@@ -176,11 +206,14 @@ ledger = (function () {
 
     function updateLedgerDetails() {
         $('#editBtnSave').on('click', function () {
+
             if ($('#editReconciliationDate').val() === '') {
                 $('#editReconciliationDate').prop('disabled', true);
             }
+
             $('.ledgerEditForm').validate({
                 submitHandler: function (form) {
+                    $('#editBtnSave').prop('disabled', true);
                     $.ajax({
                         url: 'ledger/updateLedgerDetails',
                         type: 'POST',
@@ -201,6 +234,9 @@ ledger = (function () {
                                     type: "warning"
                                 });
                             }
+                        },
+                        complete: () => {
+                            $('#editBtnSave').prop('disabled', false);
                         }
                     });
                 }
@@ -324,15 +360,31 @@ $(document).ready(function () {
     ledger.checkLedgerName();
     ledger.deleteLedgerDetails();
 
-    $("#accTypeId").change(function(){
+    $("#accTypeId").change(function () {
 
         let selectedValue = $(this).children("option:selected").val();
-        if(selectedValue>=12 && selectedValue<=17 ){
+        if (selectedValue >= 12 && selectedValue <= 17) {
             $('#openingBal').attr('disabled', 'disabled');
-        }else {
+            // alert("A")
+        } else {
             $('#openingBal').removeAttr('disabled');
+            // alert("B")
         }
     });
+
+    $('#editAccTypeId').on("change", function () {
+        // 12,13,14,15,16,17
+        $('#editOpeningBal').removeAttr('disabled');
+
+        // if (this.value >= 12 && this.value <= 17) {
+        //     $('#editOpeningBal').removeAttr('disabled');
+        // } else {
+        //     $('#editOpeningBal').attr('disabled', 'disabled');
+        //
+        // }
+
+    })
+
 
 });
 

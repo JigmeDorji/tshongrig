@@ -4,6 +4,7 @@
 voucherCreation = (function () {
 
     let ledgerList = [];
+    let ledgerListForContraVoucherType = [];
     let selectedTd;
     let selectedRow;
     let globalSelectedRow;
@@ -19,7 +20,18 @@ voucherCreation = (function () {
     });
 
     function loadLedgerDropdown() {
-        _loadGridDropDown(1);
+
+        $('#voucherTypeId').on('change', function () {
+            let contraOptionVoucherType = parseInt($('#voucherTypeId').val())
+            $('#ledgerId1').find('option').remove();
+            if (contraOptionVoucherType === 3) {
+                getLedgerListForContraVoucherType(1);
+            } else {
+                _loadGridDropDown(1);
+            }
+        });
+        // _loadGridDropDown(1);
+
     }
 
     function _loadGridDropDown(index) {
@@ -29,9 +41,25 @@ voucherCreation = (function () {
             success: function (res) {
                 ledgerList = res;
                 spms.loadGridDropDown(voucherCreationGridTBody.find('tr').find('#ledgerId' + index), res);
+                // loadGridDropDownForVoucher(voucherCreationGridTBody.find('tr').find('#ledgerId' + index), res, 0);
             }
         })
     }
+
+
+    function getLedgerListForContraVoucherType(index) {
+
+        $.ajax({
+            url: 'voucherCreation/getLedgerListForContraVoucherType',
+            type: 'GET',
+            success: function (res) {
+                ledgerListForContraVoucherType = res;
+                spms.loadGridDropDown(voucherCreationGridTBody.find('tr').find('#ledgerId' + index), res);
+                // loadGridDropDownForVoucher(voucherCreationGridTBody.find('tr').find('#ledgerId' + index), res, 0);
+            }
+        })
+    }
+
 
     function btnResetClick() {
         $('#btnReset').on('click', function () {
@@ -41,11 +69,31 @@ voucherCreation = (function () {
 
     $('#voucherCreationGrid tbody').on('keydown', 'td', function (e) {
         if (e.keyCode === 13) {
+
             selectedRowIndex = ($(this).closest('td').parent()[0].sectionRowIndex) + 1;
             selectedTd = $(this).closest('tr').find('td');
             selectedRow = $(this).closest('tr');
         }
     });
+
+    // $('#voucherCreationGrid tbody').on('keydown', 'td', function (e) {
+    //     if (e.keyCode === 13) {
+    //         e.preventDefault(); // Prevent form submission or default behavior
+    //
+    //         var nextInput = $(this).closest('td').next('td').find('input');
+    //         if (nextInput.length > 0) {
+    //             nextInput.focus();
+    //         } else {
+    //             // No next input field found, you can handle this case as needed
+    //             // For example, move focus to the first input field in the next row
+    //             var nextRow = $(this).closest('tr').next('tr');
+    //             if (nextRow.length > 0) {
+    //                 nextInput = nextRow.find('input').first();
+    //                 nextInput.focus();
+    //             }
+    //         }
+    //     }
+    // });
 
     function addRowToGrid() {
         document.body.onkeydown = function (e) {
@@ -87,6 +135,20 @@ voucherCreation = (function () {
                         }
                     } else {
                         if ((selectedTd.find('.ledgerId').val()) && (selectedTd.find('.debitAmount').val() || selectedTd.find('.creditAmount').val())) {
+
+                            function onFocusInputJump(){
+                                let newRowIndex = row.length + 1;
+                                let inputField = selectedTd.find('.ledgerId');
+                                if (parseInt(isDebitOrCredit) === 1) {
+                                    inputField = selectedTd.find('.debitAmount');
+                                } else {
+                                    inputField = selectedTd.find('.creditAmount');
+                                }
+                                inputField.focus();
+                            }
+                            onFocusInputJump();
+
+
                             _addRow(voucherCreationGridTBody, row, index);
                         }
                     }
@@ -156,18 +218,58 @@ voucherCreation = (function () {
         var allRow = tableBody.find('tr');
         spms._formIndexing(tableBody, allRow);
         voucherCreationGridTBody.find('tr').find('#ledgerId' + index).select2();
-        _loadGridDropDown(index);
+        // _loadGridDropDown(index);
+
+
+        let contraOptionVoucherType = parseInt($('#voucherTypeId').val())
+
+        $($('#ledgerId2').target).find('option').remove();
+
+
+        if (contraOptionVoucherType === 3) {
+
+            getLedgerListForContraVoucherType(index);
+
+        } else {
+            _loadGridDropDown(index);
+        }
+
+
     }
 
 
     function onChangeVoucherType() {
         $('#voucherTypeId').on('change', function () {
+            let contraOptionVoucherType = parseInt($('#voucherTypeId').val())
+
+            // if (contraOptionVoucherType === 3) {
+            //     $('#voucherCreationGrid tbody').find('option').remove();
+            //     getLedgerListForContraVoucherType();
+            //     console.log(ledgerListForContraVoucherType)
+            //
+            //     loadGridDropDownForVoucher(voucherCreationGridTBody.find('tr').find('#ledgerId' + 1), ledgerListForContraVoucherType, 3);
+            //
+            // } else {
+            //     $('#voucherCreationGrid tbody').find('option').remove();
+            //     loadGridDropDownForVoucher(voucherCreationGridTBody.find('tr').find('#ledgerId' + 1), ledgerList, 0);
+            // }
+
+
+            // ledgerList.length=0;
+
+            // console.log(ledgerList)
+
+
             var row = voucherCreationGridTBody.find('tr');
             voucherCreationGridTBody.find('tr:gt(0)').remove();
 
+
             var index = row.length;
             if ($('#voucherTypeId').val() != '') {
+
                 $('.voucherDetail').attr('disabled', false);
+
+
             } else {
                 $('.voucherDetail').attr('disabled', true);
             }
@@ -180,6 +282,8 @@ voucherCreation = (function () {
                 row.find('.crOrDr').val(0);
                 row.find('.crOrDr').attr('disabled', true);
             }
+
+
         })
     }
 
@@ -302,6 +406,7 @@ voucherCreation = (function () {
                                                 encodeURIComponent(res.dto.voucherNo) + '&type=' + $('#voucherTypeId').val();
 
                                             $('#voucherTypeId').val('');
+                                            $('#narration').val('');
                                         });
 
                                     } else {
@@ -347,6 +452,7 @@ voucherCreation = (function () {
         $('#voucherCreationGrid tbody').on('change', '.crOrDr', function () {
             let selectedRow = $(this).closest('tr');
             if (parseInt(selectedRow.find('.crOrDr').val()) === 1) {
+
                 selectedRow.find('td').find('.debitAmount').val('');
                 selectedRow.find('td').find('.creditAmount').val('');
                 selectedRow.find('td').find('.debitAmount').attr('disabled', false);
@@ -364,11 +470,13 @@ voucherCreation = (function () {
     }
 
     $('#voucherCreationGrid tbody').on('change', '.ledgerId', function () {
-        var rowIndex = $(this).closest('td').parent()[0].sectionRowIndex + 1;
+
+        var rowIndex = $(this).closest('td').parent()[0].sectionRowIndex +1;
         voucherCreationGridTBody.find('tr').find('#ledgerId' + rowIndex).removeClass('error');
     });
 
     function _checkItsDrOrCr(isDebit, index) {
+
         var debitAmountId = $('#debitAmount' + index);
         var creditAmountId = $('#creditAmount' + index);
 
@@ -466,13 +574,16 @@ voucherCreation = (function () {
             data: {voucherNo: voucherNo, voucherTypeId: voucherTypeId},
             success: function (res) {
 
+
                 if (res.length != 0) {
+
                     voucherCreationGrid.dataTable().fnClearTable();
                     $('#voucherTypeId').val(res[0].voucherTypeId).trigger('change');
                     $('#voucherEntryDate').val(formatAsDate(res[0].voucherEntryDate));
 
                     var iterator = 1;
                     for (var index in res) {
+
                         voucherCreationGrid.fnAddData(
                             [
                                 '<td><select tabindex="3" class="form-control voucherDetail crOrDr" id="crOrDr' + iterator + '"><option value=""></option> <option value="1">Dr</option> <option value="0">Cr</option></select></td> ',
@@ -514,6 +625,7 @@ voucherCreation = (function () {
                 data: {voucherTypeId: $(this).val()},
                 success: function (res) {
                     $('#voucherNo').val(res);
+
                 }
             })
         })
@@ -530,6 +642,7 @@ voucherCreation = (function () {
         btnResetClick: btnResetClick,
         getVoucherNo: getVoucherNo,
         depreciationAddRowToGrid: depreciationAddRowToGrid,
+        // getLedgerListForContraVoucherType: getLedgerListForContraVoucherType,
         // onChangeLedgerIdType: onChangeLedgerIdType
         //onChangeParticularIdType: onChangeParticularIdType
     }
@@ -547,6 +660,9 @@ $(document).ready(function () {
     voucherCreation.btnResetClick();
     voucherCreation.getVoucherNo();
     voucherCreation.depreciationAddRowToGrid();
+
     // voucherCreation.onChangeLedgerIdType();
     //voucherCreation.onChangeParticularIdType();
+
+
 });

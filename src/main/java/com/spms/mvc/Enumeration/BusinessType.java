@@ -10,7 +10,8 @@ public enum BusinessType {
     Construction(4, "Construction"),
     Hotel(5, "Hotel"),
     Restaurant(6, "Restaurant"),
-    NGO(7, "NGO");
+    NGO(7, "NGO"),
+    GeneralTrading(8, "Trading");
 
     Integer value;
     String text;

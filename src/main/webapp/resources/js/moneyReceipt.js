@@ -11,6 +11,7 @@ moneyReceipt = (function () {
     function save() {
         $('.globalForm').validate({
             submitHandler: function (form) {
+                $('#btnSave').prop('disabled', true);
                 var data = $(form).serializeArray();
                 var partyName = $("#partyLedgerId option:selected").text();
                 var paymentMode = $("#isCash option:selected").text();
@@ -69,6 +70,9 @@ moneyReceipt = (function () {
                         }
                     }, complete: function () {
                         // window.location.reload();
+                    },
+                    complete: () => {
+                        $('#btnSave').prop('disabled', false);
                     }
                 })
             }

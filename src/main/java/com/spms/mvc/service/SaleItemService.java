@@ -11,7 +11,6 @@ import com.spms.mvc.dto.SaleItemListDTO;
 import com.spms.mvc.dto.VoucherDTO;
 import com.spms.mvc.dto.VoucherDetailDTO;
 import com.spms.mvc.entity.Discount;
-import com.spms.mvc.entity.PartyDetail;
 import com.spms.mvc.entity.SaleRecord;
 import com.spms.mvc.entity.SaleRecordDetail;
 import com.spms.mvc.global.service.BaseService;
@@ -51,7 +50,7 @@ public class SaleItemService extends BaseService {
 
 
     public List<SaleItemDTO> getItemDetails(String itemCode, CurrentUser currentUser) {
-        return saleItemDao.getItemDetails(itemCode, currentUser.getCompanyId());
+        return saleItemDao.getItemDetails(itemCode, currentUser);
     }
 
 
@@ -94,9 +93,10 @@ public class SaleItemService extends BaseService {
                             currentUser.getCompanyId(), currentUser.getFinancialYearId());
                 } else {
                     /*   Auto create Cash ledger*/
-                    ledgerService.getLedgerIdByLedgerName("Cash in Hand", currentUser,
-                            AccountTypeEnum.CASH.getValue()); //create cash ledger if not exists
+                    String legerName =  ledgerService.getNameByLedgerId(ledgerService.getLedgerIdByAccountTypeId(4, currentUser.getCompanyId()),currentUser.getCompanyId(), currentUser.getFinancialYearId());
 
+
+                    ledgerService.getLedgerIdByLedgerName(legerName, currentUser, AccountTypeEnum.CASH.getValue()); //create cash ledger if not exists
                     voucherNo = voucherCreationService.getCurrentVoucherNo(VoucherTypeEnum.SALES.getValue(),
                             currentUser.getCompanyId(), currentUser.getFinancialYearId());
                 }
@@ -284,6 +284,7 @@ public class SaleItemService extends BaseService {
                 }
             }
         } catch (Exception ex) {
+            ex.printStackTrace();
             TransactionInterceptor.currentTransactionStatus().setRollbackOnly();
         }
         return receiptMemoNo;

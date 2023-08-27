@@ -1,6 +1,67 @@
 /**
  * Created by jigme.dorji on 5/23/2021.
  */
+
+let isGeneralTrader = generalTrader().isGeneralTrader("openingBalanceInventory");
+
+
+if (isGeneralTrader) {
+    $('#btnSave').attr("disabled", true)
+
+    // $('#btnSave').attr("disabled", true)
+
+    $('#itemName').on("change", (e) => {
+
+        $('#btnSave').attr("disabled", false)
+        defaultValueSetter()
+    })
+
+    function defaultValueSetter() {
+        $.ajax({
+            url: 'receivedItem/getBrandList',
+            type: 'GET',
+            success: function (res) {
+
+                // console.log(res)
+                if (res.length === 0) {
+                    alert("Re-approval of the company is required to meet the upgraded system! Or Please contact the relevant authority for further assistance");
+                }
+
+                // console.log(res)
+                $('#brandId').val(res[0].text).attr("readonly", true);
+                $('#brandNameID').val(res[0].data);
+                $.ajax({
+                    url: 'receivedItem/getSlNo',
+                    type: 'GET',
+                    data: {brandId: res[0].value},
+                    success: function (res) {
+                        //getSINo
+
+
+                        $.ajax({
+                            url: 'receivedItem/getSINo',
+                            type: 'POST',
+                            success: function (response) {
+                                let SiNo = parseInt(response) + 1;
+                                $('#itemCode').val(res.itemCode + SiNo).attr("readonly", true);
+                                $('#currentSerial').val(SiNo)
+                            }
+                        });
+
+                        $('#currentSerial').val(res.itemCode)
+
+                        $('#itemNamePrefix').val(res.prefixCode).attr("readonly", true);
+                        $('#type').val('GENERAL-' + res.itemCode).attr("readonly", true);
+                        $('#partNo').val(res.itemCode + res.itemCode).attr("readonly", true);
+                    }
+                });
+            }
+        })
+        $('#btnAddBrand').attr("disabled", true)
+    }
+
+    // defaultValueSetter();
+}
 openingBalanceInventory = (function () {
     function saveItem() {
         $('#btnSave').on('click', function () {
@@ -33,6 +94,12 @@ openingBalanceInventory = (function () {
                                 }, function () {
                                 });
                             }
+                            $('#btnSave').attr('disabled', false);
+                        },
+                        complete:()=>{
+                            $('#btnSave').attr('disabled', false);
+                        },
+                        error:()=>{
                             $('#btnSave').attr('disabled', false);
                         }
                     });
@@ -154,7 +221,7 @@ openingBalanceInventory = (function () {
                             // $('#purchaseDate').val(formatAsDate(res.purchaseDate));
                             // $('#purchaseDate').attr('readOnly', true);
                         } else {
-                            $('#itemCode').val('');
+                            // $('#itemCode').val('');
                             errorMsg("No matching item found.");
                         }
                     }
@@ -165,22 +232,26 @@ openingBalanceInventory = (function () {
 
     function getItemDetailsByPartNo() {
         $('#partNo').on('change', function () {
-            $.ajax({
-                url: 'receivedItem/getItemDetailsByPartNo',
-                type: 'GET',
-                data: {partNo: $('#partNo').val()},
-                success: function (res) {
-                    if (res !== '') {
-                        populate(res);
-                        $('#brandId').val(res.brandName)
-                        $('#itemName').val(res.itemName.split(':')[1])
-                        $('#itemNamePrefix').val(res.itemName.split(':')[0])
-                    } else {
-                        $('.common').val('');
-                        // errorMsg("No matching item found.");
+
+            if ($('#type').val() !== 'GeneralTradingType-8') {
+                $.ajax({
+                    url: 'receivedItem/getItemDetailsByPartNo',
+                    type: 'GET',
+                    data: {partNo: $('#partNo').val()},
+                    success: function (res) {
+                        // console.log(res)
+                        if (res !== '') {
+                            populate(res);
+                            $('#brandId').val(res.brandName)
+                            $('#itemName').val(res.itemName.split(':')[1])
+                            $('#itemNamePrefix').val(res.itemName.split(':')[0])
+                        } else {
+                            $('.common').val('');
+                            // errorMsg("No matching item found.");
+                        }
                     }
-                }
-            });
+                });
+            }
         })
     }
 
@@ -198,35 +269,35 @@ openingBalanceInventory = (function () {
             url: 'receivedItem/getBrandList',
             type: 'GET',
             success: function (res) {
-
-                res.unshift({
-                    value: "NEW",
-                    text: "Add new Brand"
-                });
-
-                $('#brandId').devbridgeAutocomplete({
-                    lookup: $.map(res, function (value) {
-                        return {data: value.value, value: value.text}
-                    }),
-                    onSelect: function (suggestion) {
-                        if (suggestion.data === "NEW") {
-                            $('#brandId').val('');
-                            $('#brandModal').modal('show');
-                        } else {
-                            $('#brandNameID').val(suggestion.data);
-                            $.ajax({
-                                url: 'receivedItem/getSlNo',
-                                type: 'GET',
-                                data: {brandId: suggestion.data},
-                                success: function (res) {
-                                    $('#currentSerial').val(res.itemCode);
-                                    $('#itemCode').val(res.itemCode);
-                                    $('#itemNamePrefix').val(res.prefixCode);
-                                }
-                            });
+                if (!isGeneralTrader) {
+                    res.unshift({
+                        value: "NEW",
+                        text: "Add new Brand"
+                    });
+                    $('#brandId').devbridgeAutocomplete({
+                        lookup: $.map(res, function (value) {
+                            return {data: value.value, value: value.text}
+                        }),
+                        onSelect: function (suggestion) {
+                            if (suggestion.data === "NEW") {
+                                $('#brandId').val('');
+                                $('#brandModal').modal('show');
+                            } else {
+                                $('#brandNameID').val(suggestion.data);
+                                $.ajax({
+                                    url: 'receivedItem/getSlNo',
+                                    type: 'GET',
+                                    data: {brandId: suggestion.data},
+                                    success: function (res) {
+                                        $('#currentSerial').val(res.itemCode);
+                                        $('#itemCode').val(res.itemCode);
+                                        $('#itemNamePrefix').val(res.prefixCode);
+                                    }
+                                });
+                            }
                         }
-                    }
-                })
+                    })
+                }
             }
         })
     }
@@ -239,9 +310,11 @@ openingBalanceInventory = (function () {
     }
 
     function saveBrandDetail() {
+
         $('#pModalButton').on('click', function () {
             $('.brandForm').validate({
                 submitHandler: function (form) {
+                    $('#pModalButton').prop('disabled', true);
                     $.ajax({
                         url: 'receivedItem/saveBrandDetail',
                         type: 'POST',
@@ -257,6 +330,10 @@ openingBalanceInventory = (function () {
                             $('#brandModal').modal('hide');
                         }, complete: function (res) {
                             $('#brandNameID').val(res.dto.brandId);
+                            $('#pModalButton').prop('disabled', false);
+                        },
+                        error:()=>{
+                            $('#pModalButton').prop('disabled', false);
                         }
                     })
                 }
@@ -452,3 +529,7 @@ $(document).ready(function () {
     openingBalanceInventory.checkQtyIsNegative();
     // receivedItem.dateFormat();
 });
+
+
+// console.log(generalTrader().isGeneralTrader("openingBalanceInventory"))
+// console.log(generalTrader().getFirstSecondPartOfItemCode("openingBalanceInventory", "G M"))

@@ -1,10 +1,64 @@
 /**
  * Created by SonamPC on 12-Dec-16.
  */
+
+
+let countItem = 0;
+isGeneralTrader = generalTrader().isGeneralTrader("openingBalanceInventory");
+
+
+if (isGeneralTrader) {
+    $('#itemName').on('change', () => {
+        defaultValueSetter();
+    });
+
+    function defaultValueSetter() {
+        $.ajax({
+            url: 'receivedItem/getBrandList',
+            type: 'GET',
+            success: function (res) {
+                $('#brandId').val(res[0].text).attr("readonly", true);
+
+                $.ajax({
+                    url: 'receivedItem/getSlNo',
+                    type: 'GET',
+                    data: {brandId: res[0].value},
+                    success: function (res) {
+
+                        $.ajax({
+                            url: 'receivedItem/getSINo',
+                            type: 'POST',
+                            success: function (response) {
+                                let SiNo = parseInt(response) + 1;
+                                if (countItem === 0) {
+                                    $('#itemCode').val(res.itemCode + SiNo).attr("readonly", true);
+                                    $('#currentSerial').val(SiNo)
+                                } else {
+                                    $('#itemCode').val(res.itemCode + (SiNo + countItem)).attr("readonly", true);
+                                    $('#currentSerial').val(SiNo)
+                                }
+
+
+                            }
+                        });
+
+                        $('#currentSerial').val(res.itemCode)
+                        $('#itemNamePrefix').val(res.prefixCode).attr("readonly", true);
+                        $('#type').val('GENERAL-' + res.itemCode).attr("readonly", true);
+                        $('#partNo').val(res.itemCode + res.itemCode).attr("readonly", true);
+                    }
+                });
+
+            }
+        })
+        $('#btnAddBrand').attr("disabled", true)
+    }
+
+}
 receivedItem = (function () {
     let purchaseItemTableBody = $('#purchaseItemTable tbody');
 
-    if($('#purchaseDateEdit').val()!==''){
+    if ($('#purchaseDateEdit').val() !== '') {
         $('#purchaseDate').val(formatAsDate($('#purchaseDateEdit').val()));
     }
 
@@ -16,6 +70,7 @@ receivedItem = (function () {
             var sellingPrice = $('#sellingPrice').val();
             $('.globalForm').validate({
                 submitHandler: function (form) {
+                    // $('#btnSave').prop('disabled',true)
                     var data = $(form).serializeArray();
                     $('#btnSave').attr('disabled', true);
                     $.ajax({
@@ -36,7 +91,9 @@ receivedItem = (function () {
                                 errorMsg(res.text)
                             }
 
-                        },complete:function (){
+                        }, complete: function () {
+                            $('#btnSave').attr('disabled', false);
+                        }, error: () => {
                             $('#btnSave').attr('disabled', false);
                         }
                     });
@@ -225,6 +282,7 @@ receivedItem = (function () {
         $('#pModalButton').on('click', function () {
             $('.brandForm').validate({
                 submitHandler: function (form) {
+                    $('#pModalButton').prop('disabled', true)
                     $.ajax({
                         url: 'receivedItem/saveBrandDetail',
                         type: 'POST',
@@ -237,6 +295,10 @@ receivedItem = (function () {
                                 errorMsg(res.text);
                             }
                             $('#brandModal').modal('hide');
+                        }, error: () => {
+                            $('#pModalButton').prop('disabled', false)
+                        }, complete: () => {
+                            $('#pModalButton').prop('disabled', false)
                         }
                     })
                 }
@@ -496,25 +558,58 @@ receivedItem = (function () {
                 partNo.removeClass('error');
                 locationId.removeClass('error');
 
+                let row;
+                if (isGeneralTrader) {
+                    //  <th width="2%">SL.NO</th>
+                    //                                     <th width="10%">Item Code</th>
+                    //                                     <th width="15%">Item Name</th>
+                    //                                         <%--                                <th width="10%" hidden>Part Number</th>--%>
+                    //                                     <th width="10%">SP</th>
+                    //                                     <th width="10%">CP</th>
+                    //                                     <th width="5%">Qty</th>
+                    //                                     <th width="5%">Unit</th>
+                    //                                     <th width="5%">Amount</th>
+                    //                                     <th width="15%">Action</th>
+                    row = "<tr>" +
+                        "<td><input type='text' id='index' readonly class='form-control form-control-sm input-group-sm' value='" + i + "'>" +
+                        "<input type='hidden' id='type' name='purchaseDTOS[" + i + "].type'  class='form-control form-control-sm input-group-sm' value='" + type.val() + "'>" +
+                        "<input type='hidden' id='purchaseId' name='purchaseDTOS[" + i + "].purchaseId'  class='form-control form-control-sm input-group-sm' value='" + purchaseId.val() + "'>" +
+                        "<input type='hidden' id='brandName' name='purchaseDTOS[" + i + "].brandName'  class='form-control form-control-sm input-group-sm' value='" + brandId.val() + "'>" +
+                        "<input type='hidden' id='prefixCode' name='purchaseDTOS[" + i + "].prefixCode'  class='form-control form-control-sm input-group-sm' value='" + prefixCode.val() + "'>" +
+                        "<input type='hidden' id='locationId' name='purchaseDTOS[" + i + "].locationId'  class='form-control form-control-sm input-group-sm' value='" + locationId.val() + "'></td>" +
+                        "<td><input type='text' id='itemCode' readonly name='purchaseDTOS[" + i + "].itemCode' class='form-control form-control-sm input-group-sm' value='" + itemCode.val().toUpperCase() + "'></td>" +
+                        "<td><input type='text' readonly name='purchaseDTOS[" + i + "].itemName' class='form-control form-control-sm input-group-sm' value='" + itemName.val() + "'></td>" +
+                        "<td hidden><input type='text' readonly name='purchaseDTOS[" + i + "].partNo' class='form-control form-control-sm input-group-sm partNo' value='" + partNo.val() + "'></td>" +
+                        "<td><input type='text' readonly name='purchaseDTOS[" + i + "].sellingPrice' class='form-control form-control-sm input-group-sm sellingPrice right-align' value='" + sellingPrice.val() + "'></td>" +
+                        "<td><input type='text' readonly name='purchaseDTOS[" + i + "].costPrice' class='form-control form-control-sm input-group-sm costPrice right-align' value='" + costPrice.val() + "'></td>" +
+                        "<td><input type='hidden' id='initialQty' readonly class='form-control form-control-sm input-group-sm initialQty right-align'><input type='text' id='qty' readonly class='form-control form-control-sm input-group-sm qty right-align amount'   name='purchaseDTOS[" + i + "].qty' value=" + qty.val() + " ></td>" +
+                        "<td><input type='hidden' readonly class='form-control form-control-sm input-group-sm right-align' id='unitId'  name='purchaseDTOS[" + i + "].unitId' value=" + unitId.val() + " ><input type='text' readonly class='form-control form-control-sm input-group-sm right-align' value=" + unitText + " ></td>" +
+                        "<td><input type='text' readonly class='form-control form-control-sm input-group-sm totalAmount right-align totalAmount' id='totalAmount'  name='purchaseDTOS[" + i + "].totalAmount' value=" + totalAmount.toFixed(2) + " ></td>" +
+                        "<td><input type='button'  id='itemEditBtn' class='btn btn-primary btn-sm btn-xs fa fa-trash' value='Edit'><input type='button'  id='btnDeleteItem' class='btn btn-sm btn-danger btn-xs fa fa-trash' value='Delete'></td>" +
+                        "</tr>";
+
+                    countItem += 1;
+                } else {
+                    row = "<tr>" +
+                        "<td><input type='text' id='index' readonly class='form-control form-control-sm input-group-sm' value='" + i + "'>" +
+                        "<input type='hidden' id='type' name='purchaseDTOS[" + i + "].type'  class='form-control form-control-sm input-group-sm' value='" + type.val() + "'>" +
+                        "<input type='hidden' id='purchaseId' name='purchaseDTOS[" + i + "].purchaseId'  class='form-control form-control-sm input-group-sm' value='" + purchaseId.val() + "'>" +
+                        "<input type='hidden' id='brandName' name='purchaseDTOS[" + i + "].brandName'  class='form-control form-control-sm input-group-sm' value='" + brandId.val() + "'>" +
+                        "<input type='hidden' id='prefixCode' name='purchaseDTOS[" + i + "].prefixCode'  class='form-control form-control-sm input-group-sm' value='" + prefixCode.val() + "'>" +
+                        "<input type='hidden' id='locationId' name='purchaseDTOS[" + i + "].locationId'  class='form-control form-control-sm input-group-sm' value='" + locationId.val() + "'></td>" +
+                        "<td><input type='text' id='itemCode' readonly name='purchaseDTOS[" + i + "].itemCode' class='form-control form-control-sm input-group-sm' value='" + itemCode.val().toUpperCase() + "'></td>" +
+                        "<td><input type='text' readonly name='purchaseDTOS[" + i + "].itemName' class='form-control form-control-sm input-group-sm' value='" + itemName.val() + "'></td>" +
+                        "<td><input type='text' readonly name='purchaseDTOS[" + i + "].partNo' class='form-control form-control-sm input-group-sm partNo' value='" + partNo.val() + "'></td>" +
+                        "<td><input type='text' readonly name='purchaseDTOS[" + i + "].sellingPrice' class='form-control form-control-sm input-group-sm sellingPrice right-align' value='" + sellingPrice.val() + "'></td>" +
+                        "<td><input type='text' readonly name='purchaseDTOS[" + i + "].costPrice' class='form-control form-control-sm input-group-sm costPrice right-align' value='" + costPrice.val() + "'></td>" +
+                        "<td><input type='hidden' id='initialQty' readonly class='form-control form-control-sm input-group-sm initialQty right-align'><input type='text' id='qty' readonly class='form-control form-control-sm input-group-sm qty right-align amount'   name='purchaseDTOS[" + i + "].qty' value=" + qty.val() + " ></td>" +
+                        "<td><input type='hidden' readonly class='form-control form-control-sm input-group-sm right-align' id='unitId'  name='purchaseDTOS[" + i + "].unitId' value=" + unitId.val() + " ><input type='text' readonly class='form-control form-control-sm input-group-sm right-align' value=" + unitText + " ></td>" +
+                        "<td><input type='text' readonly class='form-control form-control-sm input-group-sm totalAmount right-align totalAmount' id='totalAmount'  name='purchaseDTOS[" + i + "].totalAmount' value=" + totalAmount.toFixed(2) + " ></td>" +
+                        "<td><input type='button'  id='itemEditBtn' class='btn btn-primary btn-sm btn-xs fa fa-trash' value='Edit'><input type='button'  id='btnDeleteItem' class='btn btn-sm btn-danger btn-xs fa fa-trash' value='Delete'></td>" +
+                        "</tr>";
+                }
 
 
-                let row = "<tr>" +
-                    "<td><input type='text' id='index' readonly class='form-control form-control-sm input-group-sm' value='" + i + "'>" +
-                    "<input type='hidden' id='type' name='purchaseDTOS[" + i + "].type'  class='form-control form-control-sm input-group-sm' value='" + type.val() + "'>" +
-                    "<input type='hidden' id='purchaseId' name='purchaseDTOS[" + i + "].purchaseId'  class='form-control form-control-sm input-group-sm' value='" + purchaseId.val() + "'>" +
-                    "<input type='hidden' id='brandName' name='purchaseDTOS[" + i + "].brandName'  class='form-control form-control-sm input-group-sm' value='" + brandId.val() + "'>" +
-                    "<input type='hidden' id='prefixCode' name='purchaseDTOS[" + i + "].prefixCode'  class='form-control form-control-sm input-group-sm' value='" + prefixCode.val() + "'>" +
-                    "<input type='hidden' id='locationId' name='purchaseDTOS[" + i + "].locationId'  class='form-control form-control-sm input-group-sm' value='" + locationId.val() + "'></td>" +
-                    "<td><input type='text' id='itemCode' readonly name='purchaseDTOS[" + i + "].itemCode' class='form-control form-control-sm input-group-sm' value='" + itemCode.val().toUpperCase() + "'></td>" +
-                    "<td><input type='text' readonly name='purchaseDTOS[" + i + "].itemName' class='form-control form-control-sm input-group-sm' value='" + itemName.val() + "'></td>" +
-                    "<td><input type='text' readonly name='purchaseDTOS[" + i + "].partNo' class='form-control form-control-sm input-group-sm partNo' value='" + partNo.val() + "'></td>" +
-                    "<td><input type='text' readonly name='purchaseDTOS[" + i + "].sellingPrice' class='form-control form-control-sm input-group-sm sellingPrice right-align' value='" + sellingPrice.val() + "'></td>" +
-                    "<td><input type='text' readonly name='purchaseDTOS[" + i + "].costPrice' class='form-control form-control-sm input-group-sm costPrice right-align' value='" + costPrice.val() + "'></td>" +
-                    "<td><input type='hidden' id='initialQty' readonly class='form-control form-control-sm input-group-sm initialQty right-align'><input type='text' id='qty' readonly class='form-control form-control-sm input-group-sm qty right-align amount'   name='purchaseDTOS[" + i + "].qty' value=" + qty.val() + " ></td>" +
-                    "<td><input type='hidden' readonly class='form-control form-control-sm input-group-sm right-align' id='unitId'  name='purchaseDTOS[" + i + "].unitId' value=" + unitId.val() + " ><input type='text' readonly class='form-control form-control-sm input-group-sm right-align' value=" + unitText + " ></td>" +
-                    "<td><input type='text' readonly class='form-control form-control-sm input-group-sm totalAmount right-align totalAmount' id='totalAmount'  name='purchaseDTOS[" + i + "].totalAmount' value=" + totalAmount.toFixed(2) + " ></td>" +
-                    "<td><input type='button'  id='itemEditBtn' class='btn btn-primary btn-sm btn-xs fa fa-trash' value='Edit'><input type='button'  id='btnDeleteItem' class='btn btn-sm btn-danger btn-xs fa fa-trash' value='Delete'></td>" +
-                    "</tr>";
                 i = i + 1;
                 let tableGrid = $('#purchaseItemTable');
                 let tableBody = tableGrid.find('tbody');
@@ -539,9 +634,6 @@ receivedItem = (function () {
         })
 
     }
-
-
-
 
 
     function fieldValidation(qty, unitId, itemCode, itemName, sellingPrice, costPrice, brandId, type, partNo, locationId) {
@@ -638,10 +730,10 @@ receivedItem = (function () {
             selectedRow.remove();
             let allRow = purchaseItemTableBody.find('tr');
             spms._formIndexing(purchaseItemTableBody, allRow);
-            if(parseInt(purchaseItemTableBody.find('tr').length)===0){
-                $('#btnSave').attr('disabled',true);
-            }else {
-                $('#btnSave').attr('disabled',false);
+            if (parseInt(purchaseItemTableBody.find('tr').length) === 0) {
+                $('#btnSave').attr('disabled', true);
+            } else {
+                $('#btnSave').attr('disabled', false);
             }
             calculateTotal();
         })
@@ -716,25 +808,51 @@ receivedItem = (function () {
 
                 let tableGrid = $('#purchaseItemTable');
                 let tableBody = tableGrid.find('tbody');
-                let delBtn=res[i].purchaseId!==null?'':"<input type='button'  id='btnDeleteItem' class='btn btn-danger btn-xs fa fa-trash' value='Delete'>";
-                let row = "<tr>" +
-                    "<td><input type='text' id='index' readonly class='form-control form-control-sm input-group-sm' value='" + parseInt(i + 1) + "'>" +
-                    "<input type='hidden' id='' name='purchaseDTOS[" + i + "].type'  class='form-control form-control-sm input-group-sm' value='" + res[i].type + "'>" +
-                    "<input type='hidden' id='' name='purchaseDTOS[" + i + "].purchaseId'  class='form-control form-control-sm input-group-sm' value='" + res[i].purchaseId + "'>" +
-                    "<input type='hidden' id='' name='purchaseDTOS[" + i + "].purchaseAuditId'  class='form-control form-control-sm input-group-sm' value='" + res[i].purchaseAuditId + "'>" +
-                    "<input type='hidden' id='brandName' name='purchaseDTOS[" + i + "].brandName'  class='form-control form-control-sm input-group-sm' value='" + res[i].brandName + "'>" +
-                    "<input type='hidden' id='prefixCode' name='purchaseDTOS[" + i + "].prefixCode'  class='form-control form-control-sm input-group-sm' value='" + res[i].prefixCode + "'>" +
-                    "<input type='hidden' id='' name='purchaseDTOS[" + i + "].locationId'  class='form-control form-control-sm input-group-sm' value='" + res[i].locationId + "'></td>" +
-                    "<td><input type='text' id='itemCode' readonly name='purchaseDTOS[" + i + "].itemCode' class='form-control form-control-sm input-group-sm' value='" + res[i].itemCode.toUpperCase() + "'></td>" +
-                    "<td><input type='text' readonly name='purchaseDTOS[" + i + "].itemName' class='form-control form-control-sm input-group-sm' value='" + res[i].itemName + "'></td>" +
-                    "<td><input type='text' readonly name='purchaseDTOS[" + i + "].partNo' class='form-control form-control-sm input-group-sm partNo' value='" + res[i].partNo + "'></td>" +
-                    "<td><input type='text' readonly name='purchaseDTOS[" + i + "].sellingPrice' class='form-control form-control-sm input-group-sm sellingPrice right-align' value='" + res[i].sellingPrice + "'></td>" +
-                    "<td><input type='text' readonly name='purchaseDTOS[" + i + "].costPrice' class='form-control form-control-sm input-group-sm costPrice right-align' value='" + res[i].costPrice + "'></td>" +
-                    "<td><input type='hidden' id='initialQty' readonly class='form-control form-control-sm input-group-sm initialQty right-align' value=" + res[i].qty + " ><input type='text' id='qty' readonly class='form-control form-control-sm input-group-sm qty right-align amount'   name='purchaseDTOS[" + i + "].qty' value=" + res[i].qty + " ></td>" +
-                    "<td><input type='hidden' readonly name='purchaseDTOS[" + i + "].unitId' class='form-control form-control-sm input-group-sm costPrice right-align' value='" + res[i].unitId + "'><input type='text' readonly  class='form-control form-control-sm input-group-sm costPrice right-align' value='" + res[i].unitName + "'></td>" +
-                    "<td><input type='text' readonly class='form-control form-control-sm input-group-sm totalAmount right-align totalAmount' id='totalAmount'  name='purchaseDTOS[" + i + "].totalAmount' value=" + res[i].costPrice + " ></td>" +
-                    "<td><input type='button'  id='itemEditBtn' class='btn btn-primary btn-sm btn-xs fa fa-trash' value='Edit'>"+delBtn+"</td>" +
-                    "</tr>";
+                let delBtn = res[i].purchaseId !== null ? '' : "<input type='button'  id='btnDeleteItem' class='btn btn-danger btn-xs fa fa-trash' value='Delete'>";
+                let row;
+                if (isGeneralTrader) {
+                    row = "<tr>" +
+                        "<td><input type='text' id='index' readonly class='form-control form-control-sm input-group-sm' value='" + parseInt(i + 1) + "'>" +
+                        "<input type='hidden' id='' name='purchaseDTOS[" + i + "].type'  class='form-control form-control-sm input-group-sm' value='" + res[i].type + "'>" +
+                        "<input type='hidden' id='' name='purchaseDTOS[" + i + "].purchaseId'  class='form-control form-control-sm input-group-sm' value='" + res[i].purchaseId + "'>" +
+                        "<input type='hidden' id='' name='purchaseDTOS[" + i + "].purchaseAuditId'  class='form-control form-control-sm input-group-sm' value='" + res[i].purchaseAuditId + "'>" +
+                        "<input type='hidden' id='brandName' name='purchaseDTOS[" + i + "].brandName'  class='form-control form-control-sm input-group-sm' value='" + res[i].brandName + "'>" +
+                        "<input type='hidden' id='prefixCode' name='purchaseDTOS[" + i + "].prefixCode'  class='form-control form-control-sm input-group-sm' value='" + res[i].prefixCode + "'>" +
+                        "<input type='hidden' id='' name='purchaseDTOS[" + i + "].locationId'  class='form-control form-control-sm input-group-sm' value='" + res[i].locationId + "'></td>" +
+                        "<td><input type='text' id='itemCode' readonly name='purchaseDTOS[" + i + "].itemCode' class='form-control form-control-sm input-group-sm' value='" + res[i].itemCode.toUpperCase() + "'></td>" +
+                        "<td><input type='text' readonly name='purchaseDTOS[" + i + "].itemName' class='form-control form-control-sm input-group-sm' value='" + res[i].itemName + "'></td>" +
+                        "<td hidden><input type='text' readonly name='purchaseDTOS[" + i + "].partNo' class='form-control form-control-sm input-group-sm partNo' value='" + res[i].partNo + "'></td>" +
+                        "<td><input type='text' readonly name='purchaseDTOS[" + i + "].sellingPrice' class='form-control form-control-sm input-group-sm sellingPrice right-align' value='" + res[i].sellingPrice + "'></td>" +
+                        "<td><input type='text' readonly name='purchaseDTOS[" + i + "].costPrice' class='form-control form-control-sm input-group-sm costPrice right-align' value='" + res[i].costPrice + "'></td>" +
+                        "<td><input type='hidden' id='initialQty' readonly class='form-control form-control-sm input-group-sm initialQty right-align' value=" + res[i].qty + " ><input type='text' id='qty' readonly class='form-control form-control-sm input-group-sm qty right-align amount'   name='purchaseDTOS[" + i + "].qty' value=" + res[i].qty + " ></td>" +
+                        "<td><input type='hidden' readonly name='purchaseDTOS[" + i + "].unitId' class='form-control form-control-sm input-group-sm costPrice right-align' value='" + res[i].unitId + "'><input type='text' readonly  class='form-control form-control-sm input-group-sm costPrice right-align' value='" + res[i].unitName + "'></td>" +
+                        "<td><input type='text' readonly class='form-control form-control-sm input-group-sm totalAmount right-align totalAmount' id='totalAmount'  name='purchaseDTOS[" + i + "].totalAmount' value=" + res[i].costPrice + " ></td>" +
+                        "<td><input type='button'  id='itemEditBtn' class='btn btn-primary btn-sm btn-xs fa fa-trash' value='Edit'>" + delBtn + "</td>" +
+                        "</tr>";
+
+                    countItem += 1;
+                } else {
+                    row = "<tr>" +
+                        "<td><input type='text' id='index' readonly class='form-control form-control-sm input-group-sm' value='" + parseInt(i + 1) + "'>" +
+                        "<input type='hidden' id='' name='purchaseDTOS[" + i + "].type'  class='form-control form-control-sm input-group-sm' value='" + res[i].type + "'>" +
+                        "<input type='hidden' id='' name='purchaseDTOS[" + i + "].purchaseId'  class='form-control form-control-sm input-group-sm' value='" + res[i].purchaseId + "'>" +
+                        "<input type='hidden' id='' name='purchaseDTOS[" + i + "].purchaseAuditId'  class='form-control form-control-sm input-group-sm' value='" + res[i].purchaseAuditId + "'>" +
+                        "<input type='hidden' id='brandName' name='purchaseDTOS[" + i + "].brandName'  class='form-control form-control-sm input-group-sm' value='" + res[i].brandName + "'>" +
+                        "<input type='hidden' id='prefixCode' name='purchaseDTOS[" + i + "].prefixCode'  class='form-control form-control-sm input-group-sm' value='" + res[i].prefixCode + "'>" +
+                        "<input type='hidden' id='' name='purchaseDTOS[" + i + "].locationId'  class='form-control form-control-sm input-group-sm' value='" + res[i].locationId + "'></td>" +
+                        "<td><input type='text' id='itemCode' readonly name='purchaseDTOS[" + i + "].itemCode' class='form-control form-control-sm input-group-sm' value='" + res[i].itemCode.toUpperCase() + "'></td>" +
+                        "<td><input type='text' readonly name='purchaseDTOS[" + i + "].itemName' class='form-control form-control-sm input-group-sm' value='" + res[i].itemName + "'></td>" +
+                        "<td ><input type='text' readonly name='purchaseDTOS[" + i + "].partNo' class='form-control form-control-sm input-group-sm partNo' value='" + res[i].partNo + "'></td>" +
+                        "<td><input type='text' readonly name='purchaseDTOS[" + i + "].sellingPrice' class='form-control form-control-sm input-group-sm sellingPrice right-align' value='" + res[i].sellingPrice + "'></td>" +
+                        "<td><input type='text' readonly name='purchaseDTOS[" + i + "].costPrice' class='form-control form-control-sm input-group-sm costPrice right-align' value='" + res[i].costPrice + "'></td>" +
+                        "<td><input type='hidden' id='initialQty' readonly class='form-control form-control-sm input-group-sm initialQty right-align' value=" + res[i].qty + " ><input type='text' id='qty' readonly class='form-control form-control-sm input-group-sm qty right-align amount'   name='purchaseDTOS[" + i + "].qty' value=" + res[i].qty + " ></td>" +
+                        "<td><input type='hidden' readonly name='purchaseDTOS[" + i + "].unitId' class='form-control form-control-sm input-group-sm costPrice right-align' value='" + res[i].unitId + "'><input type='text' readonly  class='form-control form-control-sm input-group-sm costPrice right-align' value='" + res[i].unitName + "'></td>" +
+                        "<td><input type='text' readonly class='form-control form-control-sm input-group-sm totalAmount right-align totalAmount' id='totalAmount'  name='purchaseDTOS[" + i + "].totalAmount' value=" + res[i].costPrice + " ></td>" +
+                        "<td><input type='button'  id='itemEditBtn' class='btn btn-primary btn-sm btn-xs fa fa-trash' value='Edit'>" + delBtn + "</td>" +
+                        "</tr>";
+                }
+
+
                 tableGrid.find('tbody').append(row);
                 calculateTotal();
                 $('#btnSave').attr('disabled', false)
@@ -814,7 +932,7 @@ receivedItem = (function () {
 
     function deleteLedgerDetails() {
         $('#btnDelete').on('click', function () {
-            if(_validateDeletePurchase()){
+            if (_validateDeletePurchase()) {
                 let purchaseVoucherNo = $('#purchaseVoucherNo').val();
                 let purchaseInvoiceNo = $('#purchaseInvoiceNo').val();
                 if (purchaseVoucherNo !== '') {

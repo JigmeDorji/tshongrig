@@ -122,7 +122,7 @@
                                 <tr>
                                     <td style="border-top: dotted;border-left: dotted;"></td>
                                     <td style="border-top: dotted"></td>
-                                    <td class="right-align" style="border-top: dotted"><strong>Opening Balance</strong>
+                                    <td class="right-align" style="border-top: dotted"><strong>Opening Balance </strong>
                                     </td>
                                     <td hidden="hidden"></td>
                                     <td style="border-top: dotted">
@@ -137,6 +137,27 @@
                                     </td>
 
                                 </tr>
+
+                                <tr id="currentDrAndCrAmount" hidden>
+                                    <td style="border-top: dotted;border-left: dotted;"></td>
+                                    <td style="border-top: dotted"></td>
+                                    <td class="right-align" style="border-top: dotted"><strong>Current</strong>
+                                    </td>
+                                    <td hidden="hidden"></td>
+                                    <td style="border-top: dotted">
+                                        <input type="text" id="currentDrTotalAmount"
+                                               class="form-control form-control-sm   right-align"
+                                               style="border-radius: 0;height: 28px !important;" readonly>
+                                    </td>
+                                    <td style="border-top: dotted;border-right: dotted;">
+                                        <input type="text" id="currentCrTotalAmount"
+                                               class="form-control form-control-sm   right-align"
+                                               style="border-radius: 0;height: 28px !important;" readonly>
+                                    </td>
+
+                                </tr>
+
+
                                 <tr id="currentEarningId">
                                     <td style="border-left: dotted;"></td>
                                     <td></td>

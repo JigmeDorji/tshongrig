@@ -50,6 +50,8 @@ public class ReceivedItemController {
     public String list(Model model, HttpServletRequest request) {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
 
+        model.addAttribute("currentUser", currentUser);
+
         List<DropdownDTO> locationList = locationSetUpService.getLocationSetUpList(currentUser);
         model.addAttribute("locationList", locationList);
 
@@ -57,6 +59,8 @@ public class ReceivedItemController {
 
         List<DropdownDTO> supplierList = supplierSetupService.getSupplierListDropDown(currentUser);
         model.addAttribute("supplierList", supplierList);
+
+
 
 
         Date newDate = new Date();
@@ -81,8 +85,10 @@ public class ReceivedItemController {
     public ResponseMessage save(PurchaseCallingDTO purchaseCallingDTO, HttpServletRequest request) throws
             IOException, ParseException {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
+
         return addItemService.save(purchaseCallingDTO, currentUser);
     }
+
 
     @ResponseBody
     @RequestMapping(value = "/saveBrandDetail", method = RequestMethod.POST)
@@ -103,8 +109,10 @@ public class ReceivedItemController {
     @RequestMapping(value = "/getOpeningPurchaseDetail", method = RequestMethod.GET)
     public PurchaseDTO getOpeningPurchaseDetail(HttpServletRequest request, Integer purchaseId, String purchaseDate, Integer voucherNo) {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
+
         return addItemService.getOpeningPurchaseDetail(purchaseId, DateUtil.toDate(purchaseDate, DateUtil.DD_MMM_YYYY), voucherNo);
     }
+
 
     @ResponseBody
     @RequestMapping(value = "/getRecentPurchaseData", method = RequestMethod.GET)
@@ -125,6 +133,14 @@ public class ReceivedItemController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/getSINo", method = RequestMethod.POST)
+    public Integer getSINo(HttpServletRequest request, Integer companyId) {
+        CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
+        return addItemService.getSINo(currentUser);
+    }
+
+
+    @ResponseBody
     @RequestMapping(value = "/getItemDetails", method = RequestMethod.GET)
     public PurchaseDTO getItemDetails(HttpServletRequest request, String itemCode) {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
@@ -133,8 +149,9 @@ public class ReceivedItemController {
 
     @ResponseBody
     @RequestMapping(value = "/getItemDetailsByPartNo", method = RequestMethod.GET)
-    public PurchaseDTO getItemDetailsByPartNo(String partNo) {
-        return addItemService.getItemDetailsByPartNo(partNo);
+    public PurchaseDTO getItemDetailsByPartNo(HttpServletRequest request,String partNo) {
+        CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
+        return addItemService.getItemDetailsByPartNo(partNo,currentUser.getCompanyId());
     }
 
 
@@ -144,6 +161,7 @@ public class ReceivedItemController {
         return addItemService.getBrandList((CurrentUser) request.getSession()
                 .getAttribute("currentUser"));
     }
+
 
     @ResponseBody
     @RequestMapping(value = "/getTypeDetail", method = RequestMethod.GET)

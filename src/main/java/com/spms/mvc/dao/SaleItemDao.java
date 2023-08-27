@@ -9,6 +9,7 @@ import com.spms.mvc.dto.SaleItemListDTO;
 import com.spms.mvc.entity.Discount;
 import com.spms.mvc.entity.SaleRecord;
 import com.spms.mvc.entity.SaleRecordDetail;
+import com.spms.mvc.library.helper.CurrentUser;
 import com.spms.mvc.library.helper.DropdownDTO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -31,15 +32,23 @@ public class SaleItemDao {
     SessionFactory sessionFactory;
 
     @Transactional(readOnly = true)
-    public List<SaleItemDTO> getItemDetails(String itemCode, Integer companyId) {
+    public List<SaleItemDTO> getItemDetails(String itemCode, CurrentUser currentUser) {
         String query = "SELECT concat(a.itemName,' : ',type) AS itemName, a.sellingprice AS sellingPrice,unitName \n" +
                 "FROM tbl_inv_purchase a\n" +
                 "inner join tbl_inv_unit b on a.unitId=b.unitId\n" +
                 "WHERE itemCode=:itemCode and companyId=:companyId";
+
+        if (currentUser.getBusinessType() == 8) {
+            query = "SELECT concat(a.itemName,' : ',itemCode) AS itemName, a.sellingprice AS sellingPrice,unitName \n" +
+                    "FROM tbl_inv_purchase a\n" +
+                    "inner join tbl_inv_unit b on a.unitId=b.unitId\n" +
+                    "WHERE itemCode=:itemCode and companyId=:companyId";
+        }
+
         Session session = sessionFactory.getCurrentSession();
         return (List<SaleItemDTO>) session.createSQLQuery(query)
                 .setParameter("itemCode", itemCode)
-                .setParameter("companyId", companyId)
+                .setParameter("companyId", currentUser.getCompanyId())
                 .setResultTransformer(Transformers.aliasToBean(SaleItemDTO.class)).list();
 
     }
@@ -290,7 +299,7 @@ public class SaleItemDao {
 
     @Transactional(readOnly = true)
     public List<DropdownDTO> getItemCodeList(Integer companyId) {
-        String query = "SELECT itemCode AS id, concat(itemName,' : ', type) AS text FROM tbl_inv_purchase WHERE  companyId=:companyId";
+        String query = "SELECT itemCode AS id, concat(itemName,' : ', itemCode) AS text FROM tbl_inv_purchase WHERE  companyId=:companyId";
         return sessionFactory.getCurrentSession().createSQLQuery(query)
                 .setParameter("companyId", companyId)
                 .setResultTransformer(Transformers.aliasToBean(DropdownDTO.class)).list();

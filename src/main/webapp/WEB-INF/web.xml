@@ -17,7 +17,7 @@
 
     <servlet-mapping>
         <servlet-name>mvc-dispatcher</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/tshongrig</url-pattern>
     </servlet-mapping>
 
     <!-- Security Part -->
@@ -71,6 +71,10 @@
     <listener>
         <listener-class>se.jiderhamn.classloader.leak.prevention.ClassLoaderLeakPreventor</listener-class>
     </listener>
+    <listener>
+        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+    </listener>
+
 
     <filter>
         <filter-name>sitemesh</filter-name>
@@ -100,5 +104,14 @@
         <session-timeout>-1</session-timeout>
         <tracking-mode>COOKIE</tracking-mode>
     </session-config>
+
+    <servlet>
+        <servlet-name>MessageServlet</servlet-name>
+        <servlet-class>com.spms.mvc.library.helper.TshongRigServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MessageServlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
 
 </web-app>

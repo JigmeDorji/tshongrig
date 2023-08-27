@@ -26,7 +26,7 @@ import java.util.Objects;
 /**
  * Created by jigmePc on 5/8/2019.
  */
-@Service("voucherCreationService")
+@Service()
 public class VoucherCreationService {
 
     @Autowired
@@ -103,11 +103,16 @@ public class VoucherCreationService {
         ResponseMessage responseMessage = new ResponseMessage();
         if (VoucherTypeEnum.PAYMENT.getValue().equals(voucherTypeId)) {
             for (VoucherDetailDTO voucherDetailDTO : voucherDetailDTOList) {
+
                 if (voucherCreationDao.getAccTypeId(voucherDetailDTO.getLedgerId(), currentUser.getCompanyId()).equals(AccountTypeEnum.CASH.getValue())) {
-                    if (addItemService.checkCashBalance(PaymentModeTypeEnum.CASH.getValue(), format.parse(voucherDetailDTO.getCreditAmount()).doubleValue(), currentUser).getStatus() == 0) {
-                        responseMessage.setStatus(0);
-                        return responseMessage;
+
+                    if (voucherDetailDTO.getCreditAmount() != null) {
+                        if (addItemService.checkCashBalance(PaymentModeTypeEnum.CASH.getValue(), format.parse(voucherDetailDTO.getCreditAmount()).doubleValue(), currentUser).getStatus() == 0) {
+                            responseMessage.setStatus(0);
+                            return responseMessage;
+                        }
                     }
+
                 }
             }
         }
@@ -249,5 +254,10 @@ public class VoucherCreationService {
         }
 
         return responseMessage;
+    }
+
+
+    public List<DropdownDTO> getLedgerListForContraVoucherType(Integer companyId) {
+        return voucherCreationDao.getLedgerListForContraVoucherType(companyId);
     }
 }

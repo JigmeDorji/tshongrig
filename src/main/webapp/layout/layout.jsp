@@ -19,7 +19,7 @@
     <jsp:include page="include/css.jsp"/>
 
 </head>
-
+<jsp:include page="include/loader.jsp"/>
 <body>
 <jsp:include page="include/header.jsp"/>
 <!-- Page content -->
@@ -80,6 +80,10 @@
 </div>
 <jsp:include page="include/js.jsp"/>
 </body>--%>
+
+
+
+
 </body>
 <jsp:include page="include/js.jsp"/>
 </html>

@@ -227,4 +227,19 @@ public class AutoVoucherDao {
                 .setParameter("voucherTypeId", type)
                 .uniqueResult();
     }
+
+    @Transactional(readOnly = true)
+    public String getParticularNarrationForCurrentVoucherEntry(Integer voucherNumber, Integer type, Integer companyId, String setDate) {
+        String query = "select narration from tbl_acc_voucher_entries where  voucherNo=:voucherNo and companyId=:companyId and  voucherTypeId=:voucherTypeId and setDate=:setDate";
+        Session session = sessionFactory.getCurrentSession();
+        return (String) session.createSQLQuery(query)
+                .setParameter("voucherNo", voucherNumber)
+                .setParameter("companyId", companyId)
+                .setParameter("voucherTypeId", type)
+                .setParameter("setDate", setDate)
+                .uniqueResult();
+    }
 }
+//Date date = new Date();
+//        SimpleDateFormat DateFor = new SimpleDateFormat("yyyy-MM-dd");
+//        String stringDate= DateFor.format(date);

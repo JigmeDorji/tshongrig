@@ -175,42 +175,68 @@ statutoryRemittance = (function () {
     }
 
     function remitStatutoryDetail() {
-        $('#remitStatutoryBtn').on('click', function () {
-            $('.globalForm').validate({
-                submitHandler: function (form) {
-                    $.ajax({
-                        url: baseURL() + '/remitStatutoryDetail',
-                        type: 'POST',
-                        data: $(form).serializeArray(),
-                        success: function (res) {
-                            if (res.status === 1) {
-                                swal({
-                                    timer: 800,
-                                    type: "success",
-                                    title: res.text,
-                                    showConfirmButton: false
-                                });
-                                $('#monthId').val('');
-                                $('.totalAmount').val('');
-                                $('#remitBtn').attr('disabled', true);
-                            } else {
-                                $('.hC').val('');
-                                $('.tDS').val('');
-                                $('.totalAmount').val('');
-                                btnExport.attr('disabled', true);
-                                remitStatutoryBtn.attr('disabled', true);
-                                errorMsg(res.text)
-                                errorMsg(res.text)
-                            }
-                            statutoryRemittanceGrid.dataTable().fnClearTable();
-                            $('.tDS').val('')
-                            $('.hC').val('')
-                            $('.totalAmount').val('')
-                        }
-                    });
-                }
-            });
-        })
+
+        perClickSubmissionValidatorHandler('#remitStatutoryBtn','.globalForm',baseURL() + '/remitStatutoryDetail',(res)=> {
+            if (res.status === 1) {
+                swal({
+                    timer: 800,
+                    type: "success",
+                    title: res.text,
+                    showConfirmButton: false
+                });
+                $('#monthId').val('');
+                $('.totalAmount').val('');
+                $('#remitBtn').attr('disabled', true);
+            } else {
+                $('.hC').val('');
+                $('.tDS').val('');
+                $('.totalAmount').val('');
+                btnExport.attr('disabled', true);
+                remitStatutoryBtn.attr('disabled', true);
+                errorMsg(res.text)
+                errorMsg(res.text)
+            }
+            statutoryRemittanceGrid.dataTable().fnClearTable();
+            $('.tDS').val('')
+            $('.hC').val('')
+            $('.totalAmount').val('')
+        });
+        // $('#remitStatutoryBtn').on('click', function () {
+        //     $('.globalForm').validate({
+        //         submitHandler: function (form) {
+        //             $.ajax({
+        //                 url: baseURL() + '/remitStatutoryDetail',
+        //                 type: 'POST',
+        //                 data: $(form).serializeArray(),
+        //                 success: function (res) {
+        //                     if (res.status === 1) {
+        //                         swal({
+        //                             timer: 800,
+        //                             type: "success",
+        //                             title: res.text,
+        //                             showConfirmButton: false
+        //                         });
+        //                         $('#monthId').val('');
+        //                         $('.totalAmount').val('');
+        //                         $('#remitBtn').attr('disabled', true);
+        //                     } else {
+        //                         $('.hC').val('');
+        //                         $('.tDS').val('');
+        //                         $('.totalAmount').val('');
+        //                         btnExport.attr('disabled', true);
+        //                         remitStatutoryBtn.attr('disabled', true);
+        //                         errorMsg(res.text)
+        //                         errorMsg(res.text)
+        //                     }
+        //                     statutoryRemittanceGrid.dataTable().fnClearTable();
+        //                     $('.tDS').val('')
+        //                     $('.hC').val('')
+        //                     $('.totalAmount').val('')
+        //                 }
+        //             });
+        //         }
+        //     });
+        // })
     }
 
     function exportReport() {

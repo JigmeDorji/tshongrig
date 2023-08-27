@@ -86,7 +86,9 @@
                 <div class="signin-left">
                     <div class="signin-box">
                         <%--                        <h2 class="slim-logo"><a href="index.html">slim<span>.</span></a></h2>--%>
-                        <img src="<c:url value='/resources/images/logobcs.png'/>" class="img-fluid pb-2" alt="logo">
+                        <%--                        <img src="<c:url value='/resources/images/logobcs.png'/>" class="img-fluid pb-2" alt="logo">--%>
+                        <img  src="<c:url value='/resources/limitless/global_assets/images/logo.png'/>"
+                             class="img-fluid pb-2" alt="logo">
                         <p style="font-style: italic;font-family:Helvetica">"We care for your Business"</p>
                         <p>Our first product, <strong>Tshong Rig ERP system</strong> is here to help you manage your
                             business efficiently at ease. It has all the features required in the daily operation of
@@ -96,6 +98,13 @@
 
                         <p><a href="" class="btn btn-outline-secondary pd-x-25">Explore Tshong Rig Packages Offer </a>
                         </p>
+<%--                        <c:if test="${s.size()>0}">--%>
+<%--                            <c:forEach var="list" items="${s}">--%>
+<%--                                X ${list}<br>--%>
+<%--                            </c:forEach>--%>
+<%--                        </c:if>--%>
+
+
                     </div>
                 </div><!-- signin-left -->
             </div>

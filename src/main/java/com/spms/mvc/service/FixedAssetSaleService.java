@@ -132,7 +132,7 @@ public class FixedAssetSaleService {
                     }
 
                     saveToSaleRecordDetail(currentUser, saleRecordId,
-                            saleItemListDTO.getFaPurchaseDetailId(), saleItemListDTO.getSellingPrice(),
+                            saleItemListDTO.getFaPurchaseDetailId(), saleItemListDTO.getSellingPrice(),saleItemListDTO.getAssetCode(),
                             netAmount);
 
                     //update the status is purchase
@@ -253,7 +253,9 @@ public class FixedAssetSaleService {
                 }
             }
         } catch (Exception ex) {
+            ex.printStackTrace();
             TransactionInterceptor.currentTransactionStatus().setRollbackOnly();
+
         }
         responseMessage.setStatus(1);
         responseMessage.setText("Successful.");
@@ -267,7 +269,7 @@ public class FixedAssetSaleService {
     }
 
     private void saveToSaleRecordDetail(CurrentUser currentUser, BigInteger saleRecordId,
-                                        BigInteger purchaseDetailId, double sellingPrice, double netSellingAmount) {
+                                        BigInteger purchaseDetailId, double sellingPrice,String assetCode, double netSellingAmount) {
         FaSaleRecordDetail faSaleRecordDetail = new FaSaleRecordDetail();
         faSaleRecordDetail.setSaleRecordId(saleRecordId);
         faSaleRecordDetail.setSellingPrice(sellingPrice);
@@ -275,6 +277,7 @@ public class FixedAssetSaleService {
         faSaleRecordDetail.setFaPurchaseDetailId(purchaseDetailId);
         faSaleRecordDetail.setSetDate(currentUser.getCreatedDate());
         faSaleRecordDetail.setCreatedBy(currentUser.getLoginId());
+        faSaleRecordDetail.setAssetCode(assetCode);
         fixedAssetSaleDao.saveFaItemDetails(faSaleRecordDetail);
     }
 
@@ -321,8 +324,11 @@ public class FixedAssetSaleService {
             Double currentYearDepreciation = ((purchaseValue * depreciationRate) / numOfDays) * totalNoOfDaysDif;
             netValue = purchaseValue - currentYearDepreciation;
         }
+        return Double.valueOf(Math.round(netValue));
 
-        return Double.parseDouble(numberFormat.format(netValue));
+//        return Double.parseDouble(numberFormat.format(netValue));
+//        return Double.parseDouble(numberFormat.replaceAll(",",""));
+//        return Double.parseDouble(numberFormat.replaceAll(",",""));
     }
 
     public List<FixedAssetScheduleDTO> getFixedAssetSchedule(Date asOnDate, Integer companyId) {

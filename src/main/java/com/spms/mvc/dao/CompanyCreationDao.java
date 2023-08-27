@@ -2,6 +2,7 @@ package com.spms.mvc.dao;
 
 import com.spms.mvc.dto.CompanyCreationDTO;
 import com.spms.mvc.dto.FinancialYearDTO;
+import com.spms.mvc.entity.BrandWiseItemCode;
 import com.spms.mvc.entity.CommonCompanyLoginId;
 import com.spms.mvc.entity.CompanyCreation;
 import com.spms.mvc.library.helper.DropdownDTO;
@@ -12,8 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -37,21 +36,51 @@ public class CompanyCreationDao {
 
     @Transactional(readOnly = true)
     public List<CompanyCreationDTO> getCompanyDetailList() {
-        String query = "SELECT distinct id AS companyId,\n" +
-                "                CONCAT(companyName,\"(\",ifnull(username,\"---\"),\")\") AS companyName,\n" +
-                "                mailingAddress AS mailingAddress,\n" +
-                "                mobileNo AS mobileNo,\n" +
-                "                email AS email,\n" +
-                "                website AS website, \n" +
-                "                fnYrStart AS fnYrStart,\n" +
-                "                pfPercentage AS pfPercentage,\n" +
-                "                contactPerson,\n" +
-                "                status,\n" +
-                "                trialExpiryDate,\n" +
-                "                businessType AS businessType\n" +
-                "                FROM tbl_common_company c \n" +
-                "                left join tbl_user  on id=companyId \n" +
-                "                group by companyId order by id desc";
+//        String query = "SELECT distinct id AS companyId,\n" +
+//                "                CONCAT(companyName,\"(\",ifnull(username,\"---\"),\")\") AS companyName,\n" +
+//                "                mailingAddress AS mailingAddress,\n" +
+//                "                mobileNo AS mobileNo,\n" +
+//                "                email AS email,\n" +
+//                "                website AS website, \n" +
+//                "                fnYrStart AS fnYrStart,\n" +
+//                "                pfPercentage AS pfPercentage,\n" +
+//                "                contactPerson,\n" +
+//                "                status,\n" +
+//                "                trialExpiryDate,\n" +
+//                "                businessType AS businessType\n" +
+//                "                FROM tbl_common_company c \n" +
+//                "                left join tbl_user  on id=companyId \n" +
+//                "                group by companyId order by id desc";
+
+//        String query="select distinct b.id as companyId, \n" +
+//                "CONCAT(companyName, '(', COALESCE(c.loginId, '---'), ')') AS companyName,\n" +
+//                "b.mailingAddress AS mailingAddress,\n" +
+//                "b.mobileNo AS mobileNo,\n" +
+//                "b.email AS email,\n" +
+//                "b.website AS website,\n" +
+//                "b.fnYrStart AS fnYrStart,\n" +
+//                "b.pfPercentage AS pfPercentage,\n" +
+//                "b.contactPerson,\n" +
+//                "b.status,\n" +
+//                "b.trialExpiryDate,\n" +
+//                "b.businessType AS businessType\n" +
+//                "from tbl_common_company b left join tbl_common_company_login_id c on c.companyId=b.id\n" +
+//                "group by companyId order by companyId desc";
+
+        String query = "select  b.id as companyId, \n" +
+                "              CONCAT(companyName, '(', COALESCE(loginId, '---'), ')') as companyName,\n" +
+                "                b.mailingAddress AS mailingAddress,\n" +
+                "                b.mobileNo AS mobileNo,\n" +
+                "                b.email AS email,\n" +
+                "                b.website AS website,\n" +
+                "                b.fnYrStart AS fnYrStart,\n" +
+                "                b.pfPercentage AS pfPercentage,\n" +
+                "                b.contactPerson,\n" +
+                "                b.status,\n" +
+                "                b.trialExpiryDate,\n" +
+                "                b.businessType AS businessType\n" +
+                "                from tbl_common_company b \n" +
+                "                group by companyId order by companyId desc;";
         Session session = sessionFactory.getCurrentSession();
         return session.createSQLQuery(query)
                 .setResultTransformer(Transformers.aliasToBean(CompanyCreationDTO.class)).list();
@@ -319,10 +348,71 @@ public class CompanyCreationDao {
                 .setResultTransformer(Transformers.aliasToBean(CommonCompanyLoginId.class)).list();
     }
 
+
     public void saveCompanyLoginDetail(CommonCompanyLoginId commonCompanyLoginId) {
 
         Session session = sessionFactory.getCurrentSession();
         session.save(commonCompanyLoginId);
 
     }
+
+    @Transactional(readOnly = true)
+    public void updateCommonCompanyTableForUserLoginId(Integer companyId, String companyAbbreviation) {
+        Session session = sessionFactory.getCurrentSession();
+        String sql = "UPDATE  tbl_common_company set loginId=:loginId where  id=:id";
+        session.createSQLQuery(sql)
+                .setParameter("id", companyId)
+                .setParameter("loginId", companyAbbreviation)
+                .executeUpdate();
+    }
+
+    @Transactional(readOnly = true)
+    public List<BigInteger> getUserAt(Integer companyId) {
+        Session session = sessionFactory.getCurrentSession();
+        List list = session.createSQLQuery("SELECT userId FROM tbl_user  where companyId=:companyId")
+                .setParameter("companyId", companyId).list();
+        return list;
+
+    }
+
+
+    @Transactional
+    public void updateTheUserStatus(Character status, BigInteger userId) {
+        Session session = sessionFactory.getCurrentSession();
+        String sql = "UPDATE  tbl_user set userStatus=:userStatus where  userId=:userId";
+        session.createSQLQuery(sql)
+                .setParameter("userStatus", status)
+                .setParameter("userId", userId)
+                .executeUpdate();
+
+    }
+
+
+    @Transactional
+    public void savingBrandDetailOnCompanyApprovalOnce(BrandWiseItemCode brandWiseItemCode) {
+        sessionFactory.getCurrentSession().saveOrUpdate(brandWiseItemCode);
+    }
+
+
+    @Transactional(readOnly = true)
+    public Boolean checkInBrandExistsOnCompanyApprovalOnce(Integer companyId) {
+        String sqlQry = "SELECT COUNT(*) FROM tbl_item_code WHERE companyId = :companyId";
+        BigInteger count = (BigInteger) sessionFactory.getCurrentSession()
+                .createSQLQuery(sqlQry)
+                .setParameter("companyId", companyId)
+                .uniqueResult();
+        return count.equals(BigInteger.ZERO);
+    }
+
+    @Transactional(readOnly = true)
+    public Boolean isCompanyExist(Integer companyId) {
+        String sqlQry = "SELECT COUNT(*) FROM tbl_common_company_login_id WHERE companyId = :companyId";
+        BigInteger count = (BigInteger) sessionFactory.getCurrentSession()
+                .createSQLQuery(sqlQry)
+                .setParameter("companyId", companyId)
+                .uniqueResult();
+        return !count.equals(BigInteger.ZERO);
+    }
+
+
 }

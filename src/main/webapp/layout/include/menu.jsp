@@ -71,6 +71,56 @@
                     </ul>
                 </li>
 
+                <li class="nav-item nav-item-submenu">
+                    <a href="#" class="nav-link">
+                        <i class="icon-file-plus"></i>
+                        <span>File Upload</span>
+                    </a>
+                    <ul class="nav nav-group-sub" data-submenu-title="Layouts">
+                        <li class="nav-item">
+                            <a href="<c:url value='/fileUpload'/>" class="nav-link">
+                                Upload
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                        <li class="nav-item nav-item-submenu">
+                            <a href="#" class="nav-link">
+                                <span>View</span>
+                            </a>
+                            <ul class="nav nav-group-sub" data-submenu-title="Layouts">
+                                <li class="nav-item">
+                                    <a href="<c:url value='/viewNewFiles'/>" class="nav-link">
+                                        New
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<c:url value='/viewCompletedFiles'/>" class="nav-link">
+                                        Completed
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<c:url value='/viewRetrieved'/>" class="nav-link">
+                                        Retrieved
+                                    </a>
+                                </li>
+
+
+                            </ul>
+                        </li>
+
+
+                        </li>
+                        <li class="nav-item">
+                            <a href="<c:url value='/filesBin'/>" class="nav-link">
+                                Bin
+                            </a>
+                        </li>
+
+
+                    </ul>
+                </li>
+
+
                 <%--Human Resource--%>
                 <li class="nav-item nav-item-submenu">
                     <a href="#" class="nav-link"><i class="icon-users"></i><span>Human Resources</span></a>
@@ -147,7 +197,7 @@
                     </ul>
                 </li>
 
-                <c:if test="${currentUser.businessType ==1}">
+                <c:if test="${currentUser.businessType ==1 || currentUser.businessType == 8}">
                     <%--Inventory--%>
                     <li class="nav-item nav-item-submenu">
                         <a href="#" class="nav-link"><i class="icon-list3"></i> <span>Inventory</span></a>
@@ -160,6 +210,8 @@
                                 Purchase</a>
                             </li>
                             <li class="nav-item"><a href="<c:url value='/viewItem' />" class="nav-link"> View Item</a>
+                            </li>
+                            <li class="nav-item"><a href="<c:url value='/closingStock' />" class="nav-link"> Closing Stock</a>
                             </li>
                             <li class="nav-item"><a href="<c:url value='/saleItem' />" class="nav-link"> Sale</a></li>
                             <li class="nav-item"><a href="<c:url value='/saleDetail' />" class="nav-link"> Sale
@@ -185,7 +237,7 @@
                         <ul class="nav nav-group-sub" data-submenu-title="Starter kit">
                             <li class="nav-item">
                                 <sec:authorize access="hasAuthority('12-VIEW')">
-                                    <a href="<c:url value='/rawMaterialLocationSetup' />" class="nav-link"> sdLocation Setup</a>
+                                    <a href="<c:url value='/rawMaterialLocationSetup' />" class="nav-link"> Location Setup</a>
                                 </sec:authorize>
                             </li>
                             <li class="nav-item">

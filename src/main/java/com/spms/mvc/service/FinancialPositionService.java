@@ -61,6 +61,17 @@ public class FinancialPositionService {
             }
             accTrialBalanceDTOS1.add(accTrialBalanceDTO1);
         }
+
+//        if (currentUser.getCompanyId() == 1 || currentUser.getCompanyId() == 8) {
+//
+//            if (accTrialBalanceDTOS.get(0).getParticular().equals("Inventory")) {
+//                List<AccTrialBalanceDTO> accTrialBalanceDTOS2= new ArrayList<>();
+//                for (int i = 0; i < accTrialBalanceDTOS1.size(); i++) {
+//
+//                }
+//            }
+//        }
+
         return accTrialBalanceDTOS1;
     }
 
@@ -274,6 +285,7 @@ public class FinancialPositionService {
         List<AccProfitAndLossReportDTO> accProfitAndLossReportDTOs = accProfitAndLossReportService
                 .getProfitAndLossDetails(currentUser.getCompanyId(), null, toDate,
                         currentUser.getBusinessType(), currentUser.getFinancialYearId(), Boolean.TRUE);
+        System.out.println(accProfitAndLossReportDTOs.size());
         return accProfitAndLossReportDTOs.get(accProfitAndLossReportDTOs.size() - 1).getReturnPNLAmount();
     }
 

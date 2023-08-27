@@ -19,8 +19,12 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.math.RoundingMode;
-import java.text.*;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 
 /**
@@ -171,65 +175,294 @@ public class AssetOpeningService {
                 monthStart = purchaseMonth;
             }
 
-            for (int month = monthStart; month <= selectedMonth; month++) {
 
-                List<VoucherDetailDTO> voucherDetailDTOList = new ArrayList<>();
-                VoucherDTO voucherDTO = new VoucherDTO();
+//            if the purchase date fall within the current year
+            if (isPurchaseInCurrentYear(openingAndBuyingListDTO.getPurchaseDate()) || isPurchaseInCurrentYear(openingAndBuyingDTO.getPurchaseDate())) {
+                int count = 1;
+                if (!isPurchaseInCurrentYear(openingAndBuyingListDTO.getPurchaseDate())){
+                    for (int month = purchaseFromMonth(openingAndBuyingDTO.getPurchaseDate()); month <= selectedMonth + 1; month++) {
+                        System.out.println(count);
+                        count++;
 
-                if (openingAndBuyingDTO.getPurchaseInvoiceNo() == null) {
-                    voucherNarration = "Asset opening entry";
-                    voucherTypeId = VoucherTypeEnum.JOURNAL.getValue();
-                    if (openingAndBuyingDTO.getVoucherNo() == null) {
-                        voucherNo = voucherCreationService.getCurrentVoucherNo(VoucherTypeEnum.JOURNAL.getValue(),
-                                currentUser.getCompanyId(), currentUser.getFinancialYearId());
-                    } else {
-                        voucherNo = openingAndBuyingDTO.getVoucherNo();
-                    }
-                } else {
-                    voucherNarration = "Asset Buying entry";
+                        Double depreciatedAmount = 0.0;
+                        int numOfDays;
+                        if (month == purchaseFromMonth(openingAndBuyingDTO.getPurchaseDate())) {
+                            numOfDays = calculateTheNumOfDays(openingAndBuyingDTO.getPurchaseDate());
 
-                    if (openingAndBuyingDTO.getVoucherNo() == null) {
-                        if (Objects.equals(openingAndBuyingDTO.getIsCash(), PaymentModeTypeEnum.CASH.getValue()) || Objects.equals(openingAndBuyingDTO.getIsCash(), PaymentModeTypeEnum.BANK.getValue())) {
-                            voucherNo = voucherCreationService.getCurrentVoucherNo(VoucherTypeEnum.PAYMENT.getValue(), currentUser.getCompanyId(), currentUser.getFinancialYearId());
-                            voucherTypeId = VoucherTypeEnum.PAYMENT.getValue();
                         } else {
-                            voucherNo = voucherCreationService.getCurrentVoucherNo(VoucherTypeEnum.JOURNAL.getValue(), currentUser.getCompanyId(), currentUser.getFinancialYearId());
-                            voucherTypeId = VoucherTypeEnum.JOURNAL.getValue();
+                            numOfDays = numberOfDaysInCurrentMonth(month);
                         }
-                    } else {
-                        voucherNo = openingAndBuyingDTO.getVoucherNo();
+
+                        depreciatedAmount = calculateDepreciationAmount(currentUser, accTypeId,
+                                openingAndBuyingListDTO.getRate(), month, numOfDays);
+
+
+//                =====
+                        List<VoucherDetailDTO> voucherDetailDTOList = new ArrayList<>();
+                        VoucherDTO voucherDTO = new VoucherDTO();
+
+                        if (openingAndBuyingDTO.getPurchaseInvoiceNo() == null) {
+                            voucherNarration = "Asset opening entry";
+                            voucherTypeId = VoucherTypeEnum.JOURNAL.getValue();
+                            if (openingAndBuyingDTO.getVoucherNo() == null) {
+                                voucherNo = voucherCreationService.getCurrentVoucherNo(VoucherTypeEnum.JOURNAL.getValue(),
+                                        currentUser.getCompanyId(), currentUser.getFinancialYearId());
+                            } else {
+                                voucherNo = openingAndBuyingDTO.getVoucherNo();
+                            }
+                        } else {
+                            voucherNarration = "Asset Buying entry";
+
+                            if (openingAndBuyingDTO.getVoucherNo() == null) {
+                                if (Objects.equals(openingAndBuyingDTO.getIsCash(), PaymentModeTypeEnum.CASH.getValue()) || Objects.equals(openingAndBuyingDTO.getIsCash(), PaymentModeTypeEnum.BANK.getValue())) {
+                                    voucherNo = voucherCreationService.getCurrentVoucherNo(VoucherTypeEnum.PAYMENT.getValue(), currentUser.getCompanyId(), currentUser.getFinancialYearId());
+                                    voucherTypeId = VoucherTypeEnum.PAYMENT.getValue();
+                                } else {
+                                    voucherNo = voucherCreationService.getCurrentVoucherNo(VoucherTypeEnum.JOURNAL.getValue(), currentUser.getCompanyId(), currentUser.getFinancialYearId());
+                                    voucherTypeId = VoucherTypeEnum.JOURNAL.getValue();
+                                }
+                            } else {
+                                voucherNo = openingAndBuyingDTO.getVoucherNo();
+                            }
+                        }
+
+
+                        voucherDTO.setVoucherTypeId(voucherTypeId);
+                        voucherDTO.setNarration(voucherNarration);
+                        voucherDTO.setVoucherEntryDate(currentUser.getCreatedDate());
+
+                        //Prepare voucher Entry
+                        VoucherDetailDTO voucherDrDTo = new VoucherDetailDTO();
+                        voucherDrDTo.setDrcrAmount(AccountingUtil.drAmount(depreciatedAmount));
+                        voucherDrDTo.setLedgerId(autoVoucherService.getLedgerId("Depreciation", currentUser,
+                                AccountTypeEnum.INDIRECT_COST.getValue()));
+                        voucherDetailDTOList.add(voucherDrDTo);
+
+                        VoucherDetailDTO voucherCr = new VoucherDetailDTO();
+                        voucherCr.setDrcrAmount(AccountingUtil.crAmount(depreciatedAmount));
+                        voucherCr.setLedgerId(autoVoucherService.getLedgerId(ledgerService.getAccountTypeNameByAccType(accTypeId), currentUser, accTypeId));
+                        voucherDetailDTOList.add(voucherCr);
+
+                        voucherDTO.setVoucherDetailDTOList(voucherDetailDTOList);
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set((currentUser.getCreatedDate().getYear() + 1900), month - 1, 1);
+                        calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DATE));
+                        System.out.println(calendar.getTime());
+
+                        voucherDTO.setVoucherEntryDate(calendar.getTime());
+                        voucherDTO.setVoucherNo(voucherNo);
+
+                        voucherCreationService.performPurchaseAndSaleVoucherEntry(voucherDTO, currentUser);
+
                     }
+
+                }else {
+                    for (int month = purchaseFromMonth(openingAndBuyingListDTO.getPurchaseDate()); month <= selectedMonth + 1; month++) {
+                        System.out.println(count);
+                        count++;
+
+                        Double depreciatedAmount = 0.0;
+                        int numOfDays;
+                        if (month == purchaseFromMonth(openingAndBuyingListDTO.getPurchaseDate())) {
+                            numOfDays = calculateTheNumOfDays(openingAndBuyingListDTO.getPurchaseDate());
+
+                        } else {
+                            numOfDays = numberOfDaysInCurrentMonth(month);
+                        }
+
+                        depreciatedAmount = calculateDepreciationAmount(currentUser, accTypeId,
+                                openingAndBuyingListDTO.getRate(), month, numOfDays);
+
+
+//                =====
+                        List<VoucherDetailDTO> voucherDetailDTOList = new ArrayList<>();
+                        VoucherDTO voucherDTO = new VoucherDTO();
+
+                        if (openingAndBuyingDTO.getPurchaseInvoiceNo() == null) {
+                            voucherNarration = "Asset opening entry";
+                            voucherTypeId = VoucherTypeEnum.JOURNAL.getValue();
+                            if (openingAndBuyingDTO.getVoucherNo() == null) {
+                                voucherNo = voucherCreationService.getCurrentVoucherNo(VoucherTypeEnum.JOURNAL.getValue(),
+                                        currentUser.getCompanyId(), currentUser.getFinancialYearId());
+                            } else {
+                                voucherNo = openingAndBuyingDTO.getVoucherNo();
+                            }
+                        } else {
+                            voucherNarration = "Asset Buying entry";
+
+                            if (openingAndBuyingDTO.getVoucherNo() == null) {
+                                if (Objects.equals(openingAndBuyingDTO.getIsCash(), PaymentModeTypeEnum.CASH.getValue()) || Objects.equals(openingAndBuyingDTO.getIsCash(), PaymentModeTypeEnum.BANK.getValue())) {
+                                    voucherNo = voucherCreationService.getCurrentVoucherNo(VoucherTypeEnum.PAYMENT.getValue(), currentUser.getCompanyId(), currentUser.getFinancialYearId());
+                                    voucherTypeId = VoucherTypeEnum.PAYMENT.getValue();
+                                } else {
+                                    voucherNo = voucherCreationService.getCurrentVoucherNo(VoucherTypeEnum.JOURNAL.getValue(), currentUser.getCompanyId(), currentUser.getFinancialYearId());
+                                    voucherTypeId = VoucherTypeEnum.JOURNAL.getValue();
+                                }
+                            } else {
+                                voucherNo = openingAndBuyingDTO.getVoucherNo();
+                            }
+                        }
+
+
+                        voucherDTO.setVoucherTypeId(voucherTypeId);
+                        voucherDTO.setNarration(voucherNarration);
+                        voucherDTO.setVoucherEntryDate(currentUser.getCreatedDate());
+
+                        //Prepare voucher Entry
+                        VoucherDetailDTO voucherDrDTo = new VoucherDetailDTO();
+                        voucherDrDTo.setDrcrAmount(AccountingUtil.drAmount(depreciatedAmount));
+                        voucherDrDTo.setLedgerId(autoVoucherService.getLedgerId("Depreciation", currentUser,
+                                AccountTypeEnum.INDIRECT_COST.getValue()));
+                        voucherDetailDTOList.add(voucherDrDTo);
+
+                        VoucherDetailDTO voucherCr = new VoucherDetailDTO();
+                        voucherCr.setDrcrAmount(AccountingUtil.crAmount(depreciatedAmount));
+                        voucherCr.setLedgerId(autoVoucherService.getLedgerId(ledgerService.getAccountTypeNameByAccType(accTypeId), currentUser, accTypeId));
+                        voucherDetailDTOList.add(voucherCr);
+
+                        voucherDTO.setVoucherDetailDTOList(voucherDetailDTOList);
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set((currentUser.getCreatedDate().getYear() + 1900), month - 1, 1);
+                        calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DATE));
+                        System.out.println(calendar.getTime());
+
+                        voucherDTO.setVoucherEntryDate(calendar.getTime());
+                        voucherDTO.setVoucherNo(voucherNo);
+
+                        voucherCreationService.performPurchaseAndSaleVoucherEntry(voucherDTO, currentUser);
+
+                    }
+
                 }
 
-                Double depreciatedAmount = calculateDepreciationAmount(currentUser, accTypeId,
-                        openingAndBuyingListDTO.getRate(), month);
+            } else {
+                for (int month = monthStart; month <= selectedMonth; month++) {
 
-                voucherDTO.setVoucherTypeId(voucherTypeId);
-                voucherDTO.setNarration(voucherNarration);
-                voucherDTO.setVoucherEntryDate(currentUser.getCreatedDate());
+                    List<VoucherDetailDTO> voucherDetailDTOList = new ArrayList<>();
+                    VoucherDTO voucherDTO = new VoucherDTO();
 
-                //Prepare voucher Entry
-                VoucherDetailDTO voucherDrDTo = new VoucherDetailDTO();
-                voucherDrDTo.setDrcrAmount(AccountingUtil.drAmount(depreciatedAmount));
-                voucherDrDTo.setLedgerId(autoVoucherService.getLedgerId("Depreciation", currentUser,
-                        AccountTypeEnum.INDIRECT_COST.getValue()));
-                voucherDetailDTOList.add(voucherDrDTo);
+                    if (openingAndBuyingDTO.getPurchaseInvoiceNo() == null) {
+                        voucherNarration = "Asset opening entry";
+                        voucherTypeId = VoucherTypeEnum.JOURNAL.getValue();
+                        if (openingAndBuyingDTO.getVoucherNo() == null) {
+                            voucherNo = voucherCreationService.getCurrentVoucherNo(VoucherTypeEnum.JOURNAL.getValue(),
+                                    currentUser.getCompanyId(), currentUser.getFinancialYearId());
+                        } else {
+                            voucherNo = openingAndBuyingDTO.getVoucherNo();
+                        }
+                    } else {
+                        voucherNarration = "Asset Buying entry";
 
-                VoucherDetailDTO voucherCr = new VoucherDetailDTO();
-                voucherCr.setDrcrAmount(AccountingUtil.crAmount(depreciatedAmount));
-                voucherCr.setLedgerId(autoVoucherService.getLedgerId(ledgerService.getAccountTypeNameByAccType(accTypeId), currentUser, accTypeId));
-                voucherDetailDTOList.add(voucherCr);
+                        if (openingAndBuyingDTO.getVoucherNo() == null) {
+                            if (Objects.equals(openingAndBuyingDTO.getIsCash(), PaymentModeTypeEnum.CASH.getValue()) || Objects.equals(openingAndBuyingDTO.getIsCash(), PaymentModeTypeEnum.BANK.getValue())) {
+                                voucherNo = voucherCreationService.getCurrentVoucherNo(VoucherTypeEnum.PAYMENT.getValue(), currentUser.getCompanyId(), currentUser.getFinancialYearId());
+                                voucherTypeId = VoucherTypeEnum.PAYMENT.getValue();
+                            } else {
+                                voucherNo = voucherCreationService.getCurrentVoucherNo(VoucherTypeEnum.JOURNAL.getValue(), currentUser.getCompanyId(), currentUser.getFinancialYearId());
+                                voucherTypeId = VoucherTypeEnum.JOURNAL.getValue();
+                            }
+                        } else {
+                            voucherNo = openingAndBuyingDTO.getVoucherNo();
+                        }
+                    }
 
-                voucherDTO.setVoucherDetailDTOList(voucherDetailDTOList);
-                Calendar calendar = Calendar.getInstance();
-                calendar.set((currentUser.getCreatedDate().getYear() + 1900), month, 1);
-                calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DATE));
+                    Double depreciatedAmount = calculateDepreciationAmount(currentUser, accTypeId,
+                            openingAndBuyingListDTO.getRate(), month, numberOfDaysInCurrentMonth(month + 1));
 
-                voucherDTO.setVoucherEntryDate(calendar.getTime());
-                voucherDTO.setVoucherNo(voucherNo);
+                    voucherDTO.setVoucherTypeId(voucherTypeId);
+                    voucherDTO.setNarration(voucherNarration);
+                    voucherDTO.setVoucherEntryDate(currentUser.getCreatedDate());
 
-                voucherCreationService.performPurchaseAndSaleVoucherEntry(voucherDTO, currentUser);
+                    //Prepare voucher Entry
+                    VoucherDetailDTO voucherDrDTo = new VoucherDetailDTO();
+                    voucherDrDTo.setDrcrAmount(AccountingUtil.drAmount(depreciatedAmount));
+                    voucherDrDTo.setLedgerId(autoVoucherService.getLedgerId("Depreciation", currentUser,
+                            AccountTypeEnum.INDIRECT_COST.getValue()));
+                    voucherDetailDTOList.add(voucherDrDTo);
+
+                    VoucherDetailDTO voucherCr = new VoucherDetailDTO();
+                    voucherCr.setDrcrAmount(AccountingUtil.crAmount(depreciatedAmount));
+                    voucherCr.setLedgerId(autoVoucherService.getLedgerId(ledgerService.getAccountTypeNameByAccType(accTypeId), currentUser, accTypeId));
+                    voucherDetailDTOList.add(voucherCr);
+
+                    voucherDTO.setVoucherDetailDTOList(voucherDetailDTOList);
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.set((currentUser.getCreatedDate().getYear() + 1900), month, 1);
+                    calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DATE));
+
+                    voucherDTO.setVoucherEntryDate(calendar.getTime());
+                    voucherDTO.setVoucherNo(voucherNo);
+
+                    voucherCreationService.performPurchaseAndSaleVoucherEntry(voucherDTO, currentUser);
+                }
             }
+
+//            voucherEntry(openingAndBuyingListDTO, openingAndBuyingDTO,currentUser, voucherNarration, voucherTypeId, voucherNo, accTypeId, selectedMonth);
+
+
+//                //====
+//            for (int month = monthStart; month <= selectedMonth; month++) {
+//
+//                List<VoucherDetailDTO> voucherDetailDTOList = new ArrayList<>();
+//                VoucherDTO voucherDTO = new VoucherDTO();
+//
+//                if (openingAndBuyingDTO.getPurchaseInvoiceNo() == null) {
+//                    voucherNarration = "Asset opening entry";
+//                    voucherTypeId = VoucherTypeEnum.JOURNAL.getValue();
+//                    if (openingAndBuyingDTO.getVoucherNo() == null) {
+//                        voucherNo = voucherCreationService.getCurrentVoucherNo(VoucherTypeEnum.JOURNAL.getValue(),
+//                                currentUser.getCompanyId(), currentUser.getFinancialYearId());
+//                    } else {
+//                        voucherNo = openingAndBuyingDTO.getVoucherNo();
+//                    }
+//                } else {
+//                    voucherNarration = "Asset Buying entry";
+//
+//                    if (openingAndBuyingDTO.getVoucherNo() == null) {
+//                        if (Objects.equals(openingAndBuyingDTO.getIsCash(), PaymentModeTypeEnum.CASH.getValue()) || Objects.equals(openingAndBuyingDTO.getIsCash(), PaymentModeTypeEnum.BANK.getValue())) {
+//                            voucherNo = voucherCreationService.getCurrentVoucherNo(VoucherTypeEnum.PAYMENT.getValue(), currentUser.getCompanyId(), currentUser.getFinancialYearId());
+//                            voucherTypeId = VoucherTypeEnum.PAYMENT.getValue();
+//                        } else {
+//                            voucherNo = voucherCreationService.getCurrentVoucherNo(VoucherTypeEnum.JOURNAL.getValue(), currentUser.getCompanyId(), currentUser.getFinancialYearId());
+//                            voucherTypeId = VoucherTypeEnum.JOURNAL.getValue();
+//                        }
+//                    } else {
+//                        voucherNo = openingAndBuyingDTO.getVoucherNo();
+//                    }
+//                }
+//
+//                Double depreciatedAmount = calculateDepreciationAmount(currentUser, accTypeId,
+//                        openingAndBuyingListDTO.getRate(), month);
+//
+//                voucherDTO.setVoucherTypeId(voucherTypeId);
+//                voucherDTO.setNarration(voucherNarration);
+//                voucherDTO.setVoucherEntryDate(currentUser.getCreatedDate());
+//
+//                //Prepare voucher Entry
+//                VoucherDetailDTO voucherDrDTo = new VoucherDetailDTO();
+//                voucherDrDTo.setDrcrAmount(AccountingUtil.drAmount(depreciatedAmount));
+//                voucherDrDTo.setLedgerId(autoVoucherService.getLedgerId("Depreciation", currentUser,
+//                        AccountTypeEnum.INDIRECT_COST.getValue()));
+//                voucherDetailDTOList.add(voucherDrDTo);
+//
+//                VoucherDetailDTO voucherCr = new VoucherDetailDTO();
+//                voucherCr.setDrcrAmount(AccountingUtil.crAmount(depreciatedAmount));
+//                voucherCr.setLedgerId(autoVoucherService.getLedgerId(ledgerService.getAccountTypeNameByAccType(accTypeId), currentUser, accTypeId));
+//                voucherDetailDTOList.add(voucherCr);
+//
+//                voucherDTO.setVoucherDetailDTOList(voucherDetailDTOList);
+//                Calendar calendar = Calendar.getInstance();
+//                calendar.set((currentUser.getCreatedDate().getYear() + 1900), month, 1);
+//                calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DATE));
+//
+//                voucherDTO.setVoucherEntryDate(calendar.getTime());
+//                voucherDTO.setVoucherNo(voucherNo);
+//
+//                voucherCreationService.performPurchaseAndSaleVoucherEntry(voucherDTO, currentUser);
+//            }
+//            //
+//            // ===
+
 
             //save to detail table
             BigDecimal initialQty = openingAndBuyingListDTO.getQty();
@@ -267,6 +500,7 @@ public class AssetOpeningService {
 
     }
 
+
     public static Integer partyDetail(CurrentUser currentUser, Integer isCash, String partyName, AccSaleInvoiceGenerationDao accSaleInvoiceGenerationDao, String partyAddress, String partyContactNo, String partyEmail) {
         Integer partyId = null;
 
@@ -291,7 +525,7 @@ public class AssetOpeningService {
         return partyId;
     }
 
-    public Double calculateDepreciationAmount(CurrentUser currentUser, Integer accTypeId, Double rate, int month) throws ParseException {
+    public Double calculateDepreciationAmount(CurrentUser currentUser, Integer accTypeId, Double rate, int month, int totalNoOfDaysDif) throws ParseException {
 
         NumberFormat numberFormat = NumberFormat.getInstance(Locale.getDefault());
         numberFormat.setMaximumFractionDigits(2);
@@ -301,9 +535,13 @@ public class AssetOpeningService {
 
         cal.setTime(DateUtil.toDate(currentUser.getFinancialYearFrom()));
         int numOfDays = cal.getActualMaximum(Calendar.DAY_OF_YEAR);
-        int totalNoOfDaysDif = numberOfDaysInMonth(month, currentUser.getCreatedDate().getYear());
+//        int totalNoOfDaysDif = numberOfDaysInMonth(month, currentUser.getCreatedDate().getYear());
 
-        return Double.parseDouble(numberFormat.format(((rate * depreciationRate) / numOfDays) * totalNoOfDaysDif));
+//        double decAmount = ;
+//        System.out.println(decAmount);
+        return ((rate * depreciationRate) / numOfDays) * totalNoOfDaysDif;
+
+//        return Double.parseDouble(numberFormat.format(((rate * depreciationRate) / numOfDays) * totalNoOfDaysDif));
     }
 
     public static int numberOfDaysInMonth(int month, int year) {
@@ -444,4 +682,93 @@ public class AssetOpeningService {
     public List<OpeningAndBuyingDTO> loadAssetBuyingList(Integer voucherNo, BigInteger purchaseMasterId) {
         return assetOpeningDao.loadAssetBuyingList(voucherNo, purchaseMasterId);
     }
+
+    //    ======================================================================
+    public static boolean isPurchaseInCurrentYear(Date purchaseDate) {
+        if (purchaseDate==null){
+            return false;
+        }else {
+            return getYearFromDate(purchaseDate) == getYearFromDate(new Date());
+        }
+    }
+
+    public static int getYearFromDate(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(Calendar.YEAR);
+    }
+
+
+    public static int calculateTheNumOfDays(Date purchaseDate) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(purchaseDate);
+        // Extract the target year, month, and day
+        int targetYear = calendar.get(Calendar.YEAR);
+        int targetMonth = calendar.get(Calendar.MONTH) + 1; // Months are 0-based, so add 1
+        int targetDay = calendar.get(Calendar.DAY_OF_MONTH);
+        // Create the target date with the assigned values
+        LocalDate date = LocalDate.of(targetYear, targetMonth, targetDay);
+        // Get the end of the month for the given date
+        LocalDate endOfMonth = date.with(TemporalAdjusters.lastDayOfMonth());
+        // Calculate the number of days from the given date to the end of the month
+        int daysToEndOfMonth = (date.lengthOfMonth() - date.getDayOfMonth()) + 1;
+        System.out.println("Number of days from " + date + " to the end of the month: " + daysToEndOfMonth);
+        return daysToEndOfMonth;
+    }
+
+
+    public static int purchaseFromMonth(Date purchaseDate) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(purchaseDate);
+        // Create a YearMonth instance for the specified year and month
+        return calendar.get(Calendar.MONTH) + 1;
+    }
+
+
+//    public static void numberOfDaysInMonth(int month, int year) {
+//
+//        // Create a Calendar instance and set it to the Date object
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTime(new Date());
+//        YearMonth yearMonth = YearMonth.of(calendar.get(Calendar.YEAR), month);
+//        // Get the number of days in the specified month
+//        int daysInMonth = yearMonth.lengthOfMonth();
+//        System.out.println("Number of days in " + year + "-" + month + ": " + daysInMonth);
+//    }
+
+    public static int numberOfDaysInCurrentMonth(int month) {
+        // Create a Calendar instance and set it to the Date object
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        YearMonth yearMonth = YearMonth.of(calendar.get(Calendar.YEAR), month);
+        // Get the number of days in the specified month
+        return yearMonth.lengthOfMonth();
+
+    }
+
+    public static double formattedDoubleValue(double rawCurrentDepC) {
+        DecimalFormat decimalFormat = new DecimalFormat("0.000");
+        return Double.parseDouble(decimalFormat.format(rawCurrentDepC));
+    }
+
+    public static double formattedDoubleValues(double rawCurrentDepC) {
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        return Double.parseDouble(decimalFormat.format(rawCurrentDepC));
+    }
+
+    //    ================================================================
+    private void voucherEntry(OpeningAndBuyingListDTO openingAndB,
+                              CurrentUser currentUser,
+                              String voucherNarration,
+                              Integer voucherTypeId,
+                              Integer voucherNo,
+                              Integer accTypeId,
+                              Integer selectedMonth) throws ParseException {
+
+
+//        for (int month = 0; month <= selectedMonth; month++) {
+//
+//        }
+    }
+
 }

@@ -1,4 +1,4 @@
-<%--
+\<%--
   Created by IntelliJ IDEA.
   User: jigmePc
   Date: 5/7/2019
@@ -85,11 +85,14 @@
                                 <option value="1">Dr</option>
                                 <option value="0">Cr</option>
                             </select></td>
-                            <td><select name='voucherDetailDTOList[0].ledgerId'
+                            <td>
+                                <select name='voucherDetailDTOList[0].ledgerId'
                                         id="ledgerId1" tabindex="3"
                                         class='form-control form-control-sm voucherDetail select2 ledgerId'
                                         disabled>
-                            </select></td>
+                            </select>
+
+                            </td>
                             <td><input type='text' name='voucherDetailDTOList[0].debitAmount'
                                        id="debitAmount1" tabindex="3"
                                        class='form-control form-control-sm right-align voucherDetail debitAmount amount'

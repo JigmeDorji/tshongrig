@@ -2,16 +2,15 @@ package com.spms.mvc.service;
 
 import com.spms.mvc.Enumeration.CommonStatus;
 import com.spms.mvc.Enumeration.UserRoleType;
+import com.spms.mvc.dao.AddItemDao;
 import com.spms.mvc.dao.CompanyCreationDao;
 import com.spms.mvc.dao.FinancialYearSetupDao;
 import com.spms.mvc.dao.auth.UserDao;
 import com.spms.mvc.dto.CompanyCreationDTO;
 import com.spms.mvc.dto.FinancialYearDTO;
 import com.spms.mvc.dto.UserDTO;
-import com.spms.mvc.entity.CommonCompanyLoginId;
 import com.spms.mvc.entity.CompanyCreation;
-import com.spms.mvc.entity.FinancialYear;
-import com.spms.mvc.entity.User;
+import com.spms.mvc.entity.*;
 import com.spms.mvc.library.helper.CurrentUser;
 import com.spms.mvc.library.helper.DateUtil;
 import com.spms.mvc.library.helper.DropdownDTO;
@@ -62,8 +61,43 @@ public class CompanyCreationService extends BaseController {
     }
 
     public List<CompanyCreationDTO> getCompanyDetailList(CurrentUser currentUser) {
+
+
         if (currentUser.getUserRoleTypeId().equals(UserRoleType.Owner.getValue())) {
+
+            List<CompanyCreationDTO> list = companyCreationDao.getCompanyDetailList();
+            List<CompanyCreationDTO> filteredList = new ArrayList<>();
+
+            for (CompanyCreationDTO companyCreationDTO : list) {
+                String companyName = companyCreationDTO.getCompanyName();
+
+                int status = companyName.indexOf("@");
+//                System.out.println(companyName + ":=> " + status);
+                if (status == -1) {
+                    CompanyCreationDTO creationDTO = new CompanyCreationDTO();
+                    creationDTO.setCompanyId(companyCreationDTO.getCompanyId());
+                    creationDTO.setMailingAddress(companyCreationDTO.getMailingAddress());
+                    creationDTO.setMobileNo(companyCreationDTO.getMobileNo());
+                    creationDTO.setEmail(companyCreationDTO.getEmail());
+                    creationDTO.setWebsite(companyCreationDTO.getWebsite());
+                    creationDTO.setFnYrStart(companyCreationDTO.getFnYrStart());
+                    creationDTO.setBusinessType(companyCreationDTO.getBusinessType());
+                    creationDTO.setStatus(companyCreationDTO.getStatus());
+                    creationDTO.setContactPerson(companyCreationDTO.getContactPerson());
+                    creationDTO.setRemarks(companyCreationDTO.getRemarks());
+                    creationDTO.setTotalSale(companyCreationDTO.getTotalSale());
+                    creationDTO.setPfPercentage(companyCreationDTO.getPfPercentage());
+                    creationDTO.setTotalListSale(companyCreationDTO.getTotalListSale());
+                    creationDTO.setSaleDate(companyCreationDTO.getSaleDate());
+                    creationDTO.setTrialExpiryDate(companyCreationDTO.getTrialExpiryDate());
+                    creationDTO.setSaleListDate(companyCreationDTO.getSaleListDate());
+                    creationDTO.setCompanyName(companyName);
+                    filteredList.add(creationDTO);
+                }
+
+            }
             return companyCreationDao.getCompanyDetailList();
+//            return filteredList;
         } else {
             return companyCreationDao.getCompanyLoginCompany(currentUser.getCompanyId());
         }
@@ -71,11 +105,15 @@ public class CompanyCreationService extends BaseController {
     }
 
     public CompanyCreationDTO populateCompanyDetail(Integer companyId) {
+//        Boolean isCompanyExist = companyCreationDao.isCompanyExist(companyId);
+
         return companyCreationDao.populateCompanyDetail(companyId);
     }
 
     @Transactional(rollbackFor = Exception.class)
     public ResponseMessage saveCompanyDetails(CompanyCreationDTO companyCreationDTO, CurrentUser currentUser, Boolean isSignup) {
+
+
         ResponseMessage responseMessage = new ResponseMessage();
         CompanyCreation companyCreation = new CompanyCreation();
 
@@ -103,6 +141,10 @@ public class CompanyCreationService extends BaseController {
             companyId = companyCreationDao.getCompanyId();
             companyCreationDao.saveCompanyDetails(companyCreation);
         } else {//during approval time
+
+
+            Boolean isCompanyExist = companyCreationDao.isCompanyExist(companyCreationDTO.getCompanyId());
+
             CompanyCreationDTO companyDetailPrevious = companyCreationDao.populateCompanyDetail(companyCreationDTO.getCompanyId());
 
             companyId = companyCreationDTO.getCompanyId();
@@ -135,13 +177,32 @@ public class CompanyCreationService extends BaseController {
                 user.setUpdatedDate(null);
                 user.setCreatedBy(currentUser.getLoginId());
                 user.setCreatedDate(new Date());
-                userId = userDao.addUser(user);
 
-                CommonCompanyLoginId commonCompanyLoginId = new CommonCompanyLoginId();
-                commonCompanyLoginId.setCompanyLoginId(companyAbbreviation);
-                commonCompanyLoginId.setCompany(companyCreationDTO.getCompanyName());
-                commonCompanyLoginId.setCompanyId(companyCreationDTO.getCompanyId());
-                companyCreationDao.saveCompanyLoginDetail(commonCompanyLoginId);
+                if(!isCompanyExist){
+                    userId = userDao.addUser(user);
+                }
+
+
+
+//                Saving the Brand For General Trading Company
+                if (companyCreationDTO.getBusinessType() == 8) {
+//                    savingBrandDetailOnCompanyApprovalOnce(companyAbbreviation, companyCreationDTO.getCompanyName());
+                    savingBrandDetailOnCompanyApprovalOnce(companyAbbreviation, companyCreationDTO);
+                }
+
+                if (!isCompanyExist) {
+//                Updating the User Login ID in Common Company Table
+                    companyCreationDao.updateCommonCompanyTableForUserLoginId(companyId, companyAbbreviation);
+//                updating the User Login Detail in  commonCompanyLoginId table
+                    CommonCompanyLoginId commonCompanyLoginId = new CommonCompanyLoginId();
+                    commonCompanyLoginId.setCompanyLoginId(companyAbbreviation);
+                    commonCompanyLoginId.setCompany(companyCreationDTO.getCompanyName());
+                    commonCompanyLoginId.setCompanyId(companyCreationDTO.getCompanyId());
+                    companyCreationDao.saveCompanyLoginDetail(commonCompanyLoginId);
+
+                }
+
+
             }
 
 
@@ -170,6 +231,7 @@ public class CompanyCreationService extends BaseController {
             if (companyCreationDTO.getStatus().equals(CommonStatus.Approve.getValue())) {
                 companyCreation.setTrialExpiryDate(DateUtils.addMonths(new Date(), 1));
             }
+
             companyCreation.setId(companyCreationDTO.getCompanyId());
             companyCreation.setMailingAddress(companyCreationDTO.getMailingAddress());
             companyCreation.setMobileNo(companyCreationDTO.getMobileNo());
@@ -191,7 +253,8 @@ public class CompanyCreationService extends BaseController {
 
         }
         if (isSignup) {
-            responseMessage.setText("Successfully submitted, trail will be approved within 24 hrs.");
+//            responseMessage.setText("Successfully submitted, trail will be approved within 24 hrs.");
+            responseMessage.setText("Trial will be approved in 24 hours.");
             responseMessage.setStatus(1);
             responseMessage.setCompanyId(companyId);
         } else {
@@ -259,4 +322,56 @@ public class CompanyCreationService extends BaseController {
     public List<DropdownDTO> getScreenList(BigInteger userId) {
         return companyCreationDao.getScreenList(userId);
     }
+
+    public void updateTheUserStatus(Character status, Integer companyId) {
+
+        List<BigInteger> userIds = companyCreationDao.getUserAt(companyId);
+        if (status.equals('A')) {
+            updateTheUserStatus(userIds, 'A');
+        }
+        if (status.equals('N')) {
+            updateTheUserStatus(userIds, 'N');
+        }
+    }
+
+    private void updateTheUserStatus(List<BigInteger> userIds, Character status) {
+        for (BigInteger userId : userIds) {
+            companyCreationDao.updateTheUserStatus(status, userId);
+        }
+    }
+
+
+//   Added on 21/06/2023 For General Trading Business Brand Creation
+
+    @Autowired
+    private AddItemDao addItemDao;
+
+
+    private void savingBrandDetailOnCompanyApprovalOnce(String companyAbbreviation, CompanyCreationDTO companyCreationDTO) {
+        String brandName = companyAbbreviation + "GT" + companyAbbreviation;
+        Boolean noBrandExist = companyCreationDao.checkInBrandExistsOnCompanyApprovalOnce(companyCreationDTO.getCompanyId());
+//        System.out.println(noBrandExist);
+
+////        System.out.println(companyCreationDao.checkInBrandExistsOnCompanyApprovalOnce(companyCreationDao.getCompanyId()));
+        if (noBrandExist) {//adding  New Brand Detail once on approval time
+            BrandWiseItemCode brandWiseItemCode = new BrandWiseItemCode();
+            brandWiseItemCode.setBrandId(addItemDao.getMaxBrandId() + 1);
+            brandWiseItemCode.setBrandName(brandName);
+            brandWiseItemCode.setBrandPrefix(companyAbbreviation);
+            brandWiseItemCode.setSerialNo(1);
+            brandWiseItemCode.setRemarks("Brand For General Trading : " + companyCreationDTO.getCompanyName());
+            brandWiseItemCode.setCompanyId(companyCreationDTO.getCompanyId());
+            brandWiseItemCode.setSetDate(new Date());
+            brandWiseItemCode.setCreatedBy(companyAbbreviation);
+            companyCreationDao.savingBrandDetailOnCompanyApprovalOnce(brandWiseItemCode);
+        }
+    }
+
+    //Auto Brand Creation For only Trading Company
+    public void autoBrandCreationForGeneralTrading(CompanyCreationDTO companyCreationDTO,CurrentUser currentUser) {
+
+
+
+    }
+
 }

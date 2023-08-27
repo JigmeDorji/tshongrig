@@ -15,6 +15,7 @@ locationSetUp = (function () {
     function save() {
         $('.globalForm').validate({
             submitHandler: function (form) {
+                $('#btnSave').prop('disabled', true)
                 $.ajax({
                     url: 'locationSetUp/save',
                     type: 'POST',
@@ -30,7 +31,13 @@ locationSetUp = (function () {
                                 }
                             )
                         }
+                    },
+                    complete: () => {
+                        $('#btnSave').prop('disabled', false)
+                    }, error: () => {
+                        $('#btnSave').prop('disabled', false)
                     }
+
                 });
             }
         });

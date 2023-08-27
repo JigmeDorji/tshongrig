@@ -326,6 +326,7 @@ public class AddItemDao {
 
     @Transactional(readOnly = true)
     public PurchaseDTO getSlNo(Integer brandId) {
+
         String query = "SELECT serialNo AS serialNo, brandPrefix AS prefixCode FROM tbl_item_code WHERE brandId=:brandId";
         Session session = sessionFactory.getCurrentSession();
         return (PurchaseDTO) session.createSQLQuery(query)
@@ -333,6 +334,8 @@ public class AddItemDao {
                 .setResultTransformer(Transformers.aliasToBean(PurchaseDTO.class))
                 .uniqueResult();
     }
+
+
 
     @Transactional
     public void updateBrandWiseSerialNo(Integer brandId, Integer maxSerialNo, Integer companyId) {
@@ -468,7 +471,7 @@ public class AddItemDao {
     }
 
     @Transactional(readOnly = true)
-    public PurchaseDTO getItemDetailsByPartNo(String partNo) {
+    public PurchaseDTO getItemDetailsByPartNo(String partNo,Integer companyId) {
         String query = "SELECT A.itemCode AS itemCode, \n" +
                 "B.brandName AS brandName,\n" +
                 "A.purchaseId AS purchaseId,\n" +
@@ -480,9 +483,11 @@ public class AddItemDao {
                 "A.locationId AS locationId\n" +
                 "FROM tbl_inv_purchase A\n" +
                 "INNER JOIN tbl_item_code B ON A.brandId=B.brandId\n" +
-                "WHERE A.partNo=:partNo";
+                "WHERE A.partNo=:partNo and A.companyId=:companyId";
         Session session = sessionFactory.getCurrentSession();
-        return (PurchaseDTO) session.createSQLQuery(query).setParameter("partNo", partNo)
+        return (PurchaseDTO) session.createSQLQuery(query)
+                .setParameter("partNo", partNo)
+                .setParameter("companyId", companyId)
                 .setResultTransformer(Transformers.aliasToBean(PurchaseDTO.class)).uniqueResult();
     }
 
@@ -518,7 +523,7 @@ public class AddItemDao {
     }
 
     @Transactional(readOnly = true)
-    public Double getTotalCashOutFlow(String ledgerId, Integer companyId, Date curFromDate,Date curToDate) {
+    public Double getTotalCashOutFlow(String ledgerId, Integer companyId, Date curFromDate, Date curToDate) {
       /*  String sqlQuery = "SELECT\n" +
                 "SUM(c.drcrAmount) as amount\n" +
                 "FROM tbl_acc_acctype a\n" +
@@ -527,7 +532,7 @@ public class AddItemDao {
                 "LEFT JOIN tbl_acc_voucher_entries d on d.voucherId=c.voucherId\n" +
                 "WHERE d.companyId=:companyId AND d.financialYearId=:financialYearId AND a.accTypeId=:accountType AND c.drcrAmount > 0\n" +
                 "GROUP BY a.accTypeId";*/
-        String sqlQuery="SELECT\n" +
+        String sqlQuery = "SELECT\n" +
                 "SUM(IFNULL(A.drcrAmount,0)) AS drcrAmount\n" +
                 "FROM tbl_acc_voucher_entries_detail A\n" +
                 "INNER JOIN tbl_acc_voucher_entries B ON A.voucherId=B.voucherId\n" +
@@ -651,8 +656,17 @@ public class AddItemDao {
         String sqlQry = "SELECT * FROM tbl_inv_purchase where itemName=:itemName and companyId=:companyId and itemCode!=:itemCode";
         SQLQuery hibernate = sessionFactory.getCurrentSession().createSQLQuery(sqlQry);
         return hibernate.setParameter("itemName", itemName)
-                        .setParameter("itemCode", itemCode)
-                .setParameter("companyId", currentUser.getCompanyId()).list().size()>0;
+                .setParameter("itemCode", itemCode)
+                .setParameter("companyId", currentUser.getCompanyId()).list().size() > 0;
+    }
+
+    @Transactional
+    public BigInteger getSINo(Integer companyId) {
+        String sqlQry="SELECT count(purchaseId) FROM tbl_inv_purchase where companyId=:companyId";
+        SQLQuery hibernate = sessionFactory.getCurrentSession().createSQLQuery(sqlQry);
+        return (BigInteger) hibernate
+                .setParameter("companyId", companyId)
+                .uniqueResult();
     }
 }
 

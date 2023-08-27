@@ -369,4 +369,35 @@ public class VoucherCreationDao {
                 .setParameter("saleRecordId", saleAssetRecordId)
                 .executeUpdate();
     }
+
+
+//    Code
+    @Transactional(readOnly = true)
+    public List<DropdownDTO> getLedgerListForContraVoucherType(Integer companyId) {
+//
+//        String query = "SELECT ledgerId AS id,ledgerName AS text FROM tbl_acc_ledger where companyId=:companyId" +
+//                " ORDER BY ledgerName";
+//        SELECT ledgerId AS id,ledgerName AS text FROM tbl_acc_ledger where companyId=:companyId" +
+//        " ORDER BY ledgerName"
+        String query = "SELECT ledgerId AS id,ledgerName AS text FROM tbl_acc_ledger WHERE accTypeId IN (3, 4, 11) AND companyId=:companyId ORDER BY ledgerName";
+        Session session = sessionFactory.getCurrentSession();
+        return session.createSQLQuery(query)
+                .setParameter("companyId", companyId)
+                .setResultTransformer(Transformers.aliasToBean(DropdownDTO.class)).list();
+    }
+
+
+    @Transactional(readOnly = true)
+    public boolean isDepreciationLedger(String ledgerId, Integer companyId) {
+        String query = "SELECT ledgerName FROM tbl_acc_ledger WHERE ledgerId = :ledgerId AND companyId = :companyId";
+
+        Session session = sessionFactory.getCurrentSession();
+        String ledgerName = (String) session.createSQLQuery(query)
+                .setParameter("companyId", companyId)
+                .setParameter("ledgerId", ledgerId)
+                .uniqueResult();
+
+        return ledgerName != null && ledgerName.equals("Depreciation");
+    }
+
 }

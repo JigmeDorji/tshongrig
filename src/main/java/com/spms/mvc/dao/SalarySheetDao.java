@@ -61,15 +61,16 @@ public class SalarySheetDao {
     }
 
     @Transactional(readOnly = true)
-    public List<EmployeeSetupDTO> getGeneratedSalarySheet(Integer companyId, Integer selectedMonthId, Integer cost) {
+    public List<EmployeeSetupDTO> getGeneratedSalarySheet(Integer companyId, Integer selectedMonthId, Integer cost,Integer financialYearId ) {
         String query = "SELECT a.*,b.empName,b.tpnNo,b.incrementEffectDate,b.incrementAmount,b.dateOfAppointment FROM tbl_hr_salary_sheet a\n" +
                 "inner join tbl_hr_employeesetup b on a.empId=b.empId\n" +
-                "where a.monthId=:selectedMonthId and a.companyId=:companyId and b.cost=:cost \n";
+                "where a.monthId=:selectedMonthId and a.companyId=:companyId and b.cost=:cost and financialYearId=:financialYearId";
         Session session = sessionFactory.getCurrentSession();
         return session.createSQLQuery(query)
                 .setParameter("companyId", companyId)
                 .setParameter("selectedMonthId", selectedMonthId)
                 .setParameter("cost", cost)
+                .setParameter("financialYearId", financialYearId)
                 .setResultTransformer(Transformers.aliasToBean(EmployeeSetupDTO.class)).list();
     }
 

@@ -35,6 +35,7 @@ public class AssetSetupDao extends BaseDao {
     @Autowired
     SessionFactory sessionFactory;
 
+
     @Transactional(readOnly = true)
     public Boolean checkIsAssetCodeExists(Integer groupId, Integer companyId) {
         Session session = sessionFactory.getCurrentSession();

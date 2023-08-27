@@ -51,13 +51,14 @@ public class UserDao extends BaseDao {
         String sqlQuery = "SELECT A.userId,A.username, A.userFullName, A.createdDate, \n" +
                 "A.userStatus,A.userMobileNo, B.userRoleTypeName \n" +
                 "FROM tbl_user A INNER JOIN tbl_user_role_type B \n" +
-                "ON A.userRoleTypeId = B.userRoleTypeId WHERE A.companyId=:companyId and A.userRoleTypeId !=4\n" +
+                "ON A.userRoleTypeId = B.userRoleTypeId WHERE A.companyId=:companyId and A.userRoleTypeId !=5\n" +
                 "UNION \n" +
                 "SELECT A.userId,A.username, A.userFullName, A.createdDate, \n" +
                 "A.userStatus,A.userMobileNo, B.userRoleTypeName \n" +
                 "FROM tbl_user A INNER JOIN tbl_user_role_type B ON A.userRoleTypeId = B.userRoleTypeId \n" +
                 "INNER JOIN tbl_company_mapping C On A.userId=C.userId\n" +
                 "WHERE C.companyId=:companyId and A.userRoleTypeId !=0";
+
         Session session = sessionFactory.getCurrentSession();
         return session.createSQLQuery(sqlQuery)
                 .setParameter("companyId", companyId)
@@ -70,7 +71,7 @@ public class UserDao extends BaseDao {
         String sqlQuery = "SELECT A.userId,A.username, A.userFullName, A.createdDate, \n" +
                 "A.userStatus,A.userMobileNo, B.userRoleTypeName \n" +
                 "FROM tbl_user A INNER JOIN tbl_user_role_type B \n" +
-                "ON A.userRoleTypeId = B.userRoleTypeId WHERE A.companyId=:companyId and A.userRoleTypeId !=4\n" +
+                "ON A.userRoleTypeId = B.userRoleTypeId WHERE A.companyId=:companyId and A.userRoleTypeId !=5\n" +
                 "UNION \n" +
                 "SELECT A.userId,A.username, A.userFullName, A.createdDate, \n" +
                 "A.userStatus,A.userMobileNo, B.userRoleTypeName \n" +
@@ -233,6 +234,7 @@ public class UserDao extends BaseDao {
                 .setParameter("userId", userId)
                 .executeUpdate();
     }
+
     @Transactional(readOnly = true)
     public Integer getCompanyId(String username) {
         String sqlQuery = "SELECT companyId FROM tbl_user where username=:username";
@@ -244,11 +246,34 @@ public class UserDao extends BaseDao {
 
     @Transactional(readOnly = true)
     public Integer getLastCompanyId() {
-        String sqlQuery = "select max(c.id) from tbl_common_company c";
+        String sqlQuery = "SELECT COUNT(*) FROM tbl_common_company_login_id";
         Session session = sessionFactory.getCurrentSession();
-        return (Integer) session.createSQLQuery(sqlQuery)
-                .uniqueResult();
+        Object result = session.createSQLQuery(sqlQuery).uniqueResult();
+        return ((Number) result).intValue();
     }
+
+//    public Integer getLastCompanyId() {
+////        String sqlQuery = "select max(c.id) from tbl_common_company c";
+//        String sqlQuery = "SELECT COUNT(id) FROM tbl_common_company_login_id";
+//        Session session = sessionFactory.getCurrentSession();
+//        BigInteger bigInteger = new BigInteger(String.valueOf(session.createSQLQuery(sqlQuery)));
+//
+////        return (Integer) session.createSQLQuery(sqlQuery)
+//        return bigInteger.intValue();
+//    }
 
     //endregion
 }
+
+/*
+         SELECT A.userId,A.username, A.userFullName, A.createdDate,
+                A.userStatus,A.userMobileNo, B.userRoleTypeName
+                FROM tbl_user A INNER JOIN tbl_user_role_type B
+                ON A.userRoleTypeId = B.userRoleTypeId WHERE A.companyId=:companyId and A.userRoleTypeId !=4\
+                UNION
+                SELECT A.userId,A.username, A.userFullName, A.createdDate,
+                A.userStatus,A.userMobileNo, B.userRoleTypeName
+                FROM tbl_user A INNER JOIN tbl_user_role_type B ON A.userRoleTypeId = B.userRoleTypeId
+                INNER JOIN tbl_company_mapping C On A.userId=C.userId
+                WHERE C.companyId=:companyId and A.userRoleTypeId !=0
+ */

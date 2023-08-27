@@ -16,15 +16,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by Bcass Sawa on 5/19/2019.
@@ -62,7 +61,59 @@ public class VoucherGroupListController extends BaseController {
     @RequestMapping(value = "/getVoucherDetailsByLedgerId", method = RequestMethod.GET)
     public List<AccProfitAndLossReportDTO> getVoucherDetailsByLedgerId(HttpServletRequest request, String ledgerId, Date fromDate, Date toDate) throws ParseException {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
-        return voucherGroupListService.getVoucherDetailsByLedgerId(ledgerId, fromDate, toDate, currentUser);
+        List<AccProfitAndLossReportDTO> getVoucherDetailsByLedgerId = voucherGroupListService.getVoucherDetailsByLedgerId(ledgerId, fromDate, toDate, currentUser);
+//     check for Depreciation Ledger
+        if (isDepreciationLedger(ledgerId, currentUser)) {
+            return voucherGroupByParticular(getVoucherDetailsByLedgerId);
+        } else {
+            return getVoucherDetailsByLedgerId;
+        }
+
+    }
+
+    private List<AccProfitAndLossReportDTO> voucherGroupByParticular(List<AccProfitAndLossReportDTO> getVoucherDetailsByLedgerId) {
+        List<AccProfitAndLossReportDTO> voucherGroupByParticular = new ArrayList<>();
+        // Grouping by voucherTypeName
+        Map<String, List<AccProfitAndLossReportDTO>> groupedData = getVoucherDetailsByLedgerId.stream()
+                .collect(Collectors.groupingBy(AccProfitAndLossReportDTO::getVoucherTypeName));
+
+
+        // Print the grouped data
+
+        for (Map.Entry<String, List<AccProfitAndLossReportDTO>> entry : groupedData.entrySet()) {
+            AccProfitAndLossReportDTO depCVoucher = new AccProfitAndLossReportDTO();
+            List<AccProfitAndLossReportDTO> elements = entry.getValue();
+
+            depCVoucher.setVoucherTypeName(entry.getKey());
+            Double totalDrAmount = 0.0;
+            int[] voucherNums = new int[elements.size()]; // Initialize the array with the correct size
+            int index = 0; // Track the index for adding voucher numbers
+
+            for (AccProfitAndLossReportDTO element : elements) {
+                totalDrAmount += element.getDebitAmount();
+                depCVoucher.setVoucherCreatedDate(element.getVoucherCreatedDate());
+                voucherNums[index] = element.getVoucherNo();
+                index++;
+            }
+
+            // Sort the voucherNums array in ascending order
+            Arrays.sort(voucherNums);
+
+            depCVoucher.setVoucherNo(voucherNums[0]);
+            depCVoucher.setDebitAmount(totalDrAmount);
+
+            voucherGroupByParticular.add(depCVoucher);
+//            System.out.println("TotalDrAmount: For  " + entry.getKey() + " =  " + totalDrAmount);
+        }
+
+
+        return voucherGroupByParticular;
+
+    }
+
+    private boolean isDepreciationLedger(String ledgerId, CurrentUser currentUser) {
+        return voucherGroupListService.isDepreciationLedger(ledgerId, currentUser.getCompanyId());
+
     }
 
     @ResponseBody
@@ -73,7 +124,7 @@ public class VoucherGroupListController extends BaseController {
         return voucherGroupListService.getOpeningBalance(ledgerId, fromDate, toDate, currentUser);
     }
 
-
+    //
     @ResponseBody
     @RequestMapping(value = "/saveBankReconciliation", method = RequestMethod.POST)
     public ResponseMessage saveBankReconciliation(BankReconciliationDTO bankReconciliationDTO, HttpServletRequest request) throws
@@ -86,7 +137,11 @@ public class VoucherGroupListController extends BaseController {
     @RequestMapping(value = "/deleteLedgerVoucherDetails", method = RequestMethod.GET)
     public ResponseMessage deleteLedgerVoucherDetails(HttpServletRequest request, Integer voucherNo, Integer voucherTypeId) throws
             IOException {
-        return voucherGroupListService.deleteLedgerVoucherDetails(voucherNo, voucherTypeId, (CurrentUser) request.getSession().getAttribute("currentUser"));
+        if (voucherTypeId == null) {
+            return new ResponseMessage(0, "Voucher Deletion is Restricted!");
+        } else {
+            return voucherGroupListService.deleteLedgerVoucherDetails(voucherNo, voucherTypeId, (CurrentUser) request.getSession().getAttribute("currentUser"));
+        }
     }
 
     @ResponseBody

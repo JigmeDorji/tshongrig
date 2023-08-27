@@ -64,6 +64,7 @@ public class SaleItemController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/getItemDetails", method = RequestMethod.GET)
     public List<SaleItemDTO> getItemDetails(HttpServletRequest request, String itemCode) throws IOException {
+
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
         return saleItemService.getItemDetails(itemCode, currentUser);
     }

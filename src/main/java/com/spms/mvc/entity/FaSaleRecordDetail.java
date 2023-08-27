@@ -46,6 +46,18 @@ public class FaSaleRecordDetail {
     @Column(name = "createdBy")
     private String createdBy;
 
+    @Column(name = "assetCode")
+    private String assetCode;
+
+
+    public String getAssetCode() {
+        return assetCode;
+    }
+
+    public void setAssetCode(String assetCode) {
+        this.assetCode = assetCode;
+    }
+
     public BigInteger getId() {
         return id;
     }

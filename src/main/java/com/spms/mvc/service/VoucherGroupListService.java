@@ -53,7 +53,7 @@ public class VoucherGroupListService {
             currentPeriodTo = toDate;
         }
         for (AccProfitAndLossReportDTO accProfitAndLossReportDTO : voucherGroupListDao.getVoucherDetailsByAccTypeAndLedgerType(ledgerId, currentPeriodFrom, currentPeriodTo, fromDate, toDate, currentUser.getCompanyId(), currentUser.getFinancialYearId())) {
-            AccProfitAndLossReportDTO profitAndLossReportDTO = new AccProfitAndLossReportDTO();
+           AccProfitAndLossReportDTO profitAndLossReportDTO = new AccProfitAndLossReportDTO();
 
             if (accProfitAndLossReportDTO.getDrcrAmount() > 0) {
                 profitAndLossReportDTO.setCreditAmount(accProfitAndLossReportDTO.getDrcrAmount());
@@ -230,4 +230,7 @@ public class VoucherGroupListService {
     }
 
 
+    public boolean isDepreciationLedger(String ledgerId, Integer companyId) {
+      return   voucherCreationDao.isDepreciationLedger(ledgerId,companyId);
+    }
 }

@@ -12,6 +12,7 @@ accSaleInvoiceGeneration = (function () {
         $('.globalForm').validate({
             submitHandler: function (form) {
                 if (validateRequiredField()) {
+                    $('#btnSave').prop('disabled', true);
                     var data = $(form).serializeArray();
                     $.ajax({
                         url: baseURL + 'save',
@@ -33,6 +34,9 @@ accSaleInvoiceGeneration = (function () {
                                     window.location.reload();
                                 }
                             });
+                        },
+                        complete: () => {
+                            $('#btnSave').prop('disabled', false);
                         }
                     })
                 }

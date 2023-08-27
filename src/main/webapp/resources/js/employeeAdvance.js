@@ -11,6 +11,7 @@ employeeAdvance = (function () {
     function save() {
         $('.globalForm').validate({
             submitHandler: function (form) {
+                $('#btnSave').prop('disabled', true)
                 let data = $(form).serializeArray();
                 let empName=$("#empId option:selected" ).text();
                 data.push({name: 'empName', value: empName});
@@ -50,6 +51,9 @@ employeeAdvance = (function () {
                                 title: res.text,
                             });
                         }
+                    },
+                    complete:()=>{
+                        $('#btnSave').prop('disabled', false)
                     }
                 })
             }

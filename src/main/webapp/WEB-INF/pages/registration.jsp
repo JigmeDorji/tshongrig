@@ -53,25 +53,28 @@
                                     </div>
                                     <div class="form-group row">
                                         <div class="form-group form-group-float col-md-6">
-                                            <label class="form-group-float-label animate required">Contact Person</label>
-                                            <input type="text" name="contactPerson" id="contactPerson" class="form-control field" placeholder="Contact Person">
+                                            <label class="form-group-float-label animate required">Contact
+                                                Person</label>
+                                            <input type="text" name="contactPerson" id="contactPerson"
+                                                   class="form-control field" placeholder="Contact Person">
 
                                         </div>
                                         <div class="form-group form-group-float col-md-6">
 
                                             <label class="form-group-float-label anim required">Contact No.</label>
-                                            <input type="text" name="mobileNo" class="form-control field" placeholder="Contact No.">
+                                            <input type="text" name="mobileNo" class="form-control field"
+                                                   placeholder="Contact No.">
 
                                         </div>
 
                                     </div>
                                     <div class="form-group row">
                                         <div class="form-group form-group-float col-md-6">
-                                            <label class="form-group-float-label animate required">Mailing
+                                            <label class="form-group-float-label animate required">
                                                 Address</label>
                                             <textarea type="text" class="form-control field" name="mailingAddress"
                                                       id="mailingAddress" required
-                                                      placeholder="Mailing Address"></textarea>
+                                                      placeholder="Address"></textarea>
                                         </div>
 
                                         <div class="form-group form-group-float col-md-6">
@@ -103,7 +106,7 @@
                 <div class="signin-left col-md-4 text-center">
                     <div class="signin-box">
                         <%--                        <h2 class="slim-logo"><a href="index.html">slim<span>.</span></a></h2>--%>
-                        <img src="<c:url value='/resources/images/logobcs.png'/>" class="img-fluid pb-2" alt="logo">
+                        <img  src="<c:url value='/resources/limitless/global_assets/images/logo.png'/>" class="img-fluid pb-2" alt="logo">
                         <h1>Start a 30-day free trial</h1>
                         <h5>Subscribe Tshong Rig ERP system today to power your business.</h5>
                         <p class="pt-5"><a href="<c:url value='/login'/>" class="btn btn-outline-secondary pd-x-25"><i

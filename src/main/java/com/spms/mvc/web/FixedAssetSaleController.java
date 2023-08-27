@@ -121,6 +121,9 @@ public class FixedAssetSaleController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/getItemList", method = RequestMethod.GET)
     public List<DropdownDTO> getIteList(HttpServletRequest request) {
+
+//        System.out.println(fixedAssetSaleService.getItemList((CurrentUser) request.getSession()
+//                .getAttribute("currentUser")));
         return fixedAssetSaleService.getItemList((CurrentUser) request.getSession()
                 .getAttribute("currentUser"));
     }

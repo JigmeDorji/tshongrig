@@ -1,3 +1,6 @@
+// const  isGeneralTrader = generalTrader().isGeneralTrader("openingBalanceInventory");
+//
+
 saleItem = (function () {
 
         let saleItemGrid = $('#saleItemGrid').dataTable({
@@ -185,6 +188,8 @@ saleItem = (function () {
 
                             }
                         }, complete: function () {
+                            $('#printBtn').attr('disabled', false);
+                        }, error: () => {
                             $('#printBtn').attr('disabled', false);
                         }
                     });
@@ -809,6 +814,7 @@ saleItem = (function () {
                 }
             })
         }
+
         function onCounterOrSupply() {
             $('#counterOrSupply').on('change', function () {
                 if (parseInt($(this).val()) === 1) {

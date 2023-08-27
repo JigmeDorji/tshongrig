@@ -16023,6 +16023,7 @@ label.custom-control {
 @media (min-width: 576px) {
     .navbar-expand-sm .navbar-brand {
         min-width: 17.5rem
+        /*min-width: 5rem*/
     }
 
     .navbar-expand-sm .navbar-search {
@@ -16135,6 +16136,7 @@ label.custom-control {
 @media (min-width: 768px) {
     .navbar-expand-md .navbar-brand {
         min-width: 17.5rem
+        /*min-width: 5.5rem*/
     }
 
     .navbar-expand-md .navbar-search {
@@ -16247,6 +16249,7 @@ label.custom-control {
 @media (min-width: 992px) {
     .navbar-expand-lg .navbar-brand {
         min-width: 30.5rem
+        /*min-width: 10rem*/
     }
 
     .navbar-expand-lg .navbar-search {

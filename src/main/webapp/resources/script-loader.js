@@ -226,6 +226,23 @@ $(document).ready(function () {
     if (document.URL.search("viewItemsForRawMaterial") > 1)
         scriptLoader("resources/js/viewItemsForRawMaterial.js");
 
+    if (document.URL.search("closingStock") > 1)
+        scriptLoader("resources/js/closingStock.js");
+
+    if (document.URL.search("fileUpload") > 1)
+        scriptLoader("resources/js/fileUpload.js");
+
+  if (document.URL.search("viewNewFiles") > 1)
+        scriptLoader("resources/js/viewNewAndCompletedFiles.js");
+
+  if (document.URL.search("viewCompletedFiles") > 1)
+        scriptLoader("resources/js/viewNewAndCompletedFiles.js");
+
+    if (document.URL.search("filesBin") > 1)
+        scriptLoader("resources/js/viewNewAndCompletedFiles.js");
+
+    if (document.URL.search("viewRetrieved") > 1)
+        scriptLoader("resources/js/viewNewAndCompletedFiles.js");
 
 });
 var scriptLoader = function (url) {

@@ -1,15 +1,21 @@
 package com.spms.mvc.service;
 
 import com.spms.mvc.dao.ViewItemDao;
-import com.spms.mvc.dto.BrandDTO;
 import com.spms.mvc.dto.PurchaseDTO;
 import com.spms.mvc.library.helper.CurrentUser;
-import com.spms.mvc.library.helper.NumberInWords;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.*;
 
 /**
@@ -22,11 +28,11 @@ public class ViewItemService {
     private ViewItemDao viewItemDao;
 
     public List<PurchaseDTO> getItemAvailable(CurrentUser currentUser, Date asOnDate) {
-        return viewItemDao.getItemAvailable(currentUser.getCompanyId(),asOnDate);
+        return viewItemDao.getItemAvailable(currentUser.getCompanyId(), asOnDate);
     }
 
     public String getItemName(String itemCode, CurrentUser currentUser) {
-        return viewItemDao.getItemName(itemCode,currentUser.getCompanyId());
+        return viewItemDao.getItemName(itemCode, currentUser.getCompanyId());
     }
 
 //    public Double getTotalStockValue1(CurrentUser currentUser) {
@@ -55,7 +61,10 @@ public class ViewItemService {
     }
 
     public Double getTotalStockBal(CurrentUser currentUser) {
-        Double totalStockValue=viewItemDao.getTotalStockBal(currentUser.getCompanyId());
-        return totalStockValue==null?0.0:totalStockValue;
+        Double totalStockValue = viewItemDao.getTotalStockBal(currentUser.getCompanyId());
+        return totalStockValue == null ? 0.0 : totalStockValue;
     }
+
+
+
 }

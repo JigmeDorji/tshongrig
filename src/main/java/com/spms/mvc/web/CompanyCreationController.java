@@ -8,7 +8,6 @@ import com.spms.mvc.library.helper.DateUtil;
 import com.spms.mvc.library.helper.DropdownDTO;
 import com.spms.mvc.library.helper.ResponseMessage;
 import com.spms.mvc.service.CompanyCreationService;
-import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -51,9 +50,9 @@ public class CompanyCreationController extends BaseController {
 
     @ResponseBody
     @RequestMapping(value = "/selectCompany", method = RequestMethod.GET)
-    public ResponseMessage selectCompany(HttpServletRequest request,Integer companyId) {
-        ResponseMessage responseMessage= new ResponseMessage();
-        CurrentUser currentUser=getCurrentUser(request);
+    public ResponseMessage selectCompany(HttpServletRequest request, Integer companyId) {
+        ResponseMessage responseMessage = new ResponseMessage();
+        CurrentUser currentUser = getCurrentUser(request);
         CompanyCreationDTO companyCreationDTO = companyCreationService.getSelectedCompanyDetails(companyId);
 //       if(companyCreationDTO.getStatus()==null){
 //           responseMessage.setStatus(SystemDataInt.MESSAGE_STATUS_UNSUCCESSFUL.value());
@@ -94,16 +93,23 @@ public class CompanyCreationController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/populateCompanyDetail", method = RequestMethod.GET)
     public CompanyCreationDTO populateCompanyDetail(Integer companyId) {
+
+
         return companyCreationService.populateCompanyDetail(companyId);
     }
 
     @ResponseBody
     @RequestMapping(value = "/saveCompanyDetails", method = RequestMethod.POST)
-    public ResponseMessage saveCompanyDetails(CompanyCreationDTO companyCreationDTO,
-                                              HttpServletRequest request) throws
-            IOException {
+    public ResponseMessage saveCompanyDetails(CompanyCreationDTO companyCreationDTO, HttpServletRequest request) throws IOException {
         CurrentUser currentUser = (CurrentUser) request.getSession().getAttribute("currentUser");
-        return companyCreationService.saveCompanyDetails(companyCreationDTO, currentUser,false);
+
+
+
+//        Updating the User Status on Blocking Access
+        companyCreationService.updateTheUserStatus(companyCreationDTO.getStatus(), companyCreationDTO.getCompanyId());
+
+//        Main Saving Business
+        return companyCreationService.saveCompanyDetails(companyCreationDTO, currentUser, false);
     }
 
 
@@ -112,6 +118,8 @@ public class CompanyCreationController extends BaseController {
     public ResponseMessage deleteCompanyDetails(Integer companyId) {
         return companyCreationService.deleteCompanyDetails(companyId);
     }
+
+
 
 
 }

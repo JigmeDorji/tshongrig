@@ -26,6 +26,16 @@ public class ResponseMessage {
     }
     //endregion
 
+
+    public ResponseMessage(Integer status, String text) {
+        this.status = status;
+        this.text = text;
+    }
+    public ResponseMessage(Integer status) {
+        this.status = status;
+    }
+
+
     //region getter and setter
     public Integer getStatus() {
         return status;

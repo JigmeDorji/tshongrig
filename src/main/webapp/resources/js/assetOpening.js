@@ -19,7 +19,6 @@ assetOpening = (function () {
             $('.globalForm').validate({
                 submitHandler: function (form) {
                     $('#btnSave').attr('disabled', true);
-
                     $.ajax({
                         url: 'assetOpening/save',
                         type: 'POST',
@@ -38,6 +37,12 @@ assetOpening = (function () {
                                 }, function () {
                                 });
                             }
+                            $('#btnSave').attr('disabled', false);
+                        },
+                        complete:()=>{
+                            $('#btnSave').attr('disabled', false);
+                        },
+                        error: () => {
                             $('#btnSave').attr('disabled', false);
                         }
                     });
