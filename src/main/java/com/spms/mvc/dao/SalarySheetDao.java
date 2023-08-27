@@ -64,7 +64,7 @@ public class SalarySheetDao {
     public List<EmployeeSetupDTO> getGeneratedSalarySheet(Integer companyId, Integer selectedMonthId, Integer cost) {
         String query = "SELECT a.*,b.empName,b.tpnNo,b.incrementEffectDate,b.incrementAmount,b.dateOfAppointment FROM tbl_hr_salary_sheet a\n" +
                 "inner join tbl_hr_employeesetup b on a.empId=b.empId\n" +
-                "where a.monthId=:selectedMonthId and a.companyId=:companyId and b.cost=:cost";
+                "where a.monthId=:selectedMonthId and a.companyId=:companyId and b.cost=:cost \n";
         Session session = sessionFactory.getCurrentSession();
         return session.createSQLQuery(query)
                 .setParameter("companyId", companyId)
