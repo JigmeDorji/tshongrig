@@ -25,7 +25,7 @@
 -->
         <security:form-login always-use-default-target="false" authentication-failure-url="/login?error"
                              default-target-url="/home" login-page="/login" login-processing-url="/auth"
-                             username-parameter="username" password-parameter="pwd"
+                             username-parameter="username" password-parameter="password"
                              authentication-success-handler-ref="loginSuccessHandler"
                              authentication-failure-handler-ref="loginFailureHandler"/>
 

@@ -59,7 +59,7 @@
 
         <!--                                <property name="url" value="jdbc:mysql://localhost:3306/tshongrig_bugs"/>-->
         <property name="url" value="jdbc:mysql://localhost:3306/tshongrig_db"/>
-        <property name="password" value="root"/>
+        <property name="password" value="root@Root@22"/>
 
 
         <property name="validationQuery" value="SELECT 1"/>
@@ -117,6 +117,9 @@
 
     <!--Configure Messages-->
     <import resource="config/internationalzation.xml"/>
+
+    <!--Security Configuration-->
+    <import resource="config/spring-security.xml"/>
 
     <!--Bean Configuration in Current User-->
     <bean class="com.spms.mvc.library.helper.CurrentUser" id="currentUser" scope="request"/>

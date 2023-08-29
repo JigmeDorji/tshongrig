@@ -17,7 +17,7 @@
 
     <servlet-mapping>
         <servlet-name>mvc-dispatcher</servlet-name>
-        <url-pattern>/tshongrig</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
     <!-- Security Part -->
@@ -105,13 +105,7 @@
         <tracking-mode>COOKIE</tracking-mode>
     </session-config>
 
-    <servlet>
-        <servlet-name>MessageServlet</servlet-name>
-        <servlet-class>com.spms.mvc.library.helper.TshongRigServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>MessageServlet</servlet-name>
-        <url-pattern>/</url-pattern>
-    </servlet-mapping>
+
+
 
 </web-app>
